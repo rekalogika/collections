@@ -11,11 +11,12 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Domain\Collections\Trait;
+namespace Rekalogika\Collections\ORM\Trait;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
+use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 
 /**
@@ -24,7 +25,7 @@ use Rekalogika\Rekapager\Keyset\KeysetPageable;
  *
  * @internal
  */
-trait RecollectionTrait
+trait QueryBuilderTrait
 {
     /**
      * @var null|PageableInterface<TKey,T>
@@ -40,9 +41,8 @@ trait RecollectionTrait
             return $this->pageable;
         }
 
-        $adapter = new SelectableAdapter(
-            collection: $this->collection,
-            criteria: $this->criteria
+        $adapter = new QueryBuilderAdapter(
+            queryBuilder: $this->queryBuilder,
         );
 
         $count = match ($this->countStrategy) {
@@ -50,14 +50,16 @@ trait RecollectionTrait
             CountStrategy::Delegate => true,
             CountStrategy::Provided => $this->count,
         }
-        ?? 0;
+            ?? 0;
 
+        // @phpstan-ignore-next-line
         $this->pageable = new KeysetPageable(
             adapter: $adapter,
             itemsPerPage: $this->itemsPerPage,
             count: $count,
         );
 
+        // @phpstan-ignore-next-line
         return $this->pageable;
     }
 
@@ -66,7 +68,9 @@ trait RecollectionTrait
      */
     private function getRealCount(): int
     {
-        $count = $this->collection->count();
+        $pagination = new Paginator($this->queryBuilder->getQuery());
+
+        $count = $pagination->count();
 
         if ($count > 0) {
             return $count;

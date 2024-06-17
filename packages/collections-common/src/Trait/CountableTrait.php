@@ -11,9 +11,9 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Domain\Collections\Trait;
+namespace Rekalogika\Domain\Collections\Common\Trait;
 
-use Rekalogika\Domain\Collections\CountStrategy;
+use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Exception\CountDisabledException;
 
 trait CountableTrait
@@ -29,9 +29,9 @@ trait CountableTrait
         if ($this->countStrategy === CountStrategy::Restrict) {
             throw new CountDisabledException();
         } elseif ($this->countStrategy === CountStrategy::Delegate) {
-            $count = $this->collection->count();
+            $count = $this->getPageable()->getTotalItems();
 
-            if ($count >= 0) {
+            if (\is_int($count) && $count >= 0) {
                 return $count;
             }
             return 0;
@@ -46,7 +46,7 @@ trait CountableTrait
      */
     final public function refreshCount(): void
     {
-        $count = $this->collection->count();
+        $count = $this->getRealCount();
 
         if ($count >= 0) {
             $this->count = $count;

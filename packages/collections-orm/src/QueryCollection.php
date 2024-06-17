@@ -11,20 +11,19 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Domain\Collections;
+namespace Rekalogika\Collections\ORM;
 
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\ReadableCollection;
-use Doctrine\Common\Collections\Selectable;
+use Doctrine\ORM\QueryBuilder;
+use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
+use Rekalogika\Domain\Collections\Common\Trait\IteratorAggregateTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
-use Rekalogika\Domain\Collections\Exception\UnexpectedValueException;
-use Rekalogika\Domain\Collections\Trait\ReadableExtraLazyTrait;
-use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
+use Rekalogika\Domain\Collections\Common\Trait\ReadableCollectionTrait;
 
 /**
  * @template TKey of array-key
@@ -32,10 +31,18 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
  * @implements PageableInterface<TKey,T>
  * @implements ReadableCollection<TKey,T>
  */
-class CriteriaRecollection implements PageableInterface, ReadableCollection
+class QueryCollection implements PageableInterface, ReadableCollection
 {
-    /** @use RecollectionTrait<TKey,T> */
-    use RecollectionTrait;
+    /** @use QueryBuilderTrait<TKey,T> */
+    use QueryBuilderTrait;
+
+    /** @use ReadableCollectionTrait<TKey,T> */
+    use ReadableCollectionTrait;
+
+    use CountableTrait;
+
+    /** @use IteratorAggregateTrait<TKey,T> */
+    use IteratorAggregateTrait;
 
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;
@@ -43,26 +50,14 @@ class CriteriaRecollection implements PageableInterface, ReadableCollection
     /** @use ItemsWithSafeguardTrait<TKey,T> */
     use ItemsWithSafeguardTrait;
 
-    /** @use ReadableExtraLazyTrait<TKey,T> */
-    use ReadableExtraLazyTrait;
-
     /**
-     * @var ReadableCollection<TKey,T>&Selectable<TKey,T>
-     */
-    private readonly ReadableCollection&Selectable $collection;
-
-    private readonly Criteria $criteria;
-
-    /**
-     * @param ReadableCollection<TKey,T> $collection
      * @param int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      */
     public function __construct(
-        ReadableCollection $collection,
-        ?Criteria $criteria = null,
+        private QueryBuilder $queryBuilder,
         private readonly int $itemsPerPage = 50,
         private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
         private ?int &$count = null,
@@ -70,35 +65,18 @@ class CriteriaRecollection implements PageableInterface, ReadableCollection
         private readonly ?int $hardLimit = null,
         private readonly ?bool $strict = null,
     ) {
-        // save collection
-
-        if (!$collection instanceof Selectable) {
-            throw new UnexpectedValueException('The wrapped collection must implement the Selectable interface.');
-        }
-
-        $this->collection = $collection;
-
-        // save criteria
-
-        $criteria = clone ($criteria ?? Criteria::create());
-
-        if (\count($criteria->orderings()) === 0) {
-            $criteria->orderBy(['id' => Order::Descending]);
-        }
-
-        $this->criteria = $criteria;
     }
 
     /**
-     * @param null|Collection<TKey,T> $collection
+     * @param null|array<string,Order>|string $orderBy
      * @param null|int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      */
     protected function createFrom(
-        ?ReadableCollection $collection = null,
-        ?Criteria $criteria = null,
+        ?QueryBuilder $queryBuilder = null,
+        array|string|null $orderBy = null,
         ?int $itemsPerPage = 50,
         ?CountStrategy $countStrategy = CountStrategy::Restrict,
         ?int &$count = null,
@@ -110,8 +88,7 @@ class CriteriaRecollection implements PageableInterface, ReadableCollection
 
         // @phpstan-ignore-next-line
         return new static(
-            collection: $collection ?? $this->collection,
-            criteria: $criteria ?? $this->criteria,
+            queryBuilder: $queryBuilder ?? $this->queryBuilder,
             itemsPerPage: $itemsPerPage ?? $this->itemsPerPage,
             countStrategy: $countStrategy ?? $this->countStrategy,
             count: $count,

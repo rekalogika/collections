@@ -18,8 +18,12 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Domain\Collections\Common\Configuration;
+use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
+use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Exception\UnexpectedValueException;
-use Rekalogika\Domain\Collections\Trait\CollectionTrait;
+use Rekalogika\Domain\Collections\Trait\ExtraLazyTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 
 /**
@@ -33,8 +37,14 @@ class Recollection implements PageableInterface, Collection
     /** @use RecollectionTrait<TKey,T> */
     use RecollectionTrait;
 
-    /** @use CollectionTrait<TKey,T> */
-    use CollectionTrait;
+    /** @use PageableTrait<TKey,T> */
+    use PageableTrait;
+
+    /** @use ItemsWithSafeguardTrait<TKey,T> */
+    use ItemsWithSafeguardTrait;
+
+    /** @use ExtraLazyTrait<TKey,T> */
+    use ExtraLazyTrait;
 
     /**
      * @var Collection<TKey,T>&Selectable<TKey,T>
@@ -73,7 +83,7 @@ class Recollection implements PageableInterface, Collection
         $this->collection = $collection;
 
         if ($orderBy === null) {
-            $orderBy = RecollectionConfiguration::$defaultOrderBy;
+            $orderBy = Configuration::$defaultOrderBy;
         } elseif (\is_string($orderBy)) {
             $orderBy = [$orderBy => Order::Ascending];
         }

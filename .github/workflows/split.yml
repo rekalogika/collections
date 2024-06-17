@@ -19,7 +19,9 @@ jobs:
             fail-fast: false
             matrix:
                 name:
+                    - collections-common
                     - collections-domain
+                    - collections-orm
     
         steps:
             -   uses: actions/checkout@v2
