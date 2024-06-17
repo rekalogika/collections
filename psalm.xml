@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<psalm
+        errorLevel="1"
+        resolveFromConfigFile="true"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+        findUnusedBaselineEntry="true"
+        findUnusedCode="false">
+
+    <projectFiles>
+        <directory name="packages" />
+        <directory name="tests" />
+        <ignoreFiles>
+            <directory name="vendor" />
+            <directory name="tests/DoctrineCollections" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <UnsupportedReferenceUsage>
+            <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/Trait/ReadableCollectionTrait.php" />
+            </errorLevel>
+        </UnsupportedReferenceUsage>
+        <InvalidArgument>
+            <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/Trait/*.php" />
+            </errorLevel>
+        </InvalidArgument>
+        <UnsafeInstantiation>
+            <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/Recollection.php" />
+            </errorLevel>
+            <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/CriteriaRecollection.php" />
+            </errorLevel>
+        </UnsafeInstantiation>
+        <MoreSpecificReturnType>
+            <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/CriteriaRecollection.php" />
+            </errorLevel>
+        </MoreSpecificReturnType>
+        <LessSpecificReturnStatement>
+            <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/CriteriaRecollection.php" />
+            </errorLevel>
+        </LessSpecificReturnStatement>
+    </issueHandlers>
+
+    <plugins>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin" />
+    </plugins>
+</psalm>

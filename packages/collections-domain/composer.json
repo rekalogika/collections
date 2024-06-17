@@ -1,0 +1,30 @@
+{
+    "name": "rekalogika/collections-domain",
+    "description": "Improves Doctrine Collections usage in your domain entities.",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "domain",
+        "collections",
+        "doctrine",
+        "pagination"
+    ],
+    "authors": [
+        {
+            "name": "Priyadi Iman Nurcahyo",
+            "email": "priyadi@rekalogika.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Rekalogika\\Domain\\Collections\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "doctrine/collections": "^2.2.2 || ^2.3",
+        "rekalogika/rekapager-contracts": "^0.11",
+        "rekalogika/rekapager-doctrine-collections-adapter": "^0.11",
+        "rekalogika/rekapager-keyset-pagination": "^0.11"
+    }
+}

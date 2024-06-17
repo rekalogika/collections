@@ -1,0 +1,22 @@
+parameters:
+    level: max
+    checkBenevolentUnionTypes: true
+    checkExplicitMixedMissingReturn: true
+    checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true
+    reportMaybesInPropertyPhpDocTypes: true
+    treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false
+    paths:
+        - packages
+        - tests
+    excludePaths:
+        - tests/DoctrineCollections/*
+    ignoreErrors:
+
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - vendor/ekino/phpstan-banned-code/extension.neon
+    - phar://phpstan.phar/conf/bleedingEdge.neon
