@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Domain\Collections\Trait;
+namespace Rekalogika\Domain\Collections\Common\Trait;
 
 /**
  * @template TKey of array-key
@@ -20,22 +20,20 @@ namespace Rekalogika\Domain\Collections\Trait;
 trait ArrayAccessTrait
 {
     /**
-     * Safe
-     *
      * @param TKey $offset
      */
     final public function offsetExists(mixed $offset): bool
     {
+        $this->getItemsWithSafeguard();
         return $this->collection->offsetExists($offset);
     }
 
     /**
-     * Safe
-     *
      * @param TKey $offset
      */
     final public function offsetGet(mixed $offset): mixed
     {
+        $this->getItemsWithSafeguard();
         return $this->collection->offsetGet($offset);
     }
 
@@ -47,12 +45,6 @@ trait ArrayAccessTrait
      */
     final public function offsetSet(mixed $offset, mixed $value): void
     {
-        if (!isset($offset)) {
-            $this->collection->offsetSet(null, $value);
-
-            return;
-        }
-
         $this->getItemsWithSafeguard();
         $this->collection->offsetSet($offset, $value);
     }

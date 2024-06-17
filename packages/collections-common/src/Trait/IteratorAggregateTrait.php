@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Domain\Collections\Trait;
+namespace Rekalogika\Domain\Collections\Common\Trait;
 
 /**
  * @template TKey of array-key
@@ -20,8 +20,6 @@ namespace Rekalogika\Domain\Collections\Trait;
 trait IteratorAggregateTrait
 {
     /**
-     * Unsafe
-     *
      * @return \Traversable<TKey,T>
      */
     final public function getIterator(): \Traversable

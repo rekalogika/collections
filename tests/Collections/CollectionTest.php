@@ -16,7 +16,7 @@ namespace Rekalogika\Collections\Tests;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Tests\Common\Collections\ArrayCollectionTestCase;
-use Rekalogika\Domain\Collections\CountStrategy;
+use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Recollection;
 
 class CollectionTest extends ArrayCollectionTestCase

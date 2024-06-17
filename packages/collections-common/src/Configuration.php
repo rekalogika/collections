@@ -11,11 +11,11 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Domain\Collections;
+namespace Rekalogika\Domain\Collections\Common;
 
 use Doctrine\Common\Collections\Order;
 
-final class RecollectionConfiguration
+final class Configuration
 {
     /**
      * If the collection has more than this number of items, a deprecation

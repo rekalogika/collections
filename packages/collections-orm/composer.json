@@ -1,6 +1,6 @@
 {
-    "name": "rekalogika/collections-domain",
-    "description": "Improves Doctrine Collections usage in your domain entities.",
+    "name": "rekalogika/collections-orm",
+    "description": "Supercharged query-backed Doctrine Collection.",
     "license": "MIT",
     "type": "library",
     "keywords": [
@@ -17,15 +17,16 @@
     ],
     "autoload": {
         "psr-4": {
-            "Rekalogika\\Domain\\Collections\\": "src/"
+            "Rekalogika\\Collections\\ORM\\": "src/"
         }
     },
     "require": {
         "php": "^8.2",
         "doctrine/collections": "^2.2.2 || ^2.3",
+        "doctrine/orm": "^2.14 || ^3.0",
         "rekalogika/collections-common": "^0.5",
         "rekalogika/rekapager-contracts": "^0.11",
-        "rekalogika/rekapager-doctrine-collections-adapter": "^0.11",
+        "rekalogika/rekapager-doctrine-orm-adapter": "^0.11",
         "rekalogika/rekapager-keyset-pagination": "^0.11"
     }
 }

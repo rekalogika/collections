@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Domain\Collections\Trait;
+namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -29,66 +29,50 @@ trait CollectionTrait
     use ArrayAccessTrait;
 
     /**
-     * Safe
-     *
      * @param T $element
      */
     final public function add(mixed $element): void
     {
+        $this->getItemsWithSafeguard();
         $this->collection->add($element);
     }
 
-    /**
-     * Unsafe
-     */
     final public function clear(): void
     {
         $this->getItemsWithSafeguard();
-
         $this->collection->clear();
     }
 
     /**
-     * Unsafe
-     *
      * @param TKey $key
      * @return T|null
      */
     final public function remove(string|int $key): mixed
     {
         $this->getItemsWithSafeguard();
-
         return $this->collection->remove($key);
     }
 
     /**
-     * Unsafe
-     *
      * @param T $element
      */
     final public function removeElement(mixed $element): bool
     {
         $this->getItemsWithSafeguard();
-
         return $this->collection->removeElement($element);
     }
 
     /**
-     * Unsafe
-     *
      * @param TKey $key
      * @param T $value
      */
     final public function set(string|int $key, mixed $value): void
     {
         $this->getItemsWithSafeguard();
-
         $this->collection->set($key, $value);
     }
 
     /**
-     * Unsafe
-     *
      * @template U
      * @param \Closure(T):U $func
      * @return Collection<TKey,U>
@@ -103,8 +87,6 @@ trait CollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @param \Closure(T, TKey):bool $p
      * @return Collection<TKey,T>
      */
@@ -118,8 +100,6 @@ trait CollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @param \Closure(TKey,T):bool $p
      * @return array{0: Collection<TKey,T>, 1: Collection<TKey,T>}
      */

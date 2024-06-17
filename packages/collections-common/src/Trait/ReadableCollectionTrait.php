@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Domain\Collections\Trait;
+namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\ReadableCollection;
@@ -28,49 +28,44 @@ trait ReadableCollectionTrait
     use CountableTrait;
 
     /**
-     * Safe
-     *
      * @template TMaybeContained
      * @param TMaybeContained $element
      * @return (TMaybeContained is T ? bool : false)
      */
     final public function contains(mixed $element): bool
     {
-        return $this->collection->contains($element);
+        $items = $this->getItemsWithSafeguard();
+
+        return \in_array($element, $items, true);
     }
 
-    /**
-     * Unsafe
-     */
     final public function isEmpty(): bool
     {
         return empty($this->getItemsWithSafeguard());
     }
 
     /**
-     * Safe
-     *
      * @param TKey $key
      */
     final public function containsKey(string|int $key): bool
     {
-        return $this->collection->containsKey($key);
+        $items = $this->getItemsWithSafeguard();
+
+        return isset($items[$key]) || \array_key_exists($key, $items);
     }
 
     /**
-     * Safe
-     *
      * @param TKey $key
      * @return T|null
      */
     final public function get(string|int $key): mixed
     {
-        return $this->collection->get($key);
+        $items = $this->getItemsWithSafeguard();
+
+        return $items[$key] ?? null;
     }
 
     /**
-     * Unsafe
-     *
      * @return list<TKey>
      */
     final public function getKeys(): array
@@ -82,8 +77,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @return list<T>
      */
     final public function getValues(): array
@@ -92,8 +85,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @return array<TKey,T>
      */
     final public function toArray(): array
@@ -102,8 +93,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @return T|false
      */
     final public function first(): mixed
@@ -114,8 +103,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @return T|false
      */
     final public function last(): mixed
@@ -126,8 +113,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @return TKey|null
      */
     final public function key(): int|string|null
@@ -138,8 +123,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @return T|false
      */
     final public function current(): mixed
@@ -150,8 +133,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @return T|false
      */
     final public function next(): mixed
@@ -162,19 +143,17 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Safe
-     *
      * @return array<TKey,T>
      */
 
     final public function slice(int $offset, ?int $length = null): array
     {
-        return $this->collection->slice($offset, $length);
+        $items = $this->getItemsWithSafeguard();
+
+        return \array_slice($items, $offset, $length, true);
     }
 
     /**
-     * Unsafe
-     *
      * @param \Closure(TKey, T):bool $p
      */
     final public function exists(\Closure $p): bool
@@ -192,8 +171,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @param \Closure(T, TKey):bool $p
      * @return ReadableCollection<TKey,T>
      */
@@ -208,8 +185,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @template U
      * @param \Closure(T):U $func
      * @return ReadableCollection<TKey,U>
@@ -225,8 +200,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @param \Closure(TKey, T):bool $p
      * @return array{0: ReadableCollection<TKey,T>, 1: ReadableCollection<TKey,T>}
      */
@@ -249,8 +222,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @param \Closure(TKey, T):bool $p
      */
     final public function forAll(\Closure $p): bool
@@ -268,8 +239,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @template TMaybeContained
      * @param TMaybeContained $element
      * @return (TMaybeContained is T ? TKey|false : false)
@@ -283,8 +252,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @param \Closure(TKey, T):bool $p
      * @return T|null
      */
@@ -303,8 +270,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * Unsafe
-     *
      * @template TReturn
      * @template TInitial
      * @param \Closure(TReturn|TInitial, T):TReturn $func

@@ -11,7 +11,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Rekalogika\\Domain\\Collections\\": "packages/collections-domain/src/"
+            "Rekalogika\\Collections\\ORM\\": "packages/collections-orm/src/",
+            "Rekalogika\\Domain\\Collections\\": [
+                "packages/collections-common/src/",
+                "packages/collections-domain/src/"
+            ],
+            "Rekalogika\\Domain\\Collections\\Common\\": "packages/collections-common/src/"
         }
     },
     "autoload-dev": {
@@ -22,9 +27,11 @@
     },
     "require": {
         "doctrine/collections": "^2.2.2 || ^2.3",
+        "doctrine/orm": "^2.14 || ^3.0",
         "php": "^8.2",
         "rekalogika/rekapager-contracts": "^0.11",
         "rekalogika/rekapager-doctrine-collections-adapter": "^0.11",
+        "rekalogika/rekapager-doctrine-orm-adapter": "^0.11",
         "rekalogika/rekapager-keyset-pagination": "^0.11"
     },
     "require-dev": {
@@ -39,6 +46,8 @@
         "vimeo/psalm": "^5.15"
     },
     "replace": {
-        "rekalogika/collections-domain": "self.version"
+        "rekalogika/collections-common": "self.version",
+        "rekalogika/collections-domain": "self.version",
+        "rekalogika/collections-orm": "self.version"
     }
 }
