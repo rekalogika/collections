@@ -46,7 +46,7 @@ trait CountableTrait
      */
     final public function refreshCount(): void
     {
-        $count = $this->getPageable()->getTotalItems();
+        $count = $this->getRealCount();
 
         if ($count >= 0) {
             $this->count = $count;

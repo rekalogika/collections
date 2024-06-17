@@ -19,7 +19,9 @@ use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
+use Rekalogika\Domain\Collections\Common\Trait\IteratorAggregateTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableCollectionTrait;
 
@@ -36,6 +38,11 @@ class QueryCollection implements PageableInterface, ReadableCollection
 
     /** @use ReadableCollectionTrait<TKey,T> */
     use ReadableCollectionTrait;
+
+    use CountableTrait;
+
+    /** @use IteratorAggregateTrait<TKey,T> */
+    use IteratorAggregateTrait;
 
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;

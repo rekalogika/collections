@@ -20,14 +20,8 @@ use Doctrine\Common\Collections\Collection;
  * @template TKey of array-key
  * @template T
  */
-trait CollectionTrait
+trait WritableCollectionTrait
 {
-    /** @use ReadableCollectionTrait<TKey,T> */
-    use ReadableCollectionTrait;
-
-    /** @use ArrayAccessTrait<TKey,T> */
-    use ArrayAccessTrait;
-
     /**
      * @param T $element
      */

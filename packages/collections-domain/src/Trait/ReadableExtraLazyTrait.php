@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Trait;
 
+use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
+use Rekalogika\Domain\Collections\Common\Trait\IteratorAggregateTrait;
+use Rekalogika\Domain\Collections\Common\Trait\ReadableCollectionTrait;
+
 /**
  * @template TKey of array-key
  * @template T
@@ -21,6 +25,14 @@ namespace Rekalogika\Domain\Collections\Trait;
  */
 trait ReadableExtraLazyTrait
 {
+    /** @use ReadableCollectionTrait<TKey,T> */
+    use ReadableCollectionTrait;
+
+    use CountableTrait;
+
+    /** @use IteratorAggregateTrait<TKey,T> */
+    use IteratorAggregateTrait;
+
     /**
      * @template TMaybeContained
      * @param TMaybeContained $element

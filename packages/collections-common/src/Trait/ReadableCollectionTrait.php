@@ -22,11 +22,6 @@ use Doctrine\Common\Collections\ReadableCollection;
  */
 trait ReadableCollectionTrait
 {
-    /** @use IteratorAggregateTrait<TKey,T> */
-    use IteratorAggregateTrait;
-
-    use CountableTrait;
-
     /**
      * @template TMaybeContained
      * @param TMaybeContained $element

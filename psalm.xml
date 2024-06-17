@@ -20,12 +20,18 @@
     <issueHandlers>
         <UnsupportedReferenceUsage>
             <errorLevel type="suppress">
-                <file name="packages/collections-domain/src/Trait/ReadableCollectionTrait.php" />
+                <file name="packages/collections-common/src/Trait/ReadableCollectionTrait.php" />
             </errorLevel>
         </UnsupportedReferenceUsage>
         <InvalidArgument>
             <errorLevel type="suppress">
+                <file name="packages/collections-common/src/Trait/*.php" />
+            </errorLevel>
+            <errorLevel type="suppress">
                 <file name="packages/collections-domain/src/Trait/*.php" />
+            </errorLevel>
+            <errorLevel type="suppress">
+                <file name="packages/collections-orm/src/Trait/*.php" />
             </errorLevel>
         </InvalidArgument>
         <UnsafeInstantiation>
@@ -34,6 +40,9 @@
             </errorLevel>
             <errorLevel type="suppress">
                 <file name="packages/collections-domain/src/CriteriaRecollection.php" />
+            </errorLevel>
+            <errorLevel type="suppress">
+                <file name="packages/collections-orm/src/QueryCollection.php" />
             </errorLevel>
         </UnsafeInstantiation>
         <MoreSpecificReturnType>

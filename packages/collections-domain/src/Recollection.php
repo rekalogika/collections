@@ -20,7 +20,6 @@ use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Trait\CollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Exception\UnexpectedValueException;
@@ -37,9 +36,6 @@ class Recollection implements PageableInterface, Collection
 {
     /** @use RecollectionTrait<TKey,T> */
     use RecollectionTrait;
-
-    /** @use CollectionTrait<TKey,T> */
-    use CollectionTrait;
 
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;

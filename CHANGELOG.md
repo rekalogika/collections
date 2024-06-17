@@ -6,3 +6,4 @@
 * fix: rename `matching()` to `withCriteria()` to avoid conflict with PHPStan
   `allCollectionsSelectable`
 * refactor: split common code to `rekalogika/collections-common`
+* feat: new package `rekalogika/collections-orm`

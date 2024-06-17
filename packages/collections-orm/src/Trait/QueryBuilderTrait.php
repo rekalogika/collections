@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\ORM\Trait;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
@@ -49,7 +50,7 @@ trait QueryBuilderTrait
             CountStrategy::Delegate => true,
             CountStrategy::Provided => $this->count,
         }
-        ?? 0;
+            ?? 0;
 
         // @phpstan-ignore-next-line
         $this->pageable = new KeysetPageable(
@@ -60,5 +61,21 @@ trait QueryBuilderTrait
 
         // @phpstan-ignore-next-line
         return $this->pageable;
+    }
+
+    /**
+     * @return int<0,max>
+     */
+    private function getRealCount(): int
+    {
+        $pagination = new Paginator($this->queryBuilder->getQuery());
+
+        $count = $pagination->count();
+
+        if ($count > 0) {
+            return $count;
+        }
+
+        return 0;
     }
 }
