@@ -22,7 +22,6 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Domain\Collections\Trait\ReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
-use Rekalogika\Domain\Collections\Util\CriteriaUtil;
 
 /**
  * @template TKey of array-key
@@ -110,24 +109,6 @@ class CriteriaRecollection implements PageableInterface, ReadableCollection
             softLimit: $softLimit ?? $this->softLimit,
             hardLimit: $hardLimit ?? $this->hardLimit,
             strict: $strict ?? $this->strict,
-        );
-    }
-
-    /**
-     * @param null|int<0,max> $count
-     */
-    protected function matching(
-        Criteria $criteria,
-        CountStrategy $countStrategy = CountStrategy::Restrict,
-        ?int &$count = null,
-    ): static {
-        $criteria = CriteriaUtil::mergeCriteria($this->criteria, $criteria);
-
-        return $this->createFrom(
-            criteria: $criteria,
-            countStrategy: $countStrategy,
-            // @phpstan-ignore-next-line
-            count: $count,
         );
     }
 }
