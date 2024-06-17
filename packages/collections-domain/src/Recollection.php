@@ -120,7 +120,7 @@ class Recollection implements PageableInterface, Collection
      * @param null|int<0,max> $count
      * @return CriteriaRecollection<TKey,T>
      */
-    protected function matching(
+    protected function withCriteria(
         Criteria $criteria,
         CountStrategy $countStrategy = CountStrategy::Restrict,
         ?int &$count = null,
