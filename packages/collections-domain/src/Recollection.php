@@ -20,9 +20,9 @@ use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Exception\UnexpectedValueException;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
-use Rekalogika\Domain\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 

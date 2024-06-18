@@ -16,7 +16,7 @@ namespace Rekalogika\Collections\Tests;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Exception\CountDisabledException;
+use Rekalogika\Domain\Collections\Common\Exception\CountDisabledException;
 use Rekalogika\Domain\Collections\Recollection;
 
 class CountTest extends TestCase

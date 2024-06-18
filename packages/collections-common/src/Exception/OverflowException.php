@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Domain\Collections\Exception;
+namespace Rekalogika\Domain\Collections\Common\Exception;
 
 class OverflowException extends \OverflowException implements ExceptionInterface
 {

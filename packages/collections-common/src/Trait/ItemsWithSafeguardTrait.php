@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Rekalogika\Domain\Collections\Common\Configuration;
-use Rekalogika\Domain\Collections\Exception\OverflowException;
-use Rekalogika\Domain\Collections\Exception\UnsafeMethodCallException;
+use Rekalogika\Domain\Collections\Common\Exception\OverflowException;
+use Rekalogika\Domain\Collections\Common\Exception\UnsafeMethodCallException;
 
 /**
  * @template TKey of array-key

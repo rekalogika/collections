@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Exception\CountDisabledException;
+use Rekalogika\Domain\Collections\Common\Exception\CountDisabledException;
 
 trait CountableTrait
 {
