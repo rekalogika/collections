@@ -24,4 +24,5 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
  */
 interface ReadablePageableCollection extends PageableInterface, ReadableCollection
 {
+    public function refreshCount(): void;
 }
