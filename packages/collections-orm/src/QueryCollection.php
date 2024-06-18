@@ -14,10 +14,9 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\ORM;
 
 use Doctrine\Common\Collections\Order;
-use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
-use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Contracts\Collections\ReadablePageableCollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
@@ -28,10 +27,9 @@ use Rekalogika\Domain\Collections\Common\Trait\ReadableCollectionTrait;
 /**
  * @template TKey of array-key
  * @template T
- * @implements PageableInterface<TKey,T>
- * @implements ReadableCollection<TKey,T>
+ * @implements ReadablePageableCollection<TKey,T>
  */
-class QueryCollection implements PageableInterface, ReadableCollection
+class QueryCollection implements ReadablePageableCollection
 {
     /** @use QueryBuilderTrait<TKey,T> */
     use QueryBuilderTrait;
