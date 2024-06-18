@@ -88,7 +88,7 @@ class Recollection implements PageableCollection
         if ($orderBy === null) {
             $orderBy = $this->getDefaultOrderBy();
         }
-        
+
         if (\is_string($orderBy)) {
             $orderBy = [$orderBy => Order::Ascending];
         }
