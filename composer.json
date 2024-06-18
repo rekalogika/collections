@@ -12,10 +12,8 @@
     "autoload": {
         "psr-4": {
             "Rekalogika\\Collections\\ORM\\": "packages/collections-orm/src/",
-            "Rekalogika\\Domain\\Collections\\": [
-                "packages/collections-common/src/",
-                "packages/collections-domain/src/"
-            ],
+            "Rekalogika\\Contracts\\Collections\\": "packages/collections-contracts/src/",
+            "Rekalogika\\Domain\\Collections\\": "packages/collections-domain/src/",
             "Rekalogika\\Domain\\Collections\\Common\\": "packages/collections-common/src/"
         }
     },
@@ -47,6 +45,7 @@
     },
     "replace": {
         "rekalogika/collections-common": "0.1.0",
+        "rekalogika/collections-contracts": "self.version",
         "rekalogika/collections-domain": "0.1.0",
         "rekalogika/collections-orm": "0.1.0"
     }

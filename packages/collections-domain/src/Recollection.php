@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
-use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Contracts\Collections\PageableCollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Exception\UnexpectedValueException;
@@ -29,10 +29,9 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 /**
  * @template TKey of array-key
  * @template T
- * @implements PageableInterface<TKey,T>
- * @implements Collection<TKey,T>
+ * @implements PageableCollection<TKey,T>
  */
-class Recollection implements PageableInterface, Collection
+class Recollection implements PageableCollection
 {
     /** @use RecollectionTrait<TKey,T> */
     use RecollectionTrait;
@@ -89,7 +88,7 @@ class Recollection implements PageableInterface, Collection
         if ($orderBy === null) {
             $orderBy = $this->getDefaultOrderBy();
         }
-        
+
         if (\is_string($orderBy)) {
             $orderBy = [$orderBy => Order::Ascending];
         }

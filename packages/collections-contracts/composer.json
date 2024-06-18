@@ -1,0 +1,28 @@
+{
+    "name": "rekalogika/collections-contracts",
+    "description": "",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "domain",
+        "collections",
+        "doctrine",
+        "pagination"
+    ],
+    "authors": [
+        {
+            "name": "Priyadi Iman Nurcahyo",
+            "email": "priyadi@rekalogika.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Rekalogika\\Contracts\\Collections\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "doctrine/collections": "^2.2.2 || ^2.3",
+        "rekalogika/rekapager-contracts": "^0.11"
+    }
+}
