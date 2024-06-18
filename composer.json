@@ -46,8 +46,8 @@
         "vimeo/psalm": "^5.15"
     },
     "replace": {
-        "rekalogika/collections-common": "self.version",
-        "rekalogika/collections-domain": "self.version",
-        "rekalogika/collections-orm": "self.version"
+        "rekalogika/collections-common": "0.1.0",
+        "rekalogika/collections-domain": "0.1.0",
+        "rekalogika/collections-orm": "0.1.0"
     }
 }
