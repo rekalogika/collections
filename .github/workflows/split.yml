@@ -20,6 +20,7 @@ jobs:
             matrix:
                 name:
                     - collections-common
+                    - collections-contracts
                     - collections-domain
                     - collections-orm
     
