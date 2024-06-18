@@ -76,21 +76,35 @@ class Recollection implements PageableInterface, Collection
         private readonly ?int $hardLimit = null,
         private readonly ?bool $strict = null,
     ) {
+        // handle collection
+
         if (!$collection instanceof Selectable) {
             throw new UnexpectedValueException('The wrapped collection must implement the Selectable interface.');
         }
 
         $this->collection = $collection;
 
+        // handle orderBy
+
         if ($orderBy === null) {
-            $orderBy = Configuration::$defaultOrderBy;
-        } elseif (\is_string($orderBy)) {
+            $orderBy = $this->getDefaultOrderBy();
+        }
+        
+        if (\is_string($orderBy)) {
             $orderBy = [$orderBy => Order::Ascending];
         }
 
         $this->orderBy = $orderBy;
 
         $this->criteria = Criteria::create()->orderBy($this->orderBy);
+    }
+
+    /**
+     * @return array<string,Order>|string
+     */
+    protected function getDefaultOrderBy(): array|string
+    {
+        return Configuration::$defaultOrderBy;
     }
 
     /**

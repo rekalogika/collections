@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.5.0
+## 0.1.1
+
+* feat(Recollection): add `getDefaultOrderBy()`
+
+## 0.1.0
 
 * build: initial commit
 * fix: rename `matching()` to `withCriteria()` to avoid conflict with PHPStan
