@@ -11,8 +11,12 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Domain\Collections\Exception;
+namespace Rekalogika\Domain\Collections\Common\Exception;
 
-interface ExceptionInterface extends \Throwable
+class CountDisabledException extends BadMethodCallException
 {
+    public function __construct()
+    {
+        parent::__construct('Count is disabled.');
+    }
 }
