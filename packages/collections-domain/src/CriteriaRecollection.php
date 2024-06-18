@@ -119,4 +119,18 @@ class CriteriaRecollection implements ReadablePageableCollection
             strict: $strict ?? $this->strict,
         );
     }
+
+    /**
+     * @return int<0,max>
+     */
+    private function getRealCount(): int
+    {
+        $count = $this->collection->matching($this->criteria)->count();
+
+        if ($count > 0) {
+            return $count;
+        }
+
+        return 0;
+    }
 }
