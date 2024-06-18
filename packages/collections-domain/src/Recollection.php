@@ -164,4 +164,18 @@ class Recollection implements PageableCollection
             strict: $this->strict,
         );
     }
+
+    /**
+     * @return int<0,max>
+     */
+    private function getRealCount(): int
+    {
+        $count = $this->collection->count();
+
+        if ($count > 0) {
+            return $count;
+        }
+
+        return 0;
+    }
 }

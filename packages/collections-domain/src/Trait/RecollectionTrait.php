@@ -60,18 +60,4 @@ trait RecollectionTrait
 
         return $this->pageable;
     }
-
-    /**
-     * @return int<0,max>
-     */
-    private function getRealCount(): int
-    {
-        $count = $this->collection->count();
-
-        if ($count > 0) {
-            return $count;
-        }
-
-        return 0;
-    }
 }
