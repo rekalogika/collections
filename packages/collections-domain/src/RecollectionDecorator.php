@@ -23,6 +23,7 @@ use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Exception\UnexpectedValueException;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
+use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 
@@ -44,6 +45,8 @@ class RecollectionDecorator implements Recollection
 
     /** @use ExtraLazyTrait<TKey,T> */
     use ExtraLazyTrait;
+
+    use ExtraLazyDetectorTrait;
 
     /**
      * @var Collection<TKey,T>&Selectable<TKey,T>
