@@ -13,30 +13,16 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Collections;
 
+use Doctrine\Common\Collections\Collection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 
 /**
  * @template TKey of array-key
  * @template T
  * @extends PageableInterface<TKey,T>
+ * @extends Collection<TKey,T>
  */
-interface SafeReadablePageableCollection extends PageableInterface
+interface Recollection extends PageableInterface, Collection
 {
-    /**
-     * @template TMaybeContained
-     * @param TMaybeContained $element
-     * @return (TMaybeContained is T ? bool : false)
-     */
-    public function contains(mixed $element): bool;
-
-    /**
-     * @param TKey $key
-     */
-    public function containsKey(string|int $key): bool;
-
-    /**
-     * @param TKey $key
-     * @return T|null
-     */
-    public function get(string|int $key): mixed;
+    public function refreshCount(): void;
 }

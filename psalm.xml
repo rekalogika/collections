@@ -36,13 +36,13 @@
         </InvalidArgument>
         <UnsafeInstantiation>
             <errorLevel type="suppress">
-                <file name="packages/collections-domain/src/Recollection.php" />
+                <file name="packages/collections-domain/src/RecollectionDecorator.php" />
             </errorLevel>
             <errorLevel type="suppress">
                 <file name="packages/collections-domain/src/CriteriaRecollection.php" />
             </errorLevel>
             <errorLevel type="suppress">
-                <file name="packages/collections-domain/src/SafeRecollection.php" />
+                <file name="packages/collections-domain/src/SafeRecollectionDecorator.php" />
             </errorLevel>
             <errorLevel type="suppress">
                 <file name="packages/collections-domain/src/SafeCriteriaRecollection.php" />

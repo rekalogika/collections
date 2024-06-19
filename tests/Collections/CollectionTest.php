@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Tests\Common\Collections\ArrayCollectionTestCase;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Recollection;
+use Rekalogika\Domain\Collections\RecollectionDecorator;
 
 class CollectionTest extends ArrayCollectionTestCase
 {
@@ -28,7 +28,7 @@ class CollectionTest extends ArrayCollectionTestCase
      */
     protected function buildCollection(array $elements = []): Collection
     {
-        return new Recollection(
+        return new RecollectionDecorator(
             collection: new ArrayCollection($elements),
             countStrategy: CountStrategy::Delegate,
         );
