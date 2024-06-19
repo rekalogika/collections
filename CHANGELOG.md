@@ -8,3 +8,4 @@
 * feat: detect extra lazy collections
 * deps: update rekapager to 0.11.2
 * build: fix CI on lowest deps
+* fix: disable extra lazy detection for now

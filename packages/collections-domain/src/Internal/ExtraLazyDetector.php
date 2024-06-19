@@ -14,8 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Internal;
 
 use Doctrine\Common\Collections\ReadableCollection;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\PersistentCollection;
 
 /**
  * @internal
@@ -33,8 +31,7 @@ final class ExtraLazyDetector
      */
     public static function isExtraLazy(ReadableCollection $collection): bool
     {
-        return $collection instanceof PersistentCollection
-            && $collection->getMapping()->fetch === ClassMetadata::FETCH_EXTRA_LAZY;
+        return true; // disabled for now
     }
 
     /**
@@ -44,7 +41,6 @@ final class ExtraLazyDetector
      */
     public static function hasIndexBy(ReadableCollection $collection): bool
     {
-        return $collection instanceof PersistentCollection
-            && $collection->getMapping()->indexBy();
+        return true; // disabled for now
     }
 }
