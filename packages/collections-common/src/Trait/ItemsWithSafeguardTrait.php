@@ -15,7 +15,6 @@ namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Exception\OverflowException;
-use Rekalogika\Domain\Collections\Common\Exception\UnsafeMethodCallException;
 
 /**
  * @template TKey of array-key
@@ -46,20 +45,11 @@ trait ItemsWithSafeguardTrait
         return $this->hardLimit ?? Configuration::$defaultHardLimit;
     }
 
-    private function isStrict(): bool
-    {
-        return $this->strict ?? Configuration::$defaultStrict;
-    }
-
     /**
      * @return array<TKey,T>
      */
     private function &getItemsWithSafeguard(): array
     {
-        if ($this->isStrict()) {
-            throw new UnsafeMethodCallException('The collection is in strict mode and does not allow unsafe methods at all.');
-        }
-
         if ($this->itemsWithSafeguard !== null) {
             return $this->itemsWithSafeguard;
         }
