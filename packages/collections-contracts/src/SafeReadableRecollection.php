@@ -17,7 +17,7 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
 
 /**
  * @template TKey of array-key
- * @template T
+ * @template-covariant T
  * @extends PageableInterface<TKey,T>
  */
 interface SafeReadableRecollection extends PageableInterface
