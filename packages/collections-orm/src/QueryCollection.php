@@ -16,7 +16,7 @@ namespace Rekalogika\Collections\ORM;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
-use Rekalogika\Contracts\Collections\ReadablePageableCollection;
+use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
@@ -27,9 +27,9 @@ use Rekalogika\Domain\Collections\Common\Trait\ReadableCollectionTrait;
 /**
  * @template TKey of array-key
  * @template T
- * @implements ReadablePageableCollection<TKey,T>
+ * @implements ReadableRecollection<TKey,T>
  */
-class QueryCollection implements ReadablePageableCollection
+class QueryCollection implements ReadableRecollection
 {
     /** @use QueryBuilderTrait<TKey,T> */
     use QueryBuilderTrait;

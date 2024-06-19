@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
-use Rekalogika\Contracts\Collections\PageableCollection;
+use Rekalogika\Contracts\Collections\Recollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Exception\UnexpectedValueException;
@@ -29,9 +29,9 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 /**
  * @template TKey of array-key
  * @template T
- * @implements PageableCollection<TKey,T>
+ * @implements Recollection<TKey,T>
  */
-class Recollection implements PageableCollection
+class RecollectionDecorator implements Recollection
 {
     /** @use RecollectionTrait<TKey,T> */
     use RecollectionTrait;

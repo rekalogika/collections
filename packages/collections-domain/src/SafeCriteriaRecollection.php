@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\Common\Collections\Selectable;
-use Rekalogika\Contracts\Collections\SafeReadablePageableCollection;
+use Rekalogika\Contracts\Collections\SafeReadableRecollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Exception\UnexpectedValueException;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
@@ -30,9 +30,9 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 /**
  * @template TKey of array-key
  * @template T
- * @implements SafeReadablePageableCollection<TKey,T>
+ * @implements SafeReadableRecollection<TKey,T>
  */
-class SafeCriteriaRecollection implements SafeReadablePageableCollection, \Countable
+class SafeCriteriaRecollection implements SafeReadableRecollection, \Countable
 {
     /** @use RecollectionTrait<TKey,T> */
     use RecollectionTrait;
