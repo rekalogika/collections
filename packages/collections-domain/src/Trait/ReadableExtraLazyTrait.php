@@ -40,7 +40,13 @@ trait ReadableExtraLazyTrait
      */
     final public function contains(mixed $element): bool
     {
-        return $this->collection->contains($element);
+        if ($this->isExtraLazy()) {
+            return $this->collection->contains($element);
+        }
+
+        $items = $this->getItemsWithSafeguard();
+
+        return \in_array($element, $items, true);
     }
 
     /**
@@ -50,7 +56,13 @@ trait ReadableExtraLazyTrait
      */
     final public function containsKey(string|int $key): bool
     {
-        return $this->collection->containsKey($key);
+        if ($this->isExtraLazy() && $this->hasIndexBy()) {
+            return $this->collection->containsKey($key);
+        }
+
+        $items = $this->getItemsWithSafeguard();
+
+        return isset($items[$key]) || \array_key_exists($key, $items);
     }
 
     /**
@@ -61,7 +73,13 @@ trait ReadableExtraLazyTrait
      */
     final public function get(string|int $key): mixed
     {
-        return $this->collection->get($key);
+        if ($this->isExtraLazy() && $this->hasIndexBy()) {
+            return $this->collection->get($key);
+        }
+
+        $items = $this->getItemsWithSafeguard();
+
+        return $items[$key] ?? null;
     }
 
     /**
@@ -72,6 +90,12 @@ trait ReadableExtraLazyTrait
 
     final public function slice(int $offset, ?int $length = null): array
     {
-        return $this->collection->slice($offset, $length);
+        if ($this->isExtraLazy()) {
+            return $this->collection->slice($offset, $length);
+        }
+
+        $items = $this->getItemsWithSafeguard();
+
+        return \array_slice($items, $offset, $length, true);
     }
 }

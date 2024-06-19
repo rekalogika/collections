@@ -53,7 +53,13 @@ trait ExtraLazyTrait
      */
     final public function offsetExists(mixed $offset): bool
     {
-        return $this->collection->offsetExists($offset);
+        if ($this->isExtraLazy() && $this->hasIndexBy()) {
+            return $this->collection->offsetExists($offset);
+        }
+
+        $items = $this->getItemsWithSafeguard();
+
+        return isset($items[$offset]) || \array_key_exists($offset, $items);
     }
 
     /**
@@ -61,7 +67,13 @@ trait ExtraLazyTrait
      */
     final public function offsetGet(mixed $offset): mixed
     {
-        return $this->collection->offsetGet($offset);
+        if ($this->isExtraLazy() && $this->hasIndexBy()) {
+            return $this->collection->get($offset);
+        }
+
+        $items = $this->getItemsWithSafeguard();
+
+        return $items[$offset] ?? null;
     }
 
     /**

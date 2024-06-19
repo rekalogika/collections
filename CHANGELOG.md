@@ -5,3 +5,4 @@
 * feat: add `SafePageableCollection` and `SafeReadablePageableCollection`
 * refactor: rename interface & classes
 * fix: add covariance to applicable interfaces
+* feat: detect extra lazy collections

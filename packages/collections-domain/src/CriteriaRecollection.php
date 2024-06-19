@@ -23,6 +23,7 @@ use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Exception\UnexpectedValueException;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
+use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
 use Rekalogika\Domain\Collections\Trait\ReadableExtraLazyTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 
@@ -44,6 +45,8 @@ class CriteriaRecollection implements ReadableRecollection
 
     /** @use ReadableExtraLazyTrait<TKey,T> */
     use ReadableExtraLazyTrait;
+
+    use ExtraLazyDetectorTrait;
 
     /**
      * @var ReadableCollection<TKey,T>&Selectable<TKey,T>

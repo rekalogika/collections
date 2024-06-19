@@ -26,6 +26,7 @@ use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeWritableCollectionTrait;
+use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 
 /**
@@ -51,6 +52,8 @@ class SafeRecollectionDecorator implements SafeRecollection, \Countable
     use SafeReadableCollectionTrait;
 
     use CountableTrait;
+
+    use ExtraLazyDetectorTrait;
 
     /**
      * @var Collection<TKey,T>&Selectable<TKey,T>

@@ -24,8 +24,9 @@ trait ArrayAccessTrait
      */
     final public function offsetExists(mixed $offset): bool
     {
-        $this->getItemsWithSafeguard();
-        return $this->collection->offsetExists($offset);
+        $items = $this->getItemsWithSafeguard();
+
+        return isset($items[$offset]) || \array_key_exists($offset, $items);
     }
 
     /**
@@ -33,8 +34,9 @@ trait ArrayAccessTrait
      */
     final public function offsetGet(mixed $offset): mixed
     {
-        $this->getItemsWithSafeguard();
-        return $this->collection->offsetGet($offset);
+        $items = $this->getItemsWithSafeguard();
+
+        return $items[$offset] ?? null;
     }
 
     /**
