@@ -42,6 +42,12 @@
                 <file name="packages/collections-domain/src/CriteriaRecollection.php" />
             </errorLevel>
             <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/SafeRecollection.php" />
+            </errorLevel>
+            <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/SafeCriteriaRecollection.php" />
+            </errorLevel>
+            <errorLevel type="suppress">
                 <file name="packages/collections-orm/src/QueryCollection.php" />
             </errorLevel>
         </UnsafeInstantiation>
