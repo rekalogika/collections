@@ -76,7 +76,6 @@ class RecollectionDecorator implements Recollection
         private ?int &$count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
-        private readonly ?bool $strict = null,
     ) {
         // handle collection
 
@@ -125,7 +124,6 @@ class RecollectionDecorator implements Recollection
         ?int &$count = null,
         ?int $softLimit = null,
         ?int $hardLimit = null,
-        ?bool $strict = null,
     ): static {
         $count = $count ?? $this->count;
 
@@ -138,7 +136,6 @@ class RecollectionDecorator implements Recollection
             count: $count,
             softLimit: $softLimit ?? $this->softLimit,
             hardLimit: $hardLimit ?? $this->hardLimit,
-            strict: $strict ?? $this->strict,
         );
     }
 
@@ -164,7 +161,6 @@ class RecollectionDecorator implements Recollection
             count: $count,
             softLimit: $this->softLimit,
             hardLimit: $this->hardLimit,
-            strict: $this->strict,
         );
     }
 

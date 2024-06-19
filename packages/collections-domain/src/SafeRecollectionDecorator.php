@@ -83,7 +83,6 @@ class SafeRecollectionDecorator implements SafeRecollection, \Countable
         private ?int &$count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
-        private readonly ?bool $strict = null,
     ) {
         // handle collection
 
@@ -132,7 +131,6 @@ class SafeRecollectionDecorator implements SafeRecollection, \Countable
         ?int &$count = null,
         ?int $softLimit = null,
         ?int $hardLimit = null,
-        ?bool $strict = null,
     ): static {
         $count = $count ?? $this->count;
 
@@ -145,7 +143,6 @@ class SafeRecollectionDecorator implements SafeRecollection, \Countable
             count: $count,
             softLimit: $softLimit ?? $this->softLimit,
             hardLimit: $hardLimit ?? $this->hardLimit,
-            strict: $strict ?? $this->strict,
         );
     }
 
@@ -171,7 +168,6 @@ class SafeRecollectionDecorator implements SafeRecollection, \Countable
             count: $count,
             softLimit: $this->softLimit,
             hardLimit: $this->hardLimit,
-            strict: $this->strict,
         );
     }
 

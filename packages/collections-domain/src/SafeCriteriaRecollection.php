@@ -73,7 +73,6 @@ class SafeCriteriaRecollection implements SafeReadableRecollection, \Countable
         private ?int &$count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
-        private readonly ?bool $strict = null,
     ) {
         // save collection
 
@@ -109,7 +108,6 @@ class SafeCriteriaRecollection implements SafeReadableRecollection, \Countable
         ?int &$count = null,
         ?int $softLimit = null,
         ?int $hardLimit = null,
-        ?bool $strict = null,
     ): static {
         $count = $count ?? $this->count;
 
@@ -122,7 +120,6 @@ class SafeCriteriaRecollection implements SafeReadableRecollection, \Countable
             count: $count,
             softLimit: $softLimit ?? $this->softLimit,
             hardLimit: $hardLimit ?? $this->hardLimit,
-            strict: $strict ?? $this->strict,
         );
     }
 

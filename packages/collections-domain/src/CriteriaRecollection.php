@@ -70,7 +70,6 @@ class CriteriaRecollection implements ReadableRecollection
         private ?int &$count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
-        private readonly ?bool $strict = null,
     ) {
         // save collection
 
@@ -106,7 +105,6 @@ class CriteriaRecollection implements ReadableRecollection
         ?int &$count = null,
         ?int $softLimit = null,
         ?int $hardLimit = null,
-        ?bool $strict = null,
     ): static {
         $count = $count ?? $this->count;
 
@@ -119,7 +117,6 @@ class CriteriaRecollection implements ReadableRecollection
             count: $count,
             softLimit: $softLimit ?? $this->softLimit,
             hardLimit: $hardLimit ?? $this->hardLimit,
-            strict: $strict ?? $this->strict,
         );
     }
 

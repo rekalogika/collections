@@ -34,12 +34,6 @@ final class Configuration
     public static int $defaultHardLimit = 2000;
 
     /**
-     * If true, the collection will always throw an exception if an unsafe
-     * method is called, ignoring the hard limit.
-     */
-    public static bool $defaultStrict = false;
-
-    /**
      * The default order by clause for the collection.
      *
      * @var array<string,Order>

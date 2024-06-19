@@ -61,7 +61,6 @@ class QueryCollection implements ReadableRecollection
         private ?int &$count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
-        private readonly ?bool $strict = null,
     ) {
     }
 
@@ -80,7 +79,6 @@ class QueryCollection implements ReadableRecollection
         ?int &$count = null,
         ?int $softLimit = null,
         ?int $hardLimit = null,
-        ?bool $strict = null,
     ): static {
         $count = $count ?? $this->count;
 
@@ -92,7 +90,6 @@ class QueryCollection implements ReadableRecollection
             count: $count,
             softLimit: $softLimit ?? $this->softLimit,
             hardLimit: $hardLimit ?? $this->hardLimit,
-            strict: $strict ?? $this->strict,
         );
     }
 }
