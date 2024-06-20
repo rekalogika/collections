@@ -104,7 +104,7 @@ class SafeCriteriaRecollection implements SafeReadableRecollection, \Countable
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      */
-    protected function createFrom(
+    protected function with(
         ?ReadableCollection $collection = null,
         ?Criteria $criteria = null,
         ?int $itemsPerPage = 50,

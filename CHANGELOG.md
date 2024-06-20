@@ -6,6 +6,7 @@
 * feat: add `getOrFail()`
 * feat: add `QueryPageable`
 * feat: repository interfaces
+* refactor: rename `createFrom()` to `with()`
 
 ## 0.3.0
 
