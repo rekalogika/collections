@@ -18,24 +18,24 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
-use Rekalogika\Contracts\Collections\SafeRecollection;
+use Rekalogika\Contracts\Collections\LargeRecollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
+use Rekalogika\Domain\Collections\Common\Trait\LargeReadableCollectionTrait;
+use Rekalogika\Domain\Collections\Common\Trait\LargeWritableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
-use Rekalogika\Domain\Collections\Common\Trait\SafeReadableCollectionTrait;
-use Rekalogika\Domain\Collections\Common\Trait\SafeWritableCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 
 /**
  * @template TKey of array-key
  * @template T
- * @implements SafeRecollection<TKey,T>
+ * @implements LargeRecollection<TKey,T>
  */
-class SafeRecollectionDecorator implements SafeRecollection, \Countable
+class LargeRecollectionDecorator implements LargeRecollection, \Countable
 {
     /** @use RecollectionTrait<TKey,T> */
     use RecollectionTrait;
@@ -46,11 +46,11 @@ class SafeRecollectionDecorator implements SafeRecollection, \Countable
     /** @use ItemsWithSafeguardTrait<TKey,T> */
     use ItemsWithSafeguardTrait;
 
-    /** @use SafeWritableCollectionTrait<TKey,T> */
-    use SafeWritableCollectionTrait;
+    /** @use LargeWritableCollectionTrait<TKey,T> */
+    use LargeWritableCollectionTrait;
 
-    /** @use SafeReadableCollectionTrait<TKey,T> */
-    use SafeReadableCollectionTrait;
+    /** @use LargeReadableCollectionTrait<TKey,T> */
+    use LargeReadableCollectionTrait;
 
     use CountableTrait;
 
@@ -152,19 +152,19 @@ class SafeRecollectionDecorator implements SafeRecollection, \Countable
 
     /**
      * @param null|int<0,max> $count
-     * @return SafeCriteriaRecollection<TKey,T>
+     * @return LargeCriteriaRecollection<TKey,T>
      */
     protected function withCriteria(
         Criteria $criteria,
         CountStrategy $countStrategy = CountStrategy::Restrict,
         ?int &$count = null,
-    ): SafeCriteriaRecollection {
+    ): LargeCriteriaRecollection {
         // if $criteria has no orderings, add the current ordering
         if (\count($criteria->orderings()) === 0) {
             $criteria = $criteria->orderBy($this->orderBy);
         }
 
-        return new SafeCriteriaRecollection(
+        return new LargeCriteriaRecollection(
             collection: $this->collection,
             criteria: $criteria,
             itemsPerPage: $this->itemsPerPage,

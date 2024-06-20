@@ -17,7 +17,7 @@ namespace Rekalogika\Domain\Collections\Common\Trait;
  * @template TKey of array-key
  * @template T
  */
-trait SafeReadableCollectionTrait
+trait LargeReadableCollectionTrait
 {
     /**
      * @template TMaybeContained

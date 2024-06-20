@@ -7,6 +7,7 @@
 * feat: add `QueryPageable`
 * feat: repository interfaces
 * refactor: rename `createFrom()` to `with()`
+* refactor: rename the term 'safe' to 'large'
 
 ## 0.3.0
 

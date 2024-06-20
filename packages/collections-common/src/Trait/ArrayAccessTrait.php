@@ -40,8 +40,6 @@ trait ArrayAccessTrait
     }
 
     /**
-     * Unsafe if $offset is set. Safe if unset.
-     *
      * @param TKey|null $offset
      * @param T $value
      */
@@ -52,8 +50,6 @@ trait ArrayAccessTrait
     }
 
     /**
-     * Unsafe
-     *
      * @param TKey $offset
      */
     final public function offsetUnset(mixed $offset): void

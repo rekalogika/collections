@@ -15,10 +15,14 @@ namespace Rekalogika\Contracts\Collections;
 
 /**
  * @template TKey of array-key
- * @template T of object
- * @extends SafeReadableRepository<TKey,T>
- * @extends SafeRecollection<TKey,T>
+ * @template-covariant T of object
+ * @extends LargeReadableRecollection<TKey,T>
  */
-interface SafeRepository extends SafeReadableRepository, SafeRecollection
+interface LargeReadableRepository extends LargeReadableRecollection
 {
+    /**
+     * @param TKey $key
+     * @return T
+     */
+    public function getReference(int|string $key): object;
 }
