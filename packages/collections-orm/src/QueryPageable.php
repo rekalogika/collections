@@ -13,44 +13,24 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\ORM;
 
-use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
-use Rekalogika\Contracts\Collections\ReadableRecollection;
+use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
-use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
-use Rekalogika\Domain\Collections\Common\Trait\IteratorAggregateTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
-use Rekalogika\Domain\Collections\Common\Trait\ReadableCollectionTrait;
-use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 
 /**
  * @template TKey of array-key
  * @template T
- * @implements ReadableRecollection<TKey,T>
+ * @implements PageableInterface<TKey,T>
  */
-class QueryCollection implements ReadableRecollection
+class QueryPageable implements PageableInterface
 {
     /** @use QueryBuilderTrait<TKey,T> */
     use QueryBuilderTrait;
 
-    /** @use ReadableCollectionTrait<TKey,T> */
-    use ReadableCollectionTrait;
-
-    use CountableTrait;
-
-    /** @use IteratorAggregateTrait<TKey,T> */
-    use IteratorAggregateTrait;
-
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;
-
-    /** @use ItemsWithSafeguardTrait<TKey,T> */
-    use ItemsWithSafeguardTrait;
-
-    /** @use ReadableRecollectionTrait<TKey,T> */
-    use ReadableRecollectionTrait;
 
     /**
      * @param int<1,max> $itemsPerPage

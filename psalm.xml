@@ -37,18 +37,11 @@
         <UnsafeInstantiation>
             <errorLevel type="suppress">
                 <file name="packages/collections-domain/src/RecollectionDecorator.php" />
-            </errorLevel>
-            <errorLevel type="suppress">
                 <file name="packages/collections-domain/src/CriteriaRecollection.php" />
-            </errorLevel>
-            <errorLevel type="suppress">
                 <file name="packages/collections-domain/src/SafeRecollectionDecorator.php" />
-            </errorLevel>
-            <errorLevel type="suppress">
                 <file name="packages/collections-domain/src/SafeCriteriaRecollection.php" />
-            </errorLevel>
-            <errorLevel type="suppress">
                 <file name="packages/collections-orm/src/QueryCollection.php" />
+                <file name="packages/collections-orm/src/QueryPageable.php" />
             </errorLevel>
         </UnsafeInstantiation>
         <MoreSpecificReturnType>
