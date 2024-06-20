@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
+use Rekalogika\Contracts\Collections\Exception\OverflowException;
 use Rekalogika\Domain\Collections\Common\Configuration;
-use Rekalogika\Domain\Collections\Common\Exception\OverflowException;
 
 /**
  * @template TKey of array-key
