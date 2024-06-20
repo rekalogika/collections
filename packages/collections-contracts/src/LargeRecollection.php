@@ -11,19 +11,17 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Domain\Collections\Common\Trait;
+namespace Rekalogika\Contracts\Collections;
 
 /**
  * @template TKey of array-key
  * @template T
+ * @extends LargeReadableRecollection<TKey,T>
  */
-trait SafeWritableCollectionTrait
+interface LargeRecollection extends LargeReadableRecollection
 {
     /**
      * @param T $element
      */
-    final public function add(mixed $element): void
-    {
-        $this->collection->add($element);
-    }
+    public function add(mixed $element): void;
 }

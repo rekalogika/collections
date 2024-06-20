@@ -19,22 +19,22 @@ use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
-use Rekalogika\Contracts\Collections\SafeReadableRecollection;
+use Rekalogika\Contracts\Collections\LargeReadableRecollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
+use Rekalogika\Domain\Collections\Common\Trait\LargeReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
-use Rekalogika\Domain\Collections\Common\Trait\SafeReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 
 /**
  * @template TKey of array-key
  * @template T
- * @implements SafeReadableRecollection<TKey,T>
+ * @implements LargeReadableRecollection<TKey,T>
  */
-class SafeCriteriaRecollection implements SafeReadableRecollection, \Countable
+class LargeCriteriaRecollection implements LargeReadableRecollection, \Countable
 {
     /** @use RecollectionTrait<TKey,T> */
     use RecollectionTrait;
@@ -45,8 +45,8 @@ class SafeCriteriaRecollection implements SafeReadableRecollection, \Countable
     /** @use ItemsWithSafeguardTrait<TKey,T> */
     use ItemsWithSafeguardTrait;
 
-    /** @use SafeReadableCollectionTrait<TKey,T> */
-    use SafeReadableCollectionTrait;
+    /** @use LargeReadableCollectionTrait<TKey,T> */
+    use LargeReadableCollectionTrait;
 
     use CountableTrait;
 

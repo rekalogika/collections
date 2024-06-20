@@ -15,13 +15,10 @@ namespace Rekalogika\Contracts\Collections;
 
 /**
  * @template TKey of array-key
- * @template T
- * @extends SafeReadableRecollection<TKey,T>
+ * @template T of object
+ * @extends LargeReadableRepository<TKey,T>
+ * @extends LargeRecollection<TKey,T>
  */
-interface SafeRecollection extends SafeReadableRecollection
+interface LargeRepository extends LargeReadableRepository, LargeRecollection
 {
-    /**
-     * @param T $element
-     */
-    public function add(mixed $element): void;
 }

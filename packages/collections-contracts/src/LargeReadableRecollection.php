@@ -21,7 +21,7 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
  * @template-covariant T
  * @extends PageableInterface<TKey,T>
  */
-interface SafeReadableRecollection extends PageableInterface
+interface LargeReadableRecollection extends PageableInterface
 {
     /**
      * @template TMaybeContained
