@@ -10,6 +10,8 @@
 * refactor: rename the term 'safe' to 'large'
 * refactor(`RecollectionDecorator`): rename `withCriteria` to `applyCriteria`
 * refactor: rename the term 'large' to 'basic'
+* cleanup: Basic classes do not require soft and hard limits
+* cleanup: orderBy should be non-empty-array
 
 ## 0.3.0
 

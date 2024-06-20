@@ -58,7 +58,7 @@ class RecollectionDecorator implements Recollection
     private readonly Collection&Selectable $collection;
 
     /**
-     * @var array<string,Order>
+     * @var non-empty-array<string,Order>
      */
     private readonly array $orderBy;
 
@@ -99,13 +99,17 @@ class RecollectionDecorator implements Recollection
             $orderBy = [$orderBy => Order::Ascending];
         }
 
+        if (empty($orderBy)) {
+            throw new UnexpectedValueException('The order by clause cannot be empty.');
+        }
+
         $this->orderBy = $orderBy;
 
         $this->criteria = Criteria::create()->orderBy($this->orderBy);
     }
 
     /**
-     * @return array<string,Order>|string
+     * @return non-empty-array<string,Order>|string
      */
     protected function getDefaultOrderBy(): array|string
     {
@@ -123,8 +127,8 @@ class RecollectionDecorator implements Recollection
     protected function with(
         ?Collection $collection = null,
         array|string|null $orderBy = null,
-        ?int $itemsPerPage = 50,
-        ?CountStrategy $countStrategy = CountStrategy::Restrict,
+        ?int $itemsPerPage = null,
+        ?CountStrategy $countStrategy = null,
         ?int &$count = null,
         ?int $softLimit = null,
         ?int $hardLimit = null,

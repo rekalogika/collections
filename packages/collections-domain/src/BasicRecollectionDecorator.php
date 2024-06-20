@@ -24,7 +24,6 @@ use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\BasicReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\BasicWritableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
-use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
@@ -42,9 +41,6 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
 
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;
-
-    /** @use ItemsWithSafeguardTrait<TKey,T> */
-    use ItemsWithSafeguardTrait;
 
     /** @use BasicWritableCollectionTrait<TKey,T> */
     use BasicWritableCollectionTrait;
@@ -65,7 +61,7 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
     private readonly Collection&Selectable $collection;
 
     /**
-     * @var array<string,Order>
+     * @var non-empty-array<string,Order>
      */
     private readonly array $orderBy;
 
@@ -73,11 +69,9 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
 
     /**
      * @param Collection<TKey,T> $collection
-     * @param null|array<string,Order>|string $orderBy
+     * @param null|non-empty-array<string,Order>|string $orderBy
      * @param int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
-     * @param null|int<1,max> $softLimit
-     * @param null|int<1,max> $hardLimit
      */
     public function __construct(
         Collection $collection,
@@ -85,8 +79,6 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
         private readonly int $itemsPerPage = 50,
         private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
         private ?int &$count = null,
-        private readonly ?int $softLimit = null,
-        private readonly ?int $hardLimit = null,
     ) {
         // handle collection
 
@@ -106,6 +98,10 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
             $orderBy = [$orderBy => Order::Ascending];
         }
 
+        if (empty($orderBy)) {
+            throw new UnexpectedValueException('The order by clause cannot be empty.');
+        }
+
         $this->orderBy = $orderBy;
 
         $this->criteria = Criteria::create()->orderBy($this->orderBy);
@@ -121,11 +117,9 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
 
     /**
      * @param null|Collection<TKey,T> $collection
-     * @param null|array<string,Order>|string $orderBy
+     * @param null|non-empty-array<string,Order>|string $orderBy
      * @param null|int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
-     * @param null|int<1,max> $softLimit
-     * @param null|int<1,max> $hardLimit
      */
     protected function with(
         ?Collection $collection = null,
@@ -133,8 +127,6 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
         ?int $itemsPerPage = 50,
         ?CountStrategy $countStrategy = CountStrategy::Restrict,
         ?int &$count = null,
-        ?int $softLimit = null,
-        ?int $hardLimit = null,
     ): static {
         $count = $count ?? $this->count;
 
@@ -145,8 +137,6 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
             itemsPerPage: $itemsPerPage ?? $this->itemsPerPage,
             countStrategy: $countStrategy ?? $this->countStrategy,
             count: $count,
-            softLimit: $softLimit ?? $this->softLimit,
-            hardLimit: $hardLimit ?? $this->hardLimit,
         );
     }
 
@@ -170,8 +160,6 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
             itemsPerPage: $this->itemsPerPage,
             countStrategy: $countStrategy,
             count: $count,
-            softLimit: $this->softLimit,
-            hardLimit: $this->hardLimit,
         );
     }
 
