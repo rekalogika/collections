@@ -17,14 +17,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
+use Rekalogika\Contracts\Collections\BasicRecollection;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
-use Rekalogika\Contracts\Collections\LargeRecollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Trait\BasicReadableCollectionTrait;
+use Rekalogika\Domain\Collections\Common\Trait\BasicWritableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
-use Rekalogika\Domain\Collections\Common\Trait\LargeReadableCollectionTrait;
-use Rekalogika\Domain\Collections\Common\Trait\LargeWritableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
@@ -33,9 +33,9 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 /**
  * @template TKey of array-key
  * @template T
- * @implements LargeRecollection<TKey,T>
+ * @implements BasicRecollection<TKey,T>
  */
-class LargeRecollectionDecorator implements LargeRecollection, \Countable
+class BasicRecollectionDecorator implements BasicRecollection, \Countable
 {
     /** @use RecollectionTrait<TKey,T> */
     use RecollectionTrait;
@@ -46,11 +46,11 @@ class LargeRecollectionDecorator implements LargeRecollection, \Countable
     /** @use ItemsWithSafeguardTrait<TKey,T> */
     use ItemsWithSafeguardTrait;
 
-    /** @use LargeWritableCollectionTrait<TKey,T> */
-    use LargeWritableCollectionTrait;
+    /** @use BasicWritableCollectionTrait<TKey,T> */
+    use BasicWritableCollectionTrait;
 
-    /** @use LargeReadableCollectionTrait<TKey,T> */
-    use LargeReadableCollectionTrait;
+    /** @use BasicReadableCollectionTrait<TKey,T> */
+    use BasicReadableCollectionTrait;
 
     use CountableTrait;
 
@@ -152,19 +152,19 @@ class LargeRecollectionDecorator implements LargeRecollection, \Countable
 
     /**
      * @param null|int<0,max> $count
-     * @return LargeCriteriaRecollection<TKey,T>
+     * @return BasicCriteriaRecollection<TKey,T>
      */
     protected function applyCriteria(
         Criteria $criteria,
         CountStrategy $countStrategy = CountStrategy::Restrict,
         ?int &$count = null,
-    ): LargeCriteriaRecollection {
+    ): BasicCriteriaRecollection {
         // if $criteria has no orderings, add the current ordering
         if (\count($criteria->orderings()) === 0) {
             $criteria = $criteria->orderBy($this->orderBy);
         }
 
-        return new LargeCriteriaRecollection(
+        return new BasicCriteriaRecollection(
             collection: $this->collection,
             criteria: $criteria,
             itemsPerPage: $this->itemsPerPage,

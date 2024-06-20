@@ -38,8 +38,8 @@
             <errorLevel type="suppress">
                 <file name="packages/collections-domain/src/RecollectionDecorator.php" />
                 <file name="packages/collections-domain/src/CriteriaRecollection.php" />
-                <file name="packages/collections-domain/src/LargeRecollectionDecorator.php" />
-                <file name="packages/collections-domain/src/LargeCriteriaRecollection.php" />
+                <file name="packages/collections-domain/src/BasicRecollectionDecorator.php" />
+                <file name="packages/collections-domain/src/BasicCriteriaRecollection.php" />
                 <file name="packages/collections-orm/src/QueryCollection.php" />
                 <file name="packages/collections-orm/src/QueryPageable.php" />
             </errorLevel>

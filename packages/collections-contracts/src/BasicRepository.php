@@ -16,9 +16,9 @@ namespace Rekalogika\Contracts\Collections;
 /**
  * @template TKey of array-key
  * @template T of object
- * @extends LargeReadableRepository<TKey,T>
- * @extends LargeRecollection<TKey,T>
+ * @extends BasicReadableRepository<TKey,T>
+ * @extends BasicRecollection<TKey,T>
  */
-interface LargeRepository extends LargeReadableRepository, LargeRecollection
+interface BasicRepository extends BasicReadableRepository, BasicRecollection
 {
 }
