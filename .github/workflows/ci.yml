@@ -27,7 +27,7 @@ jobs:
           - highest
           - lowest
 
-    name: ${{ matrix.dep }} deps, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
+    name: ${{ matrix.dep }} deps, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}, Doctrine ${{ matrix.doctrine }}
 
     steps:
     - uses: actions/checkout@v4
