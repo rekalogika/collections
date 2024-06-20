@@ -15,8 +15,17 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php: [ '8.2', '8.3' ]
-        dep: [highest,lowest]
+        php:
+          - '8.2'
+          - '8.3'
+        doctrine:
+          - '^2.19'
+          - '^2.20'
+          - '^3.0'
+          - '^3.2'
+        dep:
+          - highest
+          - lowest
 
     name: ${{ matrix.dep }} deps, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
 
@@ -47,6 +56,9 @@ jobs:
       with:
         dependency-versions: ${{ matrix.dep }}
         composer-options: --prefer-dist --no-progress --no-scripts
+
+    - name: Install Doctrine version
+      run: composer require doctrine/orm:${{ matrix.doctrine }}
 
     - name: Run psalm
       run: vendor/bin/psalm
