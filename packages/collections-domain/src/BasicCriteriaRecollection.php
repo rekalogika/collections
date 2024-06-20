@@ -18,12 +18,12 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\Common\Collections\Selectable;
+use Rekalogika\Contracts\Collections\BasicReadableRecollection;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
-use Rekalogika\Contracts\Collections\LargeReadableRecollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Trait\BasicReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
-use Rekalogika\Domain\Collections\Common\Trait\LargeReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
@@ -32,9 +32,9 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 /**
  * @template TKey of array-key
  * @template T
- * @implements LargeReadableRecollection<TKey,T>
+ * @implements BasicReadableRecollection<TKey,T>
  */
-class LargeCriteriaRecollection implements LargeReadableRecollection, \Countable
+class BasicCriteriaRecollection implements BasicReadableRecollection, \Countable
 {
     /** @use RecollectionTrait<TKey,T> */
     use RecollectionTrait;
@@ -45,8 +45,8 @@ class LargeCriteriaRecollection implements LargeReadableRecollection, \Countable
     /** @use ItemsWithSafeguardTrait<TKey,T> */
     use ItemsWithSafeguardTrait;
 
-    /** @use LargeReadableCollectionTrait<TKey,T> */
-    use LargeReadableCollectionTrait;
+    /** @use BasicReadableCollectionTrait<TKey,T> */
+    use BasicReadableCollectionTrait;
 
     use CountableTrait;
 

@@ -50,7 +50,7 @@ trait QueryBuilderTrait
             CountStrategy::Delegate => true,
             CountStrategy::Provided => $this->count,
         }
-            ?? 0;
+        ?? 0;
 
         // @phpstan-ignore-next-line
         $this->pageable = new KeysetPageable(

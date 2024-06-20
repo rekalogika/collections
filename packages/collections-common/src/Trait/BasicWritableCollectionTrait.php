@@ -11,18 +11,19 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Contracts\Collections;
+namespace Rekalogika\Domain\Collections\Common\Trait;
 
 /**
  * @template TKey of array-key
- * @template-covariant T of object
- * @extends LargeReadableRecollection<TKey,T>
+ * @template T
  */
-interface LargeReadableRepository extends LargeReadableRecollection
+trait BasicWritableCollectionTrait
 {
     /**
-     * @param TKey $key
-     * @return T
+     * @param T $element
      */
-    public function getReference(int|string $key): object;
+    final public function add(mixed $element): void
+    {
+        $this->collection->add($element);
+    }
 }
