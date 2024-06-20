@@ -10,6 +10,7 @@
 * refactor: rename the term 'safe' to 'large'
 * refactor(`RecollectionDecorator`): rename `withCriteria` to `applyCriteria`
 * refactor: rename the term 'large' to 'basic'
+* refactor: rename query classes
 
 ## 0.3.0
 

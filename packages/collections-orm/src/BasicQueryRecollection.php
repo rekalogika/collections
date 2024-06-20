@@ -24,7 +24,7 @@ use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
  * @template T
  * @implements PageableInterface<TKey,T>
  */
-class QueryPageable implements PageableInterface
+class BasicQueryRecollection implements PageableInterface
 {
     /** @use QueryBuilderTrait<TKey,T> */
     use QueryBuilderTrait;

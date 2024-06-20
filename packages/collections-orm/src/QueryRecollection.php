@@ -29,7 +29,7 @@ use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
  * @template T
  * @implements ReadableRecollection<TKey,T>
  */
-class QueryCollection implements ReadableRecollection
+class QueryRecollection implements ReadableRecollection
 {
     /** @use QueryBuilderTrait<TKey,T> */
     use QueryBuilderTrait;
