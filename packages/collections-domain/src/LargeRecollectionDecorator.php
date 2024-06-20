@@ -154,7 +154,7 @@ class LargeRecollectionDecorator implements LargeRecollection, \Countable
      * @param null|int<0,max> $count
      * @return LargeCriteriaRecollection<TKey,T>
      */
-    protected function withCriteria(
+    protected function applyCriteria(
         Criteria $criteria,
         CountStrategy $countStrategy = CountStrategy::Restrict,
         ?int &$count = null,
