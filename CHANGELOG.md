@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.1
+## 0.4.0
 
 * refactor: reorganize exceptions
 * feat: add `getOrFail()`
@@ -8,6 +8,7 @@
 * feat: repository interfaces
 * refactor: rename `createFrom()` to `with()`
 * refactor: rename the term 'safe' to 'large'
+* refactor(`RecollectionDecorator`): rename `withCriteria` to `applyCriteria`
 
 ## 0.3.0
 
