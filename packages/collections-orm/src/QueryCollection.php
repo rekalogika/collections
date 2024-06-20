@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\ORM;
 
-use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
