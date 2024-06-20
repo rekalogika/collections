@@ -23,7 +23,6 @@ use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\BasicReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
-use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
@@ -41,9 +40,6 @@ class BasicCriteriaRecollection implements BasicReadableRecollection, \Countable
 
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;
-
-    /** @use ItemsWithSafeguardTrait<TKey,T> */
-    use ItemsWithSafeguardTrait;
 
     /** @use BasicReadableCollectionTrait<TKey,T> */
     use BasicReadableCollectionTrait;
@@ -66,8 +62,6 @@ class BasicCriteriaRecollection implements BasicReadableRecollection, \Countable
      * @param ReadableCollection<TKey,T> $collection
      * @param int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
-     * @param null|int<1,max> $softLimit
-     * @param null|int<1,max> $hardLimit
      */
     public function __construct(
         ReadableCollection $collection,
@@ -75,8 +69,6 @@ class BasicCriteriaRecollection implements BasicReadableRecollection, \Countable
         private readonly int $itemsPerPage = 50,
         private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
         private ?int &$count = null,
-        private readonly ?int $softLimit = null,
-        private readonly ?int $hardLimit = null,
     ) {
         // save collection
 
@@ -101,17 +93,13 @@ class BasicCriteriaRecollection implements BasicReadableRecollection, \Countable
      * @param null|Collection<TKey,T> $collection
      * @param null|int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
-     * @param null|int<1,max> $softLimit
-     * @param null|int<1,max> $hardLimit
      */
     protected function with(
         ?ReadableCollection $collection = null,
         ?Criteria $criteria = null,
         ?int $itemsPerPage = 50,
-        ?CountStrategy $countStrategy = CountStrategy::Restrict,
+        ?CountStrategy $countStrategy = null,
         ?int &$count = null,
-        ?int $softLimit = null,
-        ?int $hardLimit = null,
     ): static {
         $count = $count ?? $this->count;
 
@@ -122,8 +110,6 @@ class BasicCriteriaRecollection implements BasicReadableRecollection, \Countable
             itemsPerPage: $itemsPerPage ?? $this->itemsPerPage,
             countStrategy: $countStrategy ?? $this->countStrategy,
             count: $count,
-            softLimit: $softLimit ?? $this->softLimit,
-            hardLimit: $hardLimit ?? $this->hardLimit,
         );
     }
 

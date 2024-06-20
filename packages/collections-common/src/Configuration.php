@@ -36,7 +36,7 @@ final class Configuration
     /**
      * The default order by clause for the collection.
      *
-     * @var array<string,Order>
+     * @var non-empty-array<string,Order>
      */
     public static array $defaultOrderBy = ['id' => Order::Descending];
 }
