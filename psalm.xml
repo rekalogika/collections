@@ -42,6 +42,7 @@
                 <file name="packages/collections-domain/src/BasicCriteriaRecollection.php" />
                 <file name="packages/collections-orm/src/QueryCollection.php" />
                 <file name="packages/collections-orm/src/QueryPageable.php" />
+                <file name="packages/collections-orm/src/AbstractBasicRepository.php" />
             </errorLevel>
         </UnsafeInstantiation>
         <MoreSpecificReturnType>
