@@ -74,7 +74,7 @@ trait PageableTrait
      */
     final public function withItemsPerPage(int $itemsPerPage): static
     {
-        return $this->createFrom(itemsPerPage: $itemsPerPage);
+        return $this->with(itemsPerPage: $itemsPerPage);
     }
 
     /**

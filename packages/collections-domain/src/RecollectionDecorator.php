@@ -120,7 +120,7 @@ class RecollectionDecorator implements Recollection
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      */
-    protected function createFrom(
+    protected function with(
         ?Collection $collection = null,
         array|string|null $orderBy = null,
         ?int $itemsPerPage = 50,

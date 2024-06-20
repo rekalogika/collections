@@ -73,7 +73,7 @@ class QueryCollection implements ReadableRecollection
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      */
-    protected function createFrom(
+    protected function with(
         ?QueryBuilder $queryBuilder = null,
         ?int $itemsPerPage = 50,
         ?CountStrategy $countStrategy = CountStrategy::Restrict,
