@@ -21,4 +21,8 @@ namespace Rekalogika\Contracts\Collections;
  */
 interface BasicRepository extends BasicReadableRepository, BasicRecollection
 {
+    /**
+     * @param T $element
+     */
+    public function remove(mixed $element): void;
 }
