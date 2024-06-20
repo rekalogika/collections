@@ -40,8 +40,8 @@
                 <file name="packages/collections-domain/src/CriteriaRecollection.php" />
                 <file name="packages/collections-domain/src/BasicRecollectionDecorator.php" />
                 <file name="packages/collections-domain/src/BasicCriteriaRecollection.php" />
-                <file name="packages/collections-orm/src/QueryCollection.php" />
-                <file name="packages/collections-orm/src/QueryPageable.php" />
+                <file name="packages/collections-orm/src/QueryRecollection.php" />
+                <file name="packages/collections-orm/src/BasicQueryRecollection.php" />
             </errorLevel>
         </UnsafeInstantiation>
         <MoreSpecificReturnType>
