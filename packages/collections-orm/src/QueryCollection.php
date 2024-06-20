@@ -23,6 +23,7 @@ use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\IteratorAggregateTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableCollectionTrait;
+use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 
 /**
  * @template TKey of array-key
@@ -47,6 +48,9 @@ class QueryCollection implements ReadableRecollection
 
     /** @use ItemsWithSafeguardTrait<TKey,T> */
     use ItemsWithSafeguardTrait;
+
+    /** @use ReadableRecollectionTrait<TKey,T> */
+    use ReadableRecollectionTrait;
 
     /**
      * @param int<1,max> $itemsPerPage

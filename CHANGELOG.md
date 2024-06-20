@@ -3,6 +3,7 @@
 ## 0.3.1
 
 * refactor: reorganize exceptions
+* feat: add `getOrFail()`
 
 ## 0.3.0
 

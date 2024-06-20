@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Collections;
 
+use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 
 /**
@@ -39,4 +40,11 @@ interface SafeReadableRecollection extends PageableInterface
      * @return T|null
      */
     public function get(string|int $key): mixed;
+
+    /**
+     * @param TKey $key
+     * @return T
+     * @throws NotFoundException
+     */
+    public function getOrFail(string|int $key): mixed;
 }

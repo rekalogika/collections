@@ -14,15 +14,14 @@ declare(strict_types=1);
 namespace Rekalogika\Contracts\Collections;
 
 use Doctrine\Common\Collections\Collection;
-use Rekalogika\Contracts\Rekapager\PageableInterface;
 
 /**
  * @template TKey of array-key
  * @template T
- * @extends PageableInterface<TKey,T>
  * @extends Collection<TKey,T>
+ * @extends ReadableRecollection<TKey,T>
  */
-interface Recollection extends PageableInterface, Collection
+interface Recollection extends Collection, ReadableRecollection
 {
     public function refreshCount(): void;
 }

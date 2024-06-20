@@ -23,6 +23,7 @@ use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
+use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
 use Rekalogika\Domain\Collections\Trait\ReadableExtraLazyTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
@@ -47,6 +48,9 @@ class CriteriaRecollection implements ReadableRecollection
     use ReadableExtraLazyTrait;
 
     use ExtraLazyDetectorTrait;
+
+    /** @use ReadableRecollectionTrait<TKey,T> */
+    use ReadableRecollectionTrait;
 
     /**
      * @var ReadableCollection<TKey,T>&Selectable<TKey,T>

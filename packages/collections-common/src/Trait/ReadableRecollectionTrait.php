@@ -11,26 +11,29 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Contracts\Collections;
+namespace Rekalogika\Domain\Collections\Common\Trait;
 
-use Doctrine\Common\Collections\ReadableCollection;
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
-use Rekalogika\Contracts\Rekapager\PageableInterface;
 
 /**
  * @template TKey of array-key
- * @template-covariant T
- * @extends PageableInterface<TKey,T>
- * @extends ReadableCollection<TKey,T>
+ * @template T
  */
-interface ReadableRecollection extends PageableInterface, ReadableCollection
+trait ReadableRecollectionTrait
 {
     /**
      * @param TKey $key
      * @return T
      * @throws NotFoundException
      */
-    public function getOrFail(string|int $key): mixed;
+    final public function getOrFail(string|int $key): mixed
+    {
+        $result = $this->get($key);
 
-    public function refreshCount(): void;
+        if ($result === null) {
+            throw new NotFoundException();
+        }
+
+        return $result;
+    }
 }
