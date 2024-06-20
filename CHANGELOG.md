@@ -4,6 +4,7 @@
 
 * refactor: reorganize exceptions
 * feat: add `getOrFail()`
+* feat: add `QueryPageable`
 
 ## 0.3.0
 
