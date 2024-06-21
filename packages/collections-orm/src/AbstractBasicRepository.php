@@ -173,4 +173,17 @@ abstract class AbstractBasicRepository implements BasicRepository
 
         return true;
     }
+
+    public function remove(string|int $key): mixed
+    {
+        $element = $this->get($key);
+
+        if ($element === null) {
+            return null;
+        }
+
+        $this->getEntityManager()->remove($element);
+
+        return $element;
+    }
 }
