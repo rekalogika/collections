@@ -16,6 +16,7 @@
 * refactor: consolidate repeated orderBy logic to `OrderByUtil`
 * refactor: use `configure()` method for subclasses to configure the repository
 * test: rearrange test directories
+* feat: add 404 status code to `NotFoundException`
 
 ## 0.3.0
 
