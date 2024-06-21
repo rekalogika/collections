@@ -18,6 +18,7 @@
 * test: rearrange test directories
 * feat: add 404 status code to `NotFoundException`
 * test: add skeleton tests using Symfony framework
+* fix(`BasicRepository`): `remove()` should be `removeElement()`
 
 ## 0.3.0
 
