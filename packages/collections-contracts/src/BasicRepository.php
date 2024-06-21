@@ -22,6 +22,12 @@ namespace Rekalogika\Contracts\Collections;
 interface BasicRepository extends BasicReadableRepository, BasicRecollection
 {
     /**
+     * @param TKey $key
+     * @return T|null
+     */
+    public function remove(string|int $key): mixed;
+
+    /**
      * @param T $element
      */
     public function removeElement(mixed $element): bool;
