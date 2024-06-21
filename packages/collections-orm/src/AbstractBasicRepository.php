@@ -69,7 +69,7 @@ abstract class AbstractBasicRepository implements BasicRepository
     }
 
     /**
-     * @param null|array<string,Order>|string $orderBy
+     * @param null|non-empty-array<string,Order>|string $orderBy
      * @param int<1,max> $itemsPerPage
      */
     protected function with(

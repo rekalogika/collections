@@ -110,7 +110,7 @@ class RecollectionDecorator implements Recollection
 
     /**
      * @param null|Collection<TKey,T> $collection
-     * @param null|array<string,Order>|string $orderBy
+     * @param null|non-empty-array<string,Order>|string $orderBy
      * @param null|int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
      * @param null|int<1,max> $softLimit
