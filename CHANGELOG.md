@@ -21,6 +21,7 @@
 * fix(`BasicRepository`): `remove()` should be `removeElement()`
 * feat(`BasicRepository`): add `remove()` method
 * test: add basic repository test
+* refactor(`AbstractBasicRepository`): change configuration method
 
 ## 0.3.0
 

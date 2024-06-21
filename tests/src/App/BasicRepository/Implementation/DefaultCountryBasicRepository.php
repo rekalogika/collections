@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\App\BasicRepository\Implementation;
 
+use Doctrine\Common\Collections\Order;
 use Rekalogika\Collections\ORM\AbstractBasicRepository;
+use Rekalogika\Collections\ORM\Configuration\BasicRepositoryConfiguration;
 use Rekalogika\Collections\Tests\App\Entity\Country;
 use Rekalogika\Collections\Tests\App\BasicRepository\CountryBasicRepository;
 
@@ -22,8 +24,12 @@ use Rekalogika\Collections\Tests\App\BasicRepository\CountryBasicRepository;
  */
 class DefaultCountryBasicRepository extends AbstractBasicRepository implements CountryBasicRepository
 {
-    protected function getClass(): string
+    protected function configure(): BasicRepositoryConfiguration
     {
-        return Country::class;
+        return new BasicRepositoryConfiguration(
+            class: Country::class,
+            indexBy: 'id',
+            orderBy: ['id' => Order::Ascending]
+        );
     }
 }

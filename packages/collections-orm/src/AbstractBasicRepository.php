@@ -42,67 +42,60 @@ abstract class AbstractBasicRepository implements BasicRepository
      */
     use PageableTrait;
 
-    private QueryBuilder $queryBuilder;
-
     private ?int $count = 0;
-
-    /**
-     * @var non-empty-array<string,Order>
-     */
-    private array $orderBy;
 
     /**
      * @var int<1,max>
      */
-    private int $itemsPerPage = 50;
+    private int $itemsPerPage;
 
-    private CountStrategy $countStrategy = CountStrategy::Restrict;
+    private CountStrategy $countStrategy;
+    private QueryBuilder $queryBuilder;
+
+    /**
+     * @var class-string<T>
+     */
+    private string $class;
 
     final public function __construct(
         private EntityManagerInterface $entityManager,
     ) {
-        $configuration = new BasicRepositoryConfiguration();
-        $this->configure($configuration);
-
-        // set configuration
-
-        $this->orderBy = OrderByUtil::normalizeOrderBy($configuration->getOrderBy());
+        $configuration = $this->configure();
+        $this->class = $configuration->getClass();
         $this->itemsPerPage = $configuration->getItemsPerPage();
         $this->countStrategy = $configuration->getCountStrategy();
 
         // set query builder
+        $criteria = Criteria::create()->orderBy($configuration->getOrderBy());
+        $this->queryBuilder = $this
+            ->createQueryBuilder('e', 'e.' . $configuration->getIndexBy())
+            ->addCriteria($criteria);
+    }
 
-        $criteria = Criteria::create()->orderBy($this->orderBy);
-        $this->queryBuilder = $this->createQueryBuilder('e')->addCriteria($criteria);
+    /**
+     * @return BasicRepositoryConfiguration<T>
+     */
+    abstract protected function configure(): BasicRepositoryConfiguration;
+
+    /**
+     * @param int<1,max> $itemsPerPage
+     */
+    protected function with(
+        ?int $itemsPerPage = null,
+    ): static {
+        $clone = clone $this;
+        $clone->itemsPerPage = $itemsPerPage ?? $this->itemsPerPage;
+
+        return $clone;
     }
 
     /**
      * @return class-string<T>
      */
-    abstract protected function getClass(): string;
-
-    protected function configure(BasicRepositoryConfiguration $configuration): void
+    private function getClass(): string
     {
-        // override this method to configure the repository
-    }
-
-    /**
-     * @param null|non-empty-array<string,Order>|string $orderBy
-     * @param int<1,max> $itemsPerPage
-     */
-    protected function with(
-        null|EntityManagerInterface $entityManager = null,
-        array|string|null $orderBy = null,
-        ?int $itemsPerPage = null,
-        ?CountStrategy $countStrategy = null,
-    ): static {
-        $clone = clone $this;
-        $clone->entityManager = $entityManager ?? $this->entityManager;
-        $clone->orderBy = OrderByUtil::normalizeOrderBy($orderBy ?? $this->orderBy);
-        $clone->itemsPerPage = $itemsPerPage ?? $this->itemsPerPage;
-        $clone->countStrategy = $countStrategy ?? $this->countStrategy;
-
-        return $clone;
+        /** @var class-string<T> */
+        return $this->class;
     }
 
     //

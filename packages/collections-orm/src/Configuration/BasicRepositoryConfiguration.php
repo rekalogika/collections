@@ -14,38 +14,77 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\ORM\Configuration;
 
 use Doctrine\Common\Collections\Order;
+use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 
-class BasicRepositoryConfiguration
+/**
+ * @template T of object
+ */
+final readonly class BasicRepositoryConfiguration
 {
     /**
-     * @var non-empty-array<string,Order>|string|null
+     * @var non-empty-array<string,Order>
      */
-    private array|string|null $orderBy = null;
+    private array $orderBy;
 
     /**
-     * @var int<1,max>
+     * @param class-string<T> $class
+     * @param null|non-empty-array<string,Order>|string $orderBy
+     * @param int<1,max> $itemsPerPage
      */
-    private int $itemsPerPage = 50;
+    public function __construct(
+        private string $class,
+        private string $indexBy = 'id',
+        array|string|null $orderBy = null,
+        private int $itemsPerPage = 50,
+        private CountStrategy $countStrategy = CountStrategy::Restrict,
+    ) {
+        $this->orderBy = OrderByUtil::normalizeOrderBy($orderBy);
 
-    private CountStrategy $countStrategy = CountStrategy::Restrict;
-
-    /**
-     * @return non-empty-array<string,Order>|string|null
-     */
-    public function getOrderBy(): null|array|string
-    {
-        return $this->orderBy;
+        if ($countStrategy === CountStrategy::Provided) {
+            throw new InvalidArgumentException('CountStrategy::Provided is not supported in repositories');
+        }
     }
 
     /**
-     * @param non-empty-array<string,Order>|string $orderBy
+     * @param null|non-empty-array<string,Order>|string $orderBy
+     * @param null|int<1,max> $itemsPerPage
      */
-    public function setOrderBy($orderBy): self
-    {
-        $this->orderBy = $orderBy;
+    public function with(
+        ?string $indexBy = null,
+        array|string|null $orderBy = null,
+        ?int $itemsPerPage = null,
+        ?CountStrategy $countStrategy = null,
+    ): static {
+        return new static(
+            $this->class,
+            $indexBy ?? $this->indexBy,
+            $orderBy ?? $this->orderBy,
+            $itemsPerPage ?? $this->itemsPerPage,
+            $countStrategy ?? $this->countStrategy,
+        );
+    }
 
-        return $this;
+    public function getIndexBy(): string
+    {
+        return $this->indexBy;
+    }
+
+    /**
+     * @return class-string<T>
+     */
+    public function getClass(): string
+    {
+        return $this->class;
+    }
+
+    /**
+     * @return non-empty-array<string,Order>
+     */
+    public function getOrderBy(): array
+    {
+        return $this->orderBy;
     }
 
     /**
@@ -56,25 +95,8 @@ class BasicRepositoryConfiguration
         return $this->itemsPerPage;
     }
 
-    /**
-     * @param int<1,max> $itemsPerPage
-     */
-    public function setItemsPerPage(int $itemsPerPage): self
-    {
-        $this->itemsPerPage = $itemsPerPage;
-
-        return $this;
-    }
-
     public function getCountStrategy(): CountStrategy
     {
         return $this->countStrategy;
-    }
-
-    public function setCountStrategy(CountStrategy $countStrategy): self
-    {
-        $this->countStrategy = $countStrategy;
-
-        return $this;
     }
 }
