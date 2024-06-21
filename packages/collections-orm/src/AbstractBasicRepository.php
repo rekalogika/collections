@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Rekalogika\Collections\ORM\Configuration\BasicRepositoryConfiguration;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
 use Rekalogika\Contracts\Collections\BasicRepository;
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
@@ -48,24 +49,41 @@ abstract class AbstractBasicRepository implements BasicRepository
     /**
      * @var non-empty-array<string,Order>
      */
-    private readonly array $orderBy;
+    private array $orderBy;
 
     /**
-     * @param null|non-empty-array<string,Order>|string $orderBy
-     * @param int<1,max> $itemsPerPage
+     * @var int<1,max>
      */
-    public function __construct(
-        private EntityManagerInterface $entityManager,
-        array|string|null $orderBy = null,
-        private readonly int $itemsPerPage = 50,
-        private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
-    ) {
-        // handle orderBy
+    private int $itemsPerPage = 50;
 
-        $this->orderBy = OrderByUtil::normalizeOrderBy($orderBy);
+    private CountStrategy $countStrategy = CountStrategy::Restrict;
+
+    final public function __construct(
+        private EntityManagerInterface $entityManager,
+    ) {
+        $configuration = new BasicRepositoryConfiguration();
+        $this->configure($configuration);
+
+        // set configuration
+
+        $this->orderBy = OrderByUtil::normalizeOrderBy($configuration->getOrderBy());
+        $this->itemsPerPage = $configuration->getItemsPerPage();
+        $this->countStrategy = $configuration->getCountStrategy();
+
+        // set query builder
 
         $criteria = Criteria::create()->orderBy($this->orderBy);
         $this->queryBuilder = $this->createQueryBuilder('e')->addCriteria($criteria);
+    }
+
+    /**
+     * @return class-string<T>
+     */
+    abstract protected function getClass(): string;
+
+    protected function configure(BasicRepositoryConfiguration $configuration): void
+    {
+        // override this method to configure the repository
     }
 
     /**
@@ -78,27 +96,14 @@ abstract class AbstractBasicRepository implements BasicRepository
         ?int $itemsPerPage = null,
         ?CountStrategy $countStrategy = null,
     ): static {
-        // @phpstan-ignore-next-line
-        return new static(
-            entityManager: $entityManager ?? $this->entityManager,
-            orderBy: $orderBy ?? $this->orderBy,
-            itemsPerPage: $itemsPerPage ?? $this->itemsPerPage,
-            countStrategy: $countStrategy ?? $this->countStrategy,
-        );
+        $clone = clone $this;
+        $clone->entityManager = $entityManager ?? $this->entityManager;
+        $clone->orderBy = OrderByUtil::normalizeOrderBy($orderBy ?? $this->orderBy);
+        $clone->itemsPerPage = $itemsPerPage ?? $this->itemsPerPage;
+        $clone->countStrategy = $countStrategy ?? $this->countStrategy;
+
+        return $clone;
     }
-
-    //
-    // mandatory
-    //
-
-    /**
-     * @return class-string<T>
-     */
-    abstract protected function getClass(): string;
-
-    //
-    // misc
-    //
 
     //
     // accessors for subclasses
