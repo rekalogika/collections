@@ -17,6 +17,7 @@
 * refactor: use `configure()` method for subclasses to configure the repository
 * test: rearrange test directories
 * feat: add 404 status code to `NotFoundException`
+* test: add skeleton tests using Symfony framework
 
 ## 0.3.0
 

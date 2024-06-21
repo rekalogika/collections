@@ -12,6 +12,7 @@ parameters:
         - tests
     excludePaths:
         - tests/doctrine/*
+        - tests/var/*
     ignoreErrors:
 
 includes:
