@@ -2,7 +2,9 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__ . '/packages')
-    ->in(__DIR__ . '/tests')
+    ->in(__DIR__ . '/tests/bin')
+    ->in(__DIR__ . '/tests/config')
+    ->in(__DIR__ . '/tests/src')
 ;
 
 $config = new PhpCsFixer\Config();

@@ -42,12 +42,25 @@
         "symfony/var-dumper": "^6.4 || ^7.1",
         "symplify/monorepo-builder": "^11.2.20 || ^11.3",
         "vimeo/psalm": "^5.15",
-        "symfony/http-kernel": "^6.4 || ^7.1"
+        "symfony/http-kernel": "^6.4 || ^7.1",
+        "symfony/framework-bundle": "^6.4 || ^7.1",
+        "doctrine/doctrine-bundle": "^2.11",
+        "symfony/runtime": "^6.4 || ^7.1",
+        "symfony/uid": "^6.4 || ^7.1",
+        "zenstruck/foundry": "^2.0",
+        "symfony/maker-bundle": "^1.60",
+        "doctrine/doctrine-fixtures-bundle": "^3.6",
+        "symfony/yaml": "^6.4 || ^7.1"
     },
     "replace": {
         "rekalogika/collections-common": "0.3.0",
         "rekalogika/collections-contracts": "0.3.0",
         "rekalogika/collections-domain": "0.3.0",
         "rekalogika/collections-orm": "0.3.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/runtime": true
+        }
     }
 }
