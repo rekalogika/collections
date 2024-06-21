@@ -14,6 +14,7 @@
 * cleanup: orderBy should be non-empty-array
 * feat: initial version of basic repository
 * refactor: consolidate repeated orderBy logic to `OrderByUtil`
+* refactor: use `configure()` method for subclasses to configure the repository
 
 ## 0.3.0
 
