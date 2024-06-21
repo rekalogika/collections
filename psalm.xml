@@ -55,6 +55,11 @@
                 <file name="packages/collections-domain/src/CriteriaRecollection.php" />
             </errorLevel>
         </LessSpecificReturnStatement>
+        <TypeDoesNotContainType>
+            <errorLevel type="suppress">
+                <file name="packages/collections-common/src/Internal/OrderByUtil.php" />
+            </errorLevel>
+        </TypeDoesNotContainType>
     </issueHandlers>
 
     <plugins>

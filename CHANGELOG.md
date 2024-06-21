@@ -13,6 +13,7 @@
 * cleanup: Basic classes do not require soft and hard limits
 * cleanup: orderBy should be non-empty-array
 * feat: initial version of basic repository
+* refactor: consolidate repeated orderBy logic to `OrderByUtil`
 
 ## 0.3.0
 

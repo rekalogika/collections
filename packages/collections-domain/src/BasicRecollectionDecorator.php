@@ -21,6 +21,7 @@ use Rekalogika\Contracts\Collections\BasicRecollection;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\Trait\BasicReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\BasicWritableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
@@ -90,25 +91,16 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
 
         // handle orderBy
 
-        if ($orderBy === null) {
-            $orderBy = $this->getDefaultOrderBy();
-        }
-
-        if (\is_string($orderBy)) {
-            $orderBy = [$orderBy => Order::Ascending];
-        }
-
-        if (empty($orderBy)) {
-            throw new UnexpectedValueException('The order by clause cannot be empty.');
-        }
-
-        $this->orderBy = $orderBy;
+        $this->orderBy = OrderByUtil::normalizeOrderBy(
+            orderBy: $orderBy,
+            defaultOrderBy: $this->getDefaultOrderBy()
+        );
 
         $this->criteria = Criteria::create()->orderBy($this->orderBy);
     }
 
     /**
-     * @return array<string,Order>|string
+     * @return non-empty-array<string,Order>|string
      */
     protected function getDefaultOrderBy(): array|string
     {
