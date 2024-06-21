@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\App\BasicRepository\Implementation;
 
+use Doctrine\Common\Collections\Order;
 use Rekalogika\Collections\ORM\AbstractBasicRepository;
+use Rekalogika\Collections\ORM\Configuration\BasicRepositoryConfiguration;
 use Rekalogika\Collections\Tests\App\BasicRepository\CitizenBasicRepository;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 
@@ -22,8 +24,12 @@ use Rekalogika\Collections\Tests\App\Entity\Citizen;
  */
 class DefaultCitizenBasicRepository extends AbstractBasicRepository implements CitizenBasicRepository
 {
-    protected function getClass(): string
+    protected function configure(): BasicRepositoryConfiguration
     {
-        return Citizen::class;
+        return new BasicRepositoryConfiguration(
+            class: Citizen::class,
+            indexBy: 'id',
+            orderBy: ['id' => Order::Ascending]
+        );
     }
 }
