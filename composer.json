@@ -19,8 +19,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Doctrine\\Tests\\Common\\Collections\\": "tests/DoctrineCollections/",
-            "Rekalogika\\Collections\\Tests\\": "tests/Collections/"
+            "Doctrine\\Tests\\Common\\Collections\\": "tests/doctrine/",
+            "Rekalogika\\Collections\\Tests\\": "tests/src/"
         }
     },
     "require": {
