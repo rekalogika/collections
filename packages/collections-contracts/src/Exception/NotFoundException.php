@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Collections\Exception;
 
+use Symfony\Component\HttpKernel\Attribute\WithHttpStatus;
+
+#[WithHttpStatus(404)]
 class NotFoundException extends RuntimeException
 {
     public function __construct(
