@@ -20,9 +20,8 @@ use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
 use Rekalogika\Contracts\Collections\BasicRepository;
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
-use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
-use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 
 /**
@@ -52,7 +51,7 @@ abstract class AbstractBasicRepository implements BasicRepository
     private readonly array $orderBy;
 
     /**
-     * @param null|array<string,Order>|string $orderBy
+     * @param null|non-empty-array<string,Order>|string $orderBy
      * @param int<1,max> $itemsPerPage
      */
     public function __construct(
@@ -63,21 +62,9 @@ abstract class AbstractBasicRepository implements BasicRepository
     ) {
         // handle orderBy
 
-        if ($orderBy === null) {
-            $orderBy = Configuration::$defaultOrderBy;
-        }
+        $this->orderBy = OrderByUtil::normalizeOrderBy($orderBy);
 
-        if (\is_string($orderBy)) {
-            $orderBy = [$orderBy => Order::Ascending];
-        }
-
-        if (empty($orderBy)) {
-            throw new UnexpectedValueException('The order by clause cannot be empty.');
-        }
-
-        $this->orderBy = $orderBy;
-
-        $criteria = Criteria::create()->orderBy($orderBy);
+        $criteria = Criteria::create()->orderBy($this->orderBy);
         $this->queryBuilder = $this->createQueryBuilder('e')->addCriteria($criteria);
     }
 

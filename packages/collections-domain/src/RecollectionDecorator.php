@@ -21,6 +21,7 @@ use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\Recollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
@@ -66,7 +67,7 @@ class RecollectionDecorator implements Recollection
 
     /**
      * @param Collection<TKey,T> $collection
-     * @param null|array<string,Order>|string $orderBy
+     * @param null|non-empty-array<string,Order>|string $orderBy
      * @param int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
      * @param null|int<1,max> $softLimit
@@ -91,19 +92,10 @@ class RecollectionDecorator implements Recollection
 
         // handle orderBy
 
-        if ($orderBy === null) {
-            $orderBy = $this->getDefaultOrderBy();
-        }
-
-        if (\is_string($orderBy)) {
-            $orderBy = [$orderBy => Order::Ascending];
-        }
-
-        if (empty($orderBy)) {
-            throw new UnexpectedValueException('The order by clause cannot be empty.');
-        }
-
-        $this->orderBy = $orderBy;
+        $this->orderBy = OrderByUtil::normalizeOrderBy(
+            orderBy: $orderBy,
+            defaultOrderBy: $this->getDefaultOrderBy()
+        );
 
         $this->criteria = Criteria::create()->orderBy($this->orderBy);
     }
