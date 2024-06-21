@@ -11,24 +11,24 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Collections\Tests\App\Repository;
+namespace Rekalogika\Collections\Tests\App\DoctrineRepository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Rekalogika\Collections\Tests\App\Entity\Citizen;
+use Rekalogika\Collections\Tests\App\Entity\Country;
 
 /**
- * @extends ServiceEntityRepository<Citizen>
+ * @extends ServiceEntityRepository<Country>
  */
-class CitizenRepository extends ServiceEntityRepository
+class DoctrineCountryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Citizen::class);
+        parent::__construct($registry, Country::class);
     }
 
     //    /**
-    //     * @return Citizen[] Returns an array of Citizen objects
+    //     * @return Country[] Returns an array of Country objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -42,7 +42,7 @@ class CitizenRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Citizen
+    //    public function findOneBySomeField($value): ?Country
     //    {
     //        return $this->createQueryBuilder('c')
     //            ->andWhere('c.exampleField = :val')

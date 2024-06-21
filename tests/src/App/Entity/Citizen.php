@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\Tests\App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Rekalogika\Collections\Tests\App\Repository\CitizenRepository;
+use Rekalogika\Collections\Tests\App\DoctrineRepository\DoctrineCitizenRepository;
 
-#[ORM\Entity(repositoryClass: CitizenRepository::class)]
+#[ORM\Entity(repositoryClass: DoctrineCitizenRepository::class)]
 class Citizen
 {
     #[ORM\Id]

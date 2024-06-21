@@ -59,4 +59,5 @@ jobs:
 
     - name: Run phpunit
       run: |
-        vendor/bin/phpunit
+        make fixtures
+        make phpunit
