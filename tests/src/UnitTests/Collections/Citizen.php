@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Collections\Tests;
+namespace Rekalogika\Collections\Tests\UnitTests\Collections;
 
 class Citizen
 {

@@ -13,7 +13,7 @@
         <directory name="tests" />
         <ignoreFiles>
             <directory name="vendor" />
-            <directory name="tests/DoctrineCollections" />
+            <directory name="tests/doctrine" />
         </ignoreFiles>
     </projectFiles>
 
