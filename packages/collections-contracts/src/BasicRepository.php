@@ -24,5 +24,5 @@ interface BasicRepository extends BasicReadableRepository, BasicRecollection
     /**
      * @param T $element
      */
-    public function remove(mixed $element): void;
+    public function removeElement(mixed $element): bool;
 }

@@ -163,8 +163,14 @@ abstract class AbstractBasicRepository implements BasicRepository
         $this->getEntityManager()->persist($element);
     }
 
-    public function remove(mixed $element): void
+    public function removeElement(mixed $element): bool
     {
+        if (!$this->contains($element)) {
+            return false;
+        }
+
         $this->getEntityManager()->remove($element);
+
+        return true;
     }
 }
