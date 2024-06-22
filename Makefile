@@ -48,3 +48,7 @@ tests/var/data.db:
 fixtures-init:
 	$(PHP) tests/bin/console doctrine:schema:create
 	$(PHP) tests/bin/console doctrine:fixtures:load --no-interaction
+
+.PHONY: dump
+dump:
+	$(PHP) tests/bin/console server:dump

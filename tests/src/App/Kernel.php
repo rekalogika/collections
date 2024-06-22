@@ -15,6 +15,7 @@ namespace Rekalogika\Collections\Tests\App;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
+use Symfony\Bundle\DebugBundle\DebugBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\MakerBundle\MakerBundle;
@@ -49,6 +50,7 @@ class Kernel extends BaseKernel
         yield new DoctrineFixturesBundle();
         yield new ZenstruckFoundryBundle();
         yield new MakerBundle();
+        yield new DebugBundle();
     }
 
     public function getProjectDir(): string
