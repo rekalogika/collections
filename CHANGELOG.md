@@ -23,6 +23,7 @@
 * test: add basic repository test
 * refactor(`AbstractBasicRepository`): change configuration method
 * test: add phpunit and PSR support in static analyses
+* deps: update rekapager to 0.12.0
 
 ## 0.3.0
 
