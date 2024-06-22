@@ -28,7 +28,7 @@ class DefaultCountryBasicRepository extends AbstractBasicRepository implements C
     {
         return new BasicRepositoryConfiguration(
             class: Country::class,
-            indexBy: 'id',
+            identifier: 'id',
             orderBy: ['id' => Order::Ascending]
         );
     }

@@ -59,6 +59,7 @@ class QueryCollection implements ReadableRecollection
      */
     public function __construct(
         private QueryBuilder $queryBuilder,
+        private ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
         private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
         private ?int &$count = null,

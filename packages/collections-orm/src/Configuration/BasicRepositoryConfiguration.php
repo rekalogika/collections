@@ -30,13 +30,13 @@ final readonly class BasicRepositoryConfiguration
 
     /**
      * @param class-string<T> $class
-     * @param null|non-empty-array<string,Order>|string $orderBy
+     * @param non-empty-array<string,Order>|string $orderBy
      * @param int<1,max> $itemsPerPage
      */
     public function __construct(
         private string $class,
-        private string $indexBy = 'id',
-        array|string|null $orderBy = null,
+        private string $identifier = 'id',
+        array|string $orderBy = 'id',
         private int $itemsPerPage = 50,
         private CountStrategy $countStrategy = CountStrategy::Restrict,
     ) {
@@ -59,16 +59,16 @@ final readonly class BasicRepositoryConfiguration
     ): static {
         return new static(
             $this->class,
-            $indexBy ?? $this->indexBy,
+            $indexBy ?? $this->identifier,
             $orderBy ?? $this->orderBy,
             $itemsPerPage ?? $this->itemsPerPage,
             $countStrategy ?? $this->countStrategy,
         );
     }
 
-    public function getIndexBy(): string
+    public function getIdentifier(): string
     {
-        return $this->indexBy;
+        return $this->identifier;
     }
 
     /**

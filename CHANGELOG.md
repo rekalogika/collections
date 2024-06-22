@@ -25,6 +25,7 @@
 * test: add phpunit and PSR support in static analyses
 * deps: update rekapager to 0.12.0
 * deps: add debug bundle
+* feat: add options `indexBy` for decorators & `identifier` for repositories
 
 ## 0.3.0
 

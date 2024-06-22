@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\Tests\UnitTests\Collections;
 
 use Doctrine\ORM\EntityNotFoundException;
-use Rekalogika\Collections\Tests\App\BasicRepository\CountryBasicRepository;
-use Rekalogika\Collections\Tests\App\Entity\Country;
+use Rekalogika\Collections\Tests\App\BasicRepository\CitizenBasicRepository;
+use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Contracts\Collections\BasicRepository;
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -23,52 +23,52 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 class AbstractBasicRepositoryTest extends KernelTestCase
 {
     /**
-     * @return BasicRepository<array-key,Country>
+     * @return BasicRepository<array-key,Citizen>
      */
     protected function getRepository(): BasicRepository
     {
-        $repository = static::getContainer()->get(CountryBasicRepository::class);
+        $repository = static::getContainer()->get(CitizenBasicRepository::class);
         static::assertInstanceOf(BasicRepository::class, $repository);
 
-        /** @var BasicRepository<array-key,Country> $repository */
+        /** @var BasicRepository<array-key,Citizen> $repository */
 
         return $repository;
     }
 
     public function testGet(): void
     {
-        $country = $this->getRepository()->get(1);
-        static::assertInstanceOf(Country::class, $country);
+        $citizen = $this->getRepository()->get(1);
+        static::assertInstanceOf(Citizen::class, $citizen);
     }
 
     public function testGetNegative(): void
     {
-        $country = $this->getRepository()->get(9999999);
-        static::assertNull($country);
+        $citizen = $this->getRepository()->get(9999999);
+        static::assertNull($citizen);
     }
 
     public function testGetOrFail(): void
     {
-        $country = $this->getRepository()->getOrFail(1);
-        static::assertInstanceOf(Country::class, $country);
+        $citizen = $this->getRepository()->getOrFail(1);
+        static::assertInstanceOf(Citizen::class, $citizen);
     }
 
     public function testGetOrFailNegative(): void
     {
         $this->expectException(NotFoundException::class);
-        $country = $this->getRepository()->getOrFail(9999999);
+        $citizen = $this->getRepository()->getOrFail(9999999);
     }
 
     public function testContains(): void
     {
-        $country = $this->getRepository()->getOrFail(1);
-        static::assertTrue($this->getRepository()->contains($country));
+        $citizen = $this->getRepository()->getOrFail(1);
+        static::assertTrue($this->getRepository()->contains($citizen));
     }
 
     public function testContainsNegative(): void
     {
-        $country = new Country();
-        static::assertFalse($this->getRepository()->contains($country));
+        $citizen = new Citizen();
+        static::assertFalse($this->getRepository()->contains($citizen));
     }
 
     public function testContainsKey(): void
@@ -83,23 +83,23 @@ class AbstractBasicRepositoryTest extends KernelTestCase
 
     public function testGetReference(): void
     {
-        $country = $this->getRepository()->getReference(1);
-        static::assertInstanceOf(Country::class, $country);
-        $name = $country->getName();
+        $citizen = $this->getRepository()->getReference(1);
+        static::assertInstanceOf(Citizen::class, $citizen);
+        $name = $citizen->getName();
         static::assertIsString($name);
     }
 
     public function testGetReferenceNegative(): void
     {
-        $country = $this->getRepository()->getReference(9999999);
+        $citizen = $this->getRepository()->getReference(9999999);
         $this->expectException(EntityNotFoundException::class);
-        $name = $country->getName();
+        $name = $citizen->getName();
     }
 
     public function testRemove(): void
     {
-        $removed = $this->getRepository()->remove(1);
-        static::assertFalse($this->getRepository()->contains($removed));
+        $citizen = $this->getRepository()->remove(1);
+        static::assertFalse($this->getRepository()->contains($citizen));
     }
 
     public function testRemoveNegative(): void
@@ -110,19 +110,30 @@ class AbstractBasicRepositoryTest extends KernelTestCase
 
     public function testRemoveElement(): void
     {
-        $country = $this->getRepository()->getOrFail(1);
-        static::assertTrue($this->getRepository()->removeElement($country));
+        $citizen = $this->getRepository()->getOrFail(1);
+        static::assertTrue($this->getRepository()->removeElement($citizen));
     }
 
     public function testRemoveElementNegative(): void
     {
-        $country = new Country();
-        static::assertFalse($this->getRepository()->removeElement($country));
+        $citizen = new Citizen();
+        static::assertFalse($this->getRepository()->removeElement($citizen));
     }
 
     public function testPageable(): void
     {
         $page = $this->getRepository()->getFirstPage();
-        static::assertCount(3, $page);
+        static::assertCount(50, $page);
+
+        $items = iterator_to_array($page);
+
+        foreach ($items as $key => $item) {
+            static::assertInstanceOf(Citizen::class, $item);
+            static::assertEquals($key, $item->getId());
+        }
+
+        $page = $page->getNextPage();
+        static::assertNotNull($page);
+
     }
 }

@@ -28,7 +28,7 @@ class DefaultCitizenBasicRepository extends AbstractBasicRepository implements C
     {
         return new BasicRepositoryConfiguration(
             class: Citizen::class,
-            indexBy: 'id',
+            identifier: 'id',
             orderBy: ['id' => Order::Ascending]
         );
     }

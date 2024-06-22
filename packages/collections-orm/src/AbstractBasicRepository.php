@@ -51,6 +51,7 @@ abstract class AbstractBasicRepository implements BasicRepository
 
     private CountStrategy $countStrategy;
     private QueryBuilder $queryBuilder;
+    private string $indexBy;
 
     /**
      * @var class-string<T>
@@ -64,11 +65,12 @@ abstract class AbstractBasicRepository implements BasicRepository
         $this->class = $configuration->getClass();
         $this->itemsPerPage = $configuration->getItemsPerPage();
         $this->countStrategy = $configuration->getCountStrategy();
+        $this->indexBy = $configuration->getIdentifier();
 
         // set query builder
         $criteria = Criteria::create()->orderBy($configuration->getOrderBy());
         $this->queryBuilder = $this
-            ->createQueryBuilder('e', 'e.' . $configuration->getIndexBy())
+            ->createQueryBuilder('e', 'e.' . $this->indexBy)
             ->addCriteria($criteria);
     }
 
