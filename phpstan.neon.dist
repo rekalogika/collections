@@ -20,4 +20,5 @@ includes:
     - vendor/phpstan/phpstan-phpunit/rules.neon
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - vendor/ekino/phpstan-banned-code/extension.neon
+    - vendor/bnf/phpstan-psr-container/extension.neon
     - phar://phpstan.phar/conf/bleedingEdge.neon

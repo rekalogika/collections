@@ -22,6 +22,7 @@
 * feat(`BasicRepository`): add `remove()` method
 * test: add basic repository test
 * refactor(`AbstractBasicRepository`): change configuration method
+* test: add phpunit and PSR support in static analyses
 
 ## 0.3.0
 
