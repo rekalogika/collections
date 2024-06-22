@@ -56,9 +56,9 @@ trait PageableTrait
     /**
      * @return \Traversable<PageInterface<TKey,T>>
      */
-    final public function getPages(): \Traversable
+    final public function getPages(?object $start = null): \Traversable
     {
-        return $this->getPageable()->getPages();
+        return $this->getPageable()->getPages($start);
     }
 
     /**
