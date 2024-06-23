@@ -23,7 +23,6 @@ use Rekalogika\Contracts\Collections\MinimalReadableRecollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\MinimalReadableRecollectionTrait;
-use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 
 /**
@@ -40,8 +39,6 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
 
     /** @use MinimalReadableRecollectionTrait<TKey,T> */
     use MinimalReadableRecollectionTrait;
-
-    use ExtraLazyDetectorTrait;
 
     /**
      * @var ReadableCollection<TKey,T>&Selectable<TKey,T>

@@ -71,6 +71,22 @@ class QueryCollection implements ReadableRecollection
     }
 
     /**
+     * @return null|int<1,max>
+     */
+    private function getSoftLimit(): ?int
+    {
+        return $this->softLimit;
+    }
+
+    /**
+     * @return null|int<1,max>
+     */
+    private function getHardLimit(): ?int
+    {
+        return $this->hardLimit;
+    }
+
+    /**
      * @param null|int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
      * @param null|int<1,max> $softLimit

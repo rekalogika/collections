@@ -127,6 +127,22 @@ abstract class AbstractRepository implements Repository
     }
 
     /**
+     * @return null|int<1,max>
+     */
+    private function getSoftLimit(): ?int
+    {
+        return $this->softLimit;
+    }
+
+    /**
+     * @return null|int<1,max>
+     */
+    private function getHardLimit(): ?int
+    {
+        return $this->hardLimit;
+    }
+
+    /**
      * @param int<1,max> $itemsPerPage
      */
     protected function with(

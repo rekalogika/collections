@@ -23,9 +23,7 @@ use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
-use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\MinimalRecollectionTrait;
-use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 
 /**
@@ -42,11 +40,6 @@ class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
     use MinimalRecollectionTrait;
 
     use CountableTrait;
-
-    use ExtraLazyDetectorTrait;
-
-    /** @use ItemsWithSafeguardTrait<TKey,T> */
-    use ItemsWithSafeguardTrait;
 
     /**
      * @var Collection<TKey,T>&Selectable<TKey,T>

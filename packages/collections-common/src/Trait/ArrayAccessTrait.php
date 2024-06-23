@@ -36,6 +36,7 @@ trait ArrayAccessTrait
      */
     final public function offsetExists(mixed $offset): bool
     {
+        /** @var array<TKey,T> */
         $items = $this->getItemsWithSafeguard();
 
         return isset($items[$offset]) || \array_key_exists($offset, $items);
@@ -46,6 +47,7 @@ trait ArrayAccessTrait
      */
     final public function offsetGet(mixed $offset): mixed
     {
+        /** @var array<TKey,T> */
         $items = $this->getItemsWithSafeguard();
 
         return $items[$offset] ?? null;

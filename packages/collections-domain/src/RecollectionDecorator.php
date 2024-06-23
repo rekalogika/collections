@@ -24,8 +24,6 @@ use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\RecollectionTrait as TraitRecollectionTrait;
-use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
-use Rekalogika\Domain\Collections\Trait\ExtraLazyTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 
 /**
@@ -41,14 +39,7 @@ class RecollectionDecorator implements Recollection
     /** @use ItemsWithSafeguardTrait<TKey,T> */
     use ItemsWithSafeguardTrait;
 
-    /** @use ExtraLazyTrait<TKey,T> */
-    use ExtraLazyTrait;
-
-    use ExtraLazyDetectorTrait;
-
-    /**
-     * @use TraitRecollectionTrait<TKey,T>
-     */
+    /** @use TraitRecollectionTrait<TKey,T> */
     use TraitRecollectionTrait;
 
     /**
@@ -106,6 +97,22 @@ class RecollectionDecorator implements Recollection
     private function &getProvidedCount(): ?int
     {
         return $this->count;
+    }
+
+    /**
+     * @return null|int<1,max>
+     */
+    private function getSoftLimit(): ?int
+    {
+        return $this->softLimit;
+    }
+
+    /**
+     * @return null|int<1,max>
+     */
+    private function getHardLimit(): ?int
+    {
+        return $this->hardLimit;
     }
 
     /**

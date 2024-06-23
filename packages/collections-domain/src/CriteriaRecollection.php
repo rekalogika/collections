@@ -24,8 +24,6 @@ use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
-use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
-use Rekalogika\Domain\Collections\Trait\ReadableExtraLazyTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 
 /**
@@ -43,11 +41,6 @@ class CriteriaRecollection implements ReadableRecollection
 
     /** @use ItemsWithSafeguardTrait<TKey,T> */
     use ItemsWithSafeguardTrait;
-
-    /** @use ReadableExtraLazyTrait<TKey,T> */
-    use ReadableExtraLazyTrait;
-
-    use ExtraLazyDetectorTrait;
 
     /** @use ReadableRecollectionTrait<TKey,T> */
     use ReadableRecollectionTrait;
@@ -102,6 +95,22 @@ class CriteriaRecollection implements ReadableRecollection
     private function &getProvidedCount(): ?int
     {
         return $this->count;
+    }
+
+    /**
+     * @return null|int<1,max>
+     */
+    private function getSoftLimit(): ?int
+    {
+        return $this->softLimit;
+    }
+
+    /**
+     * @return null|int<1,max>
+     */
+    private function getHardLimit(): ?int
+    {
+        return $this->hardLimit;
     }
 
     /**

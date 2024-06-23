@@ -36,20 +36,14 @@ trait ItemsWithSafeguardTrait
     abstract private function getPageable(): PageableInterface;
 
     /**
-     * @return int<1,max>
+     * @return null|int<1,max>
      */
-    private function getSoftLimit(): int
-    {
-        return $this->softLimit ?? Configuration::$defaultSoftLimit;
-    }
+    abstract private function getSoftLimit(): ?int;
 
     /**
-     * @return int<1,max>
+     * @return null|int<1,max>
      */
-    private function getHardLimit(): int
-    {
-        return $this->hardLimit ?? Configuration::$defaultHardLimit;
-    }
+    abstract private function getHardLimit(): ?int;
 
     /**
      * @return array<TKey,T>
@@ -60,17 +54,24 @@ trait ItemsWithSafeguardTrait
             return $this->itemsWithSafeguard;
         }
 
+        $hardLimit = $this->getHardLimit() ?? Configuration::$defaultHardLimit;
+
         $firstPage = $this->getPageable()
-            ->withItemsPerPage($this->getHardLimit())
+            ->withItemsPerPage($hardLimit)
             ->getFirstPage();
 
         if ($firstPage->getNextPage() !== null) {
             throw new OverflowException('The collection has more items than the hard safeguard limit.');
         }
 
+        /**
+         * @var array<TKey,T>
+         */
         $items = iterator_to_array($firstPage);
 
-        if (\count($items) > $this->getSoftLimit()) {
+        $softLimit = $this->getSoftLimit() ?? Configuration::$defaultSoftLimit;
+
+        if (\count($items) > $softLimit) {
             @trigger_error("The collection has more items than the soft limit. Consider rewriting your code so that it can process the items in an efficient manner.", \E_USER_DEPRECATED);
         }
 

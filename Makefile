@@ -52,3 +52,7 @@ fixtures-init:
 .PHONY: dump
 dump:
 	$(PHP) tests/bin/console server:dump
+
+clear-cache:
+	$(PHP) vendor/bin/phpstan clear-result-cache
+	$(PHP) vendor/bin/psalm --clear-cache

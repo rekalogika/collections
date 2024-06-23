@@ -21,11 +21,17 @@ trait RecollectionTrait
 {
     /**
      * @use ReadableRecollectionTrait<TKey,T>
-     */
-    use ReadableRecollectionTrait;
-
-    /**
      * @use CollectionTrait<TKey,T>
      */
-    use CollectionTrait;
+    use ReadableRecollectionTrait, CollectionTrait {
+        CollectionTrait::map insteadof ReadableRecollectionTrait;
+        CollectionTrait::filter insteadof ReadableRecollectionTrait;
+        CollectionTrait::partition insteadof ReadableRecollectionTrait;
+    }
+
+    // use ReadableRecollectionTrait, CollectionTrait {
+    //     CollectionTrait::map insteadof ReadableRecollectionTrait;
+    //     CollectionTrait::filter insteadof ReadableRecollectionTrait;
+    //     CollectionTrait::partition insteadof ReadableRecollectionTrait;
+    // }
 }
