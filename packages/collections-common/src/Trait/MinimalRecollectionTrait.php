@@ -13,17 +13,29 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
+use Doctrine\Common\Collections\Collection;
+
 /**
  * @template TKey of array-key
  * @template T
  */
-trait MinimalWritableCollectionTrait
+trait MinimalRecollectionTrait
 {
+    /**
+     * @use MinimalReadableRecollectionTrait<TKey,T>
+     */
+    use MinimalReadableRecollectionTrait;
+
+    /**
+     * @return Collection<TKey,T>
+     */
+    abstract private function getRealCollection(): Collection;
+
     /**
      * @param T $element
      */
     final public function add(mixed $element): void
     {
-        $this->collection->add($element);
+        $this->getRealCollection()->add($element);
     }
 }

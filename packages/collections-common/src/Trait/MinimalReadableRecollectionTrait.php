@@ -13,13 +13,14 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
+use Doctrine\Common\Collections\ReadableCollection;
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 
 /**
  * @template TKey of array-key
  * @template-covariant T
  */
-trait ReadableRecollectionTrait
+trait MinimalReadableRecollectionTrait
 {
     /**
      * @use PageableTrait<TKey,T>
@@ -27,9 +28,36 @@ trait ReadableRecollectionTrait
     use PageableTrait;
 
     /**
-     * @use ReadableCollectionTrait<TKey,T>
+     * @return ReadableCollection<TKey,T>
      */
-    use ReadableCollectionTrait;
+    abstract private function getRealCollection(): ReadableCollection;
+
+    /**
+     * @template TMaybeContained
+     * @param TMaybeContained $element
+     * @return (TMaybeContained is T ? bool : false)
+     */
+    final public function contains(mixed $element): bool
+    {
+        return $this->getRealCollection()->contains($element);
+    }
+
+    /**
+     * @param TKey $key
+     */
+    final public function containsKey(string|int $key): bool
+    {
+        return $this->getRealCollection()->containsKey($key);
+    }
+
+    /**
+     * @param TKey $key
+     * @return T|null
+     */
+    final public function get(string|int $key): mixed
+    {
+        return $this->getRealCollection()->get($key);
+    }
 
     /**
      * @param TKey $key
