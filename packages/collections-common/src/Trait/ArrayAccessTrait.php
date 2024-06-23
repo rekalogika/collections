@@ -20,6 +20,11 @@ namespace Rekalogika\Domain\Collections\Common\Trait;
 trait ArrayAccessTrait
 {
     /**
+     * @return array<TKey,T>
+     */
+    abstract private function &getItemsWithSafeguard(): array;
+
+    /**
      * @param TKey $offset
      */
     final public function offsetExists(mixed $offset): bool
@@ -46,6 +51,7 @@ trait ArrayAccessTrait
     final public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->getItemsWithSafeguard();
+
         $this->collection->offsetSet($offset, $value);
     }
 
@@ -55,6 +61,7 @@ trait ArrayAccessTrait
     final public function offsetUnset(mixed $offset): void
     {
         $this->getItemsWithSafeguard();
+        
         $this->collection->offsetUnset($offset);
     }
 }
