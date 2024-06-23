@@ -15,10 +15,15 @@ namespace Rekalogika\Domain\Collections\Common\Trait;
 
 /**
  * @template TKey of array-key
- * @template T
+ * @template-covariant T
  */
 trait IteratorAggregateTrait
 {
+    /**
+     * @return array<TKey,T>
+     */
+    abstract private function &getItemsWithSafeguard(): array;
+
     /**
      * @return \Traversable<TKey,T>
      */
