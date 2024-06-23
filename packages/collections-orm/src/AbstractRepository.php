@@ -17,15 +17,11 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Configuration\RepositoryConfiguration;
-use Rekalogika\Collections\ORM\Trait\MinimalRepositoryTrait;
-use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
+use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryTrait;
 use Rekalogika\Contracts\Collections\Repository;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
-use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
-use Rekalogika\Domain\Collections\Common\Trait\IteratorAggregateTrait;
-use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
+use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 
 /**
  * @template TKey of array-key
@@ -35,36 +31,19 @@ use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 abstract class AbstractRepository implements Repository
 {
     /**
-     * @use QueryBuilderTrait<array-key,T>
+     * @use QueryBuilderPageableTrait<array-key,T>
      */
-    use QueryBuilderTrait;
-
-    /**
-     * @use PageableTrait<array-key,T>
-     */
-    use PageableTrait;
-
-    /**
-     * @use MinimalRepositoryTrait<array-key,T>
-     */
-    use MinimalRepositoryTrait;
-
-    /**
-     * @use ItemsWithSafeguardTrait<array-key,T>
-     */
-    use ItemsWithSafeguardTrait;
+    use QueryBuilderPageableTrait;
 
     /**
      * @use RepositoryTrait<array-key,T>
      */
     use RepositoryTrait;
 
-    use CountableTrait;
-
     /**
-     * @use IteratorAggregateTrait<array-key,T>
+     * @use SafeCollectionTrait<array-key,T>
      */
-    use IteratorAggregateTrait;
+    use SafeCollectionTrait;
 
     /**
      * @var null|int<0,max>
@@ -115,6 +94,32 @@ abstract class AbstractRepository implements Repository
      * @return RepositoryConfiguration<T>
      */
     abstract protected function configure(): RepositoryConfiguration;
+
+    private function getCountStrategy(): CountStrategy
+    {
+        return $this->countStrategy;
+    }
+
+    private function &getProvidedCount(): ?int
+    {
+        return $this->count;
+    }
+
+    /**
+     * @return null|int<1,max>
+     */
+    private function getSoftLimit(): ?int
+    {
+        return $this->softLimit;
+    }
+
+    /**
+     * @return null|int<1,max>
+     */
+    private function getHardLimit(): ?int
+    {
+        return $this->hardLimit;
+    }
 
     /**
      * @param int<1,max> $itemsPerPage

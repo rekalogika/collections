@@ -18,17 +18,27 @@ use Rekalogika\Domain\Collections\Common\Exception\CountDisabledException;
 
 trait CountableTrait
 {
+    abstract private function getCountStrategy(): CountStrategy;
+
     /**
-     * Unsafe, and we have a special case for this.
-     *
+     * @return int<0,max>
+     */
+    abstract private function getRealCount(): int;
+
+    /**
+     * @return null|int<0,max>
+     */
+    abstract private function &getProvidedCount(): ?int;
+
+    /**
      * @return int<0,max>
      * @throws CountDisabledException
      */
     final public function count(): int
     {
-        if ($this->countStrategy === CountStrategy::Restrict) {
+        if ($this->getCountStrategy() === CountStrategy::Restrict) {
             throw new CountDisabledException();
-        } elseif ($this->countStrategy === CountStrategy::Delegate) {
+        } elseif ($this->getCountStrategy() === CountStrategy::Delegate) {
             $count = $this->getPageable()->getTotalItems();
 
             if (\is_int($count) && $count >= 0) {
@@ -37,7 +47,14 @@ trait CountableTrait
             return 0;
         }
 
-        return $this->count ?? 0;
+        $count = $this->getProvidedCount();
+
+        /** @psalm-suppress DocblockTypeContradiction */
+        if ($count === null || $count < 0) {
+            return 0;
+        }
+
+        return $count;
     }
 
     /**
@@ -46,10 +63,11 @@ trait CountableTrait
      */
     final public function refreshCount(): void
     {
-        $count = $this->getRealCount();
+        $realCount = $this->getRealCount();
 
-        if ($count >= 0) {
-            $this->count = $count;
+        if ($realCount >= 0) {
+            $providedCount = &$this->getProvidedCount();
+            $providedCount = $realCount;
         }
     }
 }

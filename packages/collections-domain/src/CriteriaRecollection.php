@@ -21,12 +21,10 @@ use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
-use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
-use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
+use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ReadableExtraLazyTrait;
-use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
+use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
  * @template TKey of array-key
@@ -35,22 +33,22 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
  */
 class CriteriaRecollection implements ReadableRecollection
 {
-    /** @use RecollectionTrait<TKey,T> */
-    use RecollectionTrait;
+    /** @use RecollectionPageableTrait<TKey,T> */
+    use RecollectionPageableTrait;
 
-    /** @use PageableTrait<TKey,T> */
-    use PageableTrait;
+    /** @use SafeCollectionTrait<TKey,T> */
+    use SafeCollectionTrait;
 
-    /** @use ItemsWithSafeguardTrait<TKey,T> */
-    use ItemsWithSafeguardTrait;
-
-    /** @use ReadableExtraLazyTrait<TKey,T> */
-    use ReadableExtraLazyTrait;
-
-    use ExtraLazyDetectorTrait;
-
-    /** @use ReadableRecollectionTrait<TKey,T> */
-    use ReadableRecollectionTrait;
+    /**
+     * @use ReadableRecollectionTrait<TKey,T>
+     * @use ReadableExtraLazyTrait<TKey,T>
+     */
+    use ReadableRecollectionTrait, ReadableExtraLazyTrait {
+        ReadableExtraLazyTrait::contains insteadof ReadableRecollectionTrait;
+        ReadableExtraLazyTrait::containsKey insteadof ReadableRecollectionTrait;
+        ReadableExtraLazyTrait::get insteadof ReadableRecollectionTrait;
+        ReadableExtraLazyTrait::slice insteadof ReadableRecollectionTrait;
+    }
 
     /**
      * @var ReadableCollection<TKey,T>&Selectable<TKey,T>
@@ -92,6 +90,40 @@ class CriteriaRecollection implements ReadableRecollection
         }
 
         $this->criteria = $criteria;
+    }
+
+    private function getCountStrategy(): CountStrategy
+    {
+        return $this->countStrategy;
+    }
+
+    private function &getProvidedCount(): ?int
+    {
+        return $this->count;
+    }
+
+    /**
+     * @return ReadableCollection<TKey,T>
+     */
+    private function getRealCollection(): ReadableCollection
+    {
+        return $this->collection;
+    }
+
+    /**
+     * @return null|int<1,max>
+     */
+    private function getSoftLimit(): ?int
+    {
+        return $this->softLimit;
+    }
+
+    /**
+     * @return null|int<1,max>
+     */
+    private function getHardLimit(): ?int
+    {
+        return $this->hardLimit;
     }
 
     /**

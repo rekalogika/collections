@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ReadableCollection;
+
 /**
  * @template TKey of array-key
  * @template T
@@ -20,23 +23,35 @@ namespace Rekalogika\Domain\Collections\Common\Trait;
 trait ArrayAccessTrait
 {
     /**
-     * @param TKey $offset
+     * @return ReadableCollection<TKey,T>
      */
-    final public function offsetExists(mixed $offset): bool
-    {
-        $items = $this->getItemsWithSafeguard();
+    abstract private function getSafeCollection(): ReadableCollection;
+    abstract private function ensureSafety(): void;
 
-        return isset($items[$offset]) || \array_key_exists($offset, $items);
-    }
+    /**
+     * @return Collection<TKey,T>
+     */
+    abstract private function getRealCollection(): Collection;
 
     /**
      * @param TKey $offset
      */
+    final public function offsetExists(mixed $offset): bool
+    {
+        // return $this->getSafeCollection()->containsKey($offset);
+
+        return $this->containsKey($offset);
+    }
+
+    /**
+     * @param TKey $offset
+     * @return T|null
+     */
     final public function offsetGet(mixed $offset): mixed
     {
-        $items = $this->getItemsWithSafeguard();
+        // return $this->getSafeCollection()->get($offset);
 
-        return $items[$offset] ?? null;
+        return $this->get($offset);
     }
 
     /**
@@ -45,8 +60,15 @@ trait ArrayAccessTrait
      */
     final public function offsetSet(mixed $offset, mixed $value): void
     {
-        $this->getItemsWithSafeguard();
-        $this->collection->offsetSet($offset, $value);
+        if (!isset($offset)) {
+            $this->getRealCollection()->offsetSet(null, $value);
+
+            return;
+        }
+
+        $this->ensureSafety();
+
+        $this->getRealCollection()->offsetSet($offset, $value);
     }
 
     /**
@@ -54,7 +76,9 @@ trait ArrayAccessTrait
      */
     final public function offsetUnset(mixed $offset): void
     {
-        $this->getItemsWithSafeguard();
-        $this->collection->offsetUnset($offset);
+        $this->ensureSafety();
+
+        // $this->getRealCollection()->offsetUnset($offset);
+        $this->remove($offset);
     }
 }

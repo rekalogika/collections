@@ -22,11 +22,8 @@ use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\MinimalReadableRecollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
-use Rekalogika\Domain\Collections\Common\Trait\MinimalReadableCollectionTrait;
-use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
-use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
-use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
-use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
+use Rekalogika\Domain\Collections\Common\Trait\MinimalReadableRecollectionTrait;
+use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
  * @template TKey of array-key
@@ -35,21 +32,13 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
  */
 class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Countable
 {
-    /** @use RecollectionTrait<TKey,T> */
-    use RecollectionTrait;
-
-    /** @use PageableTrait<TKey,T> */
-    use PageableTrait;
-
-    /** @use MinimalReadableCollectionTrait<TKey,T> */
-    use MinimalReadableCollectionTrait;
+    /** @use RecollectionPageableTrait<TKey,T> */
+    use RecollectionPageableTrait;
 
     use CountableTrait;
 
-    use ExtraLazyDetectorTrait;
-
-    /** @use ReadableRecollectionTrait<TKey,T> */
-    use ReadableRecollectionTrait;
+    /** @use MinimalReadableRecollectionTrait<TKey,T> */
+    use MinimalReadableRecollectionTrait;
 
     /**
      * @var ReadableCollection<TKey,T>&Selectable<TKey,T>
@@ -87,6 +76,24 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
         }
 
         $this->criteria = $criteria;
+    }
+
+    private function getCountStrategy(): CountStrategy
+    {
+        return $this->countStrategy;
+    }
+
+    private function &getProvidedCount(): ?int
+    {
+        return $this->count;
+    }
+
+    /**
+     * @return ReadableCollection<TKey,T>
+     */
+    private function getRealCollection(): ReadableCollection
+    {
+        return $this->collection;
     }
 
     /**

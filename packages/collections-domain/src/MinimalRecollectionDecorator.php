@@ -23,12 +23,8 @@ use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
-use Rekalogika\Domain\Collections\Common\Trait\MinimalReadableCollectionTrait;
-use Rekalogika\Domain\Collections\Common\Trait\MinimalWritableCollectionTrait;
-use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
-use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
-use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
-use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
+use Rekalogika\Domain\Collections\Common\Trait\MinimalRecollectionTrait;
+use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
  * @template TKey of array-key
@@ -37,24 +33,13 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
  */
 class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
 {
-    /** @use RecollectionTrait<TKey,T> */
-    use RecollectionTrait;
+    /** @use RecollectionPageableTrait<TKey,T> */
+    use RecollectionPageableTrait;
 
-    /** @use PageableTrait<TKey,T> */
-    use PageableTrait;
-
-    /** @use MinimalWritableCollectionTrait<TKey,T> */
-    use MinimalWritableCollectionTrait;
-
-    /** @use MinimalReadableCollectionTrait<TKey,T> */
-    use MinimalReadableCollectionTrait;
+    /** @use MinimalRecollectionTrait<TKey,T> */
+    use MinimalRecollectionTrait;
 
     use CountableTrait;
-
-    use ExtraLazyDetectorTrait;
-
-    /** @use ReadableRecollectionTrait<TKey,T> */
-    use ReadableRecollectionTrait;
 
     /**
      * @var Collection<TKey,T>&Selectable<TKey,T>
@@ -97,6 +82,24 @@ class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
         );
 
         $this->criteria = Criteria::create()->orderBy($this->orderBy);
+    }
+
+    private function getCountStrategy(): CountStrategy
+    {
+        return $this->countStrategy;
+    }
+
+    private function &getProvidedCount(): ?int
+    {
+        return $this->count;
+    }
+
+    /**
+     * @return Collection<TKey,T>
+     */
+    private function getRealCollection(): Collection
+    {
+        return $this->collection;
     }
 
     /**

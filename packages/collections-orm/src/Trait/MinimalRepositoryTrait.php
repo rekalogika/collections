@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\ORM\Trait;
 
-use Rekalogika\Contracts\Collections\Exception\NotFoundException;
-
 /**
  * @template TKey of array-key
  * @template T of object
@@ -24,56 +22,9 @@ use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 trait MinimalRepositoryTrait
 {
     /**
-     * @param TKey $key
-     * @return T
+     * @use MinimalReadableRepositoryTrait<TKey,T>
      */
-    public function reference(int|string $key): object
-    {
-        return $this->getEntityManager()
-            ->getReference($this->getClass(), $key)
-            ?? throw new NotFoundException('Entity not found');
-    }
-
-    /**
-     * @template TMaybeContained
-     * @param TMaybeContained $element
-     * @return (TMaybeContained is T ? bool : false)
-     */
-    public function contains(mixed $element): bool
-    {
-        if (!\is_object($element)) {
-            return false;
-        }
-
-        return $this->getEntityManager()->contains($element);
-    }
-
-    /**
-     * @param TKey $key
-     */
-    public function containsKey(string|int $key): bool
-    {
-        return $this->get($key) !== null;
-    }
-
-    /**
-     * @param TKey $key
-     * @return T|null
-     */
-    public function get(string|int $key): mixed
-    {
-        return $this->getEntityManager()->find($this->getClass(), $key);
-    }
-
-    /**
-     * @param TKey $key
-     * @return T
-     * @throws NotFoundException
-     */
-    public function getOrFail(string|int $key): mixed
-    {
-        return $this->get($key) ?? throw new NotFoundException('Entity not found');
-    }
+    use MinimalReadableRepositoryTrait;
 
     /**
      * @param T $element

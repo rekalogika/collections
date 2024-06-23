@@ -13,24 +13,19 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
-use Doctrine\Common\Collections\ReadableCollection;
-
 /**
  * @template TKey of array-key
- * @template-covariant T
+ * @template T
  */
-trait IteratorAggregateTrait
+trait RecollectionTrait
 {
     /**
-     * @return ReadableCollection<TKey,T>
+     * @use ReadableRecollectionTrait<TKey,T>
+     * @use CollectionTrait<TKey,T>
      */
-    abstract private function getSafeCollection(): ReadableCollection;
-
-    /**
-     * @return \Traversable<TKey,T>
-     */
-    final public function getIterator(): \Traversable
-    {
-        return $this->getSafeCollection()->getIterator();
+    use ReadableRecollectionTrait, CollectionTrait {
+        CollectionTrait::map insteadof ReadableRecollectionTrait;
+        CollectionTrait::filter insteadof ReadableRecollectionTrait;
+        CollectionTrait::partition insteadof ReadableRecollectionTrait;
     }
 }

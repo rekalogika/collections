@@ -13,25 +13,28 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Trait;
 
-use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
-use Rekalogika\Domain\Collections\Common\Trait\IteratorAggregateTrait;
-use Rekalogika\Domain\Collections\Common\Trait\ReadableCollectionTrait;
+use Doctrine\Common\Collections\ReadableCollection;
 
 /**
  * @template TKey of array-key
- * @template T
- *
- * @internal
+ * @template-covariant T
  */
 trait ReadableExtraLazyTrait
 {
-    /** @use ReadableCollectionTrait<TKey,T> */
-    use ReadableCollectionTrait;
+    /**
+     * @use SafetyCheckTrait<TKey,T>
+     */
+    use SafetyCheckTrait;
 
-    use CountableTrait;
+    /**
+     * @return ReadableCollection<TKey,T>
+     */
+    abstract private function getRealCollection(): ReadableCollection;
 
-    /** @use IteratorAggregateTrait<TKey,T> */
-    use IteratorAggregateTrait;
+    /**
+     * @return ReadableCollection<TKey,T>
+     */
+    abstract private function getSafeCollection(): ReadableCollection;
 
     /**
      * @template TMaybeContained
@@ -40,62 +43,47 @@ trait ReadableExtraLazyTrait
      */
     final public function contains(mixed $element): bool
     {
-        if ($this->isExtraLazy()) {
-            return $this->collection->contains($element);
+        if ($this->isSafe()) {
+            return $this->getRealCollection()->contains($element);
         }
 
-        $items = $this->getItemsWithSafeguard();
-
-        return \in_array($element, $items, true);
+        return $this->getSafeCollection()->contains($element);
     }
 
     /**
-     * Safe
-     *
      * @param TKey $key
      */
     final public function containsKey(string|int $key): bool
     {
-        if ($this->isExtraLazy() && $this->hasIndexBy()) {
-            return $this->collection->containsKey($key);
+        if ($this->isSafeWithIndex()) {
+            return $this->getRealCollection()->containsKey($key);
         }
 
-        $items = $this->getItemsWithSafeguard();
-
-        return isset($items[$key]) || \array_key_exists($key, $items);
+        return $this->getSafeCollection()->containsKey($key);
     }
 
     /**
-     * Safe
-     *
      * @param TKey $key
      * @return T|null
      */
     final public function get(string|int $key): mixed
     {
-        if ($this->isExtraLazy() && $this->hasIndexBy()) {
-            return $this->collection->get($key);
+        if ($this->isSafeWithIndex()) {
+            return $this->getRealCollection()->get($key);
         }
 
-        $items = $this->getItemsWithSafeguard();
-
-        return $items[$key] ?? null;
+        return $this->getSafeCollection()->get($key);
     }
 
     /**
-     * Safe
-     *
      * @return array<TKey,T>
      */
-
     final public function slice(int $offset, ?int $length = null): array
     {
-        if ($this->isExtraLazy()) {
-            return $this->collection->slice($offset, $length);
+        if ($this->isSafe()) {
+            return $this->getRealCollection()->slice($offset, $length);
         }
 
-        $items = $this->getItemsWithSafeguard();
-
-        return \array_slice($items, $offset, $length, true);
+        return $this->getSafeCollection()->slice($offset, $length);
     }
 }

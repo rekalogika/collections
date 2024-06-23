@@ -22,12 +22,10 @@ use Rekalogika\Contracts\Collections\Recollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
-use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
-use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
-use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
-use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
+use Rekalogika\Domain\Collections\Common\Trait\RecollectionTrait;
+use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyTrait;
-use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
+use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
  * @template TKey of array-key
@@ -36,22 +34,26 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
  */
 class RecollectionDecorator implements Recollection
 {
-    /** @use RecollectionTrait<TKey,T> */
-    use RecollectionTrait;
+    /** @use RecollectionPageableTrait<TKey,T> */
+    use RecollectionPageableTrait;
 
-    /** @use PageableTrait<TKey,T> */
-    use PageableTrait;
+    /** @use SafeCollectionTrait<TKey,T> */
+    use SafeCollectionTrait;
 
-    /** @use ItemsWithSafeguardTrait<TKey,T> */
-    use ItemsWithSafeguardTrait;
-
-    /** @use ExtraLazyTrait<TKey,T> */
-    use ExtraLazyTrait;
-
-    use ExtraLazyDetectorTrait;
-
-    /** @use ReadableRecollectionTrait<TKey,T> */
-    use ReadableRecollectionTrait;
+    /**
+     * @use RecollectionTrait<TKey,T>
+     * @use ExtraLazyTrait<TKey,T>
+     */
+    use RecollectionTrait, ExtraLazyTrait {
+        ExtraLazyTrait::contains insteadof RecollectionTrait;
+        ExtraLazyTrait::containsKey insteadof RecollectionTrait;
+        ExtraLazyTrait::get insteadof RecollectionTrait;
+        ExtraLazyTrait::slice insteadof RecollectionTrait;
+        ExtraLazyTrait::offsetExists insteadof RecollectionTrait;
+        ExtraLazyTrait::offsetGet insteadof RecollectionTrait;
+        ExtraLazyTrait::offsetSet insteadof RecollectionTrait;
+        ExtraLazyTrait::add insteadof RecollectionTrait;
+    }
 
     /**
      * @var Collection<TKey,T>&Selectable<TKey,T>
@@ -98,6 +100,40 @@ class RecollectionDecorator implements Recollection
         );
 
         $this->criteria = Criteria::create()->orderBy($this->orderBy);
+    }
+
+    private function getCountStrategy(): CountStrategy
+    {
+        return $this->countStrategy;
+    }
+
+    private function &getProvidedCount(): ?int
+    {
+        return $this->count;
+    }
+
+    /**
+     * @return null|int<1,max>
+     */
+    private function getSoftLimit(): ?int
+    {
+        return $this->softLimit;
+    }
+
+    /**
+     * @return null|int<1,max>
+     */
+    private function getHardLimit(): ?int
+    {
+        return $this->hardLimit;
+    }
+
+    /**
+     * @return Collection<TKey,T>
+     */
+    private function getRealCollection(): Collection
+    {
+        return $this->collection;
     }
 
     /**

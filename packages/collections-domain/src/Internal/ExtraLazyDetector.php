@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Internal;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\ReadableCollection;
 
 /**
@@ -22,6 +23,30 @@ final class ExtraLazyDetector
 {
     private function __construct()
     {
+    }
+
+    /**
+     * @template TKey of array-key
+     * @template T
+     * @param ReadableCollection<TKey,T> $collection
+     */
+    public static function isSafe(ReadableCollection $collection): bool
+    {
+        if ($collection instanceof ArrayCollection) {
+            return true;
+        }
+
+        return self::isExtraLazy($collection);
+    }
+
+    /**
+     * @template TKey of array-key
+     * @template T
+     * @param ReadableCollection<TKey,T> $collection
+     */
+    public static function isSafeWithIndex(ReadableCollection $collection): bool
+    {
+        return self::isSafe($collection) && self::hasIndexBy($collection);
     }
 
     /**
@@ -43,4 +68,5 @@ final class ExtraLazyDetector
     {
         return true; // disabled for now
     }
+
 }

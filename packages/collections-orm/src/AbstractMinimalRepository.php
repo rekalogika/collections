@@ -18,10 +18,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Configuration\MinimalRepositoryConfiguration;
 use Rekalogika\Collections\ORM\Trait\MinimalRepositoryTrait;
-use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
+use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Collections\MinimalRepository;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 
 /**
  * @template TKey of array-key
@@ -31,14 +30,9 @@ use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 abstract class AbstractMinimalRepository implements MinimalRepository
 {
     /**
-     * @use QueryBuilderTrait<array-key,T>
+     * @use QueryBuilderPageableTrait<array-key,T>
      */
-    use QueryBuilderTrait;
-
-    /**
-     * @use PageableTrait<array-key,T>
-     */
-    use PageableTrait;
+    use QueryBuilderPageableTrait;
 
     /**
      * @use MinimalRepositoryTrait<array-key,T>

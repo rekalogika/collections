@@ -13,98 +13,78 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Trait;
 
-use Rekalogika\Domain\Collections\Common\Trait\ArrayAccessTrait;
-use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
-use Rekalogika\Domain\Collections\Common\Trait\IteratorAggregateTrait;
-use Rekalogika\Domain\Collections\Common\Trait\WritableCollectionTrait;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ReadableCollection;
 
 /**
  * @template TKey of array-key
- * @template T
- *
- * @internal
+ * @template-covariant T
  */
 trait ExtraLazyTrait
 {
     /**
-     * @use WritableCollectionTrait<TKey,T>
      * @use ReadableExtraLazyTrait<TKey,T>
      */
-    use WritableCollectionTrait, ReadableExtraLazyTrait {
-        WritableCollectionTrait::filter insteadof ReadableExtraLazyTrait;
-        WritableCollectionTrait::map insteadof ReadableExtraLazyTrait;
-        WritableCollectionTrait::partition insteadof ReadableExtraLazyTrait;
-    }
+    use ReadableExtraLazyTrait;
 
-    use CountableTrait;
+    /**
+     * @return Collection<TKey,T>
+     */
+    abstract private function getRealCollection(): Collection;
 
-    /** @use IteratorAggregateTrait<TKey,T> */
-    use IteratorAggregateTrait;
-
-    /** @use ArrayAccessTrait<TKey,T> */
-    use ArrayAccessTrait;
-
-    //
-    // ArrayAccess
-    //
+    /**
+     * @return Collection<TKey,T>
+     */
+    abstract private function getSafeCollection(): ReadableCollection;
 
     /**
      * @param TKey $offset
      */
     final public function offsetExists(mixed $offset): bool
     {
-        if ($this->isExtraLazy() && $this->hasIndexBy()) {
-            return $this->collection->offsetExists($offset);
+        if ($this->isSafeWithIndex()) {
+            return $this->getRealCollection()->contains($offset);
         }
 
-        $items = $this->getItemsWithSafeguard();
-
-        return isset($items[$offset]) || \array_key_exists($offset, $items);
+        return $this->getSafeCollection()->contains($offset);
     }
 
     /**
      * @param TKey $offset
+     * @return T|null
      */
     final public function offsetGet(mixed $offset): mixed
     {
-        if ($this->isExtraLazy() && $this->hasIndexBy()) {
-            return $this->collection->get($offset);
+        if ($this->isSafeWithIndex()) {
+            return $this->getRealCollection()->get($offset);
         }
 
-        $items = $this->getItemsWithSafeguard();
-
-        return $items[$offset] ?? null;
+        return $this->getSafeCollection()->get($offset);
     }
 
     /**
-     * Unsafe if $offset is set. Safe if unset.
-     *
      * @param TKey|null $offset
      * @param T $value
      */
     final public function offsetSet(mixed $offset, mixed $value): void
     {
         if (!isset($offset)) {
-            $this->collection->offsetSet(null, $value);
+            $this->getRealCollection()->add($value);
 
             return;
         }
 
-        $this->getItemsWithSafeguard();
-        $this->collection->offsetSet($offset, $value);
+        /** @var TKey $offset */
+
+        $this->ensureSafety();
+        $this->getRealCollection()->set($offset, $value);
     }
 
-    //
-    // Collection
-    //
-
     /**
-     * Safe
-     *
      * @param T $element
      */
     final public function add(mixed $element): void
     {
-        $this->collection->add($element);
+        $this->getRealCollection()->add($element);
     }
 }
