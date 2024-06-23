@@ -132,7 +132,6 @@ trait ReadableCollectionTrait
     /**
      * @return array<TKey,T>
      */
-
     final public function slice(int $offset, ?int $length = null): array
     {
         return $this->getSafeCollection()->slice($offset, $length);

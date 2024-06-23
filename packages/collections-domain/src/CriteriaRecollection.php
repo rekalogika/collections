@@ -23,6 +23,7 @@ use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
+use Rekalogika\Domain\Collections\Trait\ReadableExtraLazyTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
@@ -38,8 +39,16 @@ class CriteriaRecollection implements ReadableRecollection
     /** @use SafeCollectionTrait<TKey,T> */
     use SafeCollectionTrait;
 
-    /** @use ReadableRecollectionTrait<TKey,T> */
-    use ReadableRecollectionTrait;
+    /**
+     * @use ReadableRecollectionTrait<TKey,T>
+     * @use ReadableExtraLazyTrait<TKey,T>
+     */
+    use ReadableRecollectionTrait, ReadableExtraLazyTrait {
+        ReadableExtraLazyTrait::contains insteadof ReadableRecollectionTrait;
+        ReadableExtraLazyTrait::containsKey insteadof ReadableRecollectionTrait;
+        ReadableExtraLazyTrait::get insteadof ReadableRecollectionTrait;
+        ReadableExtraLazyTrait::slice insteadof ReadableRecollectionTrait;
+    }
 
     /**
      * @var ReadableCollection<TKey,T>&Selectable<TKey,T>
@@ -91,6 +100,14 @@ class CriteriaRecollection implements ReadableRecollection
     private function &getProvidedCount(): ?int
     {
         return $this->count;
+    }
+
+    /**
+     * @return ReadableCollection<TKey,T>
+     */
+    private function getRealCollection(): ReadableCollection
+    {
+        return $this->collection;
     }
 
     /**

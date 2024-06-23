@@ -48,7 +48,6 @@ trait CollectionTrait
      */
     final public function add(mixed $element): void
     {
-        $this->ensureSafety();
         $this->getRealCollection()->add($element);
     }
 

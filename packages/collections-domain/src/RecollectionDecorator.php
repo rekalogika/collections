@@ -24,6 +24,7 @@ use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\Trait\RecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
+use Rekalogika\Domain\Collections\Trait\ExtraLazyTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
@@ -39,8 +40,20 @@ class RecollectionDecorator implements Recollection
     /** @use SafeCollectionTrait<TKey,T> */
     use SafeCollectionTrait;
 
-    /** @use RecollectionTrait<TKey,T> */
-    use RecollectionTrait;
+    /**
+     * @use RecollectionTrait<TKey,T>
+     * @use ExtraLazyTrait<TKey,T>
+     */
+    use RecollectionTrait, ExtraLazyTrait {
+        ExtraLazyTrait::contains insteadof RecollectionTrait;
+        ExtraLazyTrait::containsKey insteadof RecollectionTrait;
+        ExtraLazyTrait::get insteadof RecollectionTrait;
+        ExtraLazyTrait::slice insteadof RecollectionTrait;
+        ExtraLazyTrait::offsetExists insteadof RecollectionTrait;
+        ExtraLazyTrait::offsetGet insteadof RecollectionTrait;
+        ExtraLazyTrait::offsetSet insteadof RecollectionTrait;
+        ExtraLazyTrait::add insteadof RecollectionTrait;
+    }
 
     /**
      * @var Collection<TKey,T>&Selectable<TKey,T>

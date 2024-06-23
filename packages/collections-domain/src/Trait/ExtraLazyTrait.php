@@ -11,22 +11,21 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Domain\Collections\Common\Trait;
+namespace Rekalogika\Domain\Collections\Trait;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ReadableCollection;
 
 /**
  * @template TKey of array-key
- * @template T
+ * @template-covariant T
  */
-trait ArrayAccessTrait
+trait ExtraLazyTrait
 {
     /**
-     * @return ReadableCollection<TKey,T>
+     * @use ReadableExtraLazyTrait<TKey,T>
      */
-    abstract private function getSafeCollection(): ReadableCollection;
-    abstract private function ensureSafety(): void;
+    use ReadableExtraLazyTrait;
 
     /**
      * @return Collection<TKey,T>
@@ -34,13 +33,20 @@ trait ArrayAccessTrait
     abstract private function getRealCollection(): Collection;
 
     /**
+     * @return Collection<TKey,T>
+     */
+    abstract private function getSafeCollection(): ReadableCollection;
+
+    /**
      * @param TKey $offset
      */
     final public function offsetExists(mixed $offset): bool
     {
-        // return $this->getSafeCollection()->containsKey($offset);
+        if ($this->isSafeWithIndex()) {
+            return $this->getRealCollection()->contains($offset);
+        }
 
-        return $this->containsKey($offset);
+        return $this->getSafeCollection()->contains($offset);
     }
 
     /**
@@ -49,9 +55,11 @@ trait ArrayAccessTrait
      */
     final public function offsetGet(mixed $offset): mixed
     {
-        // return $this->getSafeCollection()->get($offset);
+        if ($this->isSafeWithIndex()) {
+            return $this->getRealCollection()->get($offset);
+        }
 
-        return $this->get($offset);
+        return $this->getSafeCollection()->get($offset);
     }
 
     /**
@@ -61,24 +69,22 @@ trait ArrayAccessTrait
     final public function offsetSet(mixed $offset, mixed $value): void
     {
         if (!isset($offset)) {
-            $this->getRealCollection()->offsetSet(null, $value);
+            $this->getRealCollection()->add($value);
 
             return;
         }
 
-        $this->ensureSafety();
+        /** @var TKey $offset */
 
-        $this->getRealCollection()->offsetSet($offset, $value);
+        $this->ensureSafety();
+        $this->getRealCollection()->set($offset, $value);
     }
 
     /**
-     * @param TKey $offset
+     * @param T $element
      */
-    final public function offsetUnset(mixed $offset): void
+    final public function add(mixed $element): void
     {
-        $this->ensureSafety();
-
-        // $this->getRealCollection()->offsetUnset($offset);
-        $this->remove($offset);
+        $this->getRealCollection()->add($element);
     }
 }
