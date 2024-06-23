@@ -20,7 +20,7 @@ use Doctrine\Common\Collections\Collection;
  * @template TKey of array-key
  * @template T
  */
-trait WritableCollectionTrait
+trait CollectionTrait
 {
     /**
      * @param T $element

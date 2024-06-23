@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Trait;
 
 use Rekalogika\Domain\Collections\Common\Trait\ArrayAccessTrait;
+use Rekalogika\Domain\Collections\Common\Trait\CollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\IteratorAggregateTrait;
-use Rekalogika\Domain\Collections\Common\Trait\WritableCollectionTrait;
 
 /**
  * @template TKey of array-key
@@ -27,13 +27,13 @@ use Rekalogika\Domain\Collections\Common\Trait\WritableCollectionTrait;
 trait ExtraLazyTrait
 {
     /**
-     * @use WritableCollectionTrait<TKey,T>
+     * @use CollectionTrait<TKey,T>
      * @use ReadableExtraLazyTrait<TKey,T>
      */
-    use WritableCollectionTrait, ReadableExtraLazyTrait {
-        WritableCollectionTrait::filter insteadof ReadableExtraLazyTrait;
-        WritableCollectionTrait::map insteadof ReadableExtraLazyTrait;
-        WritableCollectionTrait::partition insteadof ReadableExtraLazyTrait;
+    use CollectionTrait, ReadableExtraLazyTrait {
+        CollectionTrait::filter insteadof ReadableExtraLazyTrait;
+        CollectionTrait::map insteadof ReadableExtraLazyTrait;
+        CollectionTrait::partition insteadof ReadableExtraLazyTrait;
     }
 
     use CountableTrait;
