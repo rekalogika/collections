@@ -31,6 +31,4 @@ interface ReadableRecollection extends PageableInterface, ReadableCollection
      * @throws NotFoundException
      */
     public function getOrFail(string|int $key): mixed;
-
-    public function refreshCount(): void;
 }
