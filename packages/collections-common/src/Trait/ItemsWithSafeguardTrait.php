@@ -14,11 +14,12 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Rekalogika\Contracts\Collections\Exception\OverflowException;
+use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Configuration;
 
 /**
  * @template TKey of array-key
- * @template T
+ * @template-covariant T
  *
  * @internal
  */
@@ -28,6 +29,11 @@ trait ItemsWithSafeguardTrait
      * @var array<TKey,T>|null
      */
     private ?array $itemsWithSafeguard = null;
+
+    /**
+     * @return PageableInterface<TKey,T>
+     */
+    abstract private function getPageable(): PageableInterface;
 
     /**
      * @return int<1,max>
