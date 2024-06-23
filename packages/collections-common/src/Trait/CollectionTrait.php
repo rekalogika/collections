@@ -23,18 +23,28 @@ use Doctrine\Common\Collections\Collection;
 trait CollectionTrait
 {
     /**
+     * @return Collection<TKey,T>
+     */
+    abstract private function getRealCollection(): Collection;
+
+    /**
+     * @return array<TKey,T>
+     */
+    abstract private function &getItemsWithSafeguard(): array;
+
+    /**
      * @param T $element
      */
     final public function add(mixed $element): void
     {
         $this->getItemsWithSafeguard();
-        $this->collection->add($element);
+        $this->getRealCollection()->add($element);
     }
 
     final public function clear(): void
     {
         $this->getItemsWithSafeguard();
-        $this->collection->clear();
+        $this->getRealCollection()->clear();
     }
 
     /**
@@ -44,7 +54,7 @@ trait CollectionTrait
     final public function remove(string|int $key): mixed
     {
         $this->getItemsWithSafeguard();
-        return $this->collection->remove($key);
+        return $this->getRealCollection()->remove($key);
     }
 
     /**
@@ -53,7 +63,7 @@ trait CollectionTrait
     final public function removeElement(mixed $element): bool
     {
         $this->getItemsWithSafeguard();
-        return $this->collection->removeElement($element);
+        return $this->getRealCollection()->removeElement($element);
     }
 
     /**
@@ -63,7 +73,7 @@ trait CollectionTrait
     final public function set(string|int $key, mixed $value): void
     {
         $this->getItemsWithSafeguard();
-        $this->collection->set($key, $value);
+        $this->getRealCollection()->set($key, $value);
     }
 
     /**
