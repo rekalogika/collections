@@ -94,6 +94,16 @@ class CriteriaRecollection implements ReadableRecollection
         $this->criteria = $criteria;
     }
 
+    private function getCountStrategy(): CountStrategy
+    {
+        return $this->countStrategy;
+    }
+
+    private function &getProvidedCount(): ?int
+    {
+        return $this->count;
+    }
+
     /**
      * @param null|Collection<TKey,T> $collection
      * @param null|int<1,max> $itemsPerPage

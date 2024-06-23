@@ -61,7 +61,7 @@ trait ArrayAccessTrait
     final public function offsetUnset(mixed $offset): void
     {
         $this->getItemsWithSafeguard();
-        
+
         $this->collection->offsetUnset($offset);
     }
 }

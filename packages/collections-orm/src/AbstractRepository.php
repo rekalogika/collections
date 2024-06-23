@@ -116,6 +116,16 @@ abstract class AbstractRepository implements Repository
      */
     abstract protected function configure(): RepositoryConfiguration;
 
+    private function getCountStrategy(): CountStrategy
+    {
+        return $this->countStrategy;
+    }
+
+    private function &getProvidedCount(): ?int
+    {
+        return $this->count;
+    }
+
     /**
      * @param int<1,max> $itemsPerPage
      */

@@ -67,6 +67,16 @@ class QueryCollection implements ReadableRecollection
     ) {
     }
 
+    private function getCountStrategy(): CountStrategy
+    {
+        return $this->countStrategy;
+    }
+
+    private function &getProvidedCount(): ?int
+    {
+        return $this->count;
+    }
+
     /**
      * @param null|int<1,max> $itemsPerPage
      * @param null|int<0,max> $count

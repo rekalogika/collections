@@ -100,6 +100,16 @@ class RecollectionDecorator implements Recollection
         $this->criteria = Criteria::create()->orderBy($this->orderBy);
     }
 
+    private function getCountStrategy(): CountStrategy
+    {
+        return $this->countStrategy;
+    }
+
+    private function &getProvidedCount(): ?int
+    {
+        return $this->count;
+    }
+
     /**
      * @return non-empty-array<string,Order>|string
      */

@@ -25,6 +25,11 @@
                 <file name="packages/collections-orm/src/Trait/RepositoryTrait.php" />
             </errorLevel>
         </UnsupportedReferenceUsage>
+        <UnsupportedPropertyReferenceUsage>
+            <errorLevel type="suppress">
+                <file name="packages/collections-common/src/Trait/CountableTrait.php" />
+            </errorLevel>
+        </UnsupportedPropertyReferenceUsage>
         <InvalidArgument>
             <errorLevel type="suppress">
                 <file name="packages/collections-domain/src/Trait/*.php" />
