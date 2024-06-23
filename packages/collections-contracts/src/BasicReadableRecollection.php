@@ -28,18 +28,19 @@ interface BasicReadableRecollection extends PageableInterface
      * @param TMaybeContained $element
      * @return (TMaybeContained is T ? bool : false)
      */
-    public function contains(mixed $element): bool;
+    public function contains(mixed $element);
 
     /**
      * @param TKey $key
+     * @return bool
      */
-    public function containsKey(string|int $key): bool;
+    public function containsKey(string|int $key);
 
     /**
      * @param TKey $key
      * @return T|null
      */
-    public function get(string|int $key): mixed;
+    public function get(string|int $key);
 
     /**
      * @param TKey $key

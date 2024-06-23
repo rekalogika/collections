@@ -21,7 +21,7 @@ use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 /**
  * @template T of object
  */
-final readonly class BasicRepositoryConfiguration
+class BasicRepositoryConfiguration
 {
     /**
      * @var non-empty-array<string,Order>
@@ -34,36 +34,17 @@ final readonly class BasicRepositoryConfiguration
      * @param int<1,max> $itemsPerPage
      */
     public function __construct(
-        private string $class,
-        private string $indexBy = 'id',
+        private readonly string $class,
+        private readonly string $indexBy = 'id',
         array|string|null $orderBy = null,
-        private int $itemsPerPage = 50,
-        private CountStrategy $countStrategy = CountStrategy::Restrict,
+        private readonly int $itemsPerPage = 50,
+        private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
     ) {
         $this->orderBy = OrderByUtil::normalizeOrderBy($orderBy);
 
         if ($countStrategy === CountStrategy::Provided) {
             throw new InvalidArgumentException('CountStrategy::Provided is not supported in repositories');
         }
-    }
-
-    /**
-     * @param null|non-empty-array<string,Order>|string $orderBy
-     * @param null|int<1,max> $itemsPerPage
-     */
-    public function with(
-        ?string $indexBy = null,
-        array|string|null $orderBy = null,
-        ?int $itemsPerPage = null,
-        ?CountStrategy $countStrategy = null,
-    ): static {
-        return new static(
-            $this->class,
-            $indexBy ?? $this->indexBy,
-            $orderBy ?? $this->orderBy,
-            $itemsPerPage ?? $this->itemsPerPage,
-            $countStrategy ?? $this->countStrategy,
-        );
     }
 
     public function getIndexBy(): string

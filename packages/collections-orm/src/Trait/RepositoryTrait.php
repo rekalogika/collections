@@ -11,53 +11,23 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Domain\Collections\Common\Trait;
+namespace Rekalogika\Collections\ORM\Trait;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ReadableCollection;
 
 /**
  * @template TKey of array-key
- * @template T
+ * @template T of object
+ *
+ * @internal
  */
-trait ReadableCollectionTrait
+trait RepositoryTrait
 {
-    /**
-     * @template TMaybeContained
-     * @param TMaybeContained $element
-     * @return (TMaybeContained is T ? bool : false)
-     */
-    final public function contains(mixed $element): bool
-    {
-        $items = $this->getItemsWithSafeguard();
-
-        return \in_array($element, $items, true);
-    }
-
     final public function isEmpty(): bool
     {
         return empty($this->getItemsWithSafeguard());
-    }
-
-    /**
-     * @param TKey $key
-     */
-    final public function containsKey(string|int $key): bool
-    {
-        $items = $this->getItemsWithSafeguard();
-
-        return isset($items[$key]) || \array_key_exists($key, $items);
-    }
-
-    /**
-     * @param TKey $key
-     * @return T|null
-     */
-    final public function get(string|int $key): mixed
-    {
-        $items = $this->getItemsWithSafeguard();
-
-        return $items[$key] ?? null;
     }
 
     /**
@@ -166,9 +136,9 @@ trait ReadableCollectionTrait
 
     /**
      * @param \Closure(T, TKey):bool $p
-     * @return ReadableCollection<TKey,T>
+     * @return Collection<TKey,T>
      */
-    final public function filter(\Closure $p): ReadableCollection
+    final public function filter(\Closure $p): Collection
     {
         /** @var array<TKey,T> */
         $items = $this->getItemsWithSafeguard();
@@ -181,9 +151,9 @@ trait ReadableCollectionTrait
     /**
      * @template U
      * @param \Closure(T):U $func
-     * @return ReadableCollection<TKey,U>
+     * @return Collection<TKey,U>
      */
-    final public function map(\Closure $func): ReadableCollection
+    final public function map(\Closure $func): Collection
     {
         /** @var array<TKey,T> */
         $items = $this->getItemsWithSafeguard();
@@ -195,7 +165,7 @@ trait ReadableCollectionTrait
 
     /**
      * @param \Closure(TKey, T):bool $p
-     * @return array{0: ReadableCollection<TKey,T>, 1: ReadableCollection<TKey,T>}
+     * @return array{0: Collection<TKey,T>, 1: Collection<TKey,T>}
      */
     final public function partition(\Closure $p): array
     {
@@ -276,5 +246,52 @@ trait ReadableCollectionTrait
         $items = $this->getItemsWithSafeguard();
 
         return array_reduce($items, $func, $initial);
+    }
+
+    public function clear()
+    {
+    }
+
+    public function set(string|int $key, mixed $value)
+    {
+    }
+
+    /**
+     * @param TKey $offset
+     */
+    final public function offsetExists(mixed $offset): bool
+    {
+        $items = $this->getItemsWithSafeguard();
+
+        return isset($items[$offset]) || \array_key_exists($offset, $items);
+    }
+
+    /**
+     * @param TKey $offset
+     * @return T|null
+     */
+    final public function offsetGet(mixed $offset): mixed
+    {
+        $items = $this->getItemsWithSafeguard();
+
+        /** @var T|null */
+        return $items[$offset] ?? null;
+    }
+
+    /**
+     * @param TKey|null $offset
+     * @param T $value
+     */
+    final public function offsetSet(mixed $offset, mixed $value): void
+    {
+        $this->add($value);
+    }
+
+    /**
+     * @param TKey $offset
+     */
+    final public function offsetUnset(mixed $offset): void
+    {
+        $this->remove($offset);
     }
 }
