@@ -16,19 +16,19 @@ namespace Rekalogika\Collections\ORM;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Rekalogika\Collections\ORM\Configuration\BasicRepositoryConfiguration;
-use Rekalogika\Collections\ORM\Trait\BasicRepositoryTrait;
+use Rekalogika\Collections\ORM\Configuration\MinimalRepositoryConfiguration;
+use Rekalogika\Collections\ORM\Trait\MinimalRepositoryTrait;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
-use Rekalogika\Contracts\Collections\BasicRepository;
+use Rekalogika\Contracts\Collections\MinimalRepository;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 
 /**
  * @template TKey of array-key
  * @template T of object
- * @implements BasicRepository<TKey,T>
+ * @implements MinimalRepository<TKey,T>
  */
-abstract class AbstractBasicRepository implements BasicRepository
+abstract class AbstractMinimalRepository implements MinimalRepository
 {
     /**
      * @use QueryBuilderTrait<array-key,T>
@@ -41,9 +41,9 @@ abstract class AbstractBasicRepository implements BasicRepository
     use PageableTrait;
 
     /**
-     * @use BasicRepositoryTrait<array-key,T>
+     * @use MinimalRepositoryTrait<array-key,T>
      */
-    use BasicRepositoryTrait;
+    use MinimalRepositoryTrait;
 
     private ?int $count = 0;
 
@@ -76,9 +76,9 @@ abstract class AbstractBasicRepository implements BasicRepository
     }
 
     /**
-     * @return BasicRepositoryConfiguration<T>
+     * @return MinimalRepositoryConfiguration<T>
      */
-    abstract protected function configure(): BasicRepositoryConfiguration;
+    abstract protected function configure(): MinimalRepositoryConfiguration;
 
     /**
      * @param int<1,max> $itemsPerPage

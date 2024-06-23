@@ -15,14 +15,20 @@ namespace Rekalogika\Contracts\Collections;
 
 /**
  * @template TKey of array-key
- * @template-covariant T of object
- * @extends BasicReadableRecollection<TKey,T>
+ * @template T of object
+ * @extends MinimalReadableRepository<TKey,T>
+ * @extends MinimalRecollection<TKey,T>
  */
-interface BasicReadableRepository extends BasicReadableRecollection
+interface MinimalRepository extends MinimalReadableRepository, MinimalRecollection
 {
     /**
      * @param TKey $key
-     * @return T
+     * @return T|null
      */
-    public function reference(int|string $key): object;
+    public function remove(string|int $key): mixed;
+
+    /**
+     * @param T $element
+     */
+    public function removeElement(mixed $element): bool;
 }

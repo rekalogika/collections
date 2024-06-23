@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Configuration\RepositoryConfiguration;
-use Rekalogika\Collections\ORM\Trait\BasicRepositoryTrait;
+use Rekalogika\Collections\ORM\Trait\MinimalRepositoryTrait;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryTrait;
 use Rekalogika\Contracts\Collections\Repository;
@@ -45,9 +45,9 @@ abstract class AbstractRepository implements Repository
     use PageableTrait;
 
     /**
-     * @use BasicRepositoryTrait<array-key,T>
+     * @use MinimalRepositoryTrait<array-key,T>
      */
-    use BasicRepositoryTrait;
+    use MinimalRepositoryTrait;
 
     /**
      * @use ItemsWithSafeguardTrait<array-key,T>

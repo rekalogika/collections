@@ -15,13 +15,14 @@ namespace Rekalogika\Contracts\Collections;
 
 /**
  * @template TKey of array-key
- * @template T
- * @extends BasicReadableRecollection<TKey,T>
+ * @template-covariant T of object
+ * @extends MinimalReadableRecollection<TKey,T>
  */
-interface BasicRecollection extends BasicReadableRecollection
+interface MinimalReadableRepository extends MinimalReadableRecollection
 {
     /**
-     * @param T $element
+     * @param TKey $key
+     * @return T
      */
-    public function add(mixed $element): void;
+    public function reference(int|string $key): object;
 }

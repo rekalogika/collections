@@ -36,11 +36,11 @@
             <errorLevel type="suppress">
                 <file name="packages/collections-domain/src/RecollectionDecorator.php" />
                 <file name="packages/collections-domain/src/CriteriaRecollection.php" />
-                <file name="packages/collections-domain/src/BasicRecollectionDecorator.php" />
-                <file name="packages/collections-domain/src/BasicCriteriaRecollection.php" />
+                <file name="packages/collections-domain/src/MinimalRecollectionDecorator.php" />
+                <file name="packages/collections-domain/src/MinimalCriteriaRecollection.php" />
                 <file name="packages/collections-orm/src/QueryCollection.php" />
                 <file name="packages/collections-orm/src/QueryPageable.php" />
-                <file name="packages/collections-orm/src/AbstractBasicRepository.php" />
+                <file name="packages/collections-orm/src/AbstractMinimalRepository.php" />
             </errorLevel>
         </UnsafeInstantiation>
         <MoreSpecificReturnType>

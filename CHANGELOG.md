@@ -27,6 +27,7 @@
 * deps: add debug bundle
 * refactor: move `refreshCount` to its own interface
 * refactor: rename `getReference` to `reference`
+* refactor: rename the term 'basic' to 'minimal'
 
 ## 0.3.0
 

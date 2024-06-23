@@ -21,7 +21,7 @@ use Rekalogika\Contracts\Collections\Exception\NotFoundException;
  *
  * @internal
  */
-trait BasicRepositoryTrait
+trait MinimalRepositoryTrait
 {
     /**
      * @param TKey $key

@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\Tests\App\BasicRepository;
 
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
-use Rekalogika\Contracts\Collections\BasicRepository;
+use Rekalogika\Contracts\Collections\MinimalRepository;
 
 /**
- * @extends BasicRepository<array-key,Citizen>
+ * @extends MinimalRepository<array-key,Citizen>
  */
-interface CitizenBasicRepository extends BasicRepository
+interface CitizenBasicRepository extends MinimalRepository
 {
 }

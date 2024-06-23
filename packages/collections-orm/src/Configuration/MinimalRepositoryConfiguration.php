@@ -21,7 +21,7 @@ use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 /**
  * @template T of object
  */
-class BasicRepositoryConfiguration
+class MinimalRepositoryConfiguration
 {
     /**
      * @var non-empty-array<string,Order>

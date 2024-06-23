@@ -13,19 +13,19 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\App\BasicRepository\Implementation;
 
-use Rekalogika\Collections\ORM\AbstractBasicRepository;
-use Rekalogika\Collections\ORM\Configuration\BasicRepositoryConfiguration;
+use Rekalogika\Collections\ORM\AbstractMinimalRepository;
+use Rekalogika\Collections\ORM\Configuration\MinimalRepositoryConfiguration;
 use Rekalogika\Collections\Tests\App\BasicRepository\CitizenBasicRepository;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 
 /**
- * @extends AbstractBasicRepository<array-key,Citizen>
+ * @extends AbstractMinimalRepository<array-key,Citizen>
  */
-class DefaultCitizenBasicRepository extends AbstractBasicRepository implements CitizenBasicRepository
+class DefaultCitizenBasicRepository extends AbstractMinimalRepository implements CitizenBasicRepository
 {
-    protected function configure(): BasicRepositoryConfiguration
+    protected function configure(): MinimalRepositoryConfiguration
     {
-        return new BasicRepositoryConfiguration(
+        return new MinimalRepositoryConfiguration(
             class: Citizen::class,
         );
     }

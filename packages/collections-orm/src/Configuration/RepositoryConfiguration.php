@@ -18,9 +18,9 @@ use Rekalogika\Domain\Collections\Common\CountStrategy;
 
 /**
  * @template T of object
- * @extends BasicRepositoryConfiguration<T>
+ * @extends MinimalRepositoryConfiguration<T>
  */
-class RepositoryConfiguration extends BasicRepositoryConfiguration
+class RepositoryConfiguration extends MinimalRepositoryConfiguration
 {
     /**
      * @param class-string<T> $class

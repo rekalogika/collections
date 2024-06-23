@@ -16,15 +16,13 @@ namespace Rekalogika\Domain\Collections;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
+use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\Common\Collections\Selectable;
-use Rekalogika\Contracts\Collections\BasicRecollection;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
-use Rekalogika\Domain\Collections\Common\Configuration;
+use Rekalogika\Contracts\Collections\MinimalReadableRecollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
-use Rekalogika\Domain\Collections\Common\Trait\BasicReadableCollectionTrait;
-use Rekalogika\Domain\Collections\Common\Trait\BasicWritableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
+use Rekalogika\Domain\Collections\Common\Trait\MinimalReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
@@ -33,9 +31,9 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 /**
  * @template TKey of array-key
  * @template T
- * @implements BasicRecollection<TKey,T>
+ * @implements MinimalReadableRecollection<TKey,T>
  */
-class BasicRecollectionDecorator implements BasicRecollection, \Countable
+class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Countable
 {
     /** @use RecollectionTrait<TKey,T> */
     use RecollectionTrait;
@@ -43,11 +41,8 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;
 
-    /** @use BasicWritableCollectionTrait<TKey,T> */
-    use BasicWritableCollectionTrait;
-
-    /** @use BasicReadableCollectionTrait<TKey,T> */
-    use BasicReadableCollectionTrait;
+    /** @use MinimalReadableCollectionTrait<TKey,T> */
+    use MinimalReadableCollectionTrait;
 
     use CountableTrait;
 
@@ -57,31 +52,25 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
     use ReadableRecollectionTrait;
 
     /**
-     * @var Collection<TKey,T>&Selectable<TKey,T>
+     * @var ReadableCollection<TKey,T>&Selectable<TKey,T>
      */
-    private readonly Collection&Selectable $collection;
-
-    /**
-     * @var non-empty-array<string,Order>
-     */
-    private readonly array $orderBy;
+    private readonly ReadableCollection&Selectable $collection;
 
     private readonly Criteria $criteria;
 
     /**
-     * @param Collection<TKey,T> $collection
-     * @param null|non-empty-array<string,Order>|string $orderBy
+     * @param ReadableCollection<TKey,T> $collection
      * @param int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
      */
     public function __construct(
-        Collection $collection,
-        array|string|null $orderBy = null,
+        ReadableCollection $collection,
+        ?Criteria $criteria = null,
         private readonly int $itemsPerPage = 50,
         private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
         private ?int &$count = null,
     ) {
-        // handle collection
+        // save collection
 
         if (!$collection instanceof Selectable) {
             throw new UnexpectedValueException('The wrapped collection must implement the Selectable interface.');
@@ -89,35 +78,27 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
 
         $this->collection = $collection;
 
-        // handle orderBy
+        // save criteria
 
-        $this->orderBy = OrderByUtil::normalizeOrderBy(
-            orderBy: $orderBy,
-            defaultOrderBy: $this->getDefaultOrderBy()
-        );
+        $criteria = clone ($criteria ?? Criteria::create());
 
-        $this->criteria = Criteria::create()->orderBy($this->orderBy);
-    }
+        if (\count($criteria->orderings()) === 0) {
+            $criteria->orderBy(['id' => Order::Descending]);
+        }
 
-    /**
-     * @return non-empty-array<string,Order>|string
-     */
-    protected function getDefaultOrderBy(): array|string
-    {
-        return Configuration::$defaultOrderBy;
+        $this->criteria = $criteria;
     }
 
     /**
      * @param null|Collection<TKey,T> $collection
-     * @param null|non-empty-array<string,Order>|string $orderBy
      * @param null|int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
      */
     protected function with(
-        ?Collection $collection = null,
-        array|string|null $orderBy = null,
+        ?ReadableCollection $collection = null,
+        ?Criteria $criteria = null,
         ?int $itemsPerPage = 50,
-        ?CountStrategy $countStrategy = CountStrategy::Restrict,
+        ?CountStrategy $countStrategy = null,
         ?int &$count = null,
     ): static {
         $count = $count ?? $this->count;
@@ -125,32 +106,9 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
         // @phpstan-ignore-next-line
         return new static(
             collection: $collection ?? $this->collection,
-            orderBy: $orderBy ?? $this->orderBy,
+            criteria: $criteria ?? $this->criteria,
             itemsPerPage: $itemsPerPage ?? $this->itemsPerPage,
             countStrategy: $countStrategy ?? $this->countStrategy,
-            count: $count,
-        );
-    }
-
-    /**
-     * @param null|int<0,max> $count
-     * @return BasicCriteriaRecollection<TKey,T>
-     */
-    protected function applyCriteria(
-        Criteria $criteria,
-        CountStrategy $countStrategy = CountStrategy::Restrict,
-        ?int &$count = null,
-    ): BasicCriteriaRecollection {
-        // if $criteria has no orderings, add the current ordering
-        if (\count($criteria->orderings()) === 0) {
-            $criteria = $criteria->orderBy($this->orderBy);
-        }
-
-        return new BasicCriteriaRecollection(
-            collection: $this->collection,
-            criteria: $criteria,
-            itemsPerPage: $this->itemsPerPage,
-            countStrategy: $countStrategy,
             count: $count,
         );
     }
@@ -160,7 +118,7 @@ class BasicRecollectionDecorator implements BasicRecollection, \Countable
      */
     private function getRealCount(): int
     {
-        $count = $this->collection->count();
+        $count = $this->collection->matching($this->criteria)->count();
 
         if ($count > 0) {
             return $count;
