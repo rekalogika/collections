@@ -13,14 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Collections;
 
-use Doctrine\Common\Collections\Collection;
-
-/**
- * @template TKey of array-key
- * @template T
- * @extends Collection<TKey,T>
- * @extends ReadableRecollection<TKey,T>
- */
-interface Recollection extends Collection, ReadableRecollection, RefreshableCount
+interface RefreshableCount
 {
+    public function refreshCount(): void;
 }
