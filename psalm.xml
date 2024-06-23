@@ -63,6 +63,11 @@
                 <file name="packages/collections-common/src/Internal/OrderByUtil.php" />
             </errorLevel>
         </TypeDoesNotContainType>
+        <InvalidTemplateParam>
+            <errorLevel type="suppress">
+                <file name="packages/collections-common/src/Trait/ReadableCollectionTrait.php" />
+            </errorLevel>
+        </InvalidTemplateParam>
     </issueHandlers>
 
     <plugins>

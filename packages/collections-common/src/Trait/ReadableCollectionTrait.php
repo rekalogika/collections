@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\ReadableCollection;
 
 /**
  * @template TKey of array-key
- * @template T
+ * @template-covariant T
  */
 trait ReadableCollectionTrait
 {
@@ -62,6 +62,7 @@ trait ReadableCollectionTrait
     {
         $items = $this->getItemsWithSafeguard();
 
+        /** @psalm-suppress EmptyArrayAccess */
         return $items[$key] ?? null;
     }
 
