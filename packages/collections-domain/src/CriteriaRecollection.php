@@ -21,9 +21,9 @@ use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
+use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 
 /**
@@ -39,8 +39,8 @@ class CriteriaRecollection implements ReadableRecollection
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;
 
-    /** @use ItemsWithSafeguardTrait<TKey,T> */
-    use ItemsWithSafeguardTrait;
+    /** @use SafeCollectionTrait<TKey,T> */
+    use SafeCollectionTrait;
 
     /** @use ReadableRecollectionTrait<TKey,T> */
     use ReadableRecollectionTrait;

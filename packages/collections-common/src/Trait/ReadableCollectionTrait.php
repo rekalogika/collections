@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\ReadableCollection;
 
 /**
@@ -30,9 +29,9 @@ trait ReadableCollectionTrait
     use CountableTrait;
 
     /**
-     * @return array<TKey,T>
+     * @return ReadableCollection<TKey,T>
      */
-    abstract private function &getItemsWithSafeguard(): array;
+    abstract private function getSafeCollection(): ReadableCollection;
 
     /**
      * @template TMaybeContained
@@ -41,14 +40,12 @@ trait ReadableCollectionTrait
      */
     final public function contains(mixed $element): bool
     {
-        $items = $this->getItemsWithSafeguard();
-
-        return \in_array($element, $items, true);
+        return $this->getSafeCollection()->contains($element);
     }
 
     final public function isEmpty(): bool
     {
-        return empty($this->getItemsWithSafeguard());
+        return $this->getSafeCollection()->isEmpty();
     }
 
     /**
@@ -56,9 +53,7 @@ trait ReadableCollectionTrait
      */
     final public function containsKey(string|int $key): bool
     {
-        $items = $this->getItemsWithSafeguard();
-
-        return isset($items[$key]) || \array_key_exists($key, $items);
+        return $this->getSafeCollection()->containsKey($key);
     }
 
     /**
@@ -67,10 +62,7 @@ trait ReadableCollectionTrait
      */
     final public function get(string|int $key): mixed
     {
-        $items = $this->getItemsWithSafeguard();
-
-        /** @psalm-suppress EmptyArrayAccess */
-        return $items[$key] ?? null;
+        return $this->getSafeCollection()->get($key);
     }
 
     /**
@@ -78,10 +70,7 @@ trait ReadableCollectionTrait
      */
     final public function getKeys(): array
     {
-        /** @var array<TKey,T> */
-        $items = $this->getItemsWithSafeguard();
-
-        return array_keys($items);
+        return $this->getSafeCollection()->getKeys();
     }
 
     /**
@@ -89,10 +78,7 @@ trait ReadableCollectionTrait
      */
     final public function getValues(): array
     {
-        $items = $this->getItemsWithSafeguard();
-
-        /** @psalm-suppress RedundantFunctionCall */
-        return array_values($items);
+        return $this->getSafeCollection()->getValues();
     }
 
     /**
@@ -100,7 +86,7 @@ trait ReadableCollectionTrait
      */
     final public function toArray(): array
     {
-        return $this->getItemsWithSafeguard();
+        return $this->getSafeCollection()->toArray();
     }
 
     /**
@@ -108,9 +94,7 @@ trait ReadableCollectionTrait
      */
     final public function first(): mixed
     {
-        $array = &$this->getItemsWithSafeguard();
-
-        return reset($array);
+        return $this->getSafeCollection()->first();
     }
 
     /**
@@ -118,9 +102,7 @@ trait ReadableCollectionTrait
      */
     final public function last(): mixed
     {
-        $array = &$this->getItemsWithSafeguard();
-
-        return end($array);
+        return $this->getSafeCollection()->last();
     }
 
     /**
@@ -128,9 +110,7 @@ trait ReadableCollectionTrait
      */
     final public function key(): int|string|null
     {
-        $array = &$this->getItemsWithSafeguard();
-
-        return key($array);
+        return $this->getSafeCollection()->key();
     }
 
     /**
@@ -138,9 +118,7 @@ trait ReadableCollectionTrait
      */
     final public function current(): mixed
     {
-        $array = &$this->getItemsWithSafeguard();
-
-        return current($array);
+        return $this->getSafeCollection()->current();
     }
 
     /**
@@ -148,9 +126,7 @@ trait ReadableCollectionTrait
      */
     final public function next(): mixed
     {
-        $array = &$this->getItemsWithSafeguard();
-
-        return next($array);
+        return $this->getSafeCollection()->next();
     }
 
     /**
@@ -159,9 +135,7 @@ trait ReadableCollectionTrait
 
     final public function slice(int $offset, ?int $length = null): array
     {
-        $items = $this->getItemsWithSafeguard();
-
-        return \array_slice($items, $offset, $length, true);
+        return $this->getSafeCollection()->slice($offset, $length);
     }
 
     /**
@@ -169,16 +143,7 @@ trait ReadableCollectionTrait
      */
     final public function exists(\Closure $p): bool
     {
-        /** @var array<TKey,T> */
-        $items = $this->getItemsWithSafeguard();
-
-        foreach ($items as $key => $item) {
-            if ($p($key, $item)) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->getSafeCollection()->exists($p);
     }
 
     /**
@@ -187,12 +152,7 @@ trait ReadableCollectionTrait
      */
     final public function filter(\Closure $p): ReadableCollection
     {
-        /** @var array<TKey,T> */
-        $items = $this->getItemsWithSafeguard();
-
-        $result = array_filter($items, $p, \ARRAY_FILTER_USE_BOTH);
-
-        return new ArrayCollection($result);
+        return $this->getSafeCollection()->filter($p);
     }
 
     /**
@@ -202,12 +162,7 @@ trait ReadableCollectionTrait
      */
     final public function map(\Closure $func): ReadableCollection
     {
-        /** @var array<TKey,T> */
-        $items = $this->getItemsWithSafeguard();
-
-        $result = array_map($func, $items);
-
-        return new ArrayCollection($result);
+        return $this->getSafeCollection()->map($func);
     }
 
     /**
@@ -216,20 +171,7 @@ trait ReadableCollectionTrait
      */
     final public function partition(\Closure $p): array
     {
-        /** @var array<TKey,T> */
-        $items = $this->getItemsWithSafeguard();
-
-        $matches = $noMatches = [];
-
-        foreach ($items as $key => $item) {
-            if ($p($key, $item)) {
-                $matches[$key] = $item;
-            } else {
-                $noMatches[$key] = $item;
-            }
-        }
-
-        return [new ArrayCollection($matches), new ArrayCollection($noMatches)];
+        return $this->getSafeCollection()->partition($p);
     }
 
     /**
@@ -237,16 +179,7 @@ trait ReadableCollectionTrait
      */
     final public function forAll(\Closure $p): bool
     {
-        /** @var array<TKey,T> */
-        $items = $this->getItemsWithSafeguard();
-
-        foreach ($items as $key => $item) {
-            if (!$p($key, $item)) {
-                return false;
-            }
-        }
-
-        return true;
+        return $this->getSafeCollection()->forAll($p);
     }
 
     /**
@@ -256,10 +189,7 @@ trait ReadableCollectionTrait
      */
     final public function indexOf(mixed $element): bool|int|string
     {
-        /** @var array<TKey,T> */
-        $items = $this->getItemsWithSafeguard();
-
-        return array_search($element, $items, true);
+        return $this->getSafeCollection()->indexOf($element);
     }
 
     /**
@@ -268,16 +198,7 @@ trait ReadableCollectionTrait
      */
     final public function findFirst(\Closure $p): mixed
     {
-        /** @var array<TKey,T> */
-        $items = $this->getItemsWithSafeguard();
-
-        foreach ($items as $key => $item) {
-            if ($p($key, $item)) {
-                return $item;
-            }
-        }
-
-        return null;
+        return $this->getSafeCollection()->findFirst($p);
     }
 
     /**
@@ -289,9 +210,6 @@ trait ReadableCollectionTrait
      */
     final public function reduce(\Closure $func, mixed $initial = null): mixed
     {
-        /** @var array<TKey,T> */
-        $items = $this->getItemsWithSafeguard();
-
-        return array_reduce($items, $func, $initial);
+        return $this->getSafeCollection()->reduce($func, $initial);
     }
 }

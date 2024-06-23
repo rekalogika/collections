@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ReadableCollection;
 use Rekalogika\Contracts\Collections\Exception\OverflowException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Configuration;
@@ -23,12 +25,12 @@ use Rekalogika\Domain\Collections\Common\Configuration;
  *
  * @internal
  */
-trait ItemsWithSafeguardTrait
+trait SafeCollectionTrait
 {
     /**
-     * @var array<TKey,T>|null
+     * @var ReadableCollection<TKey,T>|null
      */
-    private ?array $itemsWithSafeguard = null;
+    private ?ReadableCollection $safeCollection = null;
 
     /**
      * @return PageableInterface<TKey,T>
@@ -45,13 +47,18 @@ trait ItemsWithSafeguardTrait
      */
     abstract private function getHardLimit(): ?int;
 
-    /**
-     * @return array<TKey,T>
-     */
-    private function &getItemsWithSafeguard(): array
+    private function ensureSafety(): void
     {
-        if ($this->itemsWithSafeguard !== null) {
-            return $this->itemsWithSafeguard;
+        $this->getSafeCollection();
+    }
+
+    /**
+     * @return ReadableCollection<TKey,T>
+     */
+    private function getSafeCollection(): ReadableCollection
+    {
+        if ($this->safeCollection !== null) {
+            return $this->safeCollection;
         }
 
         $hardLimit = $this->getHardLimit() ?? Configuration::$defaultHardLimit;
@@ -75,9 +82,6 @@ trait ItemsWithSafeguardTrait
             @trigger_error("The collection has more items than the soft limit. Consider rewriting your code so that it can process the items in an efficient manner.", \E_USER_DEPRECATED);
         }
 
-        // needs to separate the assignment & return for next() to work
-        $this->itemsWithSafeguard = $items;
-
-        return $this->itemsWithSafeguard;
+        return $this->safeCollection = new ArrayCollection($items);
     }
 }

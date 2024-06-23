@@ -21,7 +21,6 @@ use Rekalogika\Collections\ORM\Trait\MinimalRepositoryTrait;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
 use Rekalogika\Contracts\Collections\MinimalRepository;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 
 /**
  * @template TKey of array-key
@@ -34,11 +33,6 @@ abstract class AbstractMinimalRepository implements MinimalRepository
      * @use QueryBuilderTrait<array-key,T>
      */
     use QueryBuilderTrait;
-
-    /**
-     * @use PageableTrait<array-key,T>
-     */
-    use PageableTrait;
 
     /**
      * @use MinimalRepositoryTrait<array-key,T>

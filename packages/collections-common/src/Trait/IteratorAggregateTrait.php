@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
+use Doctrine\Common\Collections\ReadableCollection;
+
 /**
  * @template TKey of array-key
  * @template-covariant T
@@ -20,15 +22,15 @@ namespace Rekalogika\Domain\Collections\Common\Trait;
 trait IteratorAggregateTrait
 {
     /**
-     * @return array<TKey,T>
+     * @return ReadableCollection<TKey,T>
      */
-    abstract private function &getItemsWithSafeguard(): array;
+    abstract private function getSafeCollection(): ReadableCollection;
 
     /**
      * @return \Traversable<TKey,T>
      */
     final public function getIterator(): \Traversable
     {
-        yield from $this->getItemsWithSafeguard();
+        return $this->getSafeCollection()->getIterator();
     }
 }

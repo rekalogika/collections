@@ -28,10 +28,4 @@ trait RecollectionTrait
         CollectionTrait::filter insteadof ReadableRecollectionTrait;
         CollectionTrait::partition insteadof ReadableRecollectionTrait;
     }
-
-    // use ReadableRecollectionTrait, CollectionTrait {
-    //     CollectionTrait::map insteadof ReadableRecollectionTrait;
-    //     CollectionTrait::filter insteadof ReadableRecollectionTrait;
-    //     CollectionTrait::partition insteadof ReadableRecollectionTrait;
-    // }
 }

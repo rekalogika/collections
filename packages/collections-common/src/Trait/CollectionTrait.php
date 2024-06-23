@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ReadableCollection;
 
 /**
  * @template TKey of array-key
@@ -38,22 +38,23 @@ trait CollectionTrait
     abstract private function getRealCollection(): Collection;
 
     /**
-     * @return array<TKey,T>
+     * @return ReadableCollection<TKey,T>
      */
-    abstract private function &getItemsWithSafeguard(): array;
+    abstract private function getSafeCollection(): ReadableCollection;
+    abstract private function ensureSafety(): void;
 
     /**
      * @param T $element
      */
     final public function add(mixed $element): void
     {
-        $this->getItemsWithSafeguard();
+        $this->ensureSafety();
         $this->getRealCollection()->add($element);
     }
 
     final public function clear(): void
     {
-        $this->getItemsWithSafeguard();
+        $this->ensureSafety();
         $this->getRealCollection()->clear();
     }
 
@@ -63,7 +64,7 @@ trait CollectionTrait
      */
     final public function remove(string|int $key): mixed
     {
-        $this->getItemsWithSafeguard();
+        $this->ensureSafety();
         return $this->getRealCollection()->remove($key);
     }
 
@@ -72,7 +73,7 @@ trait CollectionTrait
      */
     final public function removeElement(mixed $element): bool
     {
-        $this->getItemsWithSafeguard();
+        $this->ensureSafety();
         return $this->getRealCollection()->removeElement($element);
     }
 
@@ -82,7 +83,7 @@ trait CollectionTrait
      */
     final public function set(string|int $key, mixed $value): void
     {
-        $this->getItemsWithSafeguard();
+        $this->ensureSafety();
         $this->getRealCollection()->set($key, $value);
     }
 
@@ -93,11 +94,13 @@ trait CollectionTrait
      */
     final public function map(\Closure $func): Collection
     {
-        /** @var array<TKey,T> */
-        $items = $this->getItemsWithSafeguard();
-        $result = array_map($func, $items);
+        $result = $this->getSafeCollection()->map($func);
 
-        return new ArrayCollection($result);
+        if (!$result instanceof Collection) {
+            throw new \RuntimeException('Unexpected return type from map');
+        }
+
+        return $result;
     }
 
     /**
@@ -106,11 +109,13 @@ trait CollectionTrait
      */
     final public function filter(\Closure $p): Collection
     {
-        /** @var array<TKey,T> */
-        $items = $this->getItemsWithSafeguard();
-        $result = array_filter($items, $p, \ARRAY_FILTER_USE_BOTH);
+        $result = $this->getSafeCollection()->filter($p);
 
-        return new ArrayCollection($result);
+        if (!$result instanceof Collection) {
+            throw new \RuntimeException('Unexpected return type from filter');
+        }
+
+        return $result;
     }
 
     /**
@@ -119,19 +124,12 @@ trait CollectionTrait
      */
     final public function partition(\Closure $p): array
     {
-        /** @var array<TKey,T> */
-        $items = $this->getItemsWithSafeguard();
+        $result = $this->getSafeCollection()->partition($p);
 
-        $matches = $noMatches = [];
-
-        foreach ($items as $key => $item) {
-            if ($p($key, $item)) {
-                $matches[$key] = $item;
-            } else {
-                $noMatches[$key] = $item;
-            }
+        if (!\is_array($result) || \count($result) !== 2 || !$result[0] instanceof Collection || !$result[1] instanceof Collection) {
+            throw new \RuntimeException('Unexpected return type from partition');
         }
 
-        return [new ArrayCollection($matches), new ArrayCollection($noMatches)];
+        return $result;
     }
 }

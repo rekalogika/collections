@@ -17,10 +17,10 @@ use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Trait\ItemsWithSafeguardTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
+use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 
 /**
  * @template TKey of array-key
@@ -38,8 +38,8 @@ class QueryCollection implements ReadableRecollection
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;
 
-    /** @use ItemsWithSafeguardTrait<TKey,T> */
-    use ItemsWithSafeguardTrait;
+    /** @use SafeCollectionTrait<TKey,T> */
+    use SafeCollectionTrait;
 
     /** @use ReadableRecollectionTrait<TKey,T> */
     use ReadableRecollectionTrait;
