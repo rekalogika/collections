@@ -23,6 +23,13 @@ use Doctrine\Common\Collections\ReadableCollection;
 trait ReadableCollectionTrait
 {
     /**
+     * @use IteratorAggregateTrait<TKey,T>
+     */
+    use IteratorAggregateTrait;
+
+    use CountableTrait;
+
+    /**
      * @return array<TKey,T>
      */
     abstract private function &getItemsWithSafeguard(): array;

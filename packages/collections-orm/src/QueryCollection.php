@@ -37,11 +37,6 @@ class QueryCollection implements ReadableRecollection
     /** @use ReadableCollectionTrait<TKey,T> */
     use ReadableCollectionTrait;
 
-    use CountableTrait;
-
-    /** @use IteratorAggregateTrait<TKey,T> */
-    use IteratorAggregateTrait;
-
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;
 
