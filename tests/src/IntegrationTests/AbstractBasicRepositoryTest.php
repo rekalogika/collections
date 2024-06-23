@@ -16,21 +16,21 @@ namespace Rekalogika\Collections\Tests\UnitTests\Collections;
 use Doctrine\ORM\EntityNotFoundException;
 use Rekalogika\Collections\Tests\App\BasicRepository\CountryBasicRepository;
 use Rekalogika\Collections\Tests\App\Entity\Country;
-use Rekalogika\Contracts\Collections\BasicRepository;
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
+use Rekalogika\Contracts\Collections\MinimalRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class AbstractBasicRepositoryTest extends KernelTestCase
 {
     /**
-     * @return BasicRepository<array-key,Country>
+     * @return MinimalRepository<array-key,Country>
      */
-    protected function getRepository(): BasicRepository
+    protected function getRepository(): MinimalRepository
     {
         $repository = static::getContainer()->get(CountryBasicRepository::class);
-        static::assertInstanceOf(BasicRepository::class, $repository);
+        static::assertInstanceOf(MinimalRepository::class, $repository);
 
-        /** @var BasicRepository<array-key,Country> $repository */
+        /** @var MinimalRepository<array-key,Country> $repository */
 
         return $repository;
     }

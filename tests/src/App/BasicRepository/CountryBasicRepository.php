@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\Tests\App\BasicRepository;
 
 use Rekalogika\Collections\Tests\App\Entity\Country;
-use Rekalogika\Contracts\Collections\BasicRepository;
+use Rekalogika\Contracts\Collections\MinimalRepository;
 
 /**
- * @extends BasicRepository<array-key,Country>
+ * @extends MinimalRepository<array-key,Country>
  */
-interface CountryBasicRepository extends BasicRepository
+interface CountryBasicRepository extends MinimalRepository
 {
 }

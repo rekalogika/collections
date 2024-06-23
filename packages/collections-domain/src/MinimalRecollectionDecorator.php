@@ -16,13 +16,15 @@ namespace Rekalogika\Domain\Collections;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
-use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\Common\Collections\Selectable;
-use Rekalogika\Contracts\Collections\BasicReadableRecollection;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
+use Rekalogika\Contracts\Collections\MinimalRecollection;
+use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Trait\BasicReadableCollectionTrait;
+use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
+use Rekalogika\Domain\Collections\Common\Trait\MinimalReadableCollectionTrait;
+use Rekalogika\Domain\Collections\Common\Trait\MinimalWritableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyDetectorTrait;
@@ -31,9 +33,9 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
 /**
  * @template TKey of array-key
  * @template T
- * @implements BasicReadableRecollection<TKey,T>
+ * @implements MinimalRecollection<TKey,T>
  */
-class BasicCriteriaRecollection implements BasicReadableRecollection, \Countable
+class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
 {
     /** @use RecollectionTrait<TKey,T> */
     use RecollectionTrait;
@@ -41,8 +43,11 @@ class BasicCriteriaRecollection implements BasicReadableRecollection, \Countable
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;
 
-    /** @use BasicReadableCollectionTrait<TKey,T> */
-    use BasicReadableCollectionTrait;
+    /** @use MinimalWritableCollectionTrait<TKey,T> */
+    use MinimalWritableCollectionTrait;
+
+    /** @use MinimalReadableCollectionTrait<TKey,T> */
+    use MinimalReadableCollectionTrait;
 
     use CountableTrait;
 
@@ -52,25 +57,31 @@ class BasicCriteriaRecollection implements BasicReadableRecollection, \Countable
     use ReadableRecollectionTrait;
 
     /**
-     * @var ReadableCollection<TKey,T>&Selectable<TKey,T>
+     * @var Collection<TKey,T>&Selectable<TKey,T>
      */
-    private readonly ReadableCollection&Selectable $collection;
+    private readonly Collection&Selectable $collection;
+
+    /**
+     * @var non-empty-array<string,Order>
+     */
+    private readonly array $orderBy;
 
     private readonly Criteria $criteria;
 
     /**
-     * @param ReadableCollection<TKey,T> $collection
+     * @param Collection<TKey,T> $collection
+     * @param null|non-empty-array<string,Order>|string $orderBy
      * @param int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
      */
     public function __construct(
-        ReadableCollection $collection,
-        ?Criteria $criteria = null,
+        Collection $collection,
+        array|string|null $orderBy = null,
         private readonly int $itemsPerPage = 50,
         private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
         private ?int &$count = null,
     ) {
-        // save collection
+        // handle collection
 
         if (!$collection instanceof Selectable) {
             throw new UnexpectedValueException('The wrapped collection must implement the Selectable interface.');
@@ -78,27 +89,35 @@ class BasicCriteriaRecollection implements BasicReadableRecollection, \Countable
 
         $this->collection = $collection;
 
-        // save criteria
+        // handle orderBy
 
-        $criteria = clone ($criteria ?? Criteria::create());
+        $this->orderBy = OrderByUtil::normalizeOrderBy(
+            orderBy: $orderBy,
+            defaultOrderBy: $this->getDefaultOrderBy()
+        );
 
-        if (\count($criteria->orderings()) === 0) {
-            $criteria->orderBy(['id' => Order::Descending]);
-        }
+        $this->criteria = Criteria::create()->orderBy($this->orderBy);
+    }
 
-        $this->criteria = $criteria;
+    /**
+     * @return non-empty-array<string,Order>|string
+     */
+    protected function getDefaultOrderBy(): array|string
+    {
+        return Configuration::$defaultOrderBy;
     }
 
     /**
      * @param null|Collection<TKey,T> $collection
+     * @param null|non-empty-array<string,Order>|string $orderBy
      * @param null|int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
      */
     protected function with(
-        ?ReadableCollection $collection = null,
-        ?Criteria $criteria = null,
+        ?Collection $collection = null,
+        array|string|null $orderBy = null,
         ?int $itemsPerPage = 50,
-        ?CountStrategy $countStrategy = null,
+        ?CountStrategy $countStrategy = CountStrategy::Restrict,
         ?int &$count = null,
     ): static {
         $count = $count ?? $this->count;
@@ -106,9 +125,32 @@ class BasicCriteriaRecollection implements BasicReadableRecollection, \Countable
         // @phpstan-ignore-next-line
         return new static(
             collection: $collection ?? $this->collection,
-            criteria: $criteria ?? $this->criteria,
+            orderBy: $orderBy ?? $this->orderBy,
             itemsPerPage: $itemsPerPage ?? $this->itemsPerPage,
             countStrategy: $countStrategy ?? $this->countStrategy,
+            count: $count,
+        );
+    }
+
+    /**
+     * @param null|int<0,max> $count
+     * @return MinimalCriteriaRecollection<TKey,T>
+     */
+    protected function applyCriteria(
+        Criteria $criteria,
+        CountStrategy $countStrategy = CountStrategy::Restrict,
+        ?int &$count = null,
+    ): MinimalCriteriaRecollection {
+        // if $criteria has no orderings, add the current ordering
+        if (\count($criteria->orderings()) === 0) {
+            $criteria = $criteria->orderBy($this->orderBy);
+        }
+
+        return new MinimalCriteriaRecollection(
+            collection: $this->collection,
+            criteria: $criteria,
+            itemsPerPage: $this->itemsPerPage,
+            countStrategy: $countStrategy,
             count: $count,
         );
     }
@@ -118,7 +160,7 @@ class BasicCriteriaRecollection implements BasicReadableRecollection, \Countable
      */
     private function getRealCount(): int
     {
-        $count = $this->collection->matching($this->criteria)->count();
+        $count = $this->collection->count();
 
         if ($count > 0) {
             return $count;
