@@ -26,6 +26,7 @@
 * deps: update rekapager to 0.12.0
 * deps: add debug bundle
 * refactor: move `refreshCount` to its own interface
+* refactor: rename `getReference` to `reference`
 
 ## 0.3.0
 

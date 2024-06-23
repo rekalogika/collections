@@ -83,7 +83,7 @@ class AbstractBasicRepositoryTest extends KernelTestCase
 
     public function testGetReference(): void
     {
-        $country = $this->getRepository()->getReference(1);
+        $country = $this->getRepository()->reference(1);
         static::assertInstanceOf(Country::class, $country);
         $name = $country->getName();
         static::assertIsString($name);
@@ -91,7 +91,7 @@ class AbstractBasicRepositoryTest extends KernelTestCase
 
     public function testGetReferenceNegative(): void
     {
-        $country = $this->getRepository()->getReference(9999999);
+        $country = $this->getRepository()->reference(9999999);
         $this->expectException(EntityNotFoundException::class);
         $name = $country->getName();
     }

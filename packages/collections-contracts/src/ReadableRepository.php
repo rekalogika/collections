@@ -24,5 +24,5 @@ interface ReadableRepository extends ReadableRecollection
      * @param TKey $key
      * @return T
      */
-    public function getReference(int|string $key): object;
+    public function reference(int|string $key): object;
 }
