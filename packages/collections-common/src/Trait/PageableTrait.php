@@ -13,14 +13,20 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
+use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Contracts\Rekapager\PageInterface;
 
 /**
  * @template TKey of array-key
- * @template T
+ * @template-covariant T
  */
 trait PageableTrait
 {
+    /**
+     * @return PageableInterface<TKey,T>
+     */
+    abstract private function getPageable(): PageableInterface;
+
     /**
      * @return PageInterface<TKey,T>
      */
