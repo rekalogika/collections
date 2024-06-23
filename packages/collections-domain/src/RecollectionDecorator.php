@@ -22,7 +22,7 @@ use Rekalogika\Contracts\Collections\Recollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
-use Rekalogika\Domain\Collections\Common\Trait\RecollectionTrait as TraitRecollectionTrait;
+use Rekalogika\Domain\Collections\Common\Trait\RecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
@@ -39,8 +39,8 @@ class RecollectionDecorator implements Recollection
     /** @use SafeCollectionTrait<TKey,T> */
     use SafeCollectionTrait;
 
-    /** @use TraitRecollectionTrait<TKey,T> */
-    use TraitRecollectionTrait;
+    /** @use RecollectionTrait<TKey,T> */
+    use RecollectionTrait;
 
     /**
      * @var Collection<TKey,T>&Selectable<TKey,T>

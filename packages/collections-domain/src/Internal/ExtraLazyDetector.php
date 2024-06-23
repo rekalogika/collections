@@ -44,13 +44,9 @@ final class ExtraLazyDetector
      * @template T
      * @param ReadableCollection<TKey,T> $collection
      */
-    public static function isSafeWithKeys(ReadableCollection $collection): bool
+    public static function isSafeWithIndex(ReadableCollection $collection): bool
     {
-        if ($collection instanceof ArrayCollection) {
-            return true;
-        }
-
-        return self::isExtraLazy($collection) && self::hasIndexBy($collection);
+        return self::isSafe($collection) && self::hasIndexBy($collection);
     }
 
     /**
