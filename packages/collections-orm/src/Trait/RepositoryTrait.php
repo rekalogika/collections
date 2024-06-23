@@ -25,9 +25,12 @@ trait RepositoryTrait
 {
     /**
      * @use ReadableRepositoryTrait<TKey,T>
-     * @use MinimalRepositoryTrait<TKey,T>
      */
     use ReadableRepositoryTrait;
+
+    /**
+     * @use MinimalRepositoryTrait<TKey,T>
+     */
     use MinimalRepositoryTrait;
 
     final public function clear(): void
