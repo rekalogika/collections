@@ -15,8 +15,8 @@ namespace Rekalogika\Collections\Tests\App\Repository\Implementation;
 
 use Rekalogika\Collections\ORM\AbstractRepository;
 use Rekalogika\Collections\ORM\Configuration\RepositoryConfiguration;
-use Rekalogika\Collections\Tests\App\Repository\CountryRepository;
 use Rekalogika\Collections\Tests\App\Entity\Country;
+use Rekalogika\Collections\Tests\App\Repository\CountryRepository;
 
 /**
  * @extends AbstractRepository<array-key,Country>

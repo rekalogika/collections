@@ -15,7 +15,6 @@ namespace Rekalogika\Collections\ORM\Trait;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ReadableCollection;
 
 /**
  * @template TKey of array-key
