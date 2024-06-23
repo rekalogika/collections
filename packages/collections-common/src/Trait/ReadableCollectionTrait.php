@@ -23,6 +23,11 @@ use Doctrine\Common\Collections\ReadableCollection;
 trait ReadableCollectionTrait
 {
     /**
+     * @return array<TKey,T>
+     */
+    abstract private function &getItemsWithSafeguard(): array;
+
+    /**
      * @template TMaybeContained
      * @param TMaybeContained $element
      * @return (TMaybeContained is T ? bool : false)
@@ -76,7 +81,10 @@ trait ReadableCollectionTrait
      */
     final public function getValues(): array
     {
-        return array_values($this->getItemsWithSafeguard());
+        $items = $this->getItemsWithSafeguard();
+
+        /** @psalm-suppress RedundantFunctionCall */
+        return array_values($items);
     }
 
     /**
