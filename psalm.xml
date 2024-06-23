@@ -22,16 +22,13 @@
         <UnsupportedReferenceUsage>
             <errorLevel type="suppress">
                 <file name="packages/collections-common/src/Trait/ReadableCollectionTrait.php" />
+                <file name="packages/collections-orm/src/Trait/RepositoryTrait.php" />
             </errorLevel>
         </UnsupportedReferenceUsage>
         <InvalidArgument>
             <errorLevel type="suppress">
-                <file name="packages/collections-common/src/Trait/*.php" />
-            </errorLevel>
-            <errorLevel type="suppress">
                 <file name="packages/collections-domain/src/Trait/*.php" />
-            </errorLevel>
-            <errorLevel type="suppress">
+                <file name="packages/collections-common/src/Trait/*.php" />
                 <file name="packages/collections-orm/src/Trait/*.php" />
             </errorLevel>
         </InvalidArgument>
