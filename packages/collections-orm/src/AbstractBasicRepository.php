@@ -14,15 +14,13 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\ORM;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Configuration\BasicRepositoryConfiguration;
+use Rekalogika\Collections\ORM\Trait\BasicRepositoryTrait;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
 use Rekalogika\Contracts\Collections\BasicRepository;
-use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 
 /**
@@ -41,6 +39,11 @@ abstract class AbstractBasicRepository implements BasicRepository
      * @use PageableTrait<array-key,T>
      */
     use PageableTrait;
+
+    /**
+     * @use BasicRepositoryTrait<array-key,T>
+     */
+    use BasicRepositoryTrait;
 
     private ?int $count = 0;
 
@@ -116,67 +119,4 @@ abstract class AbstractBasicRepository implements BasicRepository
             ->from($this->getClass(), $alias, $indexBy);
     }
 
-    //
-    // interface methods
-    //
-
-    public function getReference(int|string $key): object
-    {
-        return $this->getEntityManager()
-            ->getReference($this->getClass(), $key)
-            ?? throw new NotFoundException('Entity not found');
-    }
-
-    public function contains(mixed $element): bool
-    {
-        if (!\is_object($element)) {
-            return false;
-        }
-
-        return $this->getEntityManager()->contains($element);
-    }
-
-    public function containsKey(string|int $key): bool
-    {
-        return $this->get($key) !== null;
-    }
-
-    public function get(string|int $key): mixed
-    {
-        return $this->getEntityManager()->find($this->getClass(), $key);
-    }
-
-    public function getOrFail(string|int $key): mixed
-    {
-        return $this->get($key) ?? throw new NotFoundException('Entity not found');
-    }
-
-    public function add(mixed $element): void
-    {
-        $this->getEntityManager()->persist($element);
-    }
-
-    public function removeElement(mixed $element): bool
-    {
-        if (!$this->contains($element)) {
-            return false;
-        }
-
-        $this->getEntityManager()->remove($element);
-
-        return true;
-    }
-
-    public function remove(string|int $key): mixed
-    {
-        $element = $this->get($key);
-
-        if ($element === null) {
-            return null;
-        }
-
-        $this->getEntityManager()->remove($element);
-
-        return $element;
-    }
 }
