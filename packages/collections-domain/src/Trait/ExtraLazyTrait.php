@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Trait;
 
-use Rekalogika\Domain\Collections\Common\Trait\ArrayAccessTrait;
 use Rekalogika\Domain\Collections\Common\Trait\CollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\IteratorAggregateTrait;
@@ -31,18 +30,19 @@ trait ExtraLazyTrait
      * @use ReadableExtraLazyTrait<TKey,T>
      */
     use CollectionTrait, ReadableExtraLazyTrait {
-        CollectionTrait::filter insteadof ReadableExtraLazyTrait;
-        CollectionTrait::map insteadof ReadableExtraLazyTrait;
-        CollectionTrait::partition insteadof ReadableExtraLazyTrait;
+        ReadableExtraLazyTrait::filter insteadof CollectionTrait;
+        ReadableExtraLazyTrait::map insteadof CollectionTrait;
+        ReadableExtraLazyTrait::partition insteadof CollectionTrait;
+        ReadableExtraLazyTrait::contains insteadof CollectionTrait;
+        ReadableExtraLazyTrait::containsKey insteadof CollectionTrait;
+        ReadableExtraLazyTrait::get insteadof CollectionTrait;
+        ReadableExtraLazyTrait::slice insteadof CollectionTrait;
     }
 
     use CountableTrait;
 
     /** @use IteratorAggregateTrait<TKey,T> */
     use IteratorAggregateTrait;
-
-    /** @use ArrayAccessTrait<TKey,T> */
-    use ArrayAccessTrait;
 
     //
     // ArrayAccess

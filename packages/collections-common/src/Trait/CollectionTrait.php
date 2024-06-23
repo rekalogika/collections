@@ -23,6 +23,16 @@ use Doctrine\Common\Collections\Collection;
 trait CollectionTrait
 {
     /**
+     * @use ReadableCollectionTrait<TKey,T>
+     */
+    use ReadableCollectionTrait;
+
+    /**
+     * @use ArrayAccessTrait<TKey,T>
+     */
+    use ArrayAccessTrait;
+
+    /**
      * @return Collection<TKey,T>
      */
     abstract private function getRealCollection(): Collection;
