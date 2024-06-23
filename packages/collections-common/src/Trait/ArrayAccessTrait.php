@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
+use Doctrine\Common\Collections\Collection;
+
 /**
  * @template TKey of array-key
  * @template T
@@ -23,6 +25,11 @@ trait ArrayAccessTrait
      * @return array<TKey,T>
      */
     abstract private function &getItemsWithSafeguard(): array;
+
+    /**
+     * @return Collection<TKey,T>
+     */
+    abstract private function getRealCollection(): Collection;
 
     /**
      * @param TKey $offset
@@ -52,7 +59,7 @@ trait ArrayAccessTrait
     {
         $this->getItemsWithSafeguard();
 
-        $this->collection->offsetSet($offset, $value);
+        $this->getRealCollection()->offsetSet($offset, $value);
     }
 
     /**
@@ -62,6 +69,6 @@ trait ArrayAccessTrait
     {
         $this->getItemsWithSafeguard();
 
-        $this->collection->offsetUnset($offset);
+        $this->getRealCollection()->offsetUnset($offset);
     }
 }

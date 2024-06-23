@@ -111,6 +111,14 @@ class RecollectionDecorator implements Recollection
     }
 
     /**
+     * @return Collection<TKey,T>
+     */
+    private function getRealCollection(): Collection
+    {
+        return $this->collection;
+    }
+
+    /**
      * @return non-empty-array<string,Order>|string
      */
     protected function getDefaultOrderBy(): array|string
