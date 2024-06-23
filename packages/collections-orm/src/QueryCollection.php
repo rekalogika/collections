@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\ORM;
 
 use Doctrine\ORM\QueryBuilder;
-use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
+use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
@@ -29,8 +29,8 @@ use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
  */
 class QueryCollection implements ReadableRecollection
 {
-    /** @use QueryBuilderTrait<TKey,T> */
-    use QueryBuilderTrait;
+    /** @use QueryBuilderPageableTrait<TKey,T> */
+    use QueryBuilderPageableTrait;
 
     /** @use ReadableCollectionTrait<TKey,T> */
     use ReadableCollectionTrait;

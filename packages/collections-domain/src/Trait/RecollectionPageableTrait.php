@@ -24,7 +24,7 @@ use Rekalogika\Rekapager\Keyset\KeysetPageable;
  *
  * @internal
  */
-trait RecollectionTrait
+trait RecollectionPageableTrait
 {
     /**
      * @var null|PageableInterface<TKey,T>

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\ORM;
 
 use Doctrine\ORM\QueryBuilder;
-use Rekalogika\Collections\ORM\Trait\QueryBuilderTrait;
+use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
@@ -26,8 +26,8 @@ use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
  */
 class QueryPageable implements PageableInterface
 {
-    /** @use QueryBuilderTrait<TKey,T> */
-    use QueryBuilderTrait;
+    /** @use QueryBuilderPageableTrait<TKey,T> */
+    use QueryBuilderPageableTrait;
 
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;

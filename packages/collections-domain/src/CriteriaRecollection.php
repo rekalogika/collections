@@ -24,7 +24,7 @@ use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
-use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
+use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
  * @template TKey of array-key
@@ -33,8 +33,8 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
  */
 class CriteriaRecollection implements ReadableRecollection
 {
-    /** @use RecollectionTrait<TKey,T> */
-    use RecollectionTrait;
+    /** @use RecollectionPageableTrait<TKey,T> */
+    use RecollectionPageableTrait;
 
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;

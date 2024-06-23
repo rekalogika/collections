@@ -23,7 +23,7 @@ use Rekalogika\Contracts\Collections\MinimalReadableRecollection;
 use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\MinimalReadableRecollectionTrait;
-use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
+use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
  * @template TKey of array-key
@@ -32,8 +32,8 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
  */
 class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Countable
 {
-    /** @use RecollectionTrait<TKey,T> */
-    use RecollectionTrait;
+    /** @use RecollectionPageableTrait<TKey,T> */
+    use RecollectionPageableTrait;
 
     use CountableTrait;
 

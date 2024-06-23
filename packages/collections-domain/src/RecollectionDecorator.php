@@ -24,7 +24,7 @@ use Rekalogika\Domain\Collections\Common\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\Trait\RecollectionTrait as TraitRecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
-use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
+use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
  * @template TKey of array-key
@@ -33,8 +33,8 @@ use Rekalogika\Domain\Collections\Trait\RecollectionTrait;
  */
 class RecollectionDecorator implements Recollection
 {
-    /** @use RecollectionTrait<TKey,T> */
-    use RecollectionTrait;
+    /** @use RecollectionPageableTrait<TKey,T> */
+    use RecollectionPageableTrait;
 
     /** @use SafeCollectionTrait<TKey,T> */
     use SafeCollectionTrait;
