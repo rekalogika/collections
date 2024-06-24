@@ -22,12 +22,12 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $countrySd = CountryFactory::createOne([
-            'name' => 'Sondonesia',
-            'code' => 'SD',
+        $countrySy = CountryFactory::createOne([
+            'name' => 'Syldavia',
+            'code' => 'SY',
         ]);
-        CitizenFactory::createMany(10, [
-            'country' => $countrySd,
+        CitizenFactory::createMany(2050, [
+            'country' => $countrySy,
         ]);
 
         $countrySt = CountryFactory::createOne([
@@ -38,12 +38,12 @@ class AppFixtures extends Fixture
             'country' => $countrySt,
         ]);
 
-        $countrySy = CountryFactory::createOne([
-            'name' => 'Syldavia',
-            'code' => 'SY',
+        $countrySd = CountryFactory::createOne([
+            'name' => 'Sondonesia',
+            'code' => 'SD',
         ]);
-        CitizenFactory::createMany(2050, [
-            'country' => $countrySy,
+        CitizenFactory::createMany(10, [
+            'country' => $countrySd,
         ]);
 
         $manager->flush();

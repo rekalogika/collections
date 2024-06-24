@@ -17,6 +17,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Rekalogika\Collections\Tests\App\DoctrineRepository\DoctrineCountryRepository;
+use Rekalogika\Contracts\Collections\Recollection;
+use Rekalogika\Domain\Collections\RecollectionDecorator;
 
 #[ORM\Entity(repositoryClass: DoctrineCountryRepository::class)]
 class Country
@@ -66,6 +68,14 @@ class Country
     public function getCitizens(): Collection
     {
         return $this->citizens;
+    }
+
+    /**
+     * @return Recollection<int, Citizen>
+     */
+    public function getCitizensInRecollection(): Recollection
+    {
+        return new RecollectionDecorator($this->citizens);
     }
 
     public function addCitizen(Citizen $citizen): static
