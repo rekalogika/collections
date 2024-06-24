@@ -11,14 +11,16 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Collections\Tests\App\BasicRepository;
+namespace Rekalogika\Collections\Tests\IntegrationTests\Trait;
 
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
-use Rekalogika\Contracts\Collections\MinimalRepository;
+use Rekalogika\Contracts\Collections\Recollection;
 
 /**
- * @extends MinimalRepository<array-key,Citizen>
+ * @template-covariant R of Recollection<array-key,Citizen>
  */
-interface CitizenBasicRepository extends MinimalRepository
+trait RecollectionTestsTrait
 {
+    /** @use ReadableRecollectionTestsTrait<R> */
+    use ReadableRecollectionTestsTrait;
 }

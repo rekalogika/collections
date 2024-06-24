@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\IntegrationTests;
 
-use Rekalogika\Collections\Tests\App\BasicRepository\CitizenBasicRepository;
+use Rekalogika\Collections\Tests\App\BasicRepository\CitizenMinimalRepository;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Collections\Tests\IntegrationTests\Base\BaseRecollectionTestCase;
 use Rekalogika\Collections\Tests\IntegrationTests\Trait\MinimalRepositoryTestsTrait;
@@ -27,17 +27,23 @@ class MinimalRepositoryTest extends BaseRecollectionTestCase
     /** @use MinimalRepositoryTestsTrait<MinimalRepository<array-key,Citizen>> */
     use MinimalRepositoryTestsTrait;
 
-    /**
-     * @return MinimalRepository<array-key,Citizen>
-     */
+    protected function getExpectedTotal(): int
+    {
+        return 2610;
+    }
+
+    protected function isSafe(): bool
+    {
+        return false;
+    }
+
     protected function getObject(): MinimalRepository
     {
-        $repository = static::getContainer()->get(CitizenBasicRepository::class);
+        $repository = static::getContainer()->get(CitizenMinimalRepository::class);
         static::assertInstanceOf(MinimalRepository::class, $repository);
 
         /** @var MinimalRepository<array-key,Citizen> $repository */
 
         return $repository;
     }
-
 }

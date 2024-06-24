@@ -17,13 +17,16 @@ use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 
 /**
- * @template R of PageableInterface<array-key,Citizen>
+ * @template-covariant R of PageableInterface<array-key,Citizen>
  */
 trait PageableTestsTrait
 {
-    public function testPageable(): void
+    public function testFirstPage(): void
     {
+        // $expected = ($this->getExpectedTotal() % 50) ?: 50;
+        $expected = $this->getExpectedTotal() > 50 ? 50 : $this->getExpectedTotal();
+
         $page = $this->getObject()->getFirstPage();
-        static::assertCount(50, $page);
+        static::assertCount($expected, $page);
     }
 }
