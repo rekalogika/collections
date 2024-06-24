@@ -29,4 +29,14 @@ trait PageableTestsTrait
         $page = $this->getObject()->getFirstPage();
         static::assertCount($expected, $page);
     }
+
+    public function testIteration(): void
+    {
+        foreach ($this->getObject()->getPages() as $page) {
+            foreach ($page as $key => $citizen) {
+                static::assertInstanceOf(Citizen::class, $citizen);
+                static::assertEquals($key, $citizen->getId());
+            }
+        }
+    }
 }

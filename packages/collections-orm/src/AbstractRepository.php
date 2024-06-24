@@ -55,13 +55,14 @@ abstract class AbstractRepository implements Repository
      */
     private int $itemsPerPage;
 
-    private CountStrategy $countStrategy;
-    private QueryBuilder $queryBuilder;
+    private readonly CountStrategy $countStrategy;
+    private readonly QueryBuilder $queryBuilder;
+    private readonly ?string $indexBy;
 
     /**
      * @var class-string<T>
      */
-    private string $class;
+    private readonly string $class;
 
     /**
      * @var null|int<1,max>
@@ -80,6 +81,7 @@ abstract class AbstractRepository implements Repository
         $this->class = $configuration->getClass();
         $this->itemsPerPage = $configuration->getItemsPerPage();
         $this->countStrategy = $configuration->getCountStrategy();
+        $this->indexBy = $configuration->getIndexBy();
         $this->softLimit = $configuration->getSoftLimit();
         $this->hardLimit = $configuration->getHardLimit();
 

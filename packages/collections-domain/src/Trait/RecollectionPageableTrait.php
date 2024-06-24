@@ -42,7 +42,8 @@ trait RecollectionPageableTrait
 
         $adapter = new SelectableAdapter(
             collection: $this->collection,
-            criteria: $this->criteria
+            criteria: $this->criteria,
+            indexBy: $this->indexBy,
         );
 
         $count = match ($this->countStrategy) {

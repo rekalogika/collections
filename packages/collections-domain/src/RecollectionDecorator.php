@@ -78,6 +78,7 @@ class RecollectionDecorator implements Recollection
     public function __construct(
         Collection $collection,
         array|string|null $orderBy = null,
+        private readonly ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
         private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
         private ?int &$count = null,
@@ -167,6 +168,7 @@ class RecollectionDecorator implements Recollection
         return new static(
             collection: $collection ?? $this->collection,
             orderBy: $orderBy ?? $this->orderBy,
+            indexBy: $this->indexBy,
             itemsPerPage: $itemsPerPage ?? $this->itemsPerPage,
             countStrategy: $countStrategy ?? $this->countStrategy,
             count: $count,
