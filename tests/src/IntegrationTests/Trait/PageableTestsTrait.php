@@ -30,7 +30,7 @@ trait PageableTestsTrait
         static::assertCount($expected, $page);
     }
 
-    public function testIteration(): void
+    public function testPageableIteration(): void
     {
         foreach ($this->getObject()->getPages() as $page) {
             foreach ($page as $key => $citizen) {

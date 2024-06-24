@@ -34,7 +34,7 @@ class Country
     /**
      * @var Collection<int, Citizen>
      */
-    #[ORM\OneToMany(targetEntity: Citizen::class, mappedBy: 'country', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Citizen::class, mappedBy: 'country', orphanRemoval: true, indexBy: 'id')]
     private Collection $citizens;
 
     #[ORM\Column(length: 255)]

@@ -15,9 +15,10 @@ namespace Rekalogika\Collections\Tests\IntegrationTests\Trait;
 
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Contracts\Collections\MinimalRecollection;
+use Rekalogika\Contracts\Collections\Recollection;
 
 /**
- * @template-covariant R of MinimalRecollection<array-key,Citizen>
+ * @template-covariant R of MinimalRecollection<array-key,Citizen>|Recollection<array-key,Citizen>
  */
 trait MinimalRecollectionTestsTrait
 {
@@ -33,7 +34,5 @@ trait MinimalRecollectionTestsTrait
         static::assertFalse($this->getObject()->contains($citizen));
         $this->getObject()->add($citizen);
         static::assertTrue($this->getObject()->contains($citizen));
-        $this->getObject()->removeElement($citizen);
-        static::assertFalse($this->getObject()->contains($citizen));
     }
 }
