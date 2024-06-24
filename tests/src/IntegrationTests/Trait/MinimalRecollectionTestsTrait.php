@@ -17,7 +17,7 @@ use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Contracts\Collections\MinimalRecollection;
 
 /**
- * @template R of MinimalRecollection<array-key,Citizen>
+ * @template-covariant R of MinimalRecollection<array-key,Citizen>
  */
 trait MinimalRecollectionTestsTrait
 {

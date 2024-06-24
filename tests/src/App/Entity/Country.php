@@ -65,7 +65,7 @@ class Country
     /**
      * @return Collection<int, Citizen>
      */
-    public function getCitizens(): Collection
+    public function getRawCitizens(): Collection
     {
         return $this->citizens;
     }
@@ -73,9 +73,11 @@ class Country
     /**
      * @return Recollection<int, Citizen>
      */
-    public function getCitizensInRecollection(): Recollection
+    public function getCitizens(): Recollection
     {
-        return new RecollectionDecorator($this->citizens);
+        return new RecollectionDecorator(
+            collection: $this->citizens,
+        );
     }
 
     public function addCitizen(Citizen $citizen): static

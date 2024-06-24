@@ -18,7 +18,7 @@ use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Contracts\Collections\MinimalReadableRepository;
 
 /**
- * @template R of MinimalReadableRepository<array-key,Citizen>
+ * @template-covariant R of MinimalReadableRepository<array-key,Citizen>
  */
 trait MinimalReadableRepositoryTestsTrait
 {

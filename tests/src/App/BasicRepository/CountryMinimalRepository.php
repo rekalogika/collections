@@ -19,6 +19,6 @@ use Rekalogika\Contracts\Collections\MinimalRepository;
 /**
  * @extends MinimalRepository<array-key,Country>
  */
-interface CountryBasicRepository extends MinimalRepository
+interface CountryMinimalRepository extends MinimalRepository
 {
 }

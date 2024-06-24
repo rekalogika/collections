@@ -15,18 +15,18 @@ namespace Rekalogika\Collections\Tests\App\BasicRepository\Implementation;
 
 use Rekalogika\Collections\ORM\AbstractMinimalRepository;
 use Rekalogika\Collections\ORM\Configuration\MinimalRepositoryConfiguration;
-use Rekalogika\Collections\Tests\App\BasicRepository\CountryBasicRepository;
-use Rekalogika\Collections\Tests\App\Entity\Country;
+use Rekalogika\Collections\Tests\App\BasicRepository\CitizenMinimalRepository;
+use Rekalogika\Collections\Tests\App\Entity\Citizen;
 
 /**
- * @extends AbstractMinimalRepository<array-key,Country>
+ * @extends AbstractMinimalRepository<array-key,Citizen>
  */
-class DefaultCountryBasicRepository extends AbstractMinimalRepository implements CountryBasicRepository
+class DefaultCitizenMinimalRepository extends AbstractMinimalRepository implements CitizenMinimalRepository
 {
     protected function configure(): MinimalRepositoryConfiguration
     {
         return new MinimalRepositoryConfiguration(
-            class: Country::class,
+            class: Citizen::class,
         );
     }
 }

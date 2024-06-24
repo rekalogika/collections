@@ -16,9 +16,10 @@ namespace Rekalogika\Collections\Tests\IntegrationTests\Trait;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 use Rekalogika\Contracts\Collections\MinimalReadableRecollection;
+use Rekalogika\Contracts\Collections\ReadableRecollection;
 
 /**
- * @template R of MinimalReadableRecollection<array-key,Citizen>
+ * @template-covariant R of MinimalReadableRecollection<array-key,Citizen>|ReadableRecollection<array-key,Citizen>
  */
 trait MinimalReadableRecollectionTestsTrait
 {
@@ -69,11 +70,5 @@ trait MinimalReadableRecollectionTestsTrait
     {
         $this->expectException(NotFoundException::class);
         $citizen = $this->getObject()->getOrFail(9999999);
-    }
-
-    public function testPageable(): void
-    {
-        $page = $this->getObject()->getFirstPage();
-        static::assertCount(50, $page);
     }
 }
