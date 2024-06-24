@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\App;
 
+use DAMA\DoctrineTestBundle\DAMADoctrineTestBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
 use Symfony\Bundle\DebugBundle\DebugBundle;
@@ -51,6 +52,7 @@ class Kernel extends BaseKernel
         yield new ZenstruckFoundryBundle();
         yield new MakerBundle();
         yield new DebugBundle();
+        yield new DAMADoctrineTestBundle();
     }
 
     public function getProjectDir(): string

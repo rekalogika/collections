@@ -28,8 +28,11 @@ class Citizen
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'citizens')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Country $country = null;
+
+    #[ORM\Column]
+    private ?int $age = null;
 
     public function getId(): ?int
     {
@@ -56,6 +59,18 @@ class Citizen
     public function setCountry(?Country $country): static
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(int $age): static
+    {
+        $this->age = $age;
 
         return $this;
     }

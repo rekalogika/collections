@@ -44,7 +44,8 @@ final class CitizenFactory extends PersistentProxyObjectFactory
     {
         return [
             'country' => CountryFactory::new(),
-            'name' => self::faker()->text(10),
+            'name' => self::faker()->name(),
+            'age' => self::faker()->numberBetween(1, 100),
         ];
     }
 

@@ -54,7 +54,8 @@
         "doctrine/persistence": "^3.1",
         "bnf/phpstan-psr-container": "^1.0",
         "psalm/plugin-symfony": "^5.2",
-        "symfony/debug-bundle": "^7.1"
+        "symfony/debug-bundle": "^7.1",
+        "dama/doctrine-test-bundle": "^8.2"
     },
     "replace": {
         "rekalogika/collections-common": "0.3.0",
