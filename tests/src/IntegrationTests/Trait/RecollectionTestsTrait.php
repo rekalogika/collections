@@ -23,4 +23,7 @@ trait RecollectionTestsTrait
 {
     /** @use ReadableRecollectionTestsTrait<R> */
     use ReadableRecollectionTestsTrait;
+
+    /** @use CollectionTestsTrait<R> */
+    use CollectionTestsTrait;
 }

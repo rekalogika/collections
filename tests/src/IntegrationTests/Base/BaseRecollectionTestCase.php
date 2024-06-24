@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\Tests\IntegrationTests\Base;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Contracts\Collections\Exception\OverflowException;
+use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -39,6 +41,22 @@ abstract class BaseRecollectionTestCase extends KernelTestCase
         if (!$this->isSafe()) {
             $this->expectException(OverflowException::class);
         }
+    }
+
+    protected function getOne(): Citizen
+    {
+        $object = $this->getObject();
+        static::assertInstanceOf(PageableInterface::class, $object);
+
+        foreach ($object->getPages() as $page) {
+            /** @var mixed $citizen */
+            foreach ($page as $citizen) {
+                static::assertInstanceOf(Citizen::class, $citizen);
+                return $citizen;
+            }
+        }
+
+        throw new \RuntimeException('No citizen found');
     }
 
 }

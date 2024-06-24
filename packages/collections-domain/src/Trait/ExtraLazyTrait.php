@@ -43,10 +43,10 @@ trait ExtraLazyTrait
     final public function offsetExists(mixed $offset): bool
     {
         if ($this->isSafeWithIndex()) {
-            return $this->getRealCollection()->contains($offset);
+            return $this->getRealCollection()->containsKey($offset);
         }
 
-        return $this->getSafeCollection()->contains($offset);
+        return $this->getSafeCollection()->containsKey($offset);
     }
 
     /**

@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\IntegrationTests\Trait;
 
+use Doctrine\Common\Collections\ReadableCollection;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 use Rekalogika\Contracts\Collections\MinimalReadableRecollection;
-use Rekalogika\Contracts\Collections\ReadableRecollection;
 
 /**
- * @template-covariant R of MinimalReadableRecollection<array-key,Citizen>|ReadableRecollection<array-key,Citizen>
+ * @template-covariant R of MinimalReadableRecollection<array-key,Citizen>|ReadableCollection<array-key,Citizen>
  */
 trait MinimalReadableRecollectionTestsTrait
 {
@@ -28,7 +28,7 @@ trait MinimalReadableRecollectionTestsTrait
 
     public function testContains(): void
     {
-        $citizen = $this->getObject()->getOrFail(1);
+        $citizen = $this->getOne();
         static::assertTrue($this->getObject()->contains($citizen));
     }
 
@@ -40,7 +40,8 @@ trait MinimalReadableRecollectionTestsTrait
 
     public function testContainsKey(): void
     {
-        static::assertTrue($this->getObject()->containsKey(1));
+        $citizen = $this->getOne();
+        static::assertTrue($this->getObject()->containsKey($citizen->getId() ?? -1));
     }
 
     public function testContainsKeyNegative(): void
@@ -50,8 +51,9 @@ trait MinimalReadableRecollectionTestsTrait
 
     public function testGet(): void
     {
-        $citizen = $this->getObject()->get(1);
-        static::assertInstanceOf(Citizen::class, $citizen);
+        $citizen = $this->getOne();
+        $citizen2 = $this->getObject()->get($citizen->getId() ?? -1);
+        static::assertSame($citizen, $citizen2);
     }
 
     public function testGetNegative(): void
@@ -62,8 +64,9 @@ trait MinimalReadableRecollectionTestsTrait
 
     public function testGetOrFail(): void
     {
-        $citizen = $this->getObject()->getOrFail(1);
-        static::assertInstanceOf(Citizen::class, $citizen);
+        $citizen = $this->getOne();
+        $citizen2 = $this->getObject()->getOrFail($citizen->getId() ?? -1);
+        static::assertSame($citizen, $citizen2);
     }
 
     public function testGetOrFailNegative(): void
