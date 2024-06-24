@@ -41,6 +41,7 @@ class QueryPageable implements PageableInterface
     public function __construct(
         private QueryBuilder $queryBuilder,
         private readonly int $itemsPerPage = 50,
+        private readonly ?string $indexBy = null,
         private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
         private ?int &$count = null,
         private readonly ?int $softLimit = null,

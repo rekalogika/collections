@@ -43,6 +43,7 @@ trait QueryBuilderPageableTrait
 
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $this->queryBuilder,
+            indexBy: $this->indexBy,
         );
 
         $count = match ($this->countStrategy) {

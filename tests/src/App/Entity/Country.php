@@ -77,6 +77,7 @@ class Country
     {
         return new RecollectionDecorator(
             collection: $this->citizens,
+            indexBy: 'id'
         );
     }
 

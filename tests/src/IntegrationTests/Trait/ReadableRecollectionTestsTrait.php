@@ -106,7 +106,7 @@ trait ReadableRecollectionTestsTrait
     public function testExists(): void
     {
         $this->testSafety();
-        $func = fn (int|string $key, object $value): bool => $key === 3;
+        $func = fn (int|string $key, object $value): bool => (int)$key % 2 === 0;
         $exists = $this->getObject()->exists($func);
         static::assertTrue($exists);
     }
@@ -122,10 +122,16 @@ trait ReadableRecollectionTestsTrait
     public function testFilter(): void
     {
         $this->testSafety();
-        $func = fn (object $value, int|string $key): bool => $key === 3;
+        $func = fn (object $value, int|string $key): bool => (int)$key % 2 === 0;
         $filtered = $this->getObject()->filter($func);
         static::assertInstanceOf(ReadableCollection::class, $filtered);
-        static::assertCount(1, $filtered);
+
+        /** @var int|string $key */
+        foreach ($filtered as $key => $citizen) {
+            static::assertIsInt($key);
+            static::assertTrue($key % 2 === 0);
+            static::assertInstanceOf(Citizen::class, $citizen);
+        }
     }
 
     public function testFilterNegative(): void
@@ -175,7 +181,7 @@ trait ReadableRecollectionTestsTrait
     public function testFindFirst(): void
     {
         $this->testSafety();
-        $func = fn (int|string $key, object $value): bool => $key === 3;
+        $func = fn (int|string $key, object $value): bool => (int)$key % 2 === 0;
         $first = $this->getObject()->findFirst($func);
         static::assertInstanceOf(Citizen::class, $first);
     }

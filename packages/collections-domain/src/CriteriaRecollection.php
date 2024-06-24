@@ -67,6 +67,7 @@ class CriteriaRecollection implements ReadableRecollection
     public function __construct(
         ReadableCollection $collection,
         ?Criteria $criteria = null,
+        private readonly ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
         private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
         private ?int &$count = null,

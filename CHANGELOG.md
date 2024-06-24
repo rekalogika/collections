@@ -29,6 +29,7 @@
 * refactor: rename `getReference` to `reference`
 * refactor: rename the term 'basic' to 'minimal'
 * test: refactor tests
+* fix: make sure all objects support indexBy
 
 ## 0.3.0
 

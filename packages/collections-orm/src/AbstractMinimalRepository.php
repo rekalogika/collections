@@ -46,13 +46,14 @@ abstract class AbstractMinimalRepository implements MinimalRepository
      */
     private int $itemsPerPage;
 
-    private CountStrategy $countStrategy;
-    private QueryBuilder $queryBuilder;
+    private readonly CountStrategy $countStrategy;
+    private readonly QueryBuilder $queryBuilder;
+    private readonly ?string $indexBy;
 
     /**
      * @var class-string<T>
      */
-    private string $class;
+    private readonly string $class;
 
     final public function __construct(
         private EntityManagerInterface $entityManager,
@@ -61,6 +62,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
         $this->class = $configuration->getClass();
         $this->itemsPerPage = $configuration->getItemsPerPage();
         $this->countStrategy = $configuration->getCountStrategy();
+        $this->indexBy = $configuration->getIndexBy();
 
         // set query builder
         $criteria = Criteria::create()->orderBy($configuration->getOrderBy());
