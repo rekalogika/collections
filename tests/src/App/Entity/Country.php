@@ -75,7 +75,7 @@ class Country
      */
     public function getCitizens(): Recollection
     {
-        return new RecollectionDecorator(
+        return RecollectionDecorator::create(
             collection: $this->citizens,
             indexBy: 'id'
         );

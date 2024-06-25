@@ -23,7 +23,7 @@ class CountTest extends TestCase
 {
     public function testDefaultCount(): void
     {
-        $collection = new RecollectionDecorator(
+        $collection = RecollectionDecorator::create(
             collection: new ArrayCollection([
                 new Citizen(3, 'John Doe'),
                 new Citizen(2, 'Jane Doe'),
@@ -37,7 +37,7 @@ class CountTest extends TestCase
 
     public function testRestrictedCount(): void
     {
-        $collection = new RecollectionDecorator(
+        $collection = RecollectionDecorator::create(
             collection: new ArrayCollection([
                 new Citizen(3, 'John Doe'),
                 new Citizen(2, 'Jane Doe'),
@@ -52,7 +52,7 @@ class CountTest extends TestCase
 
     public function testDelegatedCount(): void
     {
-        $collection = new RecollectionDecorator(
+        $collection = RecollectionDecorator::create(
             collection: new ArrayCollection([
                 new Citizen(3, 'John Doe'),
                 new Citizen(2, 'Jane Doe'),
@@ -70,7 +70,7 @@ class CountTest extends TestCase
     {
         $count = 5;
 
-        $collection = new RecollectionDecorator(
+        $collection = RecollectionDecorator::create(
             collection: new ArrayCollection([
                 new Citizen(3, 'John Doe'),
                 new Citizen(2, 'Jane Doe'),

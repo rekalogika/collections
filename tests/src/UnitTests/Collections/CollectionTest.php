@@ -28,7 +28,7 @@ class CollectionTest extends ArrayCollectionTestCase
      */
     protected function buildCollection(array $elements = []): Collection
     {
-        return new RecollectionDecorator(
+        return RecollectionDecorator::create(
             collection: new ArrayCollection($elements),
             countStrategy: CountStrategy::Delegate,
         );
