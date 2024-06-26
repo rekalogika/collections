@@ -29,6 +29,7 @@ abstract class BaseRecollectionTestCase extends KernelTestCase
      */
     abstract protected function getObject(): mixed;
     abstract protected function isSafe(): bool;
+    abstract protected function isSingleton(): bool;
     abstract protected function getExpectedTotal(): int;
 
     protected function getEntityManager(): EntityManagerInterface
@@ -57,6 +58,18 @@ abstract class BaseRecollectionTestCase extends KernelTestCase
         }
 
         throw new \RuntimeException('No citizen found');
+    }
+
+    public function testSingleton(): void
+    {
+        $object = $this->getObject();
+        static::assertInstanceOf(PageableInterface::class, $object);
+
+        if ($this->isSingleton()) {
+            $this->assertSame($object, $this->getObject());
+        } else {
+            $this->assertNotSame($object, $this->getObject());
+        }
     }
 
 }

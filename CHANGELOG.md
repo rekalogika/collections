@@ -30,6 +30,7 @@
 * refactor: rename the term 'basic' to 'minimal'
 * test: refactor tests
 * fix: make sure all objects support indexBy
+* feat: instance caching for collection decorators
 
 ## 0.3.0
 

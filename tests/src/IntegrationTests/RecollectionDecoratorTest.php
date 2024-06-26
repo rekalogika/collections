@@ -30,6 +30,11 @@ class RecollectionDecoratorTest extends BaseRecollectionTestCase
     /** @use RecollectionTestsTrait<Recollection<array-key,Citizen>> */
     use RecollectionTestsTrait;
 
+    protected function isSingleton(): bool
+    {
+        return true;
+    }
+
     protected function getExpectedTotal(): int
     {
         return 2050;

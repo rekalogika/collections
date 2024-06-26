@@ -42,6 +42,11 @@ class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
     use CountableTrait;
 
     /**
+     * @var null|\WeakMap<object,array<string,self<array-key,mixed>>>
+     */
+    private static ?\WeakMap $instances = null;
+
+    /**
      * @var Collection<TKey,T>&Selectable<TKey,T>
      */
     private readonly Collection&Selectable $collection;
@@ -59,7 +64,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
      * @param int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
      */
-    public function __construct(
+    final private function __construct(
         Collection $collection,
         array|string|null $orderBy = null,
         private readonly ?string $indexBy = null,
@@ -83,6 +88,67 @@ class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
         );
 
         $this->criteria = Criteria::create()->orderBy($this->orderBy);
+    }
+
+    /**
+     * @template STKey of array-key
+     * @template ST
+     * @param Collection<STKey,ST> $collection
+     * @param null|non-empty-array<string,Order>|string $orderBy
+     * @param int<1,max> $itemsPerPage
+     * @param null|int<0,max> $count
+     * @return static
+     */
+    final public static function create(
+        Collection $collection,
+        array|string|null $orderBy = null,
+        ?string $indexBy = null,
+        int $itemsPerPage = 50,
+        CountStrategy $countStrategy = CountStrategy::Restrict,
+        ?int &$count = null,
+    ): MinimalRecollection {
+        if (self::$instances === null) {
+            /** @var \WeakMap<object,array<string,self<array-key,mixed>>>    */
+            $weakmap = new \WeakMap();
+            // @phpstan-ignore-next-line
+            self::$instances = $weakmap;
+        }
+
+        $cacheKey = hash('xxh128', serialize([
+            $orderBy,
+            $indexBy,
+            $itemsPerPage,
+            $countStrategy,
+            $count,
+        ]));
+
+        if (isset(self::$instances[$collection][$cacheKey])) {
+            /** @var static */
+            return self::$instances[$collection][$cacheKey];
+        }
+
+        $newInstance = new self(
+            collection: $collection,
+            orderBy: $orderBy,
+            indexBy: $indexBy,
+            itemsPerPage: $itemsPerPage,
+            countStrategy: $countStrategy,
+            count: $count,
+        );
+
+        if (!isset(self::$instances[$collection])) {
+            // @phpstan-ignore-next-line
+            self::$instances[$collection] = [];
+        }
+
+        /**
+         * @psalm-suppress InvalidArgument
+         * @phpstan-ignore-next-line
+         */
+        self::$instances[$collection][$cacheKey] = $newInstance;
+
+        /** @var static */
+        return $newInstance;
     }
 
     private function getCountStrategy(): CountStrategy
@@ -112,27 +178,16 @@ class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
     }
 
     /**
-     * @param null|Collection<TKey,T> $collection
-     * @param null|non-empty-array<string,Order>|string $orderBy
-     * @param null|int<1,max> $itemsPerPage
-     * @param null|int<0,max> $count
+     * @param int<1,max> $itemsPerPage
      */
-    protected function with(
-        ?Collection $collection = null,
-        array|string|null $orderBy = null,
-        ?int $itemsPerPage = 50,
-        ?CountStrategy $countStrategy = CountStrategy::Restrict,
-        ?int &$count = null,
-    ): static {
-        $count = $count ?? $this->count;
-
-        // @phpstan-ignore-next-line
-        return new static(
-            collection: $collection ?? $this->collection,
-            orderBy: $orderBy ?? $this->orderBy,
-            itemsPerPage: $itemsPerPage ?? $this->itemsPerPage,
-            countStrategy: $countStrategy ?? $this->countStrategy,
-            count: $count,
+    public function withItemsPerPage(int $itemsPerPage): static
+    {
+        return static::create(
+            collection: $this->collection,
+            orderBy: $this->orderBy,
+            itemsPerPage: $itemsPerPage,
+            countStrategy: $this->countStrategy,
+            count: $this->count,
         );
     }
 

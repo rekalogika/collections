@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ReadableCollection;
 
 /**
  * @template TKey of array-key
@@ -38,9 +37,9 @@ trait CollectionTrait
     abstract private function getRealCollection(): Collection;
 
     /**
-     * @return ReadableCollection<TKey,T>
+     * @return Collection<TKey,T>
      */
-    abstract private function getSafeCollection(): ReadableCollection;
+    abstract private function getSafeCollection(): Collection;
     abstract private function ensureSafety(): void;
 
     /**
@@ -53,7 +52,7 @@ trait CollectionTrait
 
     final public function clear(): void
     {
-        $this->ensureSafety();
+        $this->getSafeCollection()->clear();
         $this->getRealCollection()->clear();
     }
 
@@ -63,7 +62,7 @@ trait CollectionTrait
      */
     final public function remove(string|int $key): mixed
     {
-        $this->ensureSafety();
+        $this->getSafeCollection()->remove($key);
         return $this->getRealCollection()->remove($key);
     }
 
@@ -72,7 +71,8 @@ trait CollectionTrait
      */
     final public function removeElement(mixed $element): bool
     {
-        $this->ensureSafety();
+        /** @psalm-suppress MixedArgumentTypeCoercion */
+        $this->getSafeCollection()->removeElement($element);
         return $this->getRealCollection()->removeElement($element);
     }
 
@@ -82,7 +82,8 @@ trait CollectionTrait
      */
     final public function set(string|int $key, mixed $value): void
     {
-        $this->ensureSafety();
+        /** @psalm-suppress MixedArgumentTypeCoercion */
+        $this->getSafeCollection()->set($key, $value);
         $this->getRealCollection()->set($key, $value);
     }
 

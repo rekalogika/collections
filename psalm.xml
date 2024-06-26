@@ -74,6 +74,11 @@
                 <file name="packages/collections-common/src/Trait/ReadableCollectionTrait.php" />
             </errorLevel>
         </InvalidTemplateParam>
+        <MethodSignatureMismatch>
+            <errorLevel type="suppress">
+                <file name="packages/collections-common/src/Trait/PageableTrait.php" />
+            </errorLevel>
+        </MethodSignatureMismatch>
     </issueHandlers>
 
     <plugins>

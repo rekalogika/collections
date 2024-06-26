@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Trait;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ReadableCollection;
 
 /**
@@ -32,9 +33,9 @@ trait ReadableExtraLazyTrait
     abstract private function getRealCollection(): ReadableCollection;
 
     /**
-     * @return ReadableCollection<TKey,T>
+     * @return Collection<TKey,T>
      */
-    abstract private function getSafeCollection(): ReadableCollection;
+    abstract private function getSafeCollection(): Collection;
 
     /**
      * @template TMaybeContained
