@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
-use Doctrine\Common\Collections\ReadableCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @template TKey of array-key
@@ -22,9 +22,9 @@ use Doctrine\Common\Collections\ReadableCollection;
 trait IteratorAggregateTrait
 {
     /**
-     * @return ReadableCollection<TKey,T>
+     * @return Collection<TKey,T>
      */
-    abstract private function getSafeCollection(): ReadableCollection;
+    abstract private function getSafeCollection(): Collection;
 
     /**
      * @return \Traversable<TKey,T>

@@ -14,23 +14,23 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\ReadableCollection;
+use Doctrine\Common\Collections\Collection;
 use Rekalogika\Contracts\Collections\Exception\OverflowException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Configuration;
 
 /**
  * @template TKey of array-key
- * @template-covariant T
+ * @template T
  *
  * @internal
  */
 trait SafeCollectionTrait
 {
     /**
-     * @var ReadableCollection<TKey,T>|null
+     * @var Collection<TKey,T>|null
      */
-    private ?ReadableCollection $safeCollection = null;
+    private ?Collection $safeCollection = null;
 
     /**
      * @return PageableInterface<TKey,T>
@@ -53,9 +53,9 @@ trait SafeCollectionTrait
     }
 
     /**
-     * @return ReadableCollection<TKey,T>
+     * @return Collection<TKey,T>
      */
-    private function getSafeCollection(): ReadableCollection
+    private function getSafeCollection(): Collection
     {
         if ($this->safeCollection !== null) {
             return $this->safeCollection;

@@ -78,10 +78,7 @@ trait PageableTrait
     /**
      * @param int<1,max> $itemsPerPage
      */
-    final public function withItemsPerPage(int $itemsPerPage): static
-    {
-        return $this->with(itemsPerPage: $itemsPerPage);
-    }
+    abstract public function withItemsPerPage(int $itemsPerPage): static;
 
     /**
      * @return null|int<0,max>

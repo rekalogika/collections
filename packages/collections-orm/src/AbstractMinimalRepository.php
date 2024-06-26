@@ -77,24 +77,24 @@ abstract class AbstractMinimalRepository implements MinimalRepository
     abstract protected function configure(): MinimalRepositoryConfiguration;
 
     /**
-     * @param int<1,max> $itemsPerPage
-     */
-    protected function with(
-        ?int $itemsPerPage = null,
-    ): static {
-        $clone = clone $this;
-        $clone->itemsPerPage = $itemsPerPage ?? $this->itemsPerPage;
-
-        return $clone;
-    }
-
-    /**
      * @return class-string<T>
      */
     private function getClass(): string
     {
         /** @var class-string<T> */
         return $this->class;
+    }
+
+    /**
+     * @param int<1,max> $itemsPerPage
+     */
+    public function withItemsPerPage(int $itemsPerPage): static
+    {
+        /** @psalm-suppress UnsafeGenericInstantiation */
+        $instance = new static(entityManager: $this->entityManager);
+        $instance->itemsPerPage = $itemsPerPage;
+
+        return $instance;
     }
 
     //
@@ -114,5 +114,4 @@ abstract class AbstractMinimalRepository implements MinimalRepository
             ->select($alias)
             ->from($this->getClass(), $alias, $indexBy);
     }
-
 }

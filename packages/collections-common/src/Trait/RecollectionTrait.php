@@ -16,6 +16,7 @@ namespace Rekalogika\Domain\Collections\Common\Trait;
 /**
  * @template TKey of array-key
  * @template T
+ * @link http://foo asdf
  */
 trait RecollectionTrait
 {

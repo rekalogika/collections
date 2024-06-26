@@ -52,7 +52,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
      * @param int<1,max> $itemsPerPage
      * @param null|int<0,max> $count
      */
-    public function __construct(
+    final public function __construct(
         ReadableCollection $collection,
         ?Criteria $criteria = null,
         private readonly ?string $indexBy = null,
@@ -98,26 +98,17 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
     }
 
     /**
-     * @param null|Collection<TKey,T> $collection
-     * @param null|int<1,max> $itemsPerPage
-     * @param null|int<0,max> $count
+     * @param int<1,max> $itemsPerPage
      */
-    protected function with(
-        ?ReadableCollection $collection = null,
-        ?Criteria $criteria = null,
-        ?int $itemsPerPage = 50,
-        ?CountStrategy $countStrategy = null,
-        ?int &$count = null,
-    ): static {
-        $count = $count ?? $this->count;
-
-        // @phpstan-ignore-next-line
+    public function withItemsPerPage(int $itemsPerPage): static
+    {
+        /** @psalm-suppress UnsafeGenericInstantiation */
         return new static(
-            collection: $collection ?? $this->collection,
-            criteria: $criteria ?? $this->criteria,
-            itemsPerPage: $itemsPerPage ?? $this->itemsPerPage,
-            countStrategy: $countStrategy ?? $this->countStrategy,
-            count: $count,
+            collection: $this->collection,
+            criteria: $this->criteria,
+            itemsPerPage: $itemsPerPage,
+            countStrategy: $this->countStrategy,
+            count: $this->count,
         );
     }
 

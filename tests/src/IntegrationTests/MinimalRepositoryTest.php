@@ -27,6 +27,11 @@ class MinimalRepositoryTest extends BaseRecollectionTestCase
     /** @use MinimalRepositoryTestsTrait<MinimalRepository<array-key,Citizen>> */
     use MinimalRepositoryTestsTrait;
 
+    protected function isSingleton(): bool
+    {
+        return true;
+    }
+
     protected function getExpectedTotal(): int
     {
         return 2610;

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ReadableCollection;
 
 /**
@@ -29,9 +30,9 @@ trait ReadableCollectionTrait
     use CountableTrait;
 
     /**
-     * @return ReadableCollection<TKey,T>
+     * @return Collection<TKey,T>
      */
-    abstract private function getSafeCollection(): ReadableCollection;
+    abstract private function getSafeCollection(): Collection;
 
     /**
      * @template TMaybeContained
