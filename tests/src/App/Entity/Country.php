@@ -17,7 +17,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Rekalogika\Collections\Tests\App\DoctrineRepository\DoctrineCountryRepository;
+use Rekalogika\Contracts\Collections\MinimalRecollection;
 use Rekalogika\Contracts\Collections\Recollection;
+use Rekalogika\Domain\Collections\MinimalRecollectionDecorator;
 use Rekalogika\Domain\Collections\RecollectionDecorator;
 
 #[ORM\Entity(repositoryClass: DoctrineCountryRepository::class)]
@@ -76,6 +78,17 @@ class Country
     public function getCitizens(): Recollection
     {
         return RecollectionDecorator::create(
+            collection: $this->citizens,
+            indexBy: 'id'
+        );
+    }
+
+    /**
+     * @return MinimalRecollection<int, Citizen>
+     */
+    public function getCitizensInMinimalRecollection(): MinimalRecollection
+    {
+        return MinimalRecollectionDecorator::create(
             collection: $this->citizens,
             indexBy: 'id'
         );

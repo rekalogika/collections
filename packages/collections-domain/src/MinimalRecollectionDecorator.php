@@ -127,7 +127,8 @@ class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
             return self::$instances[$collection][$cacheKey];
         }
 
-        $newInstance = new self(
+        /** @psalm-suppress UnsafeGenericInstantiation */
+        $newInstance = new static(
             collection: $collection,
             orderBy: $orderBy,
             indexBy: $indexBy,
