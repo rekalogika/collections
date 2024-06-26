@@ -198,6 +198,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
      */
     protected function applyCriteria(
         Criteria $criteria,
+        ?string $instanceId = null,
         CountStrategy $countStrategy = CountStrategy::Restrict,
         ?int &$count = null,
     ): MinimalCriteriaRecollection {
@@ -206,9 +207,10 @@ class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
             $criteria = $criteria->orderBy($this->orderBy);
         }
 
-        return new MinimalCriteriaRecollection(
+        return MinimalCriteriaRecollection::create(
             collection: $this->collection,
             criteria: $criteria,
+            instanceId: $instanceId,
             itemsPerPage: $this->itemsPerPage,
             countStrategy: $countStrategy,
             count: $count,

@@ -32,6 +32,7 @@
 * fix: make sure all objects support indexBy
 * feat: instance caching for collection decorators
 * fix: should be static instead of self for instantiation in decorators
+* feat: instance caching for criteria recollections
 
 ## 0.3.0
 
