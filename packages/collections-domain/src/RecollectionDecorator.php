@@ -240,6 +240,7 @@ class RecollectionDecorator implements Recollection
      */
     protected function applyCriteria(
         Criteria $criteria,
+        ?string $instanceId = null,
         CountStrategy $countStrategy = CountStrategy::Restrict,
         ?int &$count = null,
     ): CriteriaRecollection {
@@ -248,9 +249,10 @@ class RecollectionDecorator implements Recollection
             $criteria = $criteria->orderBy($this->orderBy);
         }
 
-        return new CriteriaRecollection(
+        return CriteriaRecollection::create(
             collection: $this->collection,
             criteria: $criteria,
+            instanceId: $instanceId,
             itemsPerPage: $this->itemsPerPage,
             countStrategy: $countStrategy,
             count: $count,

@@ -51,6 +51,11 @@ class CriteriaRecollection implements ReadableRecollection
     }
 
     /**
+     * @var null|\WeakMap<object,array<string,self<array-key,mixed>>>
+     */
+    private static ?\WeakMap $instances = null;
+
+    /**
      * @var ReadableCollection<TKey,T>&Selectable<TKey,T>
      */
     private readonly ReadableCollection&Selectable $collection;
@@ -64,7 +69,7 @@ class CriteriaRecollection implements ReadableRecollection
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      */
-    final public function __construct(
+    final private function __construct(
         ReadableCollection $collection,
         ?Criteria $criteria = null,
         private readonly ?string $indexBy = null,
@@ -91,6 +96,74 @@ class CriteriaRecollection implements ReadableRecollection
         }
 
         $this->criteria = $criteria;
+    }
+
+    /**
+     * @template STKey of array-key
+     * @template ST
+     * @param Collection<STKey,ST> $collection
+     * @param int<1,max> $itemsPerPage
+     * @param null|int<0,max> $count
+     * @param null|int<1,max> $softLimit
+     * @param null|int<1,max> $hardLimit
+     * @return static
+     */
+    final public static function create(
+        Collection $collection,
+        ?Criteria $criteria = null,
+        ?string $instanceId = null,
+        ?string $indexBy = null,
+        int $itemsPerPage = 50,
+        CountStrategy $countStrategy = CountStrategy::Restrict,
+        ?int &$count = null,
+        ?int $softLimit = null,
+        ?int $hardLimit = null,
+    ): ReadableRecollection {
+        if (self::$instances === null) {
+            /** @var \WeakMap<object,array<string,self<array-key,mixed>>> */
+            $weakmap = new \WeakMap();
+            // @phpstan-ignore-next-line
+            self::$instances = $weakmap;
+        }
+
+        $cacheKey = hash('xxh128', serialize([
+            $instanceId ?? $criteria,
+            $indexBy,
+            $itemsPerPage,
+            $countStrategy,
+            $count,
+        ]));
+
+        if (isset(self::$instances[$collection][$cacheKey])) {
+            /** @var static */
+            return self::$instances[$collection][$cacheKey];
+        }
+
+        /** @psalm-suppress UnsafeGenericInstantiation */
+        $newInstance = new static(
+            collection: $collection,
+            criteria: $criteria,
+            indexBy: $indexBy,
+            itemsPerPage: $itemsPerPage,
+            countStrategy: $countStrategy,
+            count: $count,
+            softLimit: $softLimit,
+            hardLimit: $hardLimit,
+        );
+
+        if (!isset(self::$instances[$collection])) {
+            // @phpstan-ignore-next-line
+            self::$instances[$collection] = [];
+        }
+
+        /**
+         * @psalm-suppress InvalidArgument
+         * @phpstan-ignore-next-line
+         */
+        self::$instances[$collection][$cacheKey] = $newInstance;
+
+        /** @var static */
+        return $newInstance;
     }
 
     private function getCountStrategy(): CountStrategy
