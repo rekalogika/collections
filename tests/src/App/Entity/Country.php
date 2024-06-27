@@ -15,10 +15,13 @@ namespace Rekalogika\Collections\Tests\App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Rekalogika\Collections\Tests\App\DoctrineRepository\DoctrineCountryRepository;
 use Rekalogika\Contracts\Collections\MinimalRecollection;
+use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Contracts\Collections\Recollection;
+use Rekalogika\Domain\Collections\CriteriaRecollection;
 use Rekalogika\Domain\Collections\MinimalRecollectionDecorator;
 use Rekalogika\Domain\Collections\RecollectionDecorator;
 
@@ -72,10 +75,17 @@ class Country
         return $this->citizens;
     }
 
+    private static function getWorkingAgeCriteria(): Criteria
+    {
+        return Criteria::create()
+            ->where(Criteria::expr()->gte('age', 15))
+            ->andWhere(Criteria::expr()->lte('age', 64));
+    }
+
     /**
      * @return Recollection<int, Citizen>
      */
-    public function getCitizens(): Recollection
+    public function getCitizensInRecollection(): Recollection
     {
         return RecollectionDecorator::create(
             collection: $this->citizens,
@@ -91,6 +101,19 @@ class Country
         return MinimalRecollectionDecorator::create(
             collection: $this->citizens,
             indexBy: 'id'
+        );
+    }
+
+    /**
+     * @return ReadableRecollection<int, Citizen>
+     */
+    public function getWorkingAgeCitizensInRecollection(): ReadableRecollection
+    {
+        return CriteriaRecollection::create(
+            collection: $this->citizens,
+            criteria: self::getWorkingAgeCriteria(),
+            indexBy: 'id',
+            instanceId: __METHOD__,
         );
     }
 

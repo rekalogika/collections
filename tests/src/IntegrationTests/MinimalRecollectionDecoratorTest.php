@@ -37,7 +37,7 @@ class MinimalRecollectionDecoratorTest extends BaseRecollectionTestCase
 
     protected function getExpectedTotal(): int
     {
-        return 2050;
+        return 6060;
     }
 
     protected function isSafe(): bool

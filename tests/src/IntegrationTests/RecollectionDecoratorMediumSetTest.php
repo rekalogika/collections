@@ -37,7 +37,7 @@ class RecollectionDecoratorMediumSetTest extends BaseRecollectionTestCase
 
     protected function getExpectedTotal(): int
     {
-        return 550;
+        return 1650;
     }
 
     protected function isSafe(): bool
@@ -53,7 +53,7 @@ class RecollectionDecoratorMediumSetTest extends BaseRecollectionTestCase
         /** @var MinimalRepository<array-key,Country> $repository */
 
         $country = $repository->getOrFail(2);
-        $citizens = $country->getCitizens();
+        $citizens = $country->getCitizensInRecollection();
 
         static::assertInstanceOf(Recollection::class, $citizens);
         static::assertInstanceOf(PersistentCollection::class, $country->getRawCitizens());

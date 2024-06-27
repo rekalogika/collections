@@ -32,11 +32,15 @@ trait PageableTestsTrait
 
     public function testPageableIteration(): void
     {
+        $i = 0;
         foreach ($this->getObject()->getPages() as $page) {
             foreach ($page as $key => $citizen) {
                 static::assertInstanceOf(Citizen::class, $citizen);
                 static::assertEquals($key, $citizen->getId());
+                $i++;
             }
         }
+
+        static::assertEquals($this->getExpectedTotal(), $i);
     }
 }
