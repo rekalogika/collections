@@ -11,24 +11,23 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Collections\Tests\IntegrationTests;
+namespace Rekalogika\Collections\Tests\IntegrationTests\Domain;
 
-use Doctrine\ORM\PersistentCollection;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Collections\Tests\App\Entity\Country;
 use Rekalogika\Collections\Tests\App\MinimalRepository\CountryMinimalRepository;
 use Rekalogika\Collections\Tests\IntegrationTests\Base\BaseRecollectionTestCase;
-use Rekalogika\Collections\Tests\IntegrationTests\Trait\RecollectionTestsTrait;
+use Rekalogika\Collections\Tests\IntegrationTests\Trait\ReadableRecollectionTestsTrait;
 use Rekalogika\Contracts\Collections\MinimalRepository;
-use Rekalogika\Contracts\Collections\Recollection;
+use Rekalogika\Contracts\Collections\ReadableRecollection;
 
 /**
- * @extends BaseRecollectionTestCase<Recollection<int,Citizen>>
+ * @extends BaseRecollectionTestCase<ReadableRecollection<int,Citizen>>
  */
-class RecollectionDecoratorMediumSetTest extends BaseRecollectionTestCase
+class CriteriaRecollectionMediumSetTest extends BaseRecollectionTestCase
 {
-    /** @use RecollectionTestsTrait<Recollection<array-key,Citizen>> */
-    use RecollectionTestsTrait;
+    /** @use ReadableRecollectionTestsTrait<ReadableRecollection<array-key,Citizen>> */
+    use ReadableRecollectionTestsTrait;
 
     protected function isSingleton(): bool
     {
@@ -37,7 +36,7 @@ class RecollectionDecoratorMediumSetTest extends BaseRecollectionTestCase
 
     protected function getExpectedTotal(): int
     {
-        return 1650;
+        return 550;
     }
 
     protected function isSafe(): bool
@@ -45,7 +44,7 @@ class RecollectionDecoratorMediumSetTest extends BaseRecollectionTestCase
         return true;
     }
 
-    protected function getObject(): Recollection
+    protected function getObject(): ReadableRecollection
     {
         $repository = static::getContainer()->get(CountryMinimalRepository::class);
         static::assertInstanceOf(MinimalRepository::class, $repository);
@@ -53,10 +52,9 @@ class RecollectionDecoratorMediumSetTest extends BaseRecollectionTestCase
         /** @var MinimalRepository<array-key,Country> $repository */
 
         $country = $repository->getOrFail(2);
-        $citizens = $country->getCitizensInRecollection();
+        $citizens = $country->getWorkingAgeCitizensInRecollection();
 
-        static::assertInstanceOf(Recollection::class, $citizens);
-        static::assertInstanceOf(PersistentCollection::class, $country->getRawCitizens());
+        static::assertInstanceOf(ReadableRecollection::class, $citizens);
 
         return $citizens;
     }

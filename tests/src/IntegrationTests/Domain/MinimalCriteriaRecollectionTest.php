@@ -11,23 +11,23 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Collections\Tests\IntegrationTests;
+namespace Rekalogika\Collections\Tests\IntegrationTests\Domain;
 
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Collections\Tests\App\Entity\Country;
 use Rekalogika\Collections\Tests\App\MinimalRepository\CountryMinimalRepository;
 use Rekalogika\Collections\Tests\IntegrationTests\Base\BaseRecollectionTestCase;
-use Rekalogika\Collections\Tests\IntegrationTests\Trait\ReadableRecollectionTestsTrait;
+use Rekalogika\Collections\Tests\IntegrationTests\Trait\MinimalReadableRecollectionTestsTrait;
+use Rekalogika\Contracts\Collections\MinimalReadableRecollection;
 use Rekalogika\Contracts\Collections\MinimalRepository;
-use Rekalogika\Contracts\Collections\ReadableRecollection;
 
 /**
- * @extends BaseRecollectionTestCase<ReadableRecollection<int,Citizen>>
+ * @extends BaseRecollectionTestCase<MinimalReadableRecollection<int,Citizen>>
  */
-class CriteriaRecollectionLargeSetTest extends BaseRecollectionTestCase
+class MinimalCriteriaRecollectionTest extends BaseRecollectionTestCase
 {
-    /** @use ReadableRecollectionTestsTrait<ReadableRecollection<array-key,Citizen>> */
-    use ReadableRecollectionTestsTrait;
+    /** @use MinimalReadableRecollectionTestsTrait<MinimalReadableRecollection<array-key,Citizen>> */
+    use MinimalReadableRecollectionTestsTrait;
 
     protected function isSingleton(): bool
     {
@@ -36,25 +36,25 @@ class CriteriaRecollectionLargeSetTest extends BaseRecollectionTestCase
 
     protected function getExpectedTotal(): int
     {
-        return 2020;
+        return 550;
     }
 
     protected function isSafe(): bool
     {
-        return false;
+        return true;
     }
 
-    protected function getObject(): ReadableRecollection
+    protected function getObject(): MinimalReadableRecollection
     {
         $repository = static::getContainer()->get(CountryMinimalRepository::class);
         static::assertInstanceOf(MinimalRepository::class, $repository);
 
         /** @var MinimalRepository<array-key,Country> $repository */
 
-        $country = $repository->getOrFail(1);
-        $citizens = $country->getWorkingAgeCitizensInRecollection();
+        $country = $repository->getOrFail(2);
+        $citizens = $country->getWorkingAgeCitizensInMinimalRecollection();
 
-        static::assertInstanceOf(ReadableRecollection::class, $citizens);
+        static::assertInstanceOf(MinimalReadableRecollection::class, $citizens);
 
         return $citizens;
     }
