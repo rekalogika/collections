@@ -15,9 +15,9 @@ namespace Rekalogika\Collections\Tests\IntegrationTests;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
-use Rekalogika\Collections\Tests\App\BasicRepository\CountryMinimalRepository;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Collections\Tests\App\Entity\Country;
+use Rekalogika\Collections\Tests\App\MinimalRepository\CountryMinimalRepository;
 use Rekalogika\Contracts\Collections\MinimalRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 

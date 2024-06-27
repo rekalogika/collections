@@ -34,6 +34,7 @@
 * fix: should be static instead of self for instantiation in decorators
 * feat: instance caching for criteria recollections
 * test: criteria recollection
+* refactor: rename basic repository to minimal repository
 
 ## 0.3.0
 
