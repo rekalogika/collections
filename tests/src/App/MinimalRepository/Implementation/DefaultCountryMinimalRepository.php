@@ -11,22 +11,22 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Collections\Tests\App\BasicRepository\Implementation;
+namespace Rekalogika\Collections\Tests\App\MinimalRepository\Implementation;
 
 use Rekalogika\Collections\ORM\AbstractMinimalRepository;
 use Rekalogika\Collections\ORM\Configuration\MinimalRepositoryConfiguration;
-use Rekalogika\Collections\Tests\App\BasicRepository\CitizenMinimalRepository;
-use Rekalogika\Collections\Tests\App\Entity\Citizen;
+use Rekalogika\Collections\Tests\App\Entity\Country;
+use Rekalogika\Collections\Tests\App\MinimalRepository\CountryMinimalRepository;
 
 /**
- * @extends AbstractMinimalRepository<array-key,Citizen>
+ * @extends AbstractMinimalRepository<array-key,Country>
  */
-class DefaultCitizenMinimalRepository extends AbstractMinimalRepository implements CitizenMinimalRepository
+class DefaultCountryMinimalRepository extends AbstractMinimalRepository implements CountryMinimalRepository
 {
     protected function configure(): MinimalRepositoryConfiguration
     {
         return new MinimalRepositoryConfiguration(
-            class: Citizen::class,
+            class: Country::class,
         );
     }
 }

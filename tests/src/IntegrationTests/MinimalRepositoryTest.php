@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\IntegrationTests;
 
-use Rekalogika\Collections\Tests\App\BasicRepository\CitizenMinimalRepository;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
+use Rekalogika\Collections\Tests\App\MinimalRepository\CitizenMinimalRepository;
 use Rekalogika\Collections\Tests\IntegrationTests\Base\BaseRecollectionTestCase;
 use Rekalogika\Collections\Tests\IntegrationTests\Trait\MinimalRepositoryTestsTrait;
 use Rekalogika\Contracts\Collections\MinimalRepository;

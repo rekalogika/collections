@@ -11,14 +11,14 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Collections\Tests\App\BasicRepository;
+namespace Rekalogika\Collections\Tests\App\MinimalRepository;
 
-use Rekalogika\Collections\Tests\App\Entity\Citizen;
+use Rekalogika\Collections\Tests\App\Entity\Country;
 use Rekalogika\Contracts\Collections\MinimalRepository;
 
 /**
- * @extends MinimalRepository<array-key,Citizen>
+ * @extends MinimalRepository<array-key,Country>
  */
-interface CitizenMinimalRepository extends MinimalRepository
+interface CountryMinimalRepository extends MinimalRepository
 {
 }
