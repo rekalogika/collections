@@ -36,6 +36,7 @@
 * test: criteria recollection
 * refactor: rename basic repository to minimal repository
 * fix: repository slice now use QueryBuilder setMaxResults and setFirstResult
+* test: reorganize
 
 ## 0.3.0
 

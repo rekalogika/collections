@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Collections\Tests\IntegrationTests;
+namespace Rekalogika\Collections\Tests\IntegrationTests\Domain;
 
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Collections\Tests\App\Entity\Country;
@@ -24,7 +24,7 @@ use Rekalogika\Contracts\Collections\ReadableRecollection;
 /**
  * @extends BaseRecollectionTestCase<ReadableRecollection<int,Citizen>>
  */
-class CriteriaRecollectionMediumSetTest extends BaseRecollectionTestCase
+class CriteriaRecollectionLargeSetTest extends BaseRecollectionTestCase
 {
     /** @use ReadableRecollectionTestsTrait<ReadableRecollection<array-key,Citizen>> */
     use ReadableRecollectionTestsTrait;
@@ -36,12 +36,12 @@ class CriteriaRecollectionMediumSetTest extends BaseRecollectionTestCase
 
     protected function getExpectedTotal(): int
     {
-        return 550;
+        return 2020;
     }
 
     protected function isSafe(): bool
     {
-        return true;
+        return false;
     }
 
     protected function getObject(): ReadableRecollection
@@ -51,7 +51,7 @@ class CriteriaRecollectionMediumSetTest extends BaseRecollectionTestCase
 
         /** @var MinimalRepository<array-key,Country> $repository */
 
-        $country = $repository->getOrFail(2);
+        $country = $repository->getOrFail(1);
         $citizens = $country->getWorkingAgeCitizensInRecollection();
 
         static::assertInstanceOf(ReadableRecollection::class, $citizens);
