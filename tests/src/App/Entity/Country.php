@@ -18,10 +18,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Rekalogika\Collections\Tests\App\DoctrineRepository\DoctrineCountryRepository;
+use Rekalogika\Contracts\Collections\MinimalReadableRecollection;
 use Rekalogika\Contracts\Collections\MinimalRecollection;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Contracts\Collections\Recollection;
 use Rekalogika\Domain\Collections\CriteriaRecollection;
+use Rekalogika\Domain\Collections\MinimalCriteriaRecollection;
 use Rekalogika\Domain\Collections\MinimalRecollectionDecorator;
 use Rekalogika\Domain\Collections\RecollectionDecorator;
 
@@ -110,6 +112,19 @@ class Country
     public function getWorkingAgeCitizensInRecollection(): ReadableRecollection
     {
         return CriteriaRecollection::create(
+            collection: $this->citizens,
+            criteria: self::getWorkingAgeCriteria(),
+            indexBy: 'id',
+            instanceId: __METHOD__,
+        );
+    }
+
+    /**
+     * @return MinimalReadableRecollection<int, Citizen>
+     */
+    public function getWorkingAgeCitizensInMinimalRecollection(): MinimalReadableRecollection
+    {
+        return MinimalCriteriaRecollection::create(
             collection: $this->citizens,
             criteria: self::getWorkingAgeCriteria(),
             indexBy: 'id',
