@@ -109,7 +109,7 @@ trait ReadableCollectionTestsTrait
     public function testExists(): void
     {
         $this->testSafety();
-        $func = fn (int|string $key, object $value): bool => (int)$key % 2 === 0;
+        $func = fn (int|string $key, mixed $value): bool => (int)$key % 2 === 0;
         $exists = $this->getObject()->exists($func);
         static::assertTrue($exists);
     }
@@ -117,7 +117,7 @@ trait ReadableCollectionTestsTrait
     public function testExistsNegative(): void
     {
         $this->testSafety();
-        $func = fn (int|string $key, object $value): bool => $key === 9999999;
+        $func = fn (int|string $key, mixed $value): bool => $key === 9999999;
         $exists = $this->getObject()->exists($func);
         static::assertFalse($exists);
     }
@@ -125,7 +125,7 @@ trait ReadableCollectionTestsTrait
     public function testFilter(): void
     {
         $this->testSafety();
-        $func = fn (object $value, int|string $key): bool => (int)$key % 2 === 0;
+        $func = fn (mixed $value, int|string $key): bool => (int)$key % 2 === 0;
         $filtered = $this->getObject()->filter($func);
         static::assertInstanceOf(ReadableCollection::class, $filtered);
 
@@ -140,7 +140,7 @@ trait ReadableCollectionTestsTrait
     public function testFilterNegative(): void
     {
         $this->testSafety();
-        $func = fn (object $value, int|string $key): bool => $key === 9999999;
+        $func = fn (mixed $value, int|string $key): bool => $key === 9999999;
         $filtered = $this->getObject()->filter($func);
         static::assertInstanceOf(ReadableCollection::class, $filtered);
         static::assertCount(0, $filtered);
@@ -149,7 +149,10 @@ trait ReadableCollectionTestsTrait
     public function testMap(): void
     {
         $this->testSafety();
-        $func = fn (object $value): object => $value;
+        $func = function (mixed $value): object {
+            static::assertIsObject($value);
+            return $value;
+        };
         $mapped = $this->getObject()->map($func);
         static::assertInstanceOf(ReadableCollection::class, $mapped);
     }
@@ -157,7 +160,7 @@ trait ReadableCollectionTestsTrait
     public function testPartition(): void
     {
         $this->testSafety();
-        $func = fn (int|string $key, object $value): bool => $key === 3;
+        $func = fn (int|string $key, mixed $value): bool => $key === 3;
         $partitioned = $this->getObject()->partition($func);
         static::assertIsArray($partitioned);
         static::assertCount(2, $partitioned);
@@ -166,7 +169,7 @@ trait ReadableCollectionTestsTrait
     public function testForAll(): void
     {
         $this->testSafety();
-        $func = fn (int|string $key, object $value): bool => $key > 0;
+        $func = fn (int|string $key, mixed $value): bool => $key > 0;
         $forAll = $this->getObject()->forAll($func);
         static::assertTrue($forAll);
     }
@@ -183,7 +186,7 @@ trait ReadableCollectionTestsTrait
     public function testFindFirst(): void
     {
         $this->testSafety();
-        $func = fn (int|string $key, object $value): bool => (int)$key % 2 === 0;
+        $func = fn (int|string $key, mixed $value): bool => (int)$key % 2 === 0;
         $first = $this->getObject()->findFirst($func);
         static::assertInstanceOf(Citizen::class, $first);
     }
