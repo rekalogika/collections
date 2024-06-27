@@ -34,4 +34,21 @@ trait ReadableRepositoryTrait
         MinimalReadableRepositoryTrait::get insteadof ReadableRecollectionTrait;
         MinimalReadableRepositoryTrait::getOrFail insteadof ReadableRecollectionTrait;
     }
+
+    /**
+     * @return array<TKey,T>
+     */
+    public function slice(int $offset, int|null $length = null): array
+    {
+        $queryBuilder = (clone $this->queryBuilder)->setFirstResult($offset);
+
+        if ($length !== null) {
+            $queryBuilder->setMaxResults($length);
+        }
+
+        /** @var array<TKey,T> */
+        $result = $queryBuilder->getQuery()->getResult();
+
+        return $result;
+    }
 }

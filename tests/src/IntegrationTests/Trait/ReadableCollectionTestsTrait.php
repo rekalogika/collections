@@ -38,7 +38,6 @@ trait ReadableCollectionTestsTrait
     {
         $this->testSafety();
         $keys = $this->getObject()->getKeys();
-        static::assertIsArray($keys);
         static::assertNotEmpty($keys);
     }
 
