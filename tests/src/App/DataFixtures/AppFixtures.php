@@ -22,28 +22,76 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        // large set: 6060
+        // medium set: 1650
+        // small set: 30
+        // all: 7740
+
+
+        // large set
+
         $countrySy = CountryFactory::createOne([
             'name' => 'Syldavia',
             'code' => 'SY',
         ]);
-        CitizenFactory::createMany(2050, [
+
+        CitizenFactory::createMany(2020, [
             'country' => $countrySy,
+            'age' => rand(1, 14),
         ]);
+
+        CitizenFactory::createMany(2020, [
+            'country' => $countrySy,
+            'age' => rand(16, 63),
+        ]);
+
+        CitizenFactory::createMany(2020, [
+            'country' => $countrySy,
+            'age' => rand(65, 100),
+        ]);
+
+        // medium set
 
         $countrySt = CountryFactory::createOne([
             'name' => 'San Theodoros',
             'code' => 'ST',
         ]);
+
         CitizenFactory::createMany(550, [
             'country' => $countrySt,
+            'age' => rand(1, 14),
         ]);
+
+        CitizenFactory::createMany(550, [
+            'country' => $countrySt,
+            'age' => rand(16, 63),
+        ]);
+
+        CitizenFactory::createMany(550, [
+            'country' => $countrySt,
+            'age' => rand(65, 100),
+        ]);
+
+        // small set
 
         $countrySd = CountryFactory::createOne([
             'name' => 'Sondonesia',
             'code' => 'SD',
         ]);
+
         CitizenFactory::createMany(10, [
             'country' => $countrySd,
+            'age' => rand(1, 14),
+        ]);
+
+        CitizenFactory::createMany(10, [
+            'country' => $countrySd,
+            'age' => rand(16, 63),
+        ]);
+
+        CitizenFactory::createMany(10, [
+            'country' => $countrySd,
+            'age' => rand(65, 100),
         ]);
 
         $manager->flush();

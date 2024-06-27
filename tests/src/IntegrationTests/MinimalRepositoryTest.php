@@ -34,7 +34,7 @@ class MinimalRepositoryTest extends BaseRecollectionTestCase
 
     protected function getExpectedTotal(): int
     {
-        return 2610;
+        return 7740;
     }
 
     protected function isSafe(): bool
