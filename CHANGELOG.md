@@ -3,6 +3,7 @@
 ## 0.5.0
 
 * refactor: refactor counting strategy
+* fix: use closure for counting, defer counting until it is asked
 
 ## 0.4.0
 
