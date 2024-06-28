@@ -13,48 +13,26 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
-use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Exception\CountDisabledException;
+use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Exception\InvalidCountException;
 
 trait CountableTrait
 {
     abstract private function getCountStrategy(): CountStrategy;
+    abstract private function getUnderlyingCountable(): ?\Countable;
 
     /**
      * @return int<0,max>
-     */
-    abstract private function getRealCount(): int;
-
-    /**
-     * @return null|int<0,max>
-     */
-    abstract private function &getProvidedCount(): ?int;
-
-    /**
-     * @return int<0,max>
-     * @throws CountDisabledException
      */
     final public function count(): int
     {
-        if ($this->getCountStrategy() === CountStrategy::Restrict) {
-            throw new CountDisabledException();
-        } elseif ($this->getCountStrategy() === CountStrategy::Delegate) {
-            $count = $this->getPageable()->getTotalItems();
+        $result = $this->getCountStrategy()->getCount($this->getUnderlyingCountable());
 
-            if (\is_int($count) && $count >= 0) {
-                return $count;
-            }
-            return 0;
+        if ($result >= 0) {
+            return $result;
         }
 
-        $count = $this->getProvidedCount();
-
-        /** @psalm-suppress DocblockTypeContradiction */
-        if ($count === null || $count < 0) {
-            return 0;
-        }
-
-        return $count;
+        throw new InvalidCountException('Invalid count');
     }
 
     /**
@@ -63,11 +41,7 @@ trait CountableTrait
      */
     final public function refreshCount(): void
     {
-        $realCount = $this->getRealCount();
-
-        if ($realCount >= 0) {
-            $providedCount = &$this->getProvidedCount();
-            $providedCount = $realCount;
-        }
+        $realCount = \count($this->getUnderlyingCountable());
+        $this->getCountStrategy()->setCount($this->getUnderlyingCountable(), $realCount);
     }
 }

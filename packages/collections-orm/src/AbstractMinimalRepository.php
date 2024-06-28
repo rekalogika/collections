@@ -20,7 +20,7 @@ use Rekalogika\Collections\ORM\Configuration\MinimalRepositoryConfiguration;
 use Rekalogika\Collections\ORM\Trait\MinimalRepositoryTrait;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Collections\MinimalRepository;
-use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 
 /**
  * @template TKey of array-key
@@ -39,14 +39,12 @@ abstract class AbstractMinimalRepository implements MinimalRepository
      */
     use MinimalRepositoryTrait;
 
-    private ?int $count = 0;
-
     /**
      * @var int<1,max>
      */
     private int $itemsPerPage;
 
-    private readonly CountStrategy $countStrategy;
+    private readonly CountStrategy $count;
     private readonly QueryBuilder $queryBuilder;
     private readonly ?string $indexBy;
 
@@ -61,7 +59,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
         $configuration = $this->configure();
         $this->class = $configuration->getClass();
         $this->itemsPerPage = $configuration->getItemsPerPage();
-        $this->countStrategy = $configuration->getCountStrategy();
+        $this->count = $configuration->getCountStrategy();
         $this->indexBy = $configuration->getIndexBy();
 
         // set query builder

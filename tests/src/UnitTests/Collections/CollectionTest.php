@@ -16,7 +16,7 @@ namespace Rekalogika\Collections\Tests\UnitTests\Collections;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Tests\Common\Collections\ArrayCollectionTestCase;
-use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\DelegatedCountStrategy;
 use Rekalogika\Domain\Collections\RecollectionDecorator;
 
 class CollectionTest extends ArrayCollectionTestCase
@@ -30,7 +30,7 @@ class CollectionTest extends ArrayCollectionTestCase
     {
         return RecollectionDecorator::create(
             collection: new ArrayCollection($elements),
-            countStrategy: CountStrategy::Delegate,
+            count: new DelegatedCountStrategy(),
         );
     }
 

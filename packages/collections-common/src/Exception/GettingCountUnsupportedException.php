@@ -15,10 +15,6 @@ namespace Rekalogika\Domain\Collections\Common\Exception;
 
 use Rekalogika\Contracts\Collections\Exception\BadMethodCallException;
 
-class CountDisabledException extends BadMethodCallException
+class GettingCountUnsupportedException extends BadMethodCallException
 {
-    public function __construct()
-    {
-        parent::__construct('Count is disabled.');
-    }
 }

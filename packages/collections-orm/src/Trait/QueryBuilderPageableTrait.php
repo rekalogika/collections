@@ -15,7 +15,7 @@ namespace Rekalogika\Collections\ORM\Trait;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
-use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Exception\GettingCountUnsupportedException;
 use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 
@@ -46,12 +46,11 @@ trait QueryBuilderPageableTrait
             indexBy: $this->indexBy,
         );
 
-        $count = match ($this->countStrategy) {
-            CountStrategy::Restrict => false,
-            CountStrategy::Delegate => true,
-            CountStrategy::Provided => $this->count,
+        try {
+            $count = $this->count->getCount($this->getUnderlyingCountable());
+        } catch (GettingCountUnsupportedException) {
+            $count = false;
         }
-        ?? 0;
 
         // @phpstan-ignore-next-line
         $this->pageable = new KeysetPageable(
@@ -64,19 +63,8 @@ trait QueryBuilderPageableTrait
         return $this->pageable;
     }
 
-    /**
-     * @return int<0,max>
-     */
-    private function getRealCount(): int
+    private function getUnderlyingCountable(): \Countable
     {
-        $pagination = new Paginator($this->queryBuilder->getQuery());
-
-        $count = $pagination->count();
-
-        if ($count > 0) {
-            return $count;
-        }
-
-        return 0;
+        return new Paginator($this->queryBuilder->getQuery());
     }
 }

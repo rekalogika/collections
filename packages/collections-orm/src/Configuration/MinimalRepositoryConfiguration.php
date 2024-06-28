@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\ORM\Configuration;
 
 use Doctrine\Common\Collections\Order;
-use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
-use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 
 /**
@@ -26,7 +26,8 @@ class MinimalRepositoryConfiguration
     /**
      * @var non-empty-array<string,Order>
      */
-    private array $orderBy;
+    private readonly array $orderBy;
+    private readonly CountStrategy $count;
 
     /**
      * @param class-string<T> $class
@@ -38,13 +39,11 @@ class MinimalRepositoryConfiguration
         private readonly string $indexBy = 'id',
         array|string|null $orderBy = null,
         private readonly int $itemsPerPage = 50,
-        private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
+        ?CountStrategy $count = null,
     ) {
         $this->orderBy = OrderByUtil::normalizeOrderBy($orderBy);
 
-        if ($countStrategy === CountStrategy::Provided) {
-            throw new InvalidArgumentException('CountStrategy::Provided is not supported in repositories');
-        }
+        $this->count = $count ?? new RestrictedCountStrategy();
     }
 
     public function getIndexBy(): string
@@ -78,6 +77,6 @@ class MinimalRepositoryConfiguration
 
     public function getCountStrategy(): CountStrategy
     {
-        return $this->countStrategy;
+        return $this->count;
     }
 }

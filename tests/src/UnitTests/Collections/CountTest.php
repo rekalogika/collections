@@ -15,8 +15,10 @@ namespace Rekalogika\Collections\Tests\UnitTests\Collections;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
-use Rekalogika\Domain\Collections\Common\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Exception\CountDisabledException;
+use Rekalogika\Domain\Collections\Common\Count\DelegatedCountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\PrecountingStrategy;
+use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
+use Rekalogika\Domain\Collections\Common\Exception\GettingCountUnsupportedException;
 use Rekalogika\Domain\Collections\RecollectionDecorator;
 
 class CountTest extends TestCase
@@ -31,7 +33,7 @@ class CountTest extends TestCase
             ])
         );
 
-        $this->expectException(CountDisabledException::class);
+        $this->expectException(GettingCountUnsupportedException::class);
         $foo = \count($collection);
     }
 
@@ -43,10 +45,10 @@ class CountTest extends TestCase
                 new Citizen(2, 'Jane Doe'),
                 new Citizen(1, 'John Smith'),
             ]),
-            countStrategy: CountStrategy::Restrict
+            count: new RestrictedCountStrategy()
         );
 
-        $this->expectException(CountDisabledException::class);
+        $this->expectException(GettingCountUnsupportedException::class);
         $foo = \count($collection);
     }
 
@@ -58,7 +60,7 @@ class CountTest extends TestCase
                 new Citizen(2, 'Jane Doe'),
                 new Citizen(1, 'John Smith'),
             ]),
-            countStrategy: CountStrategy::Delegate
+            count: new DelegatedCountStrategy()
         );
 
         $count = \count($collection);
@@ -76,8 +78,7 @@ class CountTest extends TestCase
                 new Citizen(2, 'Jane Doe'),
                 new Citizen(1, 'John Smith'),
             ]),
-            countStrategy: CountStrategy::Provided,
-            count: $count
+            count: new PrecountingStrategy($count),
         );
 
         $result = \count($collection);

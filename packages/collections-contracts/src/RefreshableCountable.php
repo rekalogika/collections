@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Collections;
 
-interface RefreshableCount
+interface RefreshableCountable extends \Countable
 {
     public function refreshCount(): void;
 }

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Trait;
 
 use Rekalogika\Contracts\Rekapager\PageableInterface;
-use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Exception\GettingCountUnsupportedException;
 use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 
@@ -46,12 +46,11 @@ trait RecollectionPageableTrait
             indexBy: $this->indexBy,
         );
 
-        $count = match ($this->countStrategy) {
-            CountStrategy::Restrict => false,
-            CountStrategy::Delegate => true,
-            CountStrategy::Provided => $this->count,
+        try {
+            $count = $this->count->getCount($this->collection);
+        } catch (GettingCountUnsupportedException) {
+            $count = false;
         }
-        ?? 0;
 
         $this->pageable = new KeysetPageable(
             adapter: $adapter,

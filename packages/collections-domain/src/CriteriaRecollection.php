@@ -20,7 +20,8 @@ use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
-use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ReadableExtraLazyTrait;
@@ -61,11 +62,11 @@ class CriteriaRecollection implements ReadableRecollection
     private readonly ReadableCollection&Selectable $collection;
 
     private readonly Criteria $criteria;
+    private readonly CountStrategy $count;
 
     /**
      * @param ReadableCollection<TKey,T> $collection
      * @param int<1,max> $itemsPerPage
-     * @param null|int<0,max> $count
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      */
@@ -74,8 +75,7 @@ class CriteriaRecollection implements ReadableRecollection
         ?Criteria $criteria = null,
         private readonly ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
-        private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
-        private ?int &$count = null,
+        ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
     ) {
@@ -96,6 +96,10 @@ class CriteriaRecollection implements ReadableRecollection
         }
 
         $this->criteria = $criteria;
+
+        // save count strategy
+
+        $this->count = $count ?? new RestrictedCountStrategy();
     }
 
     /**
@@ -103,7 +107,6 @@ class CriteriaRecollection implements ReadableRecollection
      * @template ST
      * @param Collection<STKey,ST> $collection
      * @param int<1,max> $itemsPerPage
-     * @param null|int<0,max> $count
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      * @return static
@@ -114,8 +117,7 @@ class CriteriaRecollection implements ReadableRecollection
         ?string $instanceId = null,
         ?string $indexBy = null,
         int $itemsPerPage = 50,
-        CountStrategy $countStrategy = CountStrategy::Restrict,
-        ?int &$count = null,
+        ?CountStrategy $count = null,
         ?int $softLimit = null,
         ?int $hardLimit = null,
     ): ReadableRecollection {
@@ -130,8 +132,6 @@ class CriteriaRecollection implements ReadableRecollection
             $instanceId ?? $criteria,
             $indexBy,
             $itemsPerPage,
-            $countStrategy,
-            $count,
         ]));
 
         if (isset(self::$instances[$collection][$cacheKey])) {
@@ -145,7 +145,6 @@ class CriteriaRecollection implements ReadableRecollection
             criteria: $criteria,
             indexBy: $indexBy,
             itemsPerPage: $itemsPerPage,
-            countStrategy: $countStrategy,
             count: $count,
             softLimit: $softLimit,
             hardLimit: $hardLimit,
@@ -167,11 +166,6 @@ class CriteriaRecollection implements ReadableRecollection
     }
 
     private function getCountStrategy(): CountStrategy
-    {
-        return $this->countStrategy;
-    }
-
-    private function &getProvidedCount(): ?int
     {
         return $this->count;
     }
@@ -210,24 +204,14 @@ class CriteriaRecollection implements ReadableRecollection
             collection: $this->collection,
             criteria: $this->criteria,
             itemsPerPage: $itemsPerPage,
-            countStrategy: $this->countStrategy,
             count: $this->count,
             softLimit: $this->softLimit,
             hardLimit: $this->hardLimit,
         );
     }
 
-    /**
-     * @return int<0,max>
-     */
-    private function getRealCount(): int
+    private function getUnderlyingCountable(): \Countable
     {
-        $count = $this->collection->matching($this->criteria)->count();
-
-        if ($count > 0) {
-            return $count;
-        }
-
-        return 0;
+        return $this->collection->matching($this->criteria);
     }
 }

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0
+
+* refactor: refactor counting strategy
+
 ## 0.4.0
 
 * refactor: reorganize exceptions

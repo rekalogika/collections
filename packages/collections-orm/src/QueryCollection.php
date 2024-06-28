@@ -16,7 +16,8 @@ namespace Rekalogika\Collections\ORM;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
-use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
@@ -44,9 +45,10 @@ class QueryCollection implements ReadableRecollection
     /** @use ReadableRecollectionTrait<TKey,T> */
     use ReadableRecollectionTrait;
 
+    private readonly CountStrategy $count;
+
     /**
      * @param int<1,max> $itemsPerPage
-     * @param null|int<0,max> $count
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      */
@@ -54,19 +56,15 @@ class QueryCollection implements ReadableRecollection
         private QueryBuilder $queryBuilder,
         private readonly int $itemsPerPage = 50,
         private readonly ?string $indexBy = null,
-        private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
-        private ?int &$count = null,
+        ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
     ) {
+        $this->count = $count ?? new RestrictedCountStrategy();
     }
+
 
     private function getCountStrategy(): CountStrategy
-    {
-        return $this->countStrategy;
-    }
-
-    private function &getProvidedCount(): ?int
     {
         return $this->count;
     }
@@ -96,7 +94,6 @@ class QueryCollection implements ReadableRecollection
         return new static(
             queryBuilder: $this->queryBuilder,
             itemsPerPage: $itemsPerPage,
-            countStrategy: $this->countStrategy,
             count: $this->count,
             softLimit: $this->softLimit,
             hardLimit: $this->hardLimit,
