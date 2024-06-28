@@ -27,10 +27,10 @@
         "doctrine/collections": "^2.2.2 || ^2.3",
         "doctrine/orm": "^2.14 || ^3.0",
         "php": "^8.2",
-        "rekalogika/rekapager-contracts": "^0.12.3 || ^0.13",
-        "rekalogika/rekapager-doctrine-collections-adapter": "^0.12.3 || ^0.13",
-        "rekalogika/rekapager-doctrine-orm-adapter": "^0.12.3 || ^0.13",
-        "rekalogika/rekapager-keyset-pagination": "^0.12.3 || ^0.13"
+        "rekalogika/rekapager-contracts": "^0.12.1 || ^0.13",
+        "rekalogika/rekapager-doctrine-collections-adapter": "^0.12.1 || ^0.13",
+        "rekalogika/rekapager-doctrine-orm-adapter": "^0.12.1 || ^0.13",
+        "rekalogika/rekapager-keyset-pagination": "^0.12.1 || ^0.13"
     },
     "require-dev": {
         "ekino/phpstan-banned-code": "^1.0",
