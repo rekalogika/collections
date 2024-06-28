@@ -46,11 +46,13 @@ trait RecollectionPageableTrait
             indexBy: $this->indexBy,
         );
 
-        try {
-            $count = $this->count->getCount($this->collection);
-        } catch (GettingCountUnsupportedException) {
-            $count = false;
-        }
+        $count = function (): int|bool {
+            try {
+                return $this->count->getCount($this->getUnderlyingCountable());
+            } catch (GettingCountUnsupportedException) {
+                return false;
+            }
+        };
 
         $this->pageable = new KeysetPageable(
             adapter: $adapter,

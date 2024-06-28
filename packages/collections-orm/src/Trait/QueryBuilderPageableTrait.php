@@ -46,11 +46,13 @@ trait QueryBuilderPageableTrait
             indexBy: $this->indexBy,
         );
 
-        try {
-            $count = $this->count->getCount($this->getUnderlyingCountable());
-        } catch (GettingCountUnsupportedException) {
-            $count = false;
-        }
+        $count = function (): int|bool {
+            try {
+                return $this->count->getCount($this->getUnderlyingCountable());
+            } catch (GettingCountUnsupportedException) {
+                return false;
+            }
+        };
 
         // @phpstan-ignore-next-line
         $this->pageable = new KeysetPageable(
