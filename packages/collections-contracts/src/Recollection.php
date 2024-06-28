@@ -21,6 +21,6 @@ use Doctrine\Common\Collections\Collection;
  * @extends Collection<TKey,T>
  * @extends ReadableRecollection<TKey,T>
  */
-interface Recollection extends Collection, ReadableRecollection, RefreshableCount
+interface Recollection extends Collection, ReadableRecollection, RefreshableCountable
 {
 }

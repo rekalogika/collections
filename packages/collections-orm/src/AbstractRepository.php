@@ -20,7 +20,7 @@ use Rekalogika\Collections\ORM\Configuration\RepositoryConfiguration;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryTrait;
 use Rekalogika\Contracts\Collections\Repository;
-use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 
 /**
@@ -46,16 +46,11 @@ abstract class AbstractRepository implements Repository
     use SafeCollectionTrait;
 
     /**
-     * @var null|int<0,max>
-     */
-    private ?int $count = 0;
-
-    /**
      * @var int<1,max>
      */
     private int $itemsPerPage;
 
-    private readonly CountStrategy $countStrategy;
+    private readonly CountStrategy $count;
     private readonly QueryBuilder $queryBuilder;
     private readonly ?string $indexBy;
 
@@ -80,7 +75,7 @@ abstract class AbstractRepository implements Repository
         $configuration = $this->configure();
         $this->class = $configuration->getClass();
         $this->itemsPerPage = $configuration->getItemsPerPage();
-        $this->countStrategy = $configuration->getCountStrategy();
+        $this->count = $configuration->getCountStrategy();
         $this->indexBy = $configuration->getIndexBy();
         $this->softLimit = $configuration->getSoftLimit();
         $this->hardLimit = $configuration->getHardLimit();
@@ -98,11 +93,6 @@ abstract class AbstractRepository implements Repository
     abstract protected function configure(): RepositoryConfiguration;
 
     private function getCountStrategy(): CountStrategy
-    {
-        return $this->countStrategy;
-    }
-
-    private function &getProvidedCount(): ?int
     {
         return $this->count;
     }

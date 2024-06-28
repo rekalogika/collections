@@ -20,7 +20,8 @@ use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\Recollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
-use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\Trait\RecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
@@ -71,12 +72,12 @@ class RecollectionDecorator implements Recollection
     private readonly array $orderBy;
 
     private readonly Criteria $criteria;
+    private readonly CountStrategy $count;
 
     /**
      * @param Collection<TKey,T> $collection
      * @param null|non-empty-array<string,Order>|string $orderBy
      * @param int<1,max> $itemsPerPage
-     * @param null|int<0,max> $count
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      */
@@ -85,8 +86,7 @@ class RecollectionDecorator implements Recollection
         array|string|null $orderBy = null,
         private readonly ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
-        private readonly CountStrategy $countStrategy = CountStrategy::Restrict,
-        private ?int &$count = null,
+        ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
     ) {
@@ -106,6 +106,10 @@ class RecollectionDecorator implements Recollection
         );
 
         $this->criteria = Criteria::create()->orderBy($this->orderBy);
+
+        // handle count strategy
+
+        $this->count = $count ?? new RestrictedCountStrategy();
     }
 
     /**
@@ -114,7 +118,6 @@ class RecollectionDecorator implements Recollection
      * @param Collection<STKey,ST> $collection
      * @param null|non-empty-array<string,Order>|string $orderBy
      * @param int<1,max> $itemsPerPage
-     * @param null|int<0,max> $count
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      * @return static
@@ -124,8 +127,7 @@ class RecollectionDecorator implements Recollection
         array|string|null $orderBy = null,
         ?string $indexBy = null,
         int $itemsPerPage = 50,
-        CountStrategy $countStrategy = CountStrategy::Restrict,
-        ?int &$count = null,
+        ?CountStrategy $count = null,
         ?int $softLimit = null,
         ?int $hardLimit = null,
     ): Recollection {
@@ -140,8 +142,6 @@ class RecollectionDecorator implements Recollection
             $orderBy,
             $indexBy,
             $itemsPerPage,
-            $countStrategy,
-            $count,
         ]));
 
         if (isset(self::$instances[$collection][$cacheKey])) {
@@ -155,7 +155,6 @@ class RecollectionDecorator implements Recollection
             orderBy: $orderBy,
             indexBy: $indexBy,
             itemsPerPage: $itemsPerPage,
-            countStrategy: $countStrategy,
             count: $count,
             softLimit: $softLimit,
             hardLimit: $hardLimit,
@@ -177,11 +176,6 @@ class RecollectionDecorator implements Recollection
     }
 
     private function getCountStrategy(): CountStrategy
-    {
-        return $this->countStrategy;
-    }
-
-    private function &getProvidedCount(): ?int
     {
         return $this->count;
     }
@@ -227,7 +221,6 @@ class RecollectionDecorator implements Recollection
             collection: $this->collection,
             orderBy: $this->orderBy,
             itemsPerPage: $itemsPerPage,
-            countStrategy: $this->countStrategy,
             count: $this->count,
             softLimit: $this->softLimit,
             hardLimit: $this->hardLimit,
@@ -235,14 +228,12 @@ class RecollectionDecorator implements Recollection
     }
 
     /**
-     * @param null|int<0,max> $count
      * @return CriteriaRecollection<TKey,T>
      */
     protected function applyCriteria(
         Criteria $criteria,
         ?string $instanceId = null,
-        CountStrategy $countStrategy = CountStrategy::Restrict,
-        ?int &$count = null,
+        ?CountStrategy $count = null,
     ): CriteriaRecollection {
         // if $criteria has no orderings, add the current ordering
         if (\count($criteria->orderings()) === 0) {
@@ -254,24 +245,14 @@ class RecollectionDecorator implements Recollection
             criteria: $criteria,
             instanceId: $instanceId,
             itemsPerPage: $this->itemsPerPage,
-            countStrategy: $countStrategy,
             count: $count,
             softLimit: $this->softLimit,
             hardLimit: $this->hardLimit,
         );
     }
 
-    /**
-     * @return int<0,max>
-     */
-    private function getRealCount(): int
+    private function getUnderlyingCountable(): \Countable
     {
-        $count = $this->collection->count();
-
-        if ($count > 0) {
-            return $count;
-        }
-
-        return 0;
+        return $this->collection;
     }
 }

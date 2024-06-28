@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\ORM\Configuration;
 
 use Doctrine\Common\Collections\Order;
-use Rekalogika\Domain\Collections\Common\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 
 /**
  * @template T of object
@@ -34,7 +34,7 @@ class RepositoryConfiguration extends MinimalRepositoryConfiguration
         string $indexBy = 'id',
         array|string|null $orderBy = null,
         int $itemsPerPage = 50,
-        CountStrategy $countStrategy = CountStrategy::Restrict,
+        ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
     ) {
@@ -43,7 +43,7 @@ class RepositoryConfiguration extends MinimalRepositoryConfiguration
             indexBy: $indexBy,
             orderBy: $orderBy,
             itemsPerPage: $itemsPerPage,
-            countStrategy: $countStrategy,
+            count: $count,
         );
     }
 
