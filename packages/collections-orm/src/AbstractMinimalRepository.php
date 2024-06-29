@@ -83,6 +83,11 @@ abstract class AbstractMinimalRepository implements MinimalRepository
         return $this->class;
     }
 
+    private function getCountStrategy(): CountStrategy
+    {
+        return $this->count;
+    }
+
     /**
      * @param int<1,max> $itemsPerPage
      */

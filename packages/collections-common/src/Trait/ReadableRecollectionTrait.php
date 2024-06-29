@@ -31,6 +31,8 @@ trait ReadableRecollectionTrait
      */
     use ReadableCollectionTrait;
 
+    use RefreshableCountTrait;
+
     /**
      * @param TKey $key
      * @return T

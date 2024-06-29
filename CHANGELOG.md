@@ -4,6 +4,7 @@
 
 * refactor: refactor counting strategy
 * fix: use closure for counting, defer counting until it is asked
+* refactor: refresh count
 
 ## 0.4.0
 

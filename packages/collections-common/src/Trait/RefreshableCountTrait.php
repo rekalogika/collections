@@ -14,24 +14,15 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Exception\InvalidCountException;
 
-trait CountableTrait
+trait RefreshableCountTrait
 {
     abstract private function getCountStrategy(): CountStrategy;
     abstract private function getUnderlyingCountable(): ?\Countable;
 
-    /**
-     * @return int<0,max>
-     */
-    final public function count(): int
+    final public function refreshCount(): void
     {
-        $result = $this->getCountStrategy()->getCount($this->getUnderlyingCountable());
-
-        if ($result >= 0) {
-            return $result;
-        }
-
-        throw new InvalidCountException('Invalid count');
+        $realCount = \count($this->getUnderlyingCountable());
+        $this->getCountStrategy()->setCount($this->getUnderlyingCountable(), $realCount);
     }
 }

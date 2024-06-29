@@ -16,6 +16,7 @@ namespace Rekalogika\Collections\ORM\Trait;
 use Doctrine\ORM\EntityManagerInterface;
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
+use Rekalogika\Domain\Collections\Common\Trait\RefreshableCountTrait;
 
 /**
  * @template TKey of array-key
@@ -29,6 +30,8 @@ trait MinimalReadableRepositoryTrait
      * @use PageableTrait<TKey,T>
      */
     use PageableTrait;
+
+    use RefreshableCountTrait;
 
     abstract private function getEntityManager(): EntityManagerInterface;
 
