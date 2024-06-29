@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\ReadableCollection;
@@ -24,7 +23,7 @@ use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
-use Rekalogika\Domain\Collections\Trait\ReadableExtraLazyTrait;
+use Rekalogika\Domain\Collections\Trait\CriteriaReadableTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
@@ -42,13 +41,13 @@ class CriteriaRecollection implements ReadableRecollection
 
     /**
      * @use ReadableRecollectionTrait<TKey,T>
-     * @use ReadableExtraLazyTrait<TKey,T>
+     * @use CriteriaReadableTrait<TKey,T>
      */
-    use ReadableRecollectionTrait, ReadableExtraLazyTrait {
-        ReadableExtraLazyTrait::contains insteadof ReadableRecollectionTrait;
-        ReadableExtraLazyTrait::containsKey insteadof ReadableRecollectionTrait;
-        ReadableExtraLazyTrait::get insteadof ReadableRecollectionTrait;
-        ReadableExtraLazyTrait::slice insteadof ReadableRecollectionTrait;
+    use ReadableRecollectionTrait, CriteriaReadableTrait {
+        CriteriaReadableTrait::contains insteadof ReadableRecollectionTrait;
+        CriteriaReadableTrait::containsKey insteadof ReadableRecollectionTrait;
+        CriteriaReadableTrait::get insteadof ReadableRecollectionTrait;
+        CriteriaReadableTrait::slice insteadof ReadableRecollectionTrait;
     }
 
     /**
@@ -57,21 +56,21 @@ class CriteriaRecollection implements ReadableRecollection
     private static ?\WeakMap $instances = null;
 
     /**
-     * @var ReadableCollection<TKey,T>&Selectable<TKey,T>
+     * @var Selectable<TKey,T>
      */
-    private readonly ReadableCollection&Selectable $collection;
+    private readonly Selectable $collection;
 
     private readonly Criteria $criteria;
     private readonly CountStrategy $count;
 
     /**
-     * @param ReadableCollection<TKey,T> $collection
+     * @param ReadableCollection<TKey,T>|Selectable<TKey,T> $collection
      * @param int<1,max> $itemsPerPage
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      */
     final private function __construct(
-        ReadableCollection $collection,
+        ReadableCollection|Selectable $collection,
         ?Criteria $criteria = null,
         private readonly ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
@@ -105,14 +104,14 @@ class CriteriaRecollection implements ReadableRecollection
     /**
      * @template STKey of array-key
      * @template ST
-     * @param Collection<STKey,ST> $collection
+     * @param ReadableCollection<STKey,ST>|Selectable<STKey,ST> $collection
      * @param int<1,max> $itemsPerPage
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      * @return static
      */
     final public static function create(
-        Collection $collection,
+        ReadableCollection|Selectable $collection,
         ?Criteria $criteria = null,
         ?string $instanceId = null,
         ?string $indexBy = null,
@@ -175,7 +174,7 @@ class CriteriaRecollection implements ReadableRecollection
      */
     private function getRealCollection(): ReadableCollection
     {
-        return $this->collection;
+        return $this->getSafeCollection();
     }
 
     /**
@@ -199,8 +198,7 @@ class CriteriaRecollection implements ReadableRecollection
      */
     public function withItemsPerPage(int $itemsPerPage): static
     {
-        /** @psalm-suppress UnsafeGenericInstantiation */
-        return new static(
+        return self::create(
             collection: $this->collection,
             criteria: $this->criteria,
             itemsPerPage: $itemsPerPage,

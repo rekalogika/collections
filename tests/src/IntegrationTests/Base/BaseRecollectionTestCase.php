@@ -37,10 +37,15 @@ abstract class BaseRecollectionTestCase extends KernelTestCase
         return static::getContainer()->get(EntityManagerInterface::class);
     }
 
-    protected function testSafety(): void
+    /**
+     * @param null|class-string<\Throwable> $exceptionIfSafe
+     */
+    protected function testSafety(?string $exceptionIfSafe = null): void
     {
         if (!$this->isSafe()) {
             $this->expectException(OverflowException::class);
+        } elseif ($exceptionIfSafe !== null) {
+            $this->expectException($exceptionIfSafe);
         }
     }
 
@@ -71,5 +76,4 @@ abstract class BaseRecollectionTestCase extends KernelTestCase
             $this->assertNotSame($object, $this->getObject());
         }
     }
-
 }

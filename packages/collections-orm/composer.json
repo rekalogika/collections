@@ -26,6 +26,7 @@
         "doctrine/orm": "^2.14 || ^3.0",
         "rekalogika/collections-common": "^0.5.1",
         "rekalogika/collections-contracts": "^0.5.1",
+        "rekalogika/collections-domain": "^0.5.1",
         "rekalogika/rekapager-contracts": "^0.12.3 || ^0.13",
         "rekalogika/rekapager-doctrine-orm-adapter": "^0.12.3 || ^0.13",
         "rekalogika/rekapager-keyset-pagination": "^0.12.3 || ^0.13"

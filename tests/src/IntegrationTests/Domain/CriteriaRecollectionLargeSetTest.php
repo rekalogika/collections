@@ -17,7 +17,7 @@ use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Collections\Tests\App\Entity\Country;
 use Rekalogika\Collections\Tests\App\MinimalRepository\CountryMinimalRepository;
 use Rekalogika\Collections\Tests\IntegrationTests\Base\BaseRecollectionTestCase;
-use Rekalogika\Collections\Tests\IntegrationTests\Trait\ReadableRecollectionTestsTrait;
+use Rekalogika\Collections\Tests\IntegrationTests\Trait\CriteriaReadableRecollectionTestsTrait;
 use Rekalogika\Contracts\Collections\MinimalRepository;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
 
@@ -26,8 +26,10 @@ use Rekalogika\Contracts\Collections\ReadableRecollection;
  */
 class CriteriaRecollectionLargeSetTest extends BaseRecollectionTestCase
 {
-    /** @use ReadableRecollectionTestsTrait<ReadableRecollection<array-key,Citizen>> */
-    use ReadableRecollectionTestsTrait;
+    /**
+     * @use CriteriaReadableRecollectionTestsTrait<ReadableRecollection<array-key,Citizen>>
+     */
+    use CriteriaReadableRecollectionTestsTrait;
 
     protected function isSingleton(): bool
     {
