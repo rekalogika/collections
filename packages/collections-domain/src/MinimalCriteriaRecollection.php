@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\ReadableCollection;
@@ -183,7 +182,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
     /**
      * @param int<1,max> $itemsPerPage
      */
-    public function withItemsPerPage(int $itemsPerPage): static
+    final public function withItemsPerPage(int $itemsPerPage): static
     {
         return self::create(
             collection: $this->collection,

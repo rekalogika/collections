@@ -196,7 +196,7 @@ class CriteriaRecollection implements ReadableRecollection
     /**
      * @param int<1,max> $itemsPerPage
      */
-    public function withItemsPerPage(int $itemsPerPage): static
+    final public function withItemsPerPage(int $itemsPerPage): static
     {
         return self::create(
             collection: $this->collection,

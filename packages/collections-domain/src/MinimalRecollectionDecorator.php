@@ -175,7 +175,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
     /**
      * @param int<1,max> $itemsPerPage
      */
-    public function withItemsPerPage(int $itemsPerPage): static
+    final public function withItemsPerPage(int $itemsPerPage): static
     {
         return static::create(
             collection: $this->collection,
@@ -185,10 +185,19 @@ class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
         );
     }
 
+    private function getUnderlyingCountable(): \Countable
+    {
+        return $this->collection;
+    }
+
+    //
+    // DX methods
+    //
+
     /**
      * @return MinimalCriteriaRecollection<TKey,T>
      */
-    protected function applyCriteria(
+    final protected function createCriteriaCollection(
         Criteria $criteria,
         ?string $instanceId = null,
         ?CountStrategy $count = null,
@@ -205,10 +214,5 @@ class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
             itemsPerPage: $this->itemsPerPage,
             count: $count,
         );
-    }
-
-    private function getUnderlyingCountable(): \Countable
-    {
-        return $this->collection;
     }
 }

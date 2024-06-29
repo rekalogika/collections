@@ -15,17 +15,15 @@ namespace Rekalogika\Collections\ORM;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
-use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ObjectRepository;
 use Rekalogika\Collections\ORM\Configuration\RepositoryConfiguration;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
+use Rekalogika\Collections\ORM\Trait\RepositoryDxTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryTrait;
 use Rekalogika\Contracts\Collections\Repository;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
-use Rekalogika\Domain\Collections\CriteriaRecollection;
 
 /**
  * @template TKey of array-key
@@ -48,6 +46,11 @@ abstract class AbstractRepository implements Repository
      * @use SafeCollectionTrait<array-key,T>
      */
     use SafeCollectionTrait;
+
+    /**
+     * @use RepositoryDxTrait<array-key,T>
+     */
+    use RepositoryDxTrait;
 
     /**
      * @var int<1,max>
@@ -142,59 +145,5 @@ abstract class AbstractRepository implements Repository
         $instance->itemsPerPage = $itemsPerPage;
 
         return $instance;
-    }
-
-    //
-    // accessors for subclasses
-    //
-
-    final protected function getEntityManager(): EntityManagerInterface
-    {
-        return $this->entityManager;
-    }
-
-    final protected function createQueryBuilder(
-        string $alias,
-        ?string $indexBy = null
-    ): QueryBuilder {
-        return $this->getEntityManager()->createQueryBuilder()
-            ->select($alias)
-            ->from($this->getClass(), $alias, $indexBy);
-    }
-
-    /**
-     * @return ObjectRepository<T>&Selectable<TKey,T>
-     */
-    final protected function getDoctrineRepository(): ObjectRepository&Selectable
-    {
-        return $this->getEntityManager()->getRepository($this->getClass());
-    }
-
-    /**
-     * @return CriteriaRecollection<TKey,T>
-     */
-    protected function applyCriteria(
-        Criteria $criteria,
-        ?string $instanceId = null,
-        ?CountStrategy $count = null,
-    ): CriteriaRecollection {
-        // if $criteria has no orderings, add the current ordering
-        if (\count($criteria->orderings()) === 0) {
-            $criteria = $criteria->orderBy($this->orderBy);
-        }
-
-        /**
-         * @var CriteriaRecollection<TKey,T>
-         * @psalm-suppress InvalidArgument
-         */
-        return CriteriaRecollection::create(
-            collection: $this->getDoctrineRepository(),
-            criteria: $criteria,
-            instanceId: $instanceId,
-            itemsPerPage: $this->itemsPerPage,
-            count: $count,
-            softLimit: $this->softLimit,
-            hardLimit: $this->hardLimit,
-        );
     }
 }

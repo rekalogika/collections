@@ -64,4 +64,44 @@ class QueryPageable implements PageableInterface
     {
         return $this->queryBuilder;
     }
+
+    /**
+     * @return self<TKey,T>
+     */
+    final protected function createQueryCollection(
+        QueryBuilder $queryBuilder,
+        ?string $indexBy = null,
+        ?CountStrategy $count = null,
+    ): self {
+        /**
+         * @var self<TKey,T>
+         * @phpstan-ignore-next-line
+         */
+        return new QueryCollection(
+            queryBuilder: $queryBuilder,
+            indexBy: $indexBy ?? $this->indexBy,
+            count: $count,
+            itemsPerPage: $this->itemsPerPage,
+        );
+    }
+
+    /**
+     * @return PageableInterface<TKey,T>
+     */
+    final protected function createQueryPageable(
+        QueryBuilder $queryBuilder,
+        ?string $indexBy = null,
+        ?CountStrategy $count = null,
+    ): PageableInterface {
+        /**
+         * @var PageableInterface<TKey,T>
+         * @phpstan-ignore-next-line
+         */
+        return new QueryPageable(
+            queryBuilder: $queryBuilder,
+            itemsPerPage: $this->itemsPerPage,
+            indexBy: $indexBy ?? $this->indexBy,
+            count: $count,
+        );
+    }
 }
