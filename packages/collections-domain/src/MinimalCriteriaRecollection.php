@@ -24,6 +24,7 @@ use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\MinimalReadableRecollectionTrait;
+use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
@@ -41,25 +42,28 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
     /** @use MinimalReadableRecollectionTrait<TKey,T> */
     use MinimalReadableRecollectionTrait;
 
+    /** @use SafeCollectionTrait<TKey,T> */
+    use SafeCollectionTrait;
+
     /**
      * @var null|\WeakMap<object,array<string,self<array-key,mixed>>>
      */
     private static ?\WeakMap $instances = null;
 
     /**
-     * @var ReadableCollection<TKey,T>&Selectable<TKey,T>
+     * @var Selectable<TKey,T>
      */
-    private readonly ReadableCollection&Selectable $collection;
+    private readonly Selectable $collection;
 
     private readonly Criteria $criteria;
     private readonly CountStrategy $count;
 
     /**
-     * @param ReadableCollection<TKey,T> $collection
+     * @param ReadableCollection<TKey,T>|Selectable<TKey,T> $collection
      * @param int<1,max> $itemsPerPage
      */
     final private function __construct(
-        ReadableCollection $collection,
+        ReadableCollection|Selectable $collection,
         ?Criteria $criteria = null,
         private readonly ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
@@ -89,14 +93,32 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
     }
 
     /**
+     * @return null|int<1,max>
+     */
+    // @phpstan-ignore-next-line
+    private function getSoftLimit(): ?int
+    {
+        return null;
+    }
+
+    /**
+     * @return null|int<1,max>
+     */
+    // @phpstan-ignore-next-line
+    private function getHardLimit(): ?int
+    {
+        return null;
+    }
+
+    /**
      * @template STKey of array-key
      * @template ST
-     * @param Collection<STKey,ST> $collection
+     * @param ReadableCollection<STKey,ST>|Selectable<STKey,ST> $collection
      * @param int<1,max> $itemsPerPage
      * @return static
      */
     final public static function create(
-        Collection $collection,
+        ReadableCollection|Selectable $collection,
         ?Criteria $criteria = null,
         ?string $instanceId = null,
         ?string $indexBy = null,
@@ -155,7 +177,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
      */
     private function getRealCollection(): ReadableCollection
     {
-        return $this->collection;
+        return $this->getSafeCollection();
     }
 
     /**
@@ -163,8 +185,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
      */
     public function withItemsPerPage(int $itemsPerPage): static
     {
-        /** @psalm-suppress UnsafeGenericInstantiation */
-        return new static(
+        return self::create(
             collection: $this->collection,
             criteria: $this->criteria,
             itemsPerPage: $itemsPerPage,
