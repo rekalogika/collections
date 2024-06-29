@@ -14,11 +14,13 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\ORM;
 
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Configuration\MinimalRepositoryConfiguration;
 use Rekalogika\Collections\ORM\Trait\MinimalRepositoryTrait;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
+use Rekalogika\Collections\ORM\Trait\RepositoryDxTrait;
 use Rekalogika\Contracts\Collections\MinimalRepository;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 
@@ -40,6 +42,11 @@ abstract class AbstractMinimalRepository implements MinimalRepository
     use MinimalRepositoryTrait;
 
     /**
+     * @use RepositoryDxTrait<array-key,T>
+     */
+    use RepositoryDxTrait;
+
+    /**
      * @var int<1,max>
      */
     private int $itemsPerPage;
@@ -47,6 +54,11 @@ abstract class AbstractMinimalRepository implements MinimalRepository
     private readonly CountStrategy $count;
     private readonly QueryBuilder $queryBuilder;
     private readonly ?string $indexBy;
+
+    /**
+     * @var non-empty-array<string,Order>
+     */
+    private readonly array $orderBy;
 
     /**
      * @var class-string<T>
@@ -61,9 +73,10 @@ abstract class AbstractMinimalRepository implements MinimalRepository
         $this->itemsPerPage = $configuration->getItemsPerPage();
         $this->count = $configuration->getCountStrategy();
         $this->indexBy = $configuration->getIndexBy();
+        $this->orderBy = $configuration->getOrderBy();
 
         // set query builder
-        $criteria = Criteria::create()->orderBy($configuration->getOrderBy());
+        $criteria = Criteria::create()->orderBy($this->orderBy);
         $this->queryBuilder = $this
             ->createQueryBuilder('e', 'e.' . $configuration->getIndexBy())
             ->addCriteria($criteria);
@@ -89,6 +102,24 @@ abstract class AbstractMinimalRepository implements MinimalRepository
     }
 
     /**
+     * @return null|int<1,max>
+     */
+    // @phpstan-ignore-next-line
+    private function getSoftLimit(): ?int
+    {
+        return null;
+    }
+
+    /**
+     * @return null|int<1,max>
+     */
+    // @phpstan-ignore-next-line
+    private function getHardLimit(): ?int
+    {
+        return null;
+    }
+
+    /**
      * @param int<1,max> $itemsPerPage
      */
     public function withItemsPerPage(int $itemsPerPage): static
@@ -98,23 +129,5 @@ abstract class AbstractMinimalRepository implements MinimalRepository
         $instance->itemsPerPage = $itemsPerPage;
 
         return $instance;
-    }
-
-    //
-    // accessors for subclasses
-    //
-
-    final protected function getEntityManager(): EntityManagerInterface
-    {
-        return $this->entityManager;
-    }
-
-    final protected function createQueryBuilder(
-        string $alias,
-        ?string $indexBy = null
-    ): QueryBuilder {
-        return $this->getEntityManager()->createQueryBuilder()
-            ->select($alias)
-            ->from($this->getClass(), $alias, $indexBy);
     }
 }

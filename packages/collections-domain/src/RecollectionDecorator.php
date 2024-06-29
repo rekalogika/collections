@@ -215,7 +215,7 @@ class RecollectionDecorator implements Recollection
     /**
      * @param int<1,max> $itemsPerPage
      */
-    public function withItemsPerPage(int $itemsPerPage): static
+    final public function withItemsPerPage(int $itemsPerPage): static
     {
         return static::create(
             collection: $this->collection,
@@ -227,10 +227,19 @@ class RecollectionDecorator implements Recollection
         );
     }
 
+    private function getUnderlyingCountable(): \Countable
+    {
+        return $this->collection;
+    }
+
+    //
+    // DX methods
+    //
+
     /**
      * @return CriteriaRecollection<TKey,T>
      */
-    protected function applyCriteria(
+    final protected function createCriteriaCollection(
         Criteria $criteria,
         ?string $instanceId = null,
         ?CountStrategy $count = null,
@@ -249,10 +258,5 @@ class RecollectionDecorator implements Recollection
             softLimit: $this->softLimit,
             hardLimit: $this->hardLimit,
         );
-    }
-
-    private function getUnderlyingCountable(): \Countable
-    {
-        return $this->collection;
     }
 }

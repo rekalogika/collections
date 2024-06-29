@@ -16,6 +16,7 @@ namespace Rekalogika\Collections\ORM;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
+use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
@@ -103,5 +104,44 @@ class QueryCollection implements ReadableRecollection
     final protected function getQueryBuilder(): QueryBuilder
     {
         return $this->queryBuilder;
+    }
+
+    /**
+     * @return self<TKey,T>
+     */
+    final protected function createQueryCollection(
+        QueryBuilder $queryBuilder,
+        ?string $indexBy = null,
+        ?CountStrategy $count = null,
+    ): self {
+        /** @var QueryCollection<TKey,T> */
+        return new QueryCollection(
+            queryBuilder: $queryBuilder,
+            indexBy: $indexBy ?? $this->indexBy,
+            count: $count,
+            itemsPerPage: $this->itemsPerPage,
+            softLimit: $this->softLimit,
+            hardLimit: $this->hardLimit,
+        );
+    }
+
+    /**
+     * @return PageableInterface<TKey,T>
+     */
+    final protected function createQueryPageable(
+        QueryBuilder $queryBuilder,
+        ?string $indexBy = null,
+        ?CountStrategy $count = null,
+    ): PageableInterface {
+        /**
+         * @var PageableInterface<TKey,T>
+         * @phpstan-ignore-next-line
+         */
+        return new QueryPageable(
+            queryBuilder: $queryBuilder,
+            itemsPerPage: $this->itemsPerPage,
+            indexBy: $indexBy ?? $this->indexBy,
+            count: $count,
+        );
     }
 }
