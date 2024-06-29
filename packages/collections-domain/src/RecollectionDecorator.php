@@ -19,6 +19,7 @@ use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\Recollection;
+use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
@@ -257,6 +258,29 @@ class RecollectionDecorator implements Recollection
             count: $count,
             softLimit: $this->softLimit,
             hardLimit: $this->hardLimit,
+        );
+    }
+
+    /**
+     * @return PageableInterface<TKey,T>
+     */
+    final protected function createCriteriaPageable(
+        Criteria $criteria,
+        ?string $instanceId = null,
+        ?CountStrategy $count = null,
+    ): PageableInterface {
+        // if $criteria has no orderings, add the current ordering
+        if (\count($criteria->orderings()) === 0) {
+            $criteria = $criteria->orderBy($this->orderBy);
+        }
+
+        /** @var PageableInterface<TKey,T> */
+        return CriteriaPageable::create(
+            collection: $this->collection,
+            criteria: $criteria,
+            instanceId: $instanceId,
+            itemsPerPage: $this->itemsPerPage,
+            count: $count,
         );
     }
 }

@@ -7,6 +7,7 @@
 * refactor: refresh count
 * fix: fix various problems with criteria recollections
 * feat: add several DX methods
+* feat: add `createCriteriaPageable` DX method
 
 ## 0.4.0
 

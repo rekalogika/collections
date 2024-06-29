@@ -20,10 +20,8 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectRepository;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Exception\GettingCountUnsupportedException;
+use Rekalogika\Domain\Collections\CriteriaPageable;
 use Rekalogika\Domain\Collections\CriteriaRecollection;
-use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
-use Rekalogika\Rekapager\Keyset\KeysetPageable;
 
 /**
  * @template TKey of array-key
@@ -93,26 +91,12 @@ trait RepositoryDxTrait
         ?string $indexBy = null,
         ?CountStrategy $count = null,
     ): PageableInterface {
-        $adapter = new SelectableAdapter(
+        return CriteriaPageable::create(
             collection: $this->getDoctrineRepository(),
             criteria: $criteria,
-            indexBy: $indexBy ?? $this->indexBy
-        );
-
-        $count = function (): int|bool {
-            try {
-                return $this->count->getCount($this->getUnderlyingCountable());
-            } catch (GettingCountUnsupportedException) {
-                return false;
-            }
-        };
-
-        $pageable = new KeysetPageable(
-            adapter: $adapter,
+            indexBy: $indexBy ?? $this->indexBy,
             itemsPerPage: $this->itemsPerPage,
             count: $count,
         );
-
-        return $pageable;
     }
 }
