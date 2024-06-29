@@ -23,7 +23,7 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
  * @extends PageableInterface<TKey,T>
  * @extends ReadableCollection<TKey,T>
  */
-interface ReadableRecollection extends PageableInterface, ReadableCollection
+interface ReadableRecollection extends PageableInterface, ReadableCollection, RefreshableCount
 {
     /**
      * @param TKey $key

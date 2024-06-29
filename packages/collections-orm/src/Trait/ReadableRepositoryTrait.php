@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\ORM\Trait;
 
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
+use Rekalogika\Domain\Collections\Common\Trait\RefreshableCountTrait;
 
 /**
  * @template TKey of array-key
@@ -34,6 +35,8 @@ trait ReadableRepositoryTrait
         MinimalReadableRepositoryTrait::get insteadof ReadableRecollectionTrait;
         MinimalReadableRepositoryTrait::getOrFail insteadof ReadableRecollectionTrait;
     }
+
+    use RefreshableCountTrait;
 
     /**
      * @return array<TKey,T>
