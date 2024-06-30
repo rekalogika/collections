@@ -15,6 +15,7 @@ namespace Rekalogika\Collections\ORM\Trait;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
+use Rekalogika\Domain\Collections\Common\Trait\FindFetchTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\RefreshableCountTrait;
 
@@ -32,6 +33,11 @@ trait MinimalReadableRepositoryTrait
     use PageableTrait;
 
     use RefreshableCountTrait;
+
+    /**
+     * @use FindFetchTrait<TKey,T>
+     */
+    use FindFetchTrait;
 
     abstract private function getEntityManager(): EntityManagerInterface;
 
@@ -80,15 +86,5 @@ trait MinimalReadableRepositoryTrait
     public function get(string|int $key): mixed
     {
         return $this->getEntityManager()->find($this->getClass(), $key);
-    }
-
-    /**
-     * @param TKey $key
-     * @return T
-     * @throws NotFoundException
-     */
-    public function getOrFail(string|int $key): mixed
-    {
-        return $this->get($key) ?? throw new NotFoundException('Entity not found');
     }
 }

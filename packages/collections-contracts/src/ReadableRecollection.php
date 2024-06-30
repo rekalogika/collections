@@ -26,9 +26,13 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
 interface ReadableRecollection extends PageableInterface, ReadableCollection, RefreshableCount
 {
     /**
-     * @param TKey $key
+     * @return T|null
+     */
+    public function find(mixed $key): mixed;
+
+    /**
      * @return T
      * @throws NotFoundException
      */
-    public function getOrFail(string|int $key): mixed;
+    public function fetch(mixed $key): mixed;
 }

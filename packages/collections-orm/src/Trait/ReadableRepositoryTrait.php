@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\ORM\Trait;
 
+use Rekalogika\Domain\Collections\Common\Trait\FindFetchTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\RefreshableCountTrait;
 
@@ -33,8 +34,12 @@ trait ReadableRepositoryTrait
         MinimalReadableRepositoryTrait::contains insteadof ReadableRecollectionTrait;
         MinimalReadableRepositoryTrait::containsKey insteadof ReadableRecollectionTrait;
         MinimalReadableRepositoryTrait::get insteadof ReadableRecollectionTrait;
-        MinimalReadableRepositoryTrait::getOrFail insteadof ReadableRecollectionTrait;
     }
+
+    /**
+     * @use FindFetchTrait<TKey,T>
+     */
+    use FindFetchTrait;
 
     use RefreshableCountTrait;
 

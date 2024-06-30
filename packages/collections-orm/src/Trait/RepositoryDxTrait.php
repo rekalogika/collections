@@ -18,6 +18,8 @@ use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectRepository;
+use Rekalogika\Collections\ORM\QueryCollection;
+use Rekalogika\Collections\ORM\QueryPageable;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\CriteriaPageable;
@@ -96,6 +98,45 @@ trait RepositoryDxTrait
             criteria: $criteria,
             indexBy: $indexBy ?? $this->indexBy,
             itemsPerPage: $this->itemsPerPage,
+            count: $count,
+        );
+    }
+
+    /**
+     * @return QueryCollection<TKey,T>
+     */
+    final protected function createQueryCollection(
+        QueryBuilder $queryBuilder,
+        ?string $indexBy = null,
+        ?CountStrategy $count = null,
+    ): QueryCollection {
+        /** @var QueryCollection<TKey,T> */
+        return new QueryCollection(
+            queryBuilder: $queryBuilder,
+            indexBy: $indexBy ?? $this->indexBy,
+            count: $count,
+            itemsPerPage: $this->itemsPerPage,
+            softLimit: $this->getSoftLimit(),
+            hardLimit: $this->getHardLimit(),
+        );
+    }
+
+    /**
+     * @return PageableInterface<TKey,T>
+     */
+    final protected function createQueryPageable(
+        QueryBuilder $queryBuilder,
+        ?string $indexBy = null,
+        ?CountStrategy $count = null,
+    ): PageableInterface {
+        /**
+         * @var PageableInterface<TKey,T>
+         * @phpstan-ignore-next-line
+         */
+        return new QueryPageable(
+            queryBuilder: $queryBuilder,
+            itemsPerPage: $this->itemsPerPage,
+            indexBy: $indexBy ?? $this->indexBy,
             count: $count,
         );
     }

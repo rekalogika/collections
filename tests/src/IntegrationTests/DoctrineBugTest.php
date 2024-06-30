@@ -36,7 +36,7 @@ class DoctrineBugTest extends KernelTestCase
 
         /** @var MinimalRepository<array-key,Country> $repository */
 
-        $country = $repository->getOrFail(1);
+        $country = $repository->fetch(1);
         $citizens = $country->getRawCitizens();
 
         static::assertInstanceOf(Selectable::class, $citizens);

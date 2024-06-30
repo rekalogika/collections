@@ -33,8 +33,8 @@ trait CriteriaReadableRecollectionTestsTrait
         CriteriaMinimalReadableRecollectionTestsTrait::testContainsKeyNegative insteadof ReadableRecollectionTestsTrait;
         CriteriaMinimalReadableRecollectionTestsTrait::testGet insteadof ReadableRecollectionTestsTrait;
         CriteriaMinimalReadableRecollectionTestsTrait::testGetNegative insteadof ReadableRecollectionTestsTrait;
-        CriteriaMinimalReadableRecollectionTestsTrait::testGetOrFail insteadof ReadableRecollectionTestsTrait;
-        CriteriaMinimalReadableRecollectionTestsTrait::testGetOrFailNegative insteadof ReadableRecollectionTestsTrait;
+        CriteriaMinimalReadableRecollectionTestsTrait::testFetch insteadof ReadableRecollectionTestsTrait;
+        CriteriaMinimalReadableRecollectionTestsTrait::testFetchNegative insteadof ReadableRecollectionTestsTrait;
         CriteriaMinimalReadableRecollectionTestsTrait::testSlice insteadof ReadableRecollectionTestsTrait;
     }
 }

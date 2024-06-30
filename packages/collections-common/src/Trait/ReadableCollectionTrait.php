@@ -30,6 +30,11 @@ trait ReadableCollectionTrait
     use CountableTrait;
 
     /**
+     * @use FindFetchTrait<TKey,T>
+     */
+    use FindFetchTrait;
+
+    /**
      * @return Collection<TKey,T>
      */
     abstract private function getSafeCollection(): Collection;
