@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.1
+
+* feat: add `createCriteria()` convenience method
+
 ## 0.6.0
 
 * feat: add `find()` and `fetch()` methods, remove `getOrFail()`
