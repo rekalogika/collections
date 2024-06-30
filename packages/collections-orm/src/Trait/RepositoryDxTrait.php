@@ -90,12 +90,14 @@ trait RepositoryDxTrait
      */
     final protected function createCriteriaPageable(
         Criteria $criteria,
+        ?string $instanceId = null,
         ?string $indexBy = null,
         ?CountStrategy $count = null,
     ): PageableInterface {
         return CriteriaPageable::create(
             collection: $this->getDoctrineRepository(),
             criteria: $criteria,
+            instanceId: $instanceId,
             indexBy: $indexBy ?? $this->indexBy,
             itemsPerPage: $this->itemsPerPage,
             count: $count,

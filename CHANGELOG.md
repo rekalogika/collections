@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.2
+
+* fix: add `instanceId` to `createCriteriaPageable`
+
 ## 0.6.1
 
 * feat: add `createCriteria()` convenience method
