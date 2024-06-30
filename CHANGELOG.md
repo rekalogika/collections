@@ -1,13 +1,16 @@
 # Changelog
 
-## 0.5.0
+## 0.5.2
+
+* fix: fix various problems with criteria recollections
+* feat: add several DX methods
+* feat: add `createCriteriaPageable` DX method
+
+## 0.5.1
 
 * refactor: refactor counting strategy
 * fix: use closure for counting, defer counting until it is asked
 * refactor: refresh count
-* fix: fix various problems with criteria recollections
-* feat: add several DX methods
-* feat: add `createCriteriaPageable` DX method
 
 ## 0.4.0
 
