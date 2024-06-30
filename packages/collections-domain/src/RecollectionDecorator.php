@@ -19,7 +19,6 @@ use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\Recollection;
-use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
@@ -27,6 +26,7 @@ use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\Trait\RecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyTrait;
+use Rekalogika\Domain\Collections\Trait\RecollectionDxTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
@@ -41,6 +41,9 @@ class RecollectionDecorator implements Recollection
 
     /** @use SafeCollectionTrait<TKey,T> */
     use SafeCollectionTrait;
+
+    /** @use RecollectionDxTrait<TKey,T> */
+    use RecollectionDxTrait;
 
     /**
      * @use RecollectionTrait<TKey,T>
@@ -198,6 +201,14 @@ class RecollectionDecorator implements Recollection
     }
 
     /**
+     * @return non-empty-array<string,Order>
+     */
+    private function getOrderBy(): array
+    {
+        return $this->orderBy;
+    }
+
+    /**
      * @return Collection<TKey,T>
      */
     private function getRealCollection(): Collection
@@ -231,56 +242,5 @@ class RecollectionDecorator implements Recollection
     private function getUnderlyingCountable(): \Countable
     {
         return $this->collection;
-    }
-
-    //
-    // DX methods
-    //
-
-    /**
-     * @return CriteriaRecollection<TKey,T>
-     */
-    final protected function createCriteriaCollection(
-        Criteria $criteria,
-        ?string $instanceId = null,
-        ?CountStrategy $count = null,
-    ): CriteriaRecollection {
-        // if $criteria has no orderings, add the current ordering
-        if (\count($criteria->orderings()) === 0) {
-            $criteria = $criteria->orderBy($this->orderBy);
-        }
-
-        return CriteriaRecollection::create(
-            collection: $this->collection,
-            criteria: $criteria,
-            instanceId: $instanceId,
-            itemsPerPage: $this->itemsPerPage,
-            count: $count,
-            softLimit: $this->softLimit,
-            hardLimit: $this->hardLimit,
-        );
-    }
-
-    /**
-     * @return PageableInterface<TKey,T>
-     */
-    final protected function createCriteriaPageable(
-        Criteria $criteria,
-        ?string $instanceId = null,
-        ?CountStrategy $count = null,
-    ): PageableInterface {
-        // if $criteria has no orderings, add the current ordering
-        if (\count($criteria->orderings()) === 0) {
-            $criteria = $criteria->orderBy($this->orderBy);
-        }
-
-        /** @var PageableInterface<TKey,T> */
-        return CriteriaPageable::create(
-            collection: $this->collection,
-            criteria: $criteria,
-            instanceId: $instanceId,
-            itemsPerPage: $this->itemsPerPage,
-            count: $count,
-        );
     }
 }

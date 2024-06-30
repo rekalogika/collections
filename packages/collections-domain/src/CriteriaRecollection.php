@@ -24,6 +24,7 @@ use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\CriteriaReadableTrait;
+use Rekalogika\Domain\Collections\Trait\RecollectionDxTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
@@ -49,6 +50,9 @@ class CriteriaRecollection implements ReadableRecollection
         CriteriaReadableTrait::get insteadof ReadableRecollectionTrait;
         CriteriaReadableTrait::slice insteadof ReadableRecollectionTrait;
     }
+
+    /** @use RecollectionDxTrait<TKey,T> */
+    use RecollectionDxTrait;
 
     /**
      * @var null|\WeakMap<object,array<string,self<array-key,mixed>>>
@@ -194,6 +198,20 @@ class CriteriaRecollection implements ReadableRecollection
     }
 
     /**
+     * @return non-empty-array<string,Order>
+     */
+    private function getOrderBy(): array
+    {
+        $ordering = $this->criteria->orderings();
+
+        if (empty($ordering)) {
+            return ['id' => Order::Descending];
+        }
+
+        return $ordering;
+    }
+
+    /**
      * @param int<1,max> $itemsPerPage
      */
     final public function withItemsPerPage(int $itemsPerPage): static
@@ -211,5 +229,10 @@ class CriteriaRecollection implements ReadableRecollection
     private function getUnderlyingCountable(): \Countable
     {
         return $this->collection->matching($this->criteria);
+    }
+
+    final protected function createCriteria(): Criteria
+    {
+        return clone $this->criteria;
     }
 }
