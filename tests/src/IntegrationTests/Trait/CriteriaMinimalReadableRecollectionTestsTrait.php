@@ -68,18 +68,18 @@ trait CriteriaMinimalReadableRecollectionTestsTrait
         static::assertNull($citizen);
     }
 
-    public function testGetOrFail(): void
+    public function testFetch(): void
     {
         $this->testSafety();
         $citizen = $this->getOne();
-        $citizen2 = $this->getObject()->getOrFail($citizen->getId() ?? -1);
+        $citizen2 = $this->getObject()->fetch($citizen->getId() ?? -1);
         static::assertSame($citizen, $citizen2);
     }
 
-    public function testGetOrFailNegative(): void
+    public function testFetchNegative(): void
     {
         $this->testSafety(NotFoundException::class);
-        $citizen = $this->getObject()->getOrFail(9999999);
+        $citizen = $this->getObject()->fetch(9999999);
     }
 
     public function testSlice(): void

@@ -41,7 +41,7 @@ trait MinimalRepositoryTestsTrait
 
     public function testRemoveElement(): void
     {
-        $citizen = $this->getObject()->getOrFail(1);
+        $citizen = $this->getObject()->fetch(1);
         static::assertTrue($this->getObject()->removeElement($citizen));
     }
 

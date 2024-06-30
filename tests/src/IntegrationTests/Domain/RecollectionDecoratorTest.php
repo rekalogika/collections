@@ -52,7 +52,7 @@ class RecollectionDecoratorTest extends BaseRecollectionTestCase
 
         /** @var MinimalRepository<array-key,Country> $repository */
 
-        $country = $repository->getOrFail(1);
+        $country = $repository->fetch(1);
         $citizens = $country->getCitizensInRecollection();
 
         static::assertInstanceOf(Recollection::class, $citizens);

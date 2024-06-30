@@ -53,7 +53,7 @@ class CriteriaRecollectionLargeSetTest extends BaseRecollectionTestCase
 
         /** @var MinimalRepository<array-key,Country> $repository */
 
-        $country = $repository->getOrFail(1);
+        $country = $repository->fetch(1);
         $citizens = $country->getWorkingAgeCitizensInRecollection();
 
         static::assertInstanceOf(ReadableRecollection::class, $citizens);

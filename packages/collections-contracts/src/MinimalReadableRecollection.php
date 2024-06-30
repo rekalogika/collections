@@ -42,9 +42,13 @@ interface MinimalReadableRecollection extends PageableInterface, RefreshableCoun
     public function get(string|int $key): mixed;
 
     /**
-     * @param TKey $key
+     * @return T|null
+     */
+    public function find(mixed $key): mixed;
+
+    /**
      * @return T
      * @throws NotFoundException
      */
-    public function getOrFail(string|int $key): mixed;
+    public function fetch(mixed $key): mixed;
 }

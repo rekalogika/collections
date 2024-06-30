@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.0
+
+* feat: add `find()` and `fetch()` methods, remove `getOrFail()`
+
 ## 0.5.2
 
 * fix: fix various problems with criteria recollections
@@ -15,7 +19,7 @@
 ## 0.4.0
 
 * refactor: reorganize exceptions
-* feat: add `getOrFail()`
+* feat: add `fetch()`
 * feat: add `QueryPageable`
 * feat: repository interfaces
 * refactor: rename `createFrom()` to `with()`

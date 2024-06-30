@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Doctrine\Common\Collections\ReadableCollection;
-use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 
 /**
  * @template TKey of array-key
@@ -28,6 +27,11 @@ trait MinimalReadableRecollectionTrait
     use PageableTrait;
 
     use RefreshableCountTrait;
+
+    /**
+     * @use FindFetchTrait<TKey,T>
+     */
+    use FindFetchTrait;
 
     /**
      * @return ReadableCollection<TKey,T>
@@ -59,21 +63,5 @@ trait MinimalReadableRecollectionTrait
     final public function get(string|int $key): mixed
     {
         return $this->getRealCollection()->get($key);
-    }
-
-    /**
-     * @param TKey $key
-     * @return T
-     * @throws NotFoundException
-     */
-    final public function getOrFail(string|int $key): mixed
-    {
-        $result = $this->get($key);
-
-        if ($result === null) {
-            throw new NotFoundException();
-        }
-
-        return $result;
     }
 }
