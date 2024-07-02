@@ -18,7 +18,6 @@ use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
@@ -46,8 +45,6 @@ class QueryCollection implements ReadableRecollection
     /** @use ReadableRecollectionTrait<TKey,T> */
     use ReadableRecollectionTrait;
 
-    private readonly CountStrategy $count;
-
     /**
      * @param int<1,max> $itemsPerPage
      * @param null|int<1,max> $softLimit
@@ -57,15 +54,14 @@ class QueryCollection implements ReadableRecollection
         private QueryBuilder $queryBuilder,
         private readonly int $itemsPerPage = 50,
         private readonly ?string $indexBy = null,
-        ?CountStrategy $count = null,
+        private readonly ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
     ) {
-        $this->count = $count ?? new RestrictedCountStrategy();
     }
 
 
-    private function getCountStrategy(): CountStrategy
+    private function getCountStrategy(): ?CountStrategy
     {
         return $this->count;
     }

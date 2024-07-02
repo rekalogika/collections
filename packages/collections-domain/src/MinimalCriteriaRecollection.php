@@ -20,7 +20,6 @@ use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\MinimalReadableRecollection;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\MinimalReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
@@ -52,7 +51,6 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
     private readonly Selectable $collection;
 
     private readonly Criteria $criteria;
-    private readonly CountStrategy $count;
 
     /**
      * @param ReadableCollection<TKey,T>|Selectable<TKey,T> $collection
@@ -63,7 +61,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
         ?Criteria $criteria = null,
         private readonly ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
-        ?CountStrategy $count = null,
+        private readonly ?CountStrategy $count = null,
     ) {
         // save collection
 
@@ -82,10 +80,6 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
         }
 
         $this->criteria = $criteria;
-
-        // save count strategy
-
-        $this->count = $count ?? new RestrictedCountStrategy();
     }
 
     /**
@@ -163,7 +157,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
         return $newInstance;
     }
 
-    private function getCountStrategy(): CountStrategy
+    private function getCountStrategy(): ?CountStrategy
     {
         return $this->count;
     }

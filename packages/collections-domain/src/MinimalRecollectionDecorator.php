@@ -22,7 +22,6 @@ use Rekalogika\Contracts\Collections\MinimalRecollection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\Trait\MinimalRecollectionTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
@@ -56,7 +55,6 @@ class MinimalRecollectionDecorator implements MinimalRecollection
     private readonly array $orderBy;
 
     private readonly Criteria $criteria;
-    private readonly CountStrategy $count;
 
     /**
      * @param Collection<TKey,T> $collection
@@ -68,7 +66,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
         array|string|null $orderBy = null,
         private readonly ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
-        ?CountStrategy $count = null,
+        private readonly ?CountStrategy $count = null,
     ) {
         // handle collection
 
@@ -86,10 +84,6 @@ class MinimalRecollectionDecorator implements MinimalRecollection
         );
 
         $this->criteria = Criteria::create()->orderBy($this->orderBy);
-
-        // handle count strategy
-
-        $this->count = $count ?? new RestrictedCountStrategy();
     }
 
     /**
@@ -149,7 +143,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
         return $newInstance;
     }
 
-    private function getCountStrategy(): CountStrategy
+    private function getCountStrategy(): ?CountStrategy
     {
         return $this->count;
     }

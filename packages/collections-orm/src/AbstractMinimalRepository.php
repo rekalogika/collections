@@ -51,7 +51,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
      */
     private int $itemsPerPage;
 
-    private readonly CountStrategy $count;
+    private readonly ?CountStrategy $count;
     private readonly QueryBuilder $queryBuilder;
     private readonly ?string $indexBy;
 
@@ -96,7 +96,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
         return $this->class;
     }
 
-    private function getCountStrategy(): CountStrategy
+    private function getCountStrategy(): ?CountStrategy
     {
         return $this->count;
     }
