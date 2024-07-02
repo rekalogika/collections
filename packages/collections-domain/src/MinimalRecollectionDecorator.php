@@ -33,7 +33,7 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template T
  * @implements MinimalRecollection<TKey,T>
  */
-class MinimalRecollectionDecorator implements MinimalRecollection, \Countable
+class MinimalRecollectionDecorator implements MinimalRecollection
 {
     /** @use RecollectionPageableTrait<TKey,T> */
     use RecollectionPageableTrait;
