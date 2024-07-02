@@ -15,6 +15,7 @@ namespace Rekalogika\Collections\ORM\Trait;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
+use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\FindFetchTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\RefreshableCountTrait;
@@ -33,6 +34,7 @@ trait MinimalReadableRepositoryTrait
     use PageableTrait;
 
     use RefreshableCountTrait;
+    use CountableTrait;
 
     /**
      * @use FindFetchTrait<TKey,T>
