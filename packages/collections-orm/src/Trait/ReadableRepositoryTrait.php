@@ -15,7 +15,6 @@ namespace Rekalogika\Collections\ORM\Trait;
 
 use Rekalogika\Domain\Collections\Common\Trait\FindFetchTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
-use Rekalogika\Domain\Collections\Common\Trait\RefreshableCountTrait;
 
 /**
  * @template TKey of array-key
@@ -40,8 +39,6 @@ trait ReadableRepositoryTrait
      * @use FindFetchTrait<TKey,T>
      */
     use FindFetchTrait;
-
-    use RefreshableCountTrait;
 
     /**
      * @return array<TKey,T>

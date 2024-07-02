@@ -21,7 +21,6 @@ use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\MinimalReadableRecollection;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
-use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\MinimalReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
@@ -35,8 +34,6 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
 {
     /** @use RecollectionPageableTrait<TKey,T> */
     use RecollectionPageableTrait;
-
-    use CountableTrait;
 
     /** @use MinimalReadableRecollectionTrait<TKey,T> */
     use MinimalReadableRecollectionTrait;

@@ -5,6 +5,7 @@
 
 * refactor: remove `RefreshableCount` interface
 * refactor: `MinimalReadableRecollection` now extends `Countable`
+* refactor: cleanup count traits
 
 ## 0.6.2
 

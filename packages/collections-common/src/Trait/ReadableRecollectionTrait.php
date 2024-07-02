@@ -29,5 +29,5 @@ trait ReadableRecollectionTrait
      */
     use ReadableCollectionTrait;
 
-    use RefreshableCountTrait;
+    use CountableTrait;
 }
