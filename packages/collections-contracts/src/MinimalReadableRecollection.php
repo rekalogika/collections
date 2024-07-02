@@ -21,7 +21,7 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
  * @template-covariant T
  * @extends PageableInterface<TKey,T>
  */
-interface MinimalReadableRecollection extends PageableInterface, RefreshableCount
+interface MinimalReadableRecollection extends PageableInterface
 {
     /**
      * @template TMaybeContained
@@ -51,4 +51,6 @@ interface MinimalReadableRecollection extends PageableInterface, RefreshableCoun
      * @throws NotFoundException
      */
     public function fetch(mixed $key): mixed;
+
+    public function refreshCount(): void;
 }

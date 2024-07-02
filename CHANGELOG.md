@@ -1,4 +1,9 @@
+
 # Changelog
+
+## 0.7.0
+
+* refactor: remove `RefreshableCount` interface
 
 ## 0.6.2
 

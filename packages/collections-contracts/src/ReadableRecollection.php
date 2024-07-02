@@ -23,7 +23,7 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
  * @extends PageableInterface<TKey,T>
  * @extends ReadableCollection<TKey,T>
  */
-interface ReadableRecollection extends PageableInterface, ReadableCollection, RefreshableCount
+interface ReadableRecollection extends PageableInterface, ReadableCollection
 {
     /**
      * @return T|null
@@ -35,4 +35,6 @@ interface ReadableRecollection extends PageableInterface, ReadableCollection, Re
      * @throws NotFoundException
      */
     public function fetch(mixed $key): mixed;
+
+    public function refreshCount(): void;
 }
