@@ -21,7 +21,6 @@ use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\Recollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\Trait\RecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
@@ -76,7 +75,6 @@ class RecollectionDecorator implements Recollection
     private readonly array $orderBy;
 
     private readonly Criteria $criteria;
-    private readonly CountStrategy $count;
 
     /**
      * @param Collection<TKey,T> $collection
@@ -90,7 +88,7 @@ class RecollectionDecorator implements Recollection
         array|string|null $orderBy = null,
         private readonly ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
-        ?CountStrategy $count = null,
+        private readonly ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
     ) {
@@ -110,10 +108,6 @@ class RecollectionDecorator implements Recollection
         );
 
         $this->criteria = Criteria::create()->orderBy($this->orderBy);
-
-        // handle count strategy
-
-        $this->count = $count ?? new RestrictedCountStrategy();
     }
 
     /**
@@ -179,7 +173,7 @@ class RecollectionDecorator implements Recollection
         return $newInstance;
     }
 
-    private function getCountStrategy(): CountStrategy
+    private function getCountStrategy(): ?CountStrategy
     {
         return $this->count;
     }

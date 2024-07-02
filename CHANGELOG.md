@@ -6,6 +6,8 @@
 * refactor: remove `RefreshableCount` interface
 * refactor: `MinimalReadableRecollection` now extends `Countable`
 * refactor: cleanup count traits
+* refactor: refactor counting, change default strategy to
+  `ConditionalDelegatedCountStrategy`
 
 ## 0.6.2
 

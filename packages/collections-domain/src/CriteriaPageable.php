@@ -20,7 +20,7 @@ use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
+use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
@@ -29,13 +29,15 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template T
  * @implements PageableInterface<TKey,T>
  */
-class CriteriaPageable implements PageableInterface
+class CriteriaPageable implements PageableInterface, \Countable
 {
     /** @use RecollectionPageableTrait<TKey,T> */
     use RecollectionPageableTrait;
 
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;
+
+    use CountableTrait;
 
     /**
      * @var null|\WeakMap<object,array<string,self<array-key,mixed>>>
@@ -48,7 +50,6 @@ class CriteriaPageable implements PageableInterface
     private readonly Selectable $collection;
 
     private readonly Criteria $criteria;
-    private readonly CountStrategy $count;
 
     /**
      * @param ReadableCollection<TKey,T>|Selectable<TKey,T> $collection
@@ -59,7 +60,7 @@ class CriteriaPageable implements PageableInterface
         ?Criteria $criteria = null,
         private readonly ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
-        ?CountStrategy $count = null,
+        private readonly ?CountStrategy $count = null,
     ) {
         // save collection
 
@@ -78,10 +79,6 @@ class CriteriaPageable implements PageableInterface
         }
 
         $this->criteria = $criteria;
-
-        // save count strategy
-
-        $this->count = $count ?? new RestrictedCountStrategy();
     }
 
     /**
@@ -157,5 +154,10 @@ class CriteriaPageable implements PageableInterface
     private function getUnderlyingCountable(): \Countable
     {
         return $this->collection->matching($this->criteria);
+    }
+
+    private function getCountStrategy(): ?CountStrategy
+    {
+        return $this->count;
     }
 }

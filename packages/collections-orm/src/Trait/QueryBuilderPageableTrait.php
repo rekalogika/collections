@@ -48,7 +48,7 @@ trait QueryBuilderPageableTrait
 
         $count = function (): int|bool {
             try {
-                return $this->count->getCount($this->getUnderlyingCountable());
+                return $this->count();
             } catch (GettingCountUnsupportedException) {
                 return false;
             }

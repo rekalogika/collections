@@ -33,8 +33,8 @@ class CountTest extends TestCase
             ])
         );
 
-        $this->expectException(GettingCountUnsupportedException::class);
-        $foo = \count($collection);
+        $count = \count($collection);
+        $this->assertEquals(3, $count);
     }
 
     public function testRestrictedCount(): void

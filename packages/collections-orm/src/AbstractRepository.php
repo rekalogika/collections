@@ -57,7 +57,7 @@ abstract class AbstractRepository implements Repository
      */
     private int $itemsPerPage;
 
-    private readonly CountStrategy $count;
+    private readonly ?CountStrategy $count;
     private readonly QueryBuilder $queryBuilder;
     private readonly ?string $indexBy;
 
@@ -105,7 +105,7 @@ abstract class AbstractRepository implements Repository
      */
     abstract protected function configure(): RepositoryConfiguration;
 
-    private function getCountStrategy(): CountStrategy
+    private function getCountStrategy(): ?CountStrategy
     {
         return $this->count;
     }

@@ -15,7 +15,6 @@ namespace Rekalogika\Collections\ORM\Configuration;
 
 use Doctrine\Common\Collections\Order;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 
 /**
@@ -27,7 +26,6 @@ class MinimalRepositoryConfiguration
      * @var non-empty-array<string,Order>
      */
     private readonly array $orderBy;
-    private readonly CountStrategy $count;
 
     /**
      * @param class-string<T> $class
@@ -39,11 +37,9 @@ class MinimalRepositoryConfiguration
         private readonly string $indexBy = 'id',
         array|string|null $orderBy = null,
         private readonly int $itemsPerPage = 50,
-        ?CountStrategy $count = null,
+        private readonly ?CountStrategy $count = null,
     ) {
         $this->orderBy = OrderByUtil::normalizeOrderBy($orderBy);
-
-        $this->count = $count ?? new RestrictedCountStrategy();
     }
 
     public function getIndexBy(): string
@@ -75,7 +71,7 @@ class MinimalRepositoryConfiguration
         return $this->itemsPerPage;
     }
 
-    public function getCountStrategy(): CountStrategy
+    public function getCountStrategy(): ?CountStrategy
     {
         return $this->count;
     }

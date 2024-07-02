@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
+use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Exception\InvalidCountException;
 
 trait CountableTrait
 {
-    abstract private function getCountStrategy(): CountStrategy;
+    abstract private function getCountStrategy(): ?CountStrategy;
     abstract private function getUnderlyingCountable(): ?\Countable;
 
     /**
@@ -26,7 +27,9 @@ trait CountableTrait
      */
     final public function count(): int
     {
-        $result = $this->getCountStrategy()->getCount($this->getUnderlyingCountable());
+        $countStrategy = $this->getCountStrategy() ?? Configuration::getDefaultCountStrategy();
+
+        $result = $countStrategy->getCount($this->getUnderlyingCountable());
 
         if ($result >= 0) {
             return $result;
@@ -37,7 +40,9 @@ trait CountableTrait
 
     final public function refreshCount(): void
     {
+        $countStrategy = $this->getCountStrategy() ?? Configuration::getDefaultCountStrategy();
+
         $realCount = \count($this->getUnderlyingCountable());
-        $this->getCountStrategy()->setCount($this->getUnderlyingCountable(), $realCount);
+        $countStrategy->setCount($this->getUnderlyingCountable(), $realCount);
     }
 }

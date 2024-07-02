@@ -17,7 +17,7 @@ use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
+use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 
 /**
@@ -25,7 +25,7 @@ use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
  * @template T
  * @implements PageableInterface<TKey,T>
  */
-class QueryPageable implements PageableInterface
+class QueryPageable implements PageableInterface, \Countable
 {
     /** @use QueryBuilderPageableTrait<TKey,T> */
     use QueryBuilderPageableTrait;
@@ -33,7 +33,7 @@ class QueryPageable implements PageableInterface
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;
 
-    private readonly CountStrategy $count;
+    use CountableTrait;
 
     /**
      * @param int<1,max> $itemsPerPage
@@ -42,9 +42,8 @@ class QueryPageable implements PageableInterface
         private QueryBuilder $queryBuilder,
         private readonly int $itemsPerPage = 50,
         private readonly ?string $indexBy = null,
-        ?CountStrategy $count = null,
+        private readonly ?CountStrategy $count = null,
     ) {
-        $this->count = $count ?? new RestrictedCountStrategy();
     }
 
     /**
@@ -103,5 +102,10 @@ class QueryPageable implements PageableInterface
             indexBy: $indexBy ?? $this->indexBy,
             count: $count,
         );
+    }
+
+    private function getCountStrategy(): ?CountStrategy
+    {
+        return $this->count;
     }
 }
