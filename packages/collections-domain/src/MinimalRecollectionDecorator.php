@@ -24,7 +24,6 @@ use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
-use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\MinimalRecollectionTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
@@ -40,8 +39,6 @@ class MinimalRecollectionDecorator implements MinimalRecollection
 
     /** @use MinimalRecollectionTrait<TKey,T> */
     use MinimalRecollectionTrait;
-
-    use CountableTrait;
 
     /**
      * @var null|\WeakMap<object,array<string,self<array-key,mixed>>>

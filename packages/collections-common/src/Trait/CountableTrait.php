@@ -34,4 +34,10 @@ trait CountableTrait
 
         throw new InvalidCountException('Invalid count');
     }
+
+    final public function refreshCount(): void
+    {
+        $realCount = \count($this->getUnderlyingCountable());
+        $this->getCountStrategy()->setCount($this->getUnderlyingCountable(), $realCount);
+    }
 }

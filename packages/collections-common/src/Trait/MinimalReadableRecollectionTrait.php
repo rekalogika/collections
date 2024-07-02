@@ -26,7 +26,7 @@ trait MinimalReadableRecollectionTrait
      */
     use PageableTrait;
 
-    use RefreshableCountTrait;
+    use CountableTrait;
 
     /**
      * @use FindFetchTrait<TKey,T>
