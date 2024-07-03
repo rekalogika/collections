@@ -8,6 +8,7 @@
 * refactor: cleanup count traits
 * refactor: refactor counting, change default strategy to
   `ConditionalDelegatedCountStrategy`
+* refactor: add `PageableRecollection`
 
 ## 0.6.2
 
