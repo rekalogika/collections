@@ -58,10 +58,10 @@
         "dama/doctrine-test-bundle": "^8.2"
     },
     "replace": {
-        "rekalogika/collections-common": "0.6.2",
-        "rekalogika/collections-contracts": "0.6.2",
-        "rekalogika/collections-domain": "0.6.2",
-        "rekalogika/collections-orm": "0.6.2"
+        "rekalogika/collections-common": "0.7.0",
+        "rekalogika/collections-contracts": "0.7.0",
+        "rekalogika/collections-domain": "0.7.0",
+        "rekalogika/collections-orm": "0.7.0"
     },
     "config": {
         "allow-plugins": {
