@@ -18,6 +18,7 @@ use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
+use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
@@ -27,9 +28,9 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 /**
  * @template TKey of array-key
  * @template T
- * @implements PageableInterface<TKey,T>
+ * @implements PageableRecollection<TKey,T>
  */
-class CriteriaPageable implements PageableInterface, \Countable
+class CriteriaPageable implements PageableRecollection
 {
     /** @use RecollectionPageableTrait<TKey,T> */
     use RecollectionPageableTrait;
