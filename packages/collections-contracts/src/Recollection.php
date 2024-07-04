@@ -32,12 +32,14 @@ interface Recollection extends ReadableRecollection, Collection
      * @param mixed $key
      * @return T|null
      */
+    #[\Override]
     public function remove(mixed $key): mixed;
 
     /**
      * @param mixed $key
      * @param T $value
      */
+    #[\Override]
     public function set(mixed $key, mixed $value): void;
 
     // /**
