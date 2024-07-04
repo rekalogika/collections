@@ -33,38 +33,4 @@ final class KeyTransformerUtil
 
         return $keyTransformer::transformToKey($input);
     }
-
-    // /**
-    //  * @template TKey of array-key
-    //  * @template T
-    //  * @param \Closure(mixed,T):bool $input
-    //  * @return \Closure(TKey,T):bool
-    //  */
-    // public static function transformClosureTKeyTReturnsBool(
-    //     ?KeyTransformer $keyTransformer,
-    //     \Closure $input
-    // ): \Closure {
-    //     $keyTransformer ??= Configuration::$defaultKeyTransformer;
-
-    //     return static function (mixed $key, mixed $value) use ($input, $keyTransformer): bool {
-    //         return $input($keyTransformer::transformFromKey($key), $value);
-    //     };
-    // }
-
-    // /**
-    //  * @template TKey of array-key
-    //  * @template T
-    //  * @param \Closure(T,mixed):bool $input
-    //  * @return \Closure(T,TKey):bool
-    //  */
-    // public static function transformClosureTTkeyReturnsBool(
-    //     ?KeyTransformer $keyTransformer,
-    //     \Closure $input
-    // ): \Closure {
-    //     $keyTransformer ??= Configuration::$defaultKeyTransformer;
-
-    //     return static function (mixed $value, mixed $key) use ($input, $keyTransformer): bool {
-    //         return $input($value, $keyTransformer::transformFromKey($key));
-    //     };
-    // }
 }
