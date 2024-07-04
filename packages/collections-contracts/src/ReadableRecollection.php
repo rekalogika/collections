@@ -34,12 +34,14 @@ interface ReadableRecollection extends PageableInterface, ReadableCollection
      * @param mixed $key
      * @return bool
      */
+    #[\Override]
     public function containsKey(mixed $key): bool;
 
     /**
      * @param mixed $key
      * @return T|null
      */
+    #[\Override]
     public function get(mixed $key): mixed;
 
     // /**
