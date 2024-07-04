@@ -22,6 +22,7 @@ use Rekalogika\Contracts\Collections\Recollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
+use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Trait\RecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyTrait;
@@ -91,6 +92,7 @@ class RecollectionDecorator implements Recollection
         private readonly ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
+        private readonly ?KeyTransformer $keyTransformer = null,
     ) {
         // handle collection
 
@@ -128,6 +130,7 @@ class RecollectionDecorator implements Recollection
         ?CountStrategy $count = null,
         ?int $softLimit = null,
         ?int $hardLimit = null,
+        ?KeyTransformer $keyTransformer = null,
     ): Recollection {
         if (self::$instances === null) {
             /** @var \WeakMap<object,array<string,self<array-key,mixed>>>    */
@@ -156,6 +159,7 @@ class RecollectionDecorator implements Recollection
             count: $count,
             softLimit: $softLimit,
             hardLimit: $hardLimit,
+            keyTransformer: $keyTransformer,
         );
 
         if (!isset(self::$instances[$collection])) {
@@ -230,6 +234,7 @@ class RecollectionDecorator implements Recollection
             count: $this->count,
             softLimit: $this->softLimit,
             hardLimit: $this->hardLimit,
+            keyTransformer: $this->keyTransformer,
         );
     }
 

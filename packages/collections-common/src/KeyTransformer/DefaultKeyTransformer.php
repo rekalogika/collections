@@ -11,29 +11,21 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Domain\Collections\Common\Trait;
+namespace Rekalogika\Domain\Collections\Common\KeyTransformer;
 
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
+use Symfony\Component\Uid\AbstractUid;
 
-/**
- * @template TKey of array-key
- * @template T
- */
-trait FindFetchTrait
+class DefaultKeyTransformer implements KeyTransformer
 {
-    /**
-     * @param mixed $key
-     * @return T
-     * @throws NotFoundException
-     */
-    final public function fetch(mixed $key): mixed
+    public static function transformToKey(mixed $key): int|string
     {
-        $result = $this->get($key);
-
-        if ($result === null) {
+        if ($key instanceof AbstractUid) {
+            return $key->toBinary();
+        } elseif (!\is_string($key) && !\is_int($key)) {
             throw new NotFoundException();
         }
 
-        return $result;
+        return $key;
     }
 }

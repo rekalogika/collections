@@ -16,6 +16,8 @@ namespace Rekalogika\Domain\Collections\Common;
 use Doctrine\Common\Collections\Order;
 use Rekalogika\Domain\Collections\Common\Count\ConditionalDelegatedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\KeyTransformer\DefaultKeyTransformer;
+use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 
 final class Configuration
 {
@@ -41,6 +43,11 @@ final class Configuration
      * @var non-empty-array<string,Order>
      */
     public static array $defaultOrderBy = ['id' => Order::Descending];
+
+    /**
+     * @var class-string<KeyTransformer>
+     */
+    public static string $defaultKeyTransformer = DefaultKeyTransformer::class;
 
     /**
      * @var null|\Closure(): CountStrategy

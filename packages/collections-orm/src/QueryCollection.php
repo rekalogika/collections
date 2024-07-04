@@ -18,6 +18,7 @@ use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
@@ -57,6 +58,7 @@ class QueryCollection implements ReadableRecollection
         private readonly ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
+        private readonly ?KeyTransformer $keyTransformer = null,
     ) {
     }
 

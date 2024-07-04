@@ -25,12 +25,57 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
  */
 interface ReadableRecollection extends PageableInterface, ReadableCollection
 {
-    /**
-     * @return T|null
-     */
-    public function find(mixed $key): mixed;
+    //
+    // Overridden methods, to widen keys in parameters to accommodate Uuid key
+    // types
+    //
 
     /**
+     * @param mixed $key
+     * @return bool
+     */
+    public function containsKey(mixed $key): bool;
+
+    /**
+     * @param mixed $key
+     * @return T|null
+     */
+    public function get(mixed $key): mixed;
+
+    // /**
+    //  * @param \Closure(mixed,T):bool $p
+    //  */
+    // public function exists(\Closure $p): bool;
+
+    // /**
+    //  * @param \Closure(T,mixed):bool $p
+    //  * @return ReadableCollection<TKey,T>
+    //  */
+    // public function filter(\Closure $p): ReadableCollection;
+
+    // /**
+    //  * @param \Closure(mixed,T):bool $p
+    //  * @return array{0: ReadableCollection<TKey,T>, 1: ReadableCollection<TKey,T>}
+    //  */
+    // public function partition(\Closure $p): array;
+
+    // /**
+    //  * @param \Closure(mixed,T):bool $p
+    //  */
+    // public function forAll(\Closure $p): bool;
+
+    // /**
+    //  * @param \Closure(mixed,T):bool $p
+    //  * @return T|null
+    //  */
+    // public function findFirst(\Closure $p): mixed;
+
+    //
+    // Methods
+    //
+
+    /**
+     * @param mixed $key
      * @return T
      * @throws NotFoundException
      */

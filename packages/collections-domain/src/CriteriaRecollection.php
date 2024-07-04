@@ -20,6 +20,7 @@ use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\CriteriaReadableTrait;
@@ -79,6 +80,7 @@ class CriteriaRecollection implements ReadableRecollection
         private readonly ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
+        private readonly ?KeyTransformer $keyTransformer = null,
     ) {
         // save collection
 
@@ -117,6 +119,7 @@ class CriteriaRecollection implements ReadableRecollection
         ?CountStrategy $count = null,
         ?int $softLimit = null,
         ?int $hardLimit = null,
+        ?KeyTransformer $keyTransformer = null,
     ): ReadableRecollection {
         if (self::$instances === null) {
             /** @var \WeakMap<object,array<string,self<array-key,mixed>>> */
@@ -145,6 +148,7 @@ class CriteriaRecollection implements ReadableRecollection
             count: $count,
             softLimit: $softLimit,
             hardLimit: $hardLimit,
+            keyTransformer: $keyTransformer,
         );
 
         if (!isset(self::$instances[$collection])) {
@@ -217,6 +221,7 @@ class CriteriaRecollection implements ReadableRecollection
             count: $this->count,
             softLimit: $this->softLimit,
             hardLimit: $this->hardLimit,
+            keyTransformer: $this->keyTransformer,
         );
     }
 
