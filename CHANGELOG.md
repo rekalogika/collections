@@ -1,4 +1,3 @@
-
 # Changelog
 
 ## 0.8.0
@@ -7,6 +6,7 @@
   UUIDs.
 * chore: rename `FindFetchTrait` to `FetchTrait`
 * chore: add `Override` attribute where applicable
+* chore: cleanup unused code
 
 ## 0.7.0
 

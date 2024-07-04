@@ -41,16 +41,4 @@ interface Recollection extends ReadableRecollection, Collection
      */
     #[\Override]
     public function set(mixed $key, mixed $value): void;
-
-    // /**
-    //  * @param \Closure(T,mixed):bool $p
-    //  * @return Collection<TKey,T>
-    //  */
-    // public function filter(\Closure $p): Collection;
-
-    // /**
-    //  * @param \Closure(mixed,T):bool $p
-    //  * @return array{0: Collection<TKey,T>, 1: Collection<TKey,T>}
-    //  */
-    // public function partition(\Closure $p): array;
 }
