@@ -46,7 +46,7 @@
         "symfony/framework-bundle": "^6.4 || ^7.1",
         "doctrine/doctrine-bundle": "^2.11",
         "symfony/runtime": "^6.4 || ^7.1",
-        "symfony/uid": "^6.4 || ^7.1",
+        "symfony/uid": "^7.1",
         "zenstruck/foundry": "^2.0",
         "symfony/maker-bundle": "^1.60",
         "doctrine/doctrine-fixtures-bundle": "^3.6",

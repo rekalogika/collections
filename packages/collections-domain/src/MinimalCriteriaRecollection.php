@@ -20,6 +20,7 @@ use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\MinimalReadableRecollection;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Trait\MinimalReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
@@ -62,6 +63,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
         private readonly ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
         private readonly ?CountStrategy $count = null,
+        private readonly ?KeyTransformer $keyTransformer = null,
     ) {
         // save collection
 
@@ -114,6 +116,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
         ?string $indexBy = null,
         int $itemsPerPage = 50,
         ?CountStrategy $count = null,
+        ?KeyTransformer $keyTransformer = null,
     ): MinimalReadableRecollection {
         if (self::$instances === null) {
             /** @var \WeakMap<object,array<string,self<array-key,mixed>>> */
@@ -140,6 +143,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
             indexBy: $indexBy,
             itemsPerPage: $itemsPerPage,
             count: $count,
+            keyTransformer: $keyTransformer,
         );
 
         if (!isset(self::$instances[$collection])) {
@@ -180,6 +184,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Count
             criteria: $this->criteria,
             itemsPerPage: $itemsPerPage,
             count: $this->count,
+            keyTransformer: $this->keyTransformer,
         );
     }
 

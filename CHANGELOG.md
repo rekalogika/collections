@@ -1,6 +1,11 @@
 
 # Changelog
 
+## 0.8.0
+
+* feat: `$key` parameter type widening, to accommodate object primary keys, like
+  UUIDs.
+
 ## 0.7.0
 
 * refactor: remove `RefreshableCount` interface

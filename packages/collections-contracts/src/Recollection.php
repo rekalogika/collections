@@ -21,6 +21,34 @@ use Doctrine\Common\Collections\Collection;
  * @extends Collection<TKey,T>
  * @extends ReadableRecollection<TKey,T>
  */
-interface Recollection extends Collection, ReadableRecollection
+interface Recollection extends ReadableRecollection, Collection
 {
+    //
+    // Overridden methods, to widen keys in parameters to accommodate Uuid key
+    // types
+    //
+
+    /**
+     * @param mixed $key
+     * @return T|null
+     */
+    public function remove(mixed $key): mixed;
+
+    /**
+     * @param mixed $key
+     * @param T $value
+     */
+    public function set(mixed $key, mixed $value): void;
+
+    // /**
+    //  * @param \Closure(T,mixed):bool $p
+    //  * @return Collection<TKey,T>
+    //  */
+    // public function filter(\Closure $p): Collection;
+
+    // /**
+    //  * @param \Closure(mixed,T):bool $p
+    //  * @return array{0: Collection<TKey,T>, 1: Collection<TKey,T>}
+    //  */
+    // public function partition(\Closure $p): array;
 }

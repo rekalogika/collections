@@ -21,6 +21,7 @@ use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
@@ -96,6 +97,7 @@ class CriteriaPageable implements PageableRecollection
         ?string $indexBy = null,
         int $itemsPerPage = 50,
         ?CountStrategy $count = null,
+        ?KeyTransformer $keyTransformer = null,
     ): PageableInterface {
         if (self::$instances === null) {
             /** @var \WeakMap<object,array<string,self<array-key,mixed>>> */

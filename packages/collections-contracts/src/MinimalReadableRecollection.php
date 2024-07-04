@@ -31,22 +31,18 @@ interface MinimalReadableRecollection extends PageableInterface, \Countable
     public function contains(mixed $element): bool;
 
     /**
-     * @param TKey $key
+     * @param mixed $key
      */
-    public function containsKey(string|int $key): bool;
+    public function containsKey(mixed $key): bool;
 
     /**
-     * @param TKey $key
+     * @param mixed $key
      * @return T|null
      */
-    public function get(string|int $key): mixed;
+    public function get(mixed $key): mixed;
 
     /**
-     * @return T|null
-     */
-    public function find(mixed $key): mixed;
-
-    /**
+     * @param mixed $key
      * @return T
      * @throws NotFoundException
      */

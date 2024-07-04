@@ -49,10 +49,10 @@ trait MinimalRepositoryTrait
     }
 
     /**
-     * @param TKey $key
+     * @param mixed $key
      * @return T|null
      */
-    public function remove(string|int $key): mixed
+    public function remove(mixed $key): mixed
     {
         $element = $this->get($key);
 

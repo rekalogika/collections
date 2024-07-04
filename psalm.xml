@@ -72,6 +72,7 @@
         <InvalidTemplateParam>
             <errorLevel type="suppress">
                 <file name="packages/collections-common/src/Trait/ReadableCollectionTrait.php" />
+                <file name="packages/collections-contracts/src/ReadableRecollection.php" />
             </errorLevel>
         </InvalidTemplateParam>
         <MethodSignatureMismatch>

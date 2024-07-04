@@ -79,7 +79,7 @@ trait RepositoryTrait
     }
 
     /**
-     * @param TKey $key
+     * @param mixed $key
      * @param T $value
      */
     final public function set(mixed $key, mixed $value): void

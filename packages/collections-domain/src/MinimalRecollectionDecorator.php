@@ -23,6 +23,7 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
+use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Trait\MinimalRecollectionTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
@@ -67,6 +68,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
         private readonly ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
         private readonly ?CountStrategy $count = null,
+        private readonly ?KeyTransformer $keyTransformer = null,
     ) {
         // handle collection
 
@@ -100,6 +102,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
         ?string $indexBy = null,
         int $itemsPerPage = 50,
         ?CountStrategy $count = null,
+        ?KeyTransformer $keyTransformer = null,
     ): MinimalRecollection {
         if (self::$instances === null) {
             /** @var \WeakMap<object,array<string,self<array-key,mixed>>>    */
@@ -126,6 +129,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
             indexBy: $indexBy,
             itemsPerPage: $itemsPerPage,
             count: $count,
+            keyTransformer: $keyTransformer,
         );
 
         if (!isset(self::$instances[$collection])) {
@@ -174,6 +178,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
             orderBy: $this->orderBy,
             itemsPerPage: $itemsPerPage,
             count: $this->count,
+            keyTransformer: $this->keyTransformer,
         );
     }
 

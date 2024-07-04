@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Doctrine\Common\Collections\ReadableCollection;
+use Rekalogika\Domain\Collections\Common\Internal\KeyTransformerUtil;
 
 /**
  * @template TKey of array-key
@@ -49,19 +50,25 @@ trait MinimalReadableRecollectionTrait
     }
 
     /**
-     * @param TKey $key
+     * @param mixed $key
      */
-    final public function containsKey(string|int $key): bool
+    final public function containsKey(mixed $key): bool
     {
+        /** @var TKey */
+        $key = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $key);
+
         return $this->getRealCollection()->containsKey($key);
     }
 
     /**
-     * @param TKey $key
+     * @param mixed $key
      * @return T|null
      */
-    final public function get(string|int $key): mixed
+    final public function get(mixed $key): mixed
     {
+        /** @var TKey */
+        $key = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $key);
+
         return $this->getRealCollection()->get($key);
     }
 }
