@@ -5,6 +5,7 @@
 
 * feat: `$key` parameter type widening, to accommodate object primary keys, like
   UUIDs.
+* chore: rename `FindFetchTrait` to `FetchTrait`
 
 ## 0.7.0
 

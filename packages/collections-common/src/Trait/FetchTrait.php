@@ -19,7 +19,7 @@ use Rekalogika\Contracts\Collections\Exception\NotFoundException;
  * @template TKey of array-key
  * @template T
  */
-trait FindFetchTrait
+trait FetchTrait
 {
     /**
      * @param mixed $key

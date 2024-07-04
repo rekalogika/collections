@@ -31,9 +31,9 @@ trait ReadableCollectionTrait
     use CountableTrait;
 
     /**
-     * @use FindFetchTrait<TKey,T>
+     * @use FetchTrait<TKey,T>
      */
-    use FindFetchTrait;
+    use FetchTrait;
 
     /**
      * @return Collection<TKey,T>
