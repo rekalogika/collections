@@ -13,15 +13,16 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Count;
 
+use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Exception\GettingCountUnsupportedException;
 use Rekalogika\Domain\Collections\Common\Exception\SettingCountUnsupportedException;
 
 class ConditionalDelegatedCountStrategy implements CountStrategy
 {
     public function __construct(
-        private ?int $softLimit = 5000,
+        private ?int $softLimit = null,
         private ?int $hardLimit = null,
-        private ?float $durationThreshold = 1,
+        private ?float $durationThreshold = null,
     ) {
     }
 
@@ -31,15 +32,19 @@ class ConditionalDelegatedCountStrategy implements CountStrategy
             throw new GettingCountUnsupportedException('The underlying object is not provided');
         }
 
+        $softLimit = $this->softLimit ?? Configuration::$defaultCountSoftLimit;
+        $hardLimit = $this->hardLimit ?? Configuration::$defaultCountHardLimit;
+        $durationThreshold = $this->durationThreshold ?? Configuration::$defaultCountDurationThreshold;
+
         $start = microtime(true);
         $result = \count($underlyingObject);
         $duration = microtime(true) - $start;
 
-        if ($this->hardLimit !== null && $result > $this->hardLimit) {
-            throw new GettingCountUnsupportedException(sprintf('The count exceeds the threshold of %d. You should refactor and use other counting strategy. Count duration: %d s', $this->hardLimit, $duration));
-        } elseif ($this->softLimit !== null && $result > $this->softLimit) {
-            @trigger_error(sprintf('The count exceeds the warning threshold of %d. As it might impact performance, you should refactor and use other counting strategy. Count duration: %d s.', $this->softLimit, $duration), \E_USER_DEPRECATED);
-        } elseif ($duration > $this->durationThreshold) {
+        if ($result > $hardLimit) {
+            throw new GettingCountUnsupportedException(sprintf('The count exceeds the threshold of %d. You should refactor and use other counting strategy. Count duration: %d s', $hardLimit, $duration));
+        } elseif ($result > $softLimit) {
+            @trigger_error(sprintf('The count exceeds the warning threshold of %d. As it might impact performance, you should refactor and use other counting strategy. Count duration: %d s.', $softLimit, $duration), \E_USER_DEPRECATED);
+        } elseif ($duration > $durationThreshold) {
             @trigger_error(sprintf('The count duration is %d s. You should consider refactoring and using other counting strategy.', $duration), \E_USER_DEPRECATED);
         }
 

@@ -8,6 +8,7 @@
 * chore: add `Override` attribute where applicable
 * chore: cleanup unused code
 * refactor: rename `QueryCollection` to `QueryRecollection`
+* feat: default count limits
 
 ## 0.7.0
 
