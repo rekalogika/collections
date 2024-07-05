@@ -16,8 +16,8 @@ namespace Rekalogika\Collections\Tests\UnitTests\Collections;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 use Rekalogika\Domain\Collections\Common\Count\DelegatedCountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\DisabledCountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\PrecountingStrategy;
-use Rekalogika\Domain\Collections\Common\Count\RestrictedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Exception\GettingCountUnsupportedException;
 use Rekalogika\Domain\Collections\RecollectionDecorator;
 
@@ -45,7 +45,7 @@ class CountTest extends TestCase
                 new Citizen(2, 'Jane Doe'),
                 new Citizen(1, 'John Smith'),
             ]),
-            count: new RestrictedCountStrategy()
+            count: new DisabledCountStrategy()
         );
 
         $this->expectException(GettingCountUnsupportedException::class);
