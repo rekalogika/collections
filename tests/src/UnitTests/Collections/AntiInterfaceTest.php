@@ -32,7 +32,7 @@ class AntiInterfaceTest extends TestCase
      */
     public function testDoesNotImplementCountable(string $class): void
     {
-        $this->assertFalse(\is_subclass_of($class, \Countable::class, true));
+        $this->assertFalse(is_subclass_of($class, \Countable::class, true));
     }
 
     /**
@@ -41,7 +41,7 @@ class AntiInterfaceTest extends TestCase
      */
     public function testDoesNotImplementTraversable(string $class): void
     {
-        $this->assertFalse(\is_subclass_of($class, \Traversable::class, true));
+        $this->assertFalse(is_subclass_of($class, \Traversable::class, true));
     }
 
     /**
@@ -50,7 +50,7 @@ class AntiInterfaceTest extends TestCase
      */
     public function testDoesNotImplementArrayAccess(string $class): void
     {
-        $this->assertFalse(\is_subclass_of($class, \ArrayAccess::class, true));
+        $this->assertFalse(is_subclass_of($class, \ArrayAccess::class, true));
     }
 
     /**

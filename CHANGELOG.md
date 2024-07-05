@@ -10,6 +10,7 @@
 * refactor: rename `QueryCollection` to `QueryRecollection`
 * feat: default count limits
 * refactor: remove `Countable` from minimal classes
+* refactor: rename `RestrictedCountStrategy` to `DisabledCountStrategy`
 
 ## 0.7.0
 

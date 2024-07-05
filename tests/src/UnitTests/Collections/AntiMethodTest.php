@@ -32,7 +32,7 @@ class AntiMethodTest extends TestCase
      */
     public function testDoesNotHaveCountMethod(string $class): void
     {
-        $this->assertFalse(\method_exists($class, 'count'));
+        $this->assertFalse(method_exists($class, 'count'));
     }
 
     /**
