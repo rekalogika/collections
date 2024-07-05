@@ -13,22 +13,18 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
-/**
- * @template TKey of array-key
- * @template-covariant T
- */
-trait ReadableRecollectionTrait
+trait CountTrait
 {
     /**
-     * @use PageableTrait<TKey,T>
+     * @return int<0,max>
      */
-    use PageableTrait;
+    abstract private function getCount(): int;
 
     /**
-     * @use ReadableCollectionTrait<TKey,T>
+     * @return int<0,max>
      */
-    use ReadableCollectionTrait;
-
-    use RefreshCountTrait;
-    use CountTrait;
+    public function count(): int
+    {
+        return $this->getCount();
+    }
 }

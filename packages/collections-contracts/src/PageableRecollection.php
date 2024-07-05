@@ -20,7 +20,7 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
  * @template-covariant T
  * @extends PageableInterface<TKey,T>
  */
-interface PageableRecollection extends PageableInterface, \Countable
+interface PageableRecollection extends PageableInterface
 {
     public function refreshCount(): void;
 }

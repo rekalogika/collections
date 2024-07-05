@@ -27,7 +27,7 @@
         </UnsupportedReferenceUsage>
         <UnsupportedPropertyReferenceUsage>
             <errorLevel type="suppress">
-                <file name="packages/collections-common/src/Trait/CountableTrait.php" />
+                <file name="packages/collections-common/src/Trait/RefreshCountTrait.php" />
             </errorLevel>
         </UnsupportedPropertyReferenceUsage>
         <InvalidArgument>

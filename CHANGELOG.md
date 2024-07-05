@@ -9,6 +9,7 @@
 * chore: cleanup unused code
 * refactor: rename `QueryCollection` to `QueryRecollection`
 * feat: default count limits
+* refactor: remove `Countable` from minimal classes
 
 ## 0.7.0
 

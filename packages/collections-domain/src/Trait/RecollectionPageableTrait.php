@@ -27,6 +27,11 @@ use Rekalogika\Rekapager\Keyset\KeysetPageable;
 trait RecollectionPageableTrait
 {
     /**
+     * @var int<0,max>
+     */
+    abstract private function getCount(): int;
+
+    /**
      * @var null|PageableInterface<TKey,T>
      */
     private ?PageableInterface $pageable = null;
@@ -48,7 +53,7 @@ trait RecollectionPageableTrait
 
         $count = function (): int|bool {
             try {
-                return $this->count();
+                return $this->getCount();
             } catch (GettingCountUnsupportedException) {
                 return false;
             }

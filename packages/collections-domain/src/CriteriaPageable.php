@@ -22,8 +22,8 @@ use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
-use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
+use Rekalogika\Domain\Collections\Common\Trait\RefreshCountTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
@@ -39,7 +39,7 @@ class CriteriaPageable implements PageableRecollection
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;
 
-    use CountableTrait;
+    use RefreshCountTrait;
 
     /**
      * @var null|\WeakMap<object,array<string,self<array-key,mixed>>>
