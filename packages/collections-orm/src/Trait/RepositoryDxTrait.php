@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectRepository;
-use Rekalogika\Collections\ORM\QueryCollection;
+use Rekalogika\Collections\ORM\QueryRecollection;
 use Rekalogika\Collections\ORM\QueryPageable;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
@@ -105,15 +105,15 @@ trait RepositoryDxTrait
     }
 
     /**
-     * @return QueryCollection<TKey,T>
+     * @return QueryRecollection<TKey,T>
      */
     final protected function createQueryCollection(
         QueryBuilder $queryBuilder,
         ?string $indexBy = null,
         ?CountStrategy $count = null,
-    ): QueryCollection {
-        /** @var QueryCollection<TKey,T> */
-        return new QueryCollection(
+    ): QueryRecollection {
+        /** @var QueryRecollection<TKey,T> */
+        return new QueryRecollection(
             queryBuilder: $queryBuilder,
             indexBy: $indexBy ?? $this->indexBy,
             count: $count,

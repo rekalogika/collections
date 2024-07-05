@@ -29,7 +29,7 @@ use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
  * @template T
  * @implements ReadableRecollection<TKey,T>
  */
-class QueryCollection implements ReadableRecollection
+class QueryRecollection implements ReadableRecollection
 {
     /** @use QueryBuilderPageableTrait<TKey,T> */
     use QueryBuilderPageableTrait;
@@ -112,8 +112,8 @@ class QueryCollection implements ReadableRecollection
         ?string $indexBy = null,
         ?CountStrategy $count = null,
     ): self {
-        /** @var QueryCollection<TKey,T> */
-        return new QueryCollection(
+        /** @var QueryRecollection<TKey,T> */
+        return new QueryRecollection(
             queryBuilder: $queryBuilder,
             indexBy: $indexBy ?? $this->indexBy,
             count: $count,
