@@ -77,7 +77,7 @@ class QueryPageable implements PageableRecollection
          * @var self<TKey,T>
          * @phpstan-ignore-next-line
          */
-        return new QueryCollection(
+        return new QueryRecollection(
             queryBuilder: $queryBuilder,
             indexBy: $indexBy ?? $this->indexBy,
             count: $count,

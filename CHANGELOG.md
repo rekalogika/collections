@@ -7,6 +7,7 @@
 * chore: rename `FindFetchTrait` to `FetchTrait`
 * chore: add `Override` attribute where applicable
 * chore: cleanup unused code
+* refactor: rename `QueryCollection` to `QueryRecollection`
 
 ## 0.7.0
 
