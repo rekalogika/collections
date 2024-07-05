@@ -28,7 +28,7 @@ trait ReadableCollectionTrait
      */
     use IteratorAggregateTrait;
 
-    use CountableTrait;
+    use RefreshCountTrait;
 
     /**
      * @use FetchTrait<TKey,T>

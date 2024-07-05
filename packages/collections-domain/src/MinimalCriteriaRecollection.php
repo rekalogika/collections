@@ -30,7 +30,7 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template T
  * @implements MinimalReadableRecollection<TKey,T>
  */
-class MinimalCriteriaRecollection implements MinimalReadableRecollection, \Countable
+class MinimalCriteriaRecollection implements MinimalReadableRecollection
 {
     /** @use RecollectionPageableTrait<TKey,T> */
     use RecollectionPageableTrait;

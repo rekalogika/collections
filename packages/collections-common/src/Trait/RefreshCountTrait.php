@@ -17,7 +17,7 @@ use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Exception\InvalidCountException;
 
-trait CountableTrait
+trait RefreshCountTrait
 {
     abstract private function getCountStrategy(): ?CountStrategy;
     abstract private function getUnderlyingCountable(): ?\Countable;
@@ -25,7 +25,7 @@ trait CountableTrait
     /**
      * @return int<0,max>
      */
-    final public function count(): int
+    private function getCount(): int
     {
         $countStrategy = $this->getCountStrategy() ?? Configuration::getDefaultCountStrategy();
 

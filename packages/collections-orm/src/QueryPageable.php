@@ -18,8 +18,8 @@ use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Trait\CountableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
+use Rekalogika\Domain\Collections\Common\Trait\RefreshCountTrait;
 
 /**
  * @template TKey of array-key
@@ -34,7 +34,7 @@ class QueryPageable implements PageableRecollection
     /** @use PageableTrait<TKey,T> */
     use PageableTrait;
 
-    use CountableTrait;
+    use RefreshCountTrait;
 
     /**
      * @param int<1,max> $itemsPerPage
