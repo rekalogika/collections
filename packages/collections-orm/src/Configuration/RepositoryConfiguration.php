@@ -15,6 +15,7 @@ namespace Rekalogika\Collections\ORM\Configuration;
 
 use Doctrine\Common\Collections\Order;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 
 /**
  * @template T of object
@@ -37,6 +38,7 @@ class RepositoryConfiguration extends MinimalRepositoryConfiguration
         ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
+        private readonly ?KeyTransformer $keyTransformer = null,
     ) {
         parent::__construct(
             class: $class,
@@ -61,5 +63,13 @@ class RepositoryConfiguration extends MinimalRepositoryConfiguration
     public function getHardLimit(): ?int
     {
         return $this->hardLimit;
+    }
+
+    /**
+     * @return null|KeyTransformer
+     */
+    public function getKeyTransformer(): ?KeyTransformer
+    {
+        return $this->keyTransformer;
     }
 }

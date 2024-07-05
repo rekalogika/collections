@@ -11,6 +11,7 @@
 * feat: default count limits
 * refactor: remove `Countable` from minimal classes
 * refactor: rename `RestrictedCountStrategy` to `DisabledCountStrategy`
+* feat: `$offset` parameter type widening for `ArrayAccess` methods
 
 ## 0.7.0
 
