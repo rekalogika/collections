@@ -41,4 +41,30 @@ interface Recollection extends ReadableRecollection, Collection
      */
     #[\Override]
     public function set(mixed $key, mixed $value): void;
+
+    /**
+     * @param mixed $offset
+     */
+    #[\Override]
+    public function offsetExists(mixed $offset): bool;
+
+    /**
+     * @param mixed $offset
+     * @return T|null
+     */
+    #[\Override]
+    public function offsetGet(mixed $offset): mixed;
+
+    /**
+     * @param mixed $offset
+     * @param T $value
+     */
+    #[\Override]
+    public function offsetSet(mixed $offset, mixed $value): void;
+
+    /**
+     * @param mixed $offset
+     */
+    #[\Override]
+    public function offsetUnset(mixed $offset): void;
 }

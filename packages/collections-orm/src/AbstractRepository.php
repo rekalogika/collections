@@ -23,6 +23,7 @@ use Rekalogika\Collections\ORM\Trait\RepositoryDxTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryTrait;
 use Rekalogika\Contracts\Collections\Repository;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 
 /**
@@ -81,6 +82,8 @@ abstract class AbstractRepository implements Repository
      */
     private readonly ?int $hardLimit;
 
+    private readonly ?KeyTransformer $keyTransformer;
+
     final public function __construct(
         private EntityManagerInterface $entityManager,
     ) {
@@ -92,6 +95,7 @@ abstract class AbstractRepository implements Repository
         $this->softLimit = $configuration->getSoftLimit();
         $this->hardLimit = $configuration->getHardLimit();
         $this->orderBy = $configuration->getOrderBy();
+        $this->keyTransformer = $configuration->getKeyTransformer();
 
         // set query builder
         $criteria = Criteria::create()->orderBy($configuration->getOrderBy());
