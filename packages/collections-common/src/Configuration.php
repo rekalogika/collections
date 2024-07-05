@@ -42,6 +42,18 @@ final class Configuration
     public static int $defaultHardLimit = 2000;
 
     /**
+     * @var int<1,max>
+     */
+    public static int $defaultCountSoftLimit = 5000;
+
+    /**
+     * @var int<1,max>
+     */
+    public static int $defaultCountHardLimit = 50000;
+
+    public static float $defaultCountDurationThreshold = 2;
+
+    /**
      * The default order by clause for the collection.
      *
      * @var non-empty-array<string,Order>
