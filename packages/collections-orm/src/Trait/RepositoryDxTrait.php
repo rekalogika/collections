@@ -58,7 +58,7 @@ trait RepositoryDxTrait
     /**
      * @return CriteriaRecollection<TKey,T>
      */
-    final protected function createCriteriaCollection(
+    final protected function createCriteriaRecollection(
         Criteria $criteria,
         ?string $instanceId = null,
         ?string $indexBy = null,
@@ -107,7 +107,7 @@ trait RepositoryDxTrait
     /**
      * @return QueryRecollection<TKey,T>
      */
-    final protected function createQueryCollection(
+    final protected function createQueryRecollection(
         QueryBuilder $queryBuilder,
         ?string $indexBy = null,
         ?CountStrategy $count = null,

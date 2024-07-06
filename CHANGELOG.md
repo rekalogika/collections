@@ -14,6 +14,7 @@
 * feat: `$offset` parameter type widening for `ArrayAccess` methods
 * fix(`DefaultKeyTransformer`): only convert `Stringable` to string for now.
 * feat: add `UuidKeyTransformer`
+* refactor(`Repository`): rename DX methods
 
 ## 0.7.0
 
