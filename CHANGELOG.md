@@ -13,6 +13,7 @@
 * refactor: rename `RestrictedCountStrategy` to `DisabledCountStrategy`
 * feat: `$offset` parameter type widening for `ArrayAccess` methods
 * fix(`DefaultKeyTransformer`): only convert `Stringable` to string for now.
+* feat: add `UuidKeyTransformer`
 
 ## 0.7.0
 
