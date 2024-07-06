@@ -14,14 +14,13 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common\KeyTransformer;
 
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
-use Symfony\Component\Uid\AbstractUid;
 
 class DefaultKeyTransformer implements KeyTransformer
 {
     public static function transformToKey(mixed $key): int|string
     {
-        if ($key instanceof AbstractUid) {
-            return $key->toBinary();
+        if ($key instanceof \Stringable) {
+            return (string) $key;
         } elseif (!\is_string($key) && !\is_int($key)) {
             throw new NotFoundException();
         }
