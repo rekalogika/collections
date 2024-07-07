@@ -4,6 +4,7 @@
 
 * feat: add `ArrayCollection` that does `matching()` calls against the private
   properties, not indirectly through the getters.
+* refactor: move count strategy resolver to `CountStrategyUtil`
 
 ## 0.8.0
 

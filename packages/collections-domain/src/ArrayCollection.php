@@ -58,7 +58,7 @@ class ArrayCollection extends DoctrineArrayCollection
         $length = $criteria->getMaxResults();
 
         if ($offset !== null && $offset > 0 || $length !== null && $length > 0) {
-            $filtered = array_slice($filtered, (int) $offset, $length, true);
+            $filtered = \array_slice($filtered, (int) $offset, $length, true);
         }
 
         return $this->createFrom($filtered);

@@ -54,7 +54,7 @@ class ArrayCollectionTest extends TestCase
             ->where(Criteria::expr()->isNull('country'));
 
         $statelessCitizens = $citizens->matching($statelessCriteria);
-        static::assertCount(1, $statelessCitizens); 
+        static::assertCount(1, $statelessCitizens);
     }
 
     public function testParentPrivateProperty(): void
@@ -70,6 +70,6 @@ class ArrayCollectionTest extends TestCase
             ->where(Criteria::expr()->eq('foo', 'bar'));
 
         $result = $citizens->matching($criteria);
-        static::assertCount(5, $result); 
+        static::assertCount(5, $result);
     }
 }

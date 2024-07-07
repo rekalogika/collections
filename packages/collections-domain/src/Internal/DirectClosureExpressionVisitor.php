@@ -14,22 +14,11 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Internal;
 
 use Doctrine\Common\Collections\Expr\Comparison;
-use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
-
-use Closure;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
+
 use Doctrine\Common\Collections\Expr\ExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Value;
-use RuntimeException;
-
-use function explode;
-use function in_array;
-use function is_array;
-use function is_scalar;
-use function iterator_to_array;
-use function str_contains;
-use function str_ends_with;
-use function str_starts_with;
+use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 
 /**
  * Copied from ClosureExpressionVisitor from doctrine/collections package.
@@ -47,14 +36,14 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
      */
     public static function getObjectFieldValue(object|array $object, string $field)
     {
-        if (str_contains($field, '.')) {
-            [$field, $subField] = explode('.', $field, 2);
+        if (\str_contains($field, '.')) {
+            [$field, $subField] = \explode('.', $field, 2);
             $object             = self::getObjectFieldValue($object, $field);
 
             return self::getObjectFieldValue($object, $subField);
         }
 
-        if (is_array($object)) {
+        if (\is_array($object)) {
             return $object[$field];
         }
 
@@ -75,9 +64,9 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
     /**
      * Helper for sorting arrays of objects based on multiple fields + orientations.
      *
-     * @return Closure
+     * @return \Closure
      */
-    public static function sortByField(string $name, int $orientation = 1, Closure|null $next = null)
+    public static function sortByField(string $name, int $orientation = 1, \Closure|null $next = null)
     {
         if (!$next) {
             $next = static fn (): int => 0;
@@ -114,26 +103,26 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
             Comparison::IN => static function ($object) use ($field, $value): bool {
                 $fieldValue = static::getObjectFieldValue($object, $field);
 
-                return in_array($fieldValue, $value, is_scalar($fieldValue));
+                return \in_array($fieldValue, $value, \is_scalar($fieldValue));
             },
             Comparison::NIN => static function ($object) use ($field, $value): bool {
                 $fieldValue = static::getObjectFieldValue($object, $field);
 
-                return !in_array($fieldValue, $value, is_scalar($fieldValue));
+                return !\in_array($fieldValue, $value, \is_scalar($fieldValue));
             },
-            Comparison::CONTAINS => static fn ($object): bool => str_contains((string) static::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::CONTAINS => static fn ($object): bool => \str_contains((string) static::getObjectFieldValue($object, $field), (string) $value),
             Comparison::MEMBER_OF => static function ($object) use ($field, $value): bool {
                 $fieldValues = static::getObjectFieldValue($object, $field);
 
-                if (!is_array($fieldValues)) {
-                    $fieldValues = iterator_to_array($fieldValues);
+                if (!\is_array($fieldValues)) {
+                    $fieldValues = \iterator_to_array($fieldValues);
                 }
 
-                return in_array($value, $fieldValues, true);
+                return \in_array($value, $fieldValues, true);
             },
-            Comparison::STARTS_WITH => static fn ($object): bool => str_starts_with((string) static::getObjectFieldValue($object, $field), (string) $value),
-            Comparison::ENDS_WITH => static fn ($object): bool => str_ends_with((string) static::getObjectFieldValue($object, $field), (string) $value),
-            default => throw new RuntimeException('Unknown comparison operator: ' . $comparison->getOperator()),
+            Comparison::STARTS_WITH => static fn ($object): bool => \str_starts_with((string) static::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::ENDS_WITH => static fn ($object): bool => \str_ends_with((string) static::getObjectFieldValue($object, $field), (string) $value),
+            default => throw new \RuntimeException('Unknown comparison operator: ' . $comparison->getOperator()),
         };
     }
 
@@ -160,12 +149,12 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
             CompositeExpression::TYPE_AND => $this->andExpressions($expressionList),
             CompositeExpression::TYPE_OR => $this->orExpressions($expressionList),
             CompositeExpression::TYPE_NOT => $this->notExpression($expressionList),
-            default => throw new RuntimeException('Unknown composite ' . $expr->getType()),
+            default => throw new \RuntimeException('Unknown composite ' . $expr->getType()),
         };
     }
 
     /** @param callable[] $expressions */
-    private function andExpressions(array $expressions): Closure
+    private function andExpressions(array $expressions): \Closure
     {
         return static function ($object) use ($expressions): bool {
             foreach ($expressions as $expression) {
@@ -179,7 +168,7 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
     }
 
     /** @param callable[] $expressions */
-    private function orExpressions(array $expressions): Closure
+    private function orExpressions(array $expressions): \Closure
     {
         return static function ($object) use ($expressions): bool {
             foreach ($expressions as $expression) {
@@ -193,7 +182,7 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
     }
 
     /** @param callable[] $expressions */
-    private function notExpression(array $expressions): Closure
+    private function notExpression(array $expressions): \Closure
     {
         return static fn ($object) => !$expressions[0]($object);
     }
