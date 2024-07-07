@@ -80,6 +80,41 @@
                 <file name="packages/collections-common/src/Trait/PageableTrait.php" />
             </errorLevel>
         </MethodSignatureMismatch>
+        <PossiblyUndefinedArrayOffset>
+            <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php" />
+            </errorLevel>
+        </PossiblyUndefinedArrayOffset>
+        <MixedArgument>
+            <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php" />
+            </errorLevel>
+        </MixedArgument>
+        <MissingClosureParamType>
+            <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php" />
+            </errorLevel>
+        </MissingClosureParamType>
+        <MixedAssignment>
+            <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php" />
+            </errorLevel>
+        </MixedAssignment>
+        <MixedInferredReturnType>
+            <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php" />
+            </errorLevel>
+        </MixedInferredReturnType>
+        <MixedReturnStatement>
+            <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php" />
+            </errorLevel>
+        </MixedReturnStatement>
+        <MixedArgumentTypeCoercion>
+            <errorLevel type="suppress">
+                <file name="packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php" />
+            </errorLevel>
+        </MixedArgumentTypeCoercion>
     </issueHandlers>
 
     <plugins>

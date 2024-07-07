@@ -11,23 +11,24 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Collections\Tests\UnitTests\Collections;
+namespace Rekalogika\Collections\Tests\UnitTests\Collections\Fixtures;
 
-class Citizen
+class Country
 {
+    private string $foo = 'bar';
+
     public function __construct(
-        private int $id,
         private string $name,
     ) {
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
     }
 
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function x(): string
+    {
+        return $this->foo;
     }
 }

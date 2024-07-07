@@ -15,6 +15,7 @@ namespace Rekalogika\Collections\Tests\UnitTests\Collections;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
+use Rekalogika\Collections\Tests\UnitTests\Collections\Fixtures\Citizen;
 use Rekalogika\Domain\Collections\Common\Count\DelegatedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\DisabledCountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\PrecountingStrategy;
