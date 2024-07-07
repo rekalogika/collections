@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.1
+
+* feat: add `ArrayCollection` that does `matching()` calls against the private
+  properties, not indirectly through the getters.
+
 ## 0.8.0
 
 * feat: `$key` parameter type widening, to accommodate object primary keys, like
