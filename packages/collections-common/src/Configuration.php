@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common;
 
 use Doctrine\Common\Collections\Order;
-use Rekalogika\Domain\Collections\Common\Count\ConditionalDelegatedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\DefaultKeyTransformer;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
@@ -68,24 +67,5 @@ final class Configuration
     /**
      * @var null|\Closure(): CountStrategy
      */
-    private static ?\Closure $defaultCountStrategy = null;
-
-    /**
-     * @param \Closure(): CountStrategy $defaultCountStrategy
-     */
-    public static function setDefaultCountStrategy(\Closure $defaultCountStrategy): void
-    {
-        self::$defaultCountStrategy = $defaultCountStrategy;
-    }
-
-    public static function getDefaultCountStrategy(): CountStrategy
-    {
-        if (self::$defaultCountStrategy === null) {
-            $countStrategy = fn (): CountStrategy => new ConditionalDelegatedCountStrategy();
-        } else {
-            $countStrategy = self::$defaultCountStrategy;
-        }
-
-        return $countStrategy();
-    }
+    public static ?\Closure $defaultCountStrategy = null;
 }
