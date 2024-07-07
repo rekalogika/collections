@@ -18,6 +18,7 @@ use Doctrine\Common\Collections\Criteria;
 use PHPUnit\Framework\TestCase;
 use Rekalogika\Collections\Tests\UnitTests\Collections\Fixtures\Citizen;
 use Rekalogika\Collections\Tests\UnitTests\Collections\Fixtures\Country;
+use Rekalogika\Collections\Tests\UnitTests\Collections\Fixtures\NullCountry;
 use Rekalogika\Domain\Collections\ArrayCollection;
 
 class ArrayCollectionTest extends TestCase
@@ -54,5 +55,21 @@ class ArrayCollectionTest extends TestCase
 
         $statelessCitizens = $citizens->matching($statelessCriteria);
         static::assertCount(1, $statelessCitizens); 
+    }
+
+    public function testParentPrivateProperty(): void
+    {
+        $citizens = new ArrayCollection([
+            new Country('Khemed'),
+            new Country('San Theodoros'),
+            new Country('Borduria'),
+            new Country('Syldavia'),
+            new NullCountry()
+        ]);
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('foo', 'bar'));
+
+        $result = $citizens->matching($criteria);
+        static::assertCount(5, $result); 
     }
 }

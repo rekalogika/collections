@@ -15,6 +15,8 @@ namespace Rekalogika\Collections\Tests\UnitTests\Collections\Fixtures;
 
 class Country
 {
+    private string $foo = 'bar';
+
     public function __construct(
         private string $name,
     ) {
@@ -23,5 +25,10 @@ class Country
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function x(): string
+    {
+        return $this->foo;
     }
 }

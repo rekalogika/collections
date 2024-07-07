@@ -60,12 +60,14 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
 
         $reflection = new \ReflectionObject($object);
 
-        if ($reflection->hasProperty($field)) {
-            $property = $reflection->getProperty($field);
-            $property->setAccessible(true);
+        do {
+            if ($reflection->hasProperty($field)) {
+                $property = $reflection->getProperty($field);
+                $property->setAccessible(true);
 
-            return $property->getValue($object);
-        }
+                return $property->getValue($object);
+            }
+        } while ($reflection = $reflection->getParentClass());
 
         throw new UnexpectedValueException('Unknown field ' . $field);
     }
