@@ -64,9 +64,9 @@ abstract class AbstractMinimalRepository implements MinimalRepository
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly string $class,
+        array|string|null $orderBy = null,
         private int $itemsPerPage = 50,
         private readonly ?CountStrategy $count = null,
-        array|string|null $orderBy = null,
     ) {
         // set index by
         $identifiers = $this->getEntityManager()

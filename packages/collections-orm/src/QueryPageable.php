@@ -44,8 +44,8 @@ class QueryPageable implements PageableRecollection
      */
     final public function __construct(
         private QueryBuilder $queryBuilder,
-        private readonly int $itemsPerPage = 50,
         ?string $indexBy = null,
+        private readonly int $itemsPerPage = 50,
         private readonly ?CountStrategy $count = null,
     ) {
         $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;

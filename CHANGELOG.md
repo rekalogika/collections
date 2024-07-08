@@ -11,6 +11,7 @@
 * feat: repositories now automatically detect indexBy
 * refactor: `CriteriaPageable`, `CriteriaRecollection`, `MinimalCriteriaRecollection`
   now respect default order by
+* refactor: consistent argument ordering
 
 ## 0.8.0
 
