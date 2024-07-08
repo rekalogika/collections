@@ -28,7 +28,6 @@ class DefaultCountryMinimalRepository extends AbstractMinimalRepository implemen
         parent::__construct(
             entityManager: $entityManager,
             class: Country::class,
-            indexBy: 'id',
         );
     }
 }

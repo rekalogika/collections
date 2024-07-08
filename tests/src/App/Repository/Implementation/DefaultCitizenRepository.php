@@ -28,7 +28,6 @@ class DefaultCitizenRepository extends AbstractRepository implements CitizenRepo
         parent::__construct(
             entityManager: $entityManager,
             class: Citizen::class,
-            indexBy: 'id',
         );
     }
 }

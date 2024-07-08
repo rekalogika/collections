@@ -8,6 +8,7 @@
 * refactor: use standard constructor for repositories, scrap the configuration
 * refactor: consolidate util classes
 * feat: default indexBy
+* feat: repositories now automatically detect indexBy
 
 ## 0.8.0
 
