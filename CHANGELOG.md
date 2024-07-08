@@ -9,6 +9,8 @@
 * refactor: consolidate util classes
 * feat: default indexBy
 * feat: repositories now automatically detect indexBy
+* refactor: `CriteriaPageable`, `CriteriaRecollection`, `MinimalCriteriaRecollection`
+  now respect default order by
 
 ## 0.8.0
 
