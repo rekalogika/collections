@@ -99,7 +99,7 @@ class CriteriaRecollection implements ReadableRecollection
         $criteria = clone ($criteria ?? Criteria::create());
 
         if (\count($criteria->orderings()) === 0) {
-            $criteria->orderBy(['id' => Order::Descending]);
+            $criteria->orderBy(Configuration::$defaultOrderBy);
         }
 
         $this->criteria = $criteria;

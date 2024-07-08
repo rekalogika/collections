@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
@@ -82,7 +81,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
         $criteria = clone ($criteria ?? Criteria::create());
 
         if (\count($criteria->orderings()) === 0) {
-            $criteria->orderBy(['id' => Order::Descending]);
+            $criteria->orderBy(Configuration::$defaultOrderBy);
         }
 
         $this->criteria = $criteria;
