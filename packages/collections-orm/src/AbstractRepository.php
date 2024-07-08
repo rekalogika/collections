@@ -21,6 +21,7 @@ use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryDxTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryTrait;
 use Rekalogika\Contracts\Collections\Repository;
+use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
@@ -60,6 +61,8 @@ abstract class AbstractRepository implements Repository
      */
     private readonly array $orderBy;
 
+    private readonly ?string $indexBy;
+
     /**
      * @param class-string<T> $class
      * @param int<1,max> $itemsPerPage
@@ -70,7 +73,7 @@ abstract class AbstractRepository implements Repository
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly string $class,
-        private readonly string $indexBy = 'id',
+        ?string $indexBy = null,
         array|string|null $orderBy = null,
         private int $itemsPerPage = 50,
         private readonly ?CountStrategy $count = null,
@@ -78,13 +81,21 @@ abstract class AbstractRepository implements Repository
         private readonly ?int $hardLimit = null,
         private readonly ?KeyTransformer $keyTransformer = null,
     ) {
+        $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
         $this->orderBy = ParameterUtil::normalizeOrderBy($orderBy);
 
         // set query builder
         $criteria = Criteria::create()->orderBy($this->orderBy);
-        $this->queryBuilder = $this
-            ->createQueryBuilder('e', 'e.' . $indexBy)
-            ->addCriteria($criteria);
+
+        if ($this->indexBy !== null) {
+            $this->queryBuilder = $this
+                ->createQueryBuilder('e', 'e.' . $this->indexBy)
+                ->addCriteria($criteria);
+        } else {
+            $this->queryBuilder = $this
+                ->createQueryBuilder('e')
+                ->addCriteria($criteria);
+        }
     }
 
     private function getCountStrategy(): ?CountStrategy

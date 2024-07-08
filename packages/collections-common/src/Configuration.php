@@ -68,4 +68,6 @@ final class Configuration
      * @var null|\Closure(): CountStrategy
      */
     public static ?\Closure $defaultCountStrategy = null;
+
+    public static ?string $defaultIndexBy = null;
 }

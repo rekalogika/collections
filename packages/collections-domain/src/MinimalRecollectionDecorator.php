@@ -56,6 +56,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
     private readonly array $orderBy;
 
     private readonly Criteria $criteria;
+    private readonly ?string $indexBy;
 
     /**
      * @param Collection<TKey,T> $collection
@@ -65,11 +66,13 @@ class MinimalRecollectionDecorator implements MinimalRecollection
     final private function __construct(
         Collection $collection,
         array|string|null $orderBy = null,
-        private readonly ?string $indexBy = null,
+        ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
         private readonly ?CountStrategy $count = null,
         private readonly ?KeyTransformer $keyTransformer = null,
     ) {
+        $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
+
         // handle collection
 
         if (!$collection instanceof Selectable) {

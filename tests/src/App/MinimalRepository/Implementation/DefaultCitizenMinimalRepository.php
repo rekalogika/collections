@@ -28,6 +28,7 @@ class DefaultCitizenMinimalRepository extends AbstractMinimalRepository implemen
         parent::__construct(
             entityManager: $entityManager,
             class: Citizen::class,
+            indexBy: 'id',
         );
     }
 }

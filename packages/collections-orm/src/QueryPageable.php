@@ -17,6 +17,7 @@ use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\RefreshCountTrait;
@@ -36,15 +37,18 @@ class QueryPageable implements PageableRecollection
 
     use RefreshCountTrait;
 
+    private readonly ?string $indexBy;
+
     /**
      * @param int<1,max> $itemsPerPage
      */
     final public function __construct(
         private QueryBuilder $queryBuilder,
         private readonly int $itemsPerPage = 50,
-        private readonly ?string $indexBy = null,
+        ?string $indexBy = null,
         private readonly ?CountStrategy $count = null,
     ) {
+        $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
     }
 
     /**

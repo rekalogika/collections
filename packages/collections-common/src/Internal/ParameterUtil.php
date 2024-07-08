@@ -31,13 +31,10 @@ final class ParameterUtil
 
     public static function getDefaultCountStrategy(): CountStrategy
     {
-        if (Configuration::$defaultCountStrategy === null) {
-            $countStrategy = fn (): CountStrategy => new ConditionalDelegatedCountStrategy();
-        } else {
-            $countStrategy = Configuration::$defaultCountStrategy;
-        }
+        $closure = Configuration::$defaultCountStrategy
+            ?? fn (): CountStrategy => new ConditionalDelegatedCountStrategy();
 
-        return $countStrategy();
+        return $closure();
     }
 
     public static function transformInputToKey(

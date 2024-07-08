@@ -19,6 +19,7 @@ use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
+use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
@@ -65,6 +66,7 @@ class CriteriaRecollection implements ReadableRecollection
     private readonly Selectable $collection;
 
     private readonly Criteria $criteria;
+    private readonly ?string $indexBy;
 
     /**
      * @param ReadableCollection<TKey,T>|Selectable<TKey,T> $collection
@@ -75,13 +77,15 @@ class CriteriaRecollection implements ReadableRecollection
     final private function __construct(
         ReadableCollection|Selectable $collection,
         ?Criteria $criteria = null,
-        private readonly ?string $indexBy = null,
+        ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
         private readonly ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
         private readonly ?KeyTransformer $keyTransformer = null,
     ) {
+        $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
+
         // save collection
 
         if (!$collection instanceof Selectable) {
