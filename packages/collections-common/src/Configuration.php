@@ -70,4 +70,9 @@ final class Configuration
     public static ?\Closure $defaultCountStrategy = null;
 
     public static ?string $defaultIndexBy = null;
+
+    /**
+     * @var int<1,max>
+     */
+    public static int $defaultItemsPerPage = 50;
 }

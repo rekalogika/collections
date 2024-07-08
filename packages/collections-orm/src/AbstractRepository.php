@@ -23,6 +23,7 @@ use Rekalogika\Collections\ORM\Trait\RepositoryDxTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryTrait;
 use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Collections\Repository;
+use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
@@ -66,6 +67,11 @@ abstract class AbstractRepository implements Repository
     private ?EntityManagerInterface $entityManager = null;
 
     /**
+     * @var int<1,max>
+     */
+    private int $itemsPerPage;
+
+    /**
      * @param class-string<T> $class
      * @param int<1,max> $itemsPerPage
      * @param int<1,max> $softLimit
@@ -76,12 +82,14 @@ abstract class AbstractRepository implements Repository
         private readonly ManagerRegistry $managerRegistry,
         private readonly string $class,
         array|string|null $orderBy = null,
-        private int $itemsPerPage = 50,
+        ?int $itemsPerPage = null,
         private readonly ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
         private readonly ?KeyTransformer $keyTransformer = null,
     ) {
+        $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
+
         // set index by
         $identifiers = $this->getEntityManager()
             ->getClassMetadata($this->getClass())
@@ -141,6 +149,7 @@ abstract class AbstractRepository implements Repository
     {
         $instance = clone $this;
         $instance->itemsPerPage = $itemsPerPage;
+        $instance->pageable = null;
 
         return $instance;
     }
