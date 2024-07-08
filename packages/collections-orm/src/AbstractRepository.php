@@ -20,8 +20,8 @@ use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryDxTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryTrait;
+use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Collections\Repository;
-use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
@@ -73,7 +73,6 @@ abstract class AbstractRepository implements Repository
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly string $class,
-        ?string $indexBy = null,
         array|string|null $orderBy = null,
         private int $itemsPerPage = 50,
         private readonly ?CountStrategy $count = null,
@@ -81,21 +80,26 @@ abstract class AbstractRepository implements Repository
         private readonly ?int $hardLimit = null,
         private readonly ?KeyTransformer $keyTransformer = null,
     ) {
-        $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
+        // set index by
+        $identifiers = $this->getEntityManager()
+            ->getClassMetadata($this->getClass())
+            ->getIdentifier();
+
+        if (\count($identifiers) !== 1) {
+            throw new InvalidArgumentException('Entity with composite primary key is not supported');
+        }
+
+        $this->indexBy = $identifiers[0];
+
+        // set orderBy
         $this->orderBy = ParameterUtil::normalizeOrderBy($orderBy);
 
         // set query builder
         $criteria = Criteria::create()->orderBy($this->orderBy);
 
-        if ($this->indexBy !== null) {
-            $this->queryBuilder = $this
-                ->createQueryBuilder('e', 'e.' . $this->indexBy)
-                ->addCriteria($criteria);
-        } else {
-            $this->queryBuilder = $this
-                ->createQueryBuilder('e')
-                ->addCriteria($criteria);
-        }
+        $this->queryBuilder = $this
+            ->createQueryBuilder('e', 'e.' . $this->indexBy)
+            ->addCriteria($criteria);
     }
 
     private function getCountStrategy(): ?CountStrategy
