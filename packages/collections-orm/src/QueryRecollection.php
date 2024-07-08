@@ -50,20 +50,26 @@ class QueryRecollection implements ReadableRecollection
     private readonly ?string $indexBy;
 
     /**
+     * @var int<1,max>
+     */
+    private int $itemsPerPage;
+
+    /**
      * @param int<1,max> $itemsPerPage
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      */
-    final public function __construct(
+    public function __construct(
         private QueryBuilder $queryBuilder,
         ?string $indexBy = null,
-        private readonly int $itemsPerPage = 50,
+        ?int $itemsPerPage = null,
         private readonly ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
         private readonly ?KeyTransformer $keyTransformer = null,
     ) {
         $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
+        $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
     }
 
 
@@ -93,14 +99,11 @@ class QueryRecollection implements ReadableRecollection
      */
     public function withItemsPerPage(int $itemsPerPage): static
     {
-        /** @psalm-suppress UnsafeGenericInstantiation */
-        return new static(
-            queryBuilder: $this->queryBuilder,
-            itemsPerPage: $itemsPerPage,
-            count: $this->count,
-            softLimit: $this->softLimit,
-            hardLimit: $this->hardLimit,
-        );
+        $instance = clone $this;
+        $instance->itemsPerPage = $itemsPerPage;
+        $instance->pageable = null;
+
+        return $instance;
     }
 
     final protected function getQueryBuilder(): QueryBuilder

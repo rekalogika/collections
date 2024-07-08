@@ -13,6 +13,7 @@
   now respect default order by
 * refactor: consistent argument ordering
 * feat: repository now accept `ManagerRegistry` instead of `EntityManagerInterface`
+* feat: default items per page
 
 ## 0.8.0
 

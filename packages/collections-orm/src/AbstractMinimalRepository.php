@@ -23,6 +23,7 @@ use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryDxTrait;
 use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Collections\MinimalRepository;
+use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 
@@ -59,6 +60,11 @@ abstract class AbstractMinimalRepository implements MinimalRepository
     private ?EntityManagerInterface $entityManager = null;
 
     /**
+     * @var int<1,max>
+     */
+    private int $itemsPerPage;
+
+    /**
      * @param class-string<T> $class
      * @param int<1,max> $itemsPerPage
      * @param null|non-empty-array<string,Order>|string $orderBy
@@ -67,9 +73,11 @@ abstract class AbstractMinimalRepository implements MinimalRepository
         private readonly ManagerRegistry $managerRegistry,
         private readonly string $class,
         array|string|null $orderBy = null,
-        private int $itemsPerPage = 50,
+        ?int $itemsPerPage = null,
         private readonly ?CountStrategy $count = null,
     ) {
+        $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
+
         // set index by
         $identifiers = $this->getEntityManager()
             ->getClassMetadata($this->getClass())
@@ -131,6 +139,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
     {
         $instance = clone $this;
         $instance->itemsPerPage = $itemsPerPage;
+        $instance->pageable = null;
 
         return $instance;
     }

@@ -79,6 +79,11 @@ class RecollectionDecorator implements Recollection
     private readonly Criteria $criteria;
 
     /**
+     * @var int<1,max>
+     */
+    private readonly int $itemsPerPage;
+
+    /**
      * @param Collection<TKey,T> $collection
      * @param null|non-empty-array<string,Order>|string $orderBy
      * @param int<1,max> $itemsPerPage
@@ -89,13 +94,14 @@ class RecollectionDecorator implements Recollection
         Collection $collection,
         array|string|null $orderBy = null,
         ?string $indexBy = null,
-        private readonly int $itemsPerPage = 50,
+        ?int $itemsPerPage = null,
         private readonly ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
         private readonly ?KeyTransformer $keyTransformer = null,
     ) {
         $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
+        $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
 
         // handle collection
 

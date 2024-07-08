@@ -40,15 +40,21 @@ class QueryPageable implements PageableRecollection
     private readonly ?string $indexBy;
 
     /**
+     * @var int<1,max>
+     */
+    private int $itemsPerPage;
+
+    /**
      * @param int<1,max> $itemsPerPage
      */
-    final public function __construct(
+    public function __construct(
         private QueryBuilder $queryBuilder,
         ?string $indexBy = null,
-        private readonly int $itemsPerPage = 50,
+        ?int $itemsPerPage = null,
         private readonly ?CountStrategy $count = null,
     ) {
         $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
+        $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
     }
 
     /**
@@ -56,12 +62,11 @@ class QueryPageable implements PageableRecollection
      */
     public function withItemsPerPage(int $itemsPerPage): static
     {
-        /** @psalm-suppress UnsafeGenericInstantiation */
-        return new static(
-            queryBuilder: $this->queryBuilder,
-            itemsPerPage: $itemsPerPage,
-            count: $this->count,
-        );
+        $instance = clone $this;
+        $instance->itemsPerPage = $itemsPerPage;
+        $instance->pageable = null;
+
+        return $instance;
     }
 
     final protected function getQueryBuilder(): QueryBuilder

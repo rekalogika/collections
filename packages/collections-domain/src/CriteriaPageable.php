@@ -55,6 +55,11 @@ class CriteriaPageable implements PageableRecollection
     private readonly ?string $indexBy;
 
     /**
+     * @var int<1,max>
+     */
+    private readonly int $itemsPerPage;
+
+    /**
      * @param ReadableCollection<TKey,T>|Selectable<TKey,T> $collection
      * @param int<1,max> $itemsPerPage
      */
@@ -62,10 +67,11 @@ class CriteriaPageable implements PageableRecollection
         ReadableCollection|Selectable $collection,
         ?Criteria $criteria = null,
         ?string $indexBy = null,
-        private readonly int $itemsPerPage = 50,
+        ?int $itemsPerPage = null,
         private readonly ?CountStrategy $count = null,
     ) {
         $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
+        $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
 
         // save collection
 
