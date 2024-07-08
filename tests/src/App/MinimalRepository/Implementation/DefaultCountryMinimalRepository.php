@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\App\MinimalRepository\Implementation;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Rekalogika\Collections\ORM\AbstractMinimalRepository;
 use Rekalogika\Collections\Tests\App\Entity\Country;
 use Rekalogika\Collections\Tests\App\MinimalRepository\CountryMinimalRepository;
@@ -23,10 +23,10 @@ use Rekalogika\Collections\Tests\App\MinimalRepository\CountryMinimalRepository;
  */
 class DefaultCountryMinimalRepository extends AbstractMinimalRepository implements CountryMinimalRepository
 {
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $managerRegistry)
     {
         parent::__construct(
-            entityManager: $entityManager,
+            managerRegistry: $managerRegistry,
             class: Country::class,
         );
     }

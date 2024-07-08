@@ -20,6 +20,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectRepository;
 use Rekalogika\Collections\ORM\QueryPageable;
 use Rekalogika\Collections\ORM\QueryRecollection;
+use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\CriteriaPageable;
@@ -35,7 +36,21 @@ trait RepositoryDxTrait
 {
     final protected function getEntityManager(): EntityManagerInterface
     {
-        return $this->entityManager;
+        if ($this->entityManager !== null) {
+            return $this->entityManager;
+        }
+
+        $entityManager = $this->managerRegistry->getManagerForClass($this->getClass());
+
+        if (null === $entityManager) {
+            throw new InvalidArgumentException(sprintf('Entity manager not found for class "%s"', $this->getClass()));
+        }
+
+        if (!$entityManager instanceof EntityManagerInterface) {
+            throw new InvalidArgumentException(sprintf('Manager for class "%s" is not an instance of EntityManagerInterface', $this->getClass()));
+        }
+
+        return $this->entityManager = $entityManager;
     }
 
     final protected function createQueryBuilder(

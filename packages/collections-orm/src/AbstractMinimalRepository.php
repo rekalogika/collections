@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 use Rekalogika\Collections\ORM\Trait\MinimalRepositoryTrait;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryDxTrait;
@@ -55,6 +56,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
     private readonly array $orderBy;
 
     private readonly ?string $indexBy;
+    private ?EntityManagerInterface $entityManager = null;
 
     /**
      * @param class-string<T> $class
@@ -62,7 +64,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
      * @param null|non-empty-array<string,Order>|string $orderBy
      */
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+        private readonly ManagerRegistry $managerRegistry,
         private readonly string $class,
         array|string|null $orderBy = null,
         private int $itemsPerPage = 50,
