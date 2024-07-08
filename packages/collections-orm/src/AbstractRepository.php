@@ -17,12 +17,12 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Rekalogika\Collections\ORM\Configuration\RepositoryConfiguration;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryDxTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryTrait;
 use Rekalogika\Contracts\Collections\Repository;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 
@@ -53,14 +53,7 @@ abstract class AbstractRepository implements Repository
      */
     use RepositoryDxTrait;
 
-    /**
-     * @var int<1,max>
-     */
-    private int $itemsPerPage;
-
-    private readonly ?CountStrategy $count;
     private readonly QueryBuilder $queryBuilder;
-    private readonly ?string $indexBy;
 
     /**
      * @var non-empty-array<string,Order>
@@ -68,46 +61,31 @@ abstract class AbstractRepository implements Repository
     private readonly array $orderBy;
 
     /**
-     * @var class-string<T>
+     * @param class-string<T> $class
+     * @param int<1,max> $itemsPerPage
+     * @param int<1,max> $softLimit
+     * @param int<1,max> $hardLimit
+     * @param null|non-empty-array<string,Order>|string $orderBy
      */
-    private readonly string $class;
-
-    /**
-     * @var null|int<1,max>
-     */
-    private readonly ?int $softLimit;
-
-    /**
-     * @var null|int<1,max>
-     */
-    private readonly ?int $hardLimit;
-
-    private readonly ?KeyTransformer $keyTransformer;
-
-    final public function __construct(
-        private EntityManagerInterface $entityManager,
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly string $class,
+        private readonly string $indexBy = 'id',
+        array|string|null $orderBy = null,
+        private int $itemsPerPage = 50,
+        private readonly ?CountStrategy $count = null,
+        private readonly ?int $softLimit = null,
+        private readonly ?int $hardLimit = null,
+        private readonly ?KeyTransformer $keyTransformer = null,
     ) {
-        $configuration = $this->configure();
-        $this->class = $configuration->getClass();
-        $this->itemsPerPage = $configuration->getItemsPerPage();
-        $this->count = $configuration->getCountStrategy();
-        $this->indexBy = $configuration->getIndexBy();
-        $this->softLimit = $configuration->getSoftLimit();
-        $this->hardLimit = $configuration->getHardLimit();
-        $this->orderBy = $configuration->getOrderBy();
-        $this->keyTransformer = $configuration->getKeyTransformer();
+        $this->orderBy = OrderByUtil::normalizeOrderBy($orderBy);
 
         // set query builder
-        $criteria = Criteria::create()->orderBy($configuration->getOrderBy());
+        $criteria = Criteria::create()->orderBy($this->orderBy);
         $this->queryBuilder = $this
-            ->createQueryBuilder('e', 'e.' . $configuration->getIndexBy())
+            ->createQueryBuilder('e', 'e.' . $indexBy)
             ->addCriteria($criteria);
     }
-
-    /**
-     * @return RepositoryConfiguration<T>
-     */
-    abstract protected function configure(): RepositoryConfiguration;
 
     private function getCountStrategy(): ?CountStrategy
     {
@@ -144,8 +122,7 @@ abstract class AbstractRepository implements Repository
      */
     public function withItemsPerPage(int $itemsPerPage): static
     {
-        /** @psalm-suppress UnsafeGenericInstantiation */
-        $instance = new static(entityManager: $this->entityManager);
+        $instance = clone $this;
         $instance->itemsPerPage = $itemsPerPage;
 
         return $instance;
