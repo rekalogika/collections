@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\App\Repository\Implementation;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Rekalogika\Collections\ORM\AbstractRepository;
 use Rekalogika\Collections\Tests\App\Entity\Country;
 use Rekalogika\Collections\Tests\App\Repository\CountryRepository;
@@ -23,10 +23,10 @@ use Rekalogika\Collections\Tests\App\Repository\CountryRepository;
  */
 class DefaultCountryRepository extends AbstractRepository implements CountryRepository
 {
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $managerRegistry)
     {
         parent::__construct(
-            entityManager: $entityManager,
+            managerRegistry: $managerRegistry,
             class: Country::class,
         );
     }

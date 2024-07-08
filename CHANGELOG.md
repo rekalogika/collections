@@ -12,6 +12,7 @@
 * refactor: `CriteriaPageable`, `CriteriaRecollection`, `MinimalCriteriaRecollection`
   now respect default order by
 * refactor: consistent argument ordering
+* feat: repository now accept `ManagerRegistry` instead of `EntityManagerInterface`
 
 ## 0.8.0
 
