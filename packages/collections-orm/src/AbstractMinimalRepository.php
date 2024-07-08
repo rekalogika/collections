@@ -21,6 +21,7 @@ use Rekalogika\Collections\ORM\Trait\MinimalRepositoryTrait;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryDxTrait;
 use Rekalogika\Contracts\Collections\MinimalRepository;
+use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 
@@ -53,6 +54,8 @@ abstract class AbstractMinimalRepository implements MinimalRepository
      */
     private readonly array $orderBy;
 
+    private readonly ?string $indexBy;
+
     /**
      * @param class-string<T> $class
      * @param int<1,max> $itemsPerPage
@@ -63,16 +66,24 @@ abstract class AbstractMinimalRepository implements MinimalRepository
         private readonly string $class,
         private int $itemsPerPage = 50,
         private readonly ?CountStrategy $count = null,
-        private readonly string $indexBy = 'id',
+        ?string $indexBy = null,
         array|string|null $orderBy = null,
     ) {
+        $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
         $this->orderBy = ParameterUtil::normalizeOrderBy($orderBy);
 
         // set query builder
         $criteria = Criteria::create()->orderBy($this->orderBy);
-        $this->queryBuilder = $this
-            ->createQueryBuilder('e', 'e.' . $indexBy)
-            ->addCriteria($criteria);
+
+        if ($this->indexBy !== null) {
+            $this->queryBuilder = $this
+                ->createQueryBuilder('e', 'e.' . $this->indexBy)
+                ->addCriteria($criteria);
+        } else {
+            $this->queryBuilder = $this
+                ->createQueryBuilder('e')
+                ->addCriteria($criteria);
+        }
     }
 
     /**

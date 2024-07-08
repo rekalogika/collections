@@ -17,6 +17,7 @@ use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
@@ -46,6 +47,8 @@ class QueryRecollection implements ReadableRecollection
     /** @use ReadableRecollectionTrait<TKey,T> */
     use ReadableRecollectionTrait;
 
+    private readonly ?string $indexBy;
+
     /**
      * @param int<1,max> $itemsPerPage
      * @param null|int<1,max> $softLimit
@@ -54,12 +57,13 @@ class QueryRecollection implements ReadableRecollection
     final public function __construct(
         private QueryBuilder $queryBuilder,
         private readonly int $itemsPerPage = 50,
-        private readonly ?string $indexBy = null,
+        ?string $indexBy = null,
         private readonly ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
         private readonly ?KeyTransformer $keyTransformer = null,
     ) {
+        $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
     }
 
 

@@ -76,6 +76,7 @@ class RecollectionDecorator implements Recollection
     private readonly array $orderBy;
 
     private readonly Criteria $criteria;
+    private readonly ?string $indexBy;
 
     /**
      * @param Collection<TKey,T> $collection
@@ -87,13 +88,15 @@ class RecollectionDecorator implements Recollection
     final private function __construct(
         Collection $collection,
         array|string|null $orderBy = null,
-        private readonly ?string $indexBy = null,
+        ?string $indexBy = null,
         private readonly int $itemsPerPage = 50,
         private readonly ?CountStrategy $count = null,
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
         private readonly ?KeyTransformer $keyTransformer = null,
     ) {
+        $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
+
         // handle collection
 
         if (!$collection instanceof Selectable) {

@@ -28,6 +28,7 @@ class DefaultCountryRepository extends AbstractRepository implements CountryRepo
         parent::__construct(
             entityManager: $entityManager,
             class: Country::class,
+            indexBy: 'id',
         );
     }
 }
