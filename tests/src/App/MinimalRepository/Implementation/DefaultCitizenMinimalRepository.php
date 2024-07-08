@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\App\MinimalRepository\Implementation;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Rekalogika\Collections\ORM\AbstractMinimalRepository;
-use Rekalogika\Collections\ORM\Configuration\MinimalRepositoryConfiguration;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Collections\Tests\App\MinimalRepository\CitizenMinimalRepository;
 
@@ -23,9 +23,10 @@ use Rekalogika\Collections\Tests\App\MinimalRepository\CitizenMinimalRepository;
  */
 class DefaultCitizenMinimalRepository extends AbstractMinimalRepository implements CitizenMinimalRepository
 {
-    protected function configure(): MinimalRepositoryConfiguration
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        return new MinimalRepositoryConfiguration(
+        parent::__construct(
+            entityManager: $entityManager,
             class: Citizen::class,
         );
     }

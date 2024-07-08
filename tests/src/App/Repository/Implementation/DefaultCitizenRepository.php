@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\App\Repository\Implementation;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Rekalogika\Collections\ORM\AbstractRepository;
-use Rekalogika\Collections\ORM\Configuration\RepositoryConfiguration;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Collections\Tests\App\Repository\CitizenRepository;
 
@@ -23,9 +23,10 @@ use Rekalogika\Collections\Tests\App\Repository\CitizenRepository;
  */
 class DefaultCitizenRepository extends AbstractRepository implements CitizenRepository
 {
-    protected function configure(): RepositoryConfiguration
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        return new RepositoryConfiguration(
+        parent::__construct(
+            entityManager: $entityManager,
             class: Citizen::class,
         );
     }

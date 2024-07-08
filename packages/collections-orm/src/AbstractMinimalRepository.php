@@ -17,12 +17,12 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Rekalogika\Collections\ORM\Configuration\MinimalRepositoryConfiguration;
 use Rekalogika\Collections\ORM\Trait\MinimalRepositoryTrait;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryDxTrait;
 use Rekalogika\Contracts\Collections\MinimalRepository;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
 
 /**
  * @template TKey of array-key
@@ -46,14 +46,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
      */
     use RepositoryDxTrait;
 
-    /**
-     * @var int<1,max>
-     */
-    private int $itemsPerPage;
-
-    private readonly ?CountStrategy $count;
     private readonly QueryBuilder $queryBuilder;
-    private readonly ?string $indexBy;
 
     /**
      * @var non-empty-array<string,Order>
@@ -61,31 +54,26 @@ abstract class AbstractMinimalRepository implements MinimalRepository
     private readonly array $orderBy;
 
     /**
-     * @var class-string<T>
+     * @param class-string<T> $class
+     * @param int<1,max> $itemsPerPage
+     * @param null|non-empty-array<string,Order>|string $orderBy
      */
-    private readonly string $class;
-
-    final public function __construct(
-        private EntityManagerInterface $entityManager,
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly string $class,
+        private int $itemsPerPage = 50,
+        private readonly ?CountStrategy $count = null,
+        private readonly string $indexBy = 'id',
+        array|string|null $orderBy = null,
     ) {
-        $configuration = $this->configure();
-        $this->class = $configuration->getClass();
-        $this->itemsPerPage = $configuration->getItemsPerPage();
-        $this->count = $configuration->getCountStrategy();
-        $this->indexBy = $configuration->getIndexBy();
-        $this->orderBy = $configuration->getOrderBy();
+        $this->orderBy = OrderByUtil::normalizeOrderBy($orderBy);
 
         // set query builder
         $criteria = Criteria::create()->orderBy($this->orderBy);
         $this->queryBuilder = $this
-            ->createQueryBuilder('e', 'e.' . $configuration->getIndexBy())
+            ->createQueryBuilder('e', 'e.' . $indexBy)
             ->addCriteria($criteria);
     }
-
-    /**
-     * @return MinimalRepositoryConfiguration<T>
-     */
-    abstract protected function configure(): MinimalRepositoryConfiguration;
 
     /**
      * @return class-string<T>
@@ -124,8 +112,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
      */
     public function withItemsPerPage(int $itemsPerPage): static
     {
-        /** @psalm-suppress UnsafeGenericInstantiation */
-        $instance = new static(entityManager: $this->entityManager);
+        $instance = clone $this;
         $instance->itemsPerPage = $itemsPerPage;
 
         return $instance;
