@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Trait;
 
 use Doctrine\Common\Collections\Collection;
-use Rekalogika\Domain\Collections\Common\Internal\KeyTransformerUtil;
+use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 
 /**
  * @template TKey of array-key
@@ -48,7 +48,7 @@ trait CriteriaReadableTrait
     final public function containsKey(mixed $key): bool
     {
         /** @var TKey */
-        $key = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $key);
+        $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
         return $this->getSafeCollection()->containsKey($key);
     }
@@ -60,7 +60,7 @@ trait CriteriaReadableTrait
     final public function get(mixed $key): mixed
     {
         /** @var TKey */
-        $key = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $key);
+        $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
         return $this->getSafeCollection()->get($key);
     }

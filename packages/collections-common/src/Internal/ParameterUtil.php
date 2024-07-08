@@ -16,14 +16,37 @@ namespace Rekalogika\Domain\Collections\Common\Internal;
 use Doctrine\Common\Collections\Order;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Domain\Collections\Common\Configuration;
+use Rekalogika\Domain\Collections\Common\Count\ConditionalDelegatedCountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 
 /**
  * @internal
  */
-final class OrderByUtil
+final class ParameterUtil
 {
     private function __construct()
     {
+    }
+
+    public static function getDefaultCountStrategy(): CountStrategy
+    {
+        if (Configuration::$defaultCountStrategy === null) {
+            $countStrategy = fn (): CountStrategy => new ConditionalDelegatedCountStrategy();
+        } else {
+            $countStrategy = Configuration::$defaultCountStrategy;
+        }
+
+        return $countStrategy();
+    }
+
+    public static function transformInputToKey(
+        ?KeyTransformer $keyTransformer,
+        mixed $input
+    ): int|string {
+        $keyTransformer ??= Configuration::$defaultKeyTransformer;
+
+        return $keyTransformer::transformToKey($input);
     }
 
     /**

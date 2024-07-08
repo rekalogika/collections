@@ -15,7 +15,7 @@ namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Exception\InvalidCountException;
-use Rekalogika\Domain\Collections\Common\Internal\CountStrategyUtil;
+use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 
 trait RefreshCountTrait
 {
@@ -27,7 +27,7 @@ trait RefreshCountTrait
      */
     private function getCount(): int
     {
-        $countStrategy = $this->getCountStrategy() ?? CountStrategyUtil::getDefaultCountStrategy();
+        $countStrategy = $this->getCountStrategy() ?? ParameterUtil::getDefaultCountStrategy();
 
         $result = $countStrategy->getCount($this->getUnderlyingCountable());
 
@@ -40,7 +40,7 @@ trait RefreshCountTrait
 
     final public function refreshCount(): void
     {
-        $countStrategy = $this->getCountStrategy() ?? CountStrategyUtil::getDefaultCountStrategy();
+        $countStrategy = $this->getCountStrategy() ?? ParameterUtil::getDefaultCountStrategy();
 
         $realCount = \count($this->getUnderlyingCountable());
         $countStrategy->setCount($this->getUnderlyingCountable(), $realCount);

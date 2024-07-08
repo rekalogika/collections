@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Doctrine\Common\Collections\Collection;
-use Rekalogika\Domain\Collections\Common\Internal\KeyTransformerUtil;
+use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 
 /**
  * @template TKey of array-key
@@ -39,7 +39,7 @@ trait ArrayAccessTrait
     final public function offsetExists(mixed $offset): bool
     {
         /** @var TKey */
-        $offset = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $offset);
+        $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
         // return $this->getSafeCollection()->containsKey($offset);
 
@@ -53,7 +53,7 @@ trait ArrayAccessTrait
     final public function offsetGet(mixed $offset): mixed
     {
         /** @var TKey */
-        $offset = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $offset);
+        $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
         // return $this->getSafeCollection()->get($offset);
 
@@ -73,7 +73,7 @@ trait ArrayAccessTrait
         }
 
         /** @var TKey */
-        $offset = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $offset);
+        $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
         $this->ensureSafety();
 
@@ -86,7 +86,7 @@ trait ArrayAccessTrait
     final public function offsetUnset(mixed $offset): void
     {
         /** @var TKey */
-        $offset = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $offset);
+        $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
         $this->ensureSafety();
 

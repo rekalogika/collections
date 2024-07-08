@@ -21,7 +21,7 @@ use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\Recollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
+use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Trait\RecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
@@ -104,7 +104,7 @@ class RecollectionDecorator implements Recollection
 
         // handle orderBy
 
-        $this->orderBy = OrderByUtil::normalizeOrderBy(
+        $this->orderBy = ParameterUtil::normalizeOrderBy(
             orderBy: $orderBy,
             defaultOrderBy: $this->getDefaultOrderBy()
         );

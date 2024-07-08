@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Doctrine\Common\Collections\Collection;
-use Rekalogika\Domain\Collections\Common\Internal\KeyTransformerUtil;
+use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 
 /**
  * @template TKey of array-key
@@ -64,7 +64,7 @@ trait CollectionTrait
     final public function remove(mixed $key): mixed
     {
         /** @var TKey */
-        $key = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $key);
+        $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
         $this->getSafeCollection()->remove($key);
         return $this->getRealCollection()->remove($key);
@@ -87,7 +87,7 @@ trait CollectionTrait
     final public function set(mixed $key, mixed $value): void
     {
         /** @var TKey */
-        $key = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $key);
+        $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
         /** @psalm-suppress MixedArgumentTypeCoercion */
         $this->getSafeCollection()->set($key, $value);

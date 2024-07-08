@@ -15,7 +15,7 @@ namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ReadableCollection;
-use Rekalogika\Domain\Collections\Common\Internal\KeyTransformerUtil;
+use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 
 /**
  * @template TKey of array-key
@@ -61,7 +61,7 @@ trait ReadableCollectionTrait
     final public function containsKey(mixed $key): bool
     {
         /** @var TKey */
-        $key = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $key);
+        $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
         return $this->getSafeCollection()->containsKey($key);
     }
@@ -73,7 +73,7 @@ trait ReadableCollectionTrait
     final public function get(mixed $key): mixed
     {
         /** @var TKey */
-        $key = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $key);
+        $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
         return $this->getSafeCollection()->get($key);
     }

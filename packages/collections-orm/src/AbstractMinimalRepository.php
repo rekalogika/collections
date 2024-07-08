@@ -22,7 +22,7 @@ use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Collections\ORM\Trait\RepositoryDxTrait;
 use Rekalogika\Contracts\Collections\MinimalRepository;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
-use Rekalogika\Domain\Collections\Common\Internal\OrderByUtil;
+use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 
 /**
  * @template TKey of array-key
@@ -66,7 +66,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
         private readonly string $indexBy = 'id',
         array|string|null $orderBy = null,
     ) {
-        $this->orderBy = OrderByUtil::normalizeOrderBy($orderBy);
+        $this->orderBy = ParameterUtil::normalizeOrderBy($orderBy);
 
         // set query builder
         $criteria = Criteria::create()->orderBy($this->orderBy);
