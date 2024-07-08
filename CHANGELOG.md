@@ -6,6 +6,7 @@
   properties, not indirectly through the getters.
 * refactor: move count strategy resolver to `CountStrategyUtil`
 * refactor: use standard constructor for repositories, scrap the configuration
+* refactor: consolidate util classes
 
 ## 0.8.0
 

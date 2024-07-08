@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\ORM\Trait;
 
 use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
-use Rekalogika\Domain\Collections\Common\Internal\KeyTransformerUtil;
+use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 
 /**
  * @template TKey of array-key
@@ -47,7 +47,7 @@ trait RepositoryTrait
     final public function offsetExists(mixed $offset): bool
     {
         /** @var TKey */
-        $offset = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $offset);
+        $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
         return $this->containsKey($offset);
     }
@@ -59,7 +59,7 @@ trait RepositoryTrait
     final public function offsetGet(mixed $offset): mixed
     {
         /** @var TKey */
-        $offset = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $offset);
+        $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
         return $this->get($offset);
     }
@@ -83,7 +83,7 @@ trait RepositoryTrait
     final public function offsetUnset(mixed $offset): void
     {
         /** @var TKey */
-        $offset = KeyTransformerUtil::transformInputToKey($this->keyTransformer, $offset);
+        $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
         $this->remove($offset);
     }
