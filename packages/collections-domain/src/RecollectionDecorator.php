@@ -75,8 +75,8 @@ class RecollectionDecorator implements Recollection
      */
     private readonly array $orderBy;
 
-    private readonly Criteria $criteria;
     private readonly ?string $indexBy;
+    private readonly Criteria $criteria;
 
     /**
      * @param Collection<TKey,T> $collection
