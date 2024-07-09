@@ -14,6 +14,7 @@
 * refactor: consistent argument ordering
 * feat: repository now accept `ManagerRegistry` instead of `EntityManagerInterface`
 * feat: default items per page
+* feat: different default count strategies for full & minimal classes
 
 ## 0.8.0
 

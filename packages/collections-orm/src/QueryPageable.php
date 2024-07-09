@@ -19,6 +19,7 @@ use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\RefreshCountTrait;
 
@@ -114,8 +115,8 @@ class QueryPageable implements PageableRecollection
         );
     }
 
-    private function getCountStrategy(): ?CountStrategy
+    private function getCountStrategy(): CountStrategy
     {
-        return $this->count;
+        return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();
     }
 }

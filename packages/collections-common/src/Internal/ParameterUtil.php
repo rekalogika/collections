@@ -16,8 +16,9 @@ namespace Rekalogika\Domain\Collections\Common\Internal;
 use Doctrine\Common\Collections\Order;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Domain\Collections\Common\Configuration;
-use Rekalogika\Domain\Collections\Common\Count\ConditionalDelegatedCountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\DisabledCountStrategy;
+use Rekalogika\Domain\Collections\Common\Count\SafeDelegatedCountStrategy;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 
 /**
@@ -29,10 +30,18 @@ final class ParameterUtil
     {
     }
 
-    public static function getDefaultCountStrategy(): CountStrategy
+    public static function getDefaultCountStrategyForFullClasses(): CountStrategy
     {
-        $closure = Configuration::$defaultCountStrategy
-            ?? fn (): CountStrategy => new ConditionalDelegatedCountStrategy();
+        $closure = Configuration::$defaultCountStrategyForFullClasses
+            ?? fn (): CountStrategy => new SafeDelegatedCountStrategy();
+
+        return $closure();
+    }
+
+    public static function getDefaultCountStrategyForMinimalClasses(): CountStrategy
+    {
+        $closure = Configuration::$defaultCountStrategyForMinimalClasses
+            ?? fn (): CountStrategy => new DisabledCountStrategy();
 
         return $closure();
     }
