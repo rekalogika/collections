@@ -23,8 +23,8 @@
     "require": {
         "php": "^8.2",
         "doctrine/collections": "^2.2.2 || ^2.3",
-        "rekalogika/collections-common": "^0.8",
-        "rekalogika/collections-contracts": "^0.8",
+        "rekalogika/collections-common": "^0.9",
+        "rekalogika/collections-contracts": "^0.9",
         "rekalogika/rekapager-contracts": "^0.12.3 || ^0.13",
         "rekalogika/rekapager-doctrine-collections-adapter": "^0.12.3 || ^0.13",
         "rekalogika/rekapager-keyset-pagination": "^0.12.3 || ^0.13"
