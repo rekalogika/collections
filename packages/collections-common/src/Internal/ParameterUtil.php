@@ -19,6 +19,7 @@ use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\DisabledCountStrategy;
 use Rekalogika\Domain\Collections\Common\Count\SafeDelegatedCountStrategy;
+use Rekalogika\Domain\Collections\Common\KeyTransformer\DefaultKeyTransformer;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 
 /**
@@ -46,13 +47,21 @@ final class ParameterUtil
         return $closure();
     }
 
+    public static function getDefaultKeyTransformer(): KeyTransformer
+    {
+        $closure = Configuration::$defaultKeyTransformer
+            ?? fn (): KeyTransformer => DefaultKeyTransformer::create();
+
+        return $closure();
+    }
+
     public static function transformInputToKey(
         ?KeyTransformer $keyTransformer,
         mixed $input
     ): int|string {
-        $keyTransformer ??= Configuration::$defaultKeyTransformer;
+        $keyTransformer ??= self::getDefaultKeyTransformer();
 
-        return $keyTransformer::transformToKey($input);
+        return $keyTransformer->transformToKey($input);
     }
 
     /**

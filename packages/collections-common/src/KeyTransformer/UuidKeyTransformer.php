@@ -19,7 +19,18 @@ use Symfony\Component\Uid\Uuid;
 
 class UuidKeyTransformer implements KeyTransformer
 {
-    public static function transformToKey(mixed $key): int|string
+    private static ?self $instance = null;
+
+    public static function create(): self
+    {
+        return self::$instance ??= new self();
+    }
+
+    private function __construct()
+    {
+    }
+
+    public function transformToKey(mixed $key): int|string
     {
         if ($key instanceof AbstractUid) {
             return $key->toRfc4122();
