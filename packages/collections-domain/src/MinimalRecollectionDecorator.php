@@ -19,7 +19,7 @@ use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\MinimalRecollection;
-use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
@@ -203,7 +203,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
     /**
      * @return MinimalCriteriaRecollection<TKey,T>
      */
-    final protected function createCriteriaCollection(
+    final protected function createCriteriaRecollection(
         Criteria $criteria,
         ?string $instanceId = null,
         ?CountStrategy $count = null,
@@ -223,19 +223,22 @@ class MinimalRecollectionDecorator implements MinimalRecollection
     }
 
     /**
-     * @return PageableInterface<TKey,T>
+     * @return PageableRecollection<TKey,T>
      */
     final protected function createCriteriaPageable(
         Criteria $criteria,
         ?string $instanceId = null,
         ?CountStrategy $count = null,
-    ): PageableInterface {
+    ): PageableRecollection {
         // if $criteria has no orderings, add the current ordering
         if (\count($criteria->orderings()) === 0) {
             $criteria = $criteria->orderBy($this->orderBy);
         }
 
-        /** @var PageableInterface<TKey,T> */
+        /**
+         * @var PageableRecollection<TKey,T>
+         * @phpstan-ignore-next-line
+         */
         return CriteriaPageable::create(
             collection: $this->collection,
             criteria: $criteria,

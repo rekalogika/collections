@@ -21,7 +21,7 @@ use Doctrine\Persistence\ObjectRepository;
 use Rekalogika\Collections\ORM\QueryPageable;
 use Rekalogika\Collections\ORM\QueryRecollection;
 use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
-use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\CriteriaPageable;
 use Rekalogika\Domain\Collections\CriteriaRecollection;
@@ -101,14 +101,14 @@ trait RepositoryDxTrait
     }
 
     /**
-     * @return PageableInterface<TKey,T>
+     * @return PageableRecollection<TKey,T>
      */
     final protected function createCriteriaPageable(
         Criteria $criteria,
         ?string $instanceId = null,
         ?string $indexBy = null,
         ?CountStrategy $count = null,
-    ): PageableInterface {
+    ): PageableRecollection {
         return CriteriaPageable::create(
             collection: $this->getDoctrineRepository(),
             criteria: $criteria,
@@ -139,15 +139,15 @@ trait RepositoryDxTrait
     }
 
     /**
-     * @return PageableInterface<TKey,T>
+     * @return PageableRecollection<TKey,T>
      */
     final protected function createQueryPageable(
         QueryBuilder $queryBuilder,
         ?string $indexBy = null,
         ?CountStrategy $count = null,
-    ): PageableInterface {
+    ): PageableRecollection {
         /**
-         * @var PageableInterface<TKey,T>
+         * @var PageableRecollection<TKey,T>
          * @phpstan-ignore-next-line
          */
         return new QueryPageable(

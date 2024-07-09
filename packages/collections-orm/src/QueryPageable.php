@@ -16,7 +16,6 @@ namespace Rekalogika\Collections\ORM;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Collections\PageableRecollection;
-use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
@@ -78,7 +77,7 @@ class QueryPageable implements PageableRecollection
     /**
      * @return self<TKey,T>
      */
-    final protected function createQueryCollection(
+    final protected function createQueryRecollection(
         QueryBuilder $queryBuilder,
         ?string $indexBy = null,
         ?CountStrategy $count = null,
@@ -96,15 +95,15 @@ class QueryPageable implements PageableRecollection
     }
 
     /**
-     * @return PageableInterface<TKey,T>
+     * @return PageableRecollection<TKey,T>
      */
     final protected function createQueryPageable(
         QueryBuilder $queryBuilder,
         ?string $indexBy = null,
         ?CountStrategy $count = null,
-    ): PageableInterface {
+    ): PageableRecollection {
         /**
-         * @var PageableInterface<TKey,T>
+         * @var PageableRecollection<TKey,T>
          * @phpstan-ignore-next-line
          */
         return new QueryPageable(
