@@ -235,7 +235,10 @@ class MinimalRecollectionDecorator implements MinimalRecollection
             $criteria = $criteria->orderBy($this->orderBy);
         }
 
-        /** @var PageableRecollection<TKey,T> */
+        /**
+         * @var PageableRecollection<TKey,T>
+         * @phpstan-ignore-next-line
+         */
         return CriteriaPageable::create(
             collection: $this->collection,
             criteria: $criteria,

@@ -73,7 +73,6 @@ trait RecollectionDxTrait
             $criteria = $criteria->orderBy($this->getOrderBy());
         }
 
-        /** @var PageableRecollection<TKey,T> */
         return CriteriaPageable::create(
             collection: $this->collection,
             criteria: $criteria,
