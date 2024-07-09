@@ -15,7 +15,7 @@ namespace Rekalogika\Domain\Collections\Trait;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
-use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\CriteriaPageable;
 use Rekalogika\Domain\Collections\CriteriaRecollection;
@@ -39,7 +39,7 @@ trait RecollectionDxTrait
     /**
      * @return CriteriaRecollection<TKey,T>
      */
-    final protected function createCriteriaCollection(
+    final protected function createCriteriaRecollection(
         Criteria $criteria,
         ?string $instanceId = null,
         ?CountStrategy $count = null,
@@ -61,19 +61,19 @@ trait RecollectionDxTrait
     }
 
     /**
-     * @return PageableInterface<TKey,T>
+     * @return PageableRecollection<TKey,T>
      */
     final protected function createCriteriaPageable(
         Criteria $criteria,
         ?string $instanceId = null,
         ?CountStrategy $count = null,
-    ): PageableInterface {
+    ): PageableRecollection {
         // if $criteria has no orderings, add the current ordering
         if (\count($criteria->orderings()) === 0) {
             $criteria = $criteria->orderBy($this->getOrderBy());
         }
 
-        /** @var PageableInterface<TKey,T> */
+        /** @var PageableRecollection<TKey,T> */
         return CriteriaPageable::create(
             collection: $this->collection,
             criteria: $criteria,
