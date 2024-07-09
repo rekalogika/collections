@@ -15,5 +15,5 @@ namespace Rekalogika\Domain\Collections\Common\KeyTransformer;
 
 interface KeyTransformer
 {
-    public static function transformToKey(mixed $key): int|string;
+    public function transformToKey(mixed $key): int|string;
 }

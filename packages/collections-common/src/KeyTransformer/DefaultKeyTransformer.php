@@ -17,7 +17,18 @@ use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 
 class DefaultKeyTransformer implements KeyTransformer
 {
-    public static function transformToKey(mixed $key): int|string
+    private static ?self $instance = null;
+
+    public static function create(): self
+    {
+        return self::$instance ??= new self();
+    }
+
+    private function __construct()
+    {
+    }
+
+    public function transformToKey(mixed $key): int|string
     {
         if ($key instanceof \Stringable) {
             return (string) $key;

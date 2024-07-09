@@ -16,6 +16,7 @@
 * feat: default items per page
 * feat: different default count strategies for full & minimal classes
 * chore: cleanup typehints
+* refactor: change `KeyTransformer` to instance object, not static class
 
 ## 0.8.0
 
