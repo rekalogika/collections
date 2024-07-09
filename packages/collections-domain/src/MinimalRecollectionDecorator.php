@@ -156,9 +156,9 @@ class MinimalRecollectionDecorator implements MinimalRecollection
         return $newInstance;
     }
 
-    private function getCountStrategy(): ?CountStrategy
+    private function getCountStrategy(): CountStrategy
     {
-        return $this->count;
+        return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();
     }
 
     /**

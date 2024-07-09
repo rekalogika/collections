@@ -109,9 +109,9 @@ abstract class AbstractMinimalRepository implements MinimalRepository
         return $this->class;
     }
 
-    private function getCountStrategy(): ?CountStrategy
+    private function getCountStrategy(): CountStrategy
     {
-        return $this->count;
+        return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();
     }
 
     /**

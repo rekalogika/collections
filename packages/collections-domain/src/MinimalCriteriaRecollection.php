@@ -20,6 +20,7 @@ use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\MinimalReadableRecollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Trait\MinimalReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
@@ -170,9 +171,9 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
         return $newInstance;
     }
 
-    private function getCountStrategy(): ?CountStrategy
+    private function getCountStrategy(): CountStrategy
     {
-        return $this->count;
+        return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();
     }
 
     /**

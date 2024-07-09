@@ -112,9 +112,9 @@ abstract class AbstractRepository implements Repository
             ->addCriteria($criteria);
     }
 
-    private function getCountStrategy(): ?CountStrategy
+    private function getCountStrategy(): CountStrategy
     {
-        return $this->count;
+        return $this->count ?? ParameterUtil::getDefaultCountStrategyForFullClasses();
     }
 
     /**

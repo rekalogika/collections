@@ -67,7 +67,12 @@ final class Configuration
     /**
      * @var null|\Closure(): CountStrategy
      */
-    public static ?\Closure $defaultCountStrategy = null;
+    public static ?\Closure $defaultCountStrategyForFullClasses = null;
+
+    /**
+     * @var null|\Closure(): CountStrategy
+     */
+    public static ?\Closure $defaultCountStrategyForMinimalClasses = null;
 
     public static ?string $defaultIndexBy = null;
 
