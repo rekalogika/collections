@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.8.1
+## 0.9.0
 
 * feat: add `ArrayCollection` that does `matching()` calls against the private
   properties, not indirectly through the getters.
