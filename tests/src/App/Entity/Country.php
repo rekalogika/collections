@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,6 +21,7 @@ use Rekalogika\Contracts\Collections\MinimalReadableRecollection;
 use Rekalogika\Contracts\Collections\MinimalRecollection;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Contracts\Collections\Recollection;
+use Rekalogika\Domain\Collections\ArrayCollection;
 use Rekalogika\Domain\Collections\CriteriaRecollection;
 use Rekalogika\Domain\Collections\MinimalCriteriaRecollection;
 use Rekalogika\Domain\Collections\MinimalRecollectionDecorator;
