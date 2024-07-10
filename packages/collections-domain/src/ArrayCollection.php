@@ -28,6 +28,14 @@ use Rekalogika\Domain\Collections\Internal\DirectClosureExpressionVisitor;
 class ArrayCollection extends DoctrineArrayCollection
 {
     /**
+     * @param array<TKey,T> $elements
+     */
+    public function __construct(array $elements = [])
+    {
+        parent::__construct($elements);
+    }
+
+    /**
      * @psalm-return Collection<TKey,T>&Selectable<TKey,T>
      */
     public function matching(Criteria $criteria): Collection&Selectable

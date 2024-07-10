@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.1
+
+* fix: static analysis problem with assignment of empty `ArrayCollection` to
+  typed properties
+
 ## 0.9.0
 
 * feat: add `ArrayCollection` that does `matching()` calls against the private
