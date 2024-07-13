@@ -57,6 +57,11 @@ class QueryPageable implements PageableRecollection
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
     }
 
+    private function getCountStrategy(): CountStrategy
+    {
+        return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();
+    }
+
     /**
      * @param int<1,max> $itemsPerPage
      */
@@ -69,9 +74,21 @@ class QueryPageable implements PageableRecollection
         return $instance;
     }
 
-    final protected function getQueryBuilder(): QueryBuilder
+    final public function getQueryBuilder(): QueryBuilder
     {
         return $this->queryBuilder;
+    }
+
+    /**
+     * @param \Closure(QueryBuilder):void $function
+     * @return static
+     */
+    final public function updateQueryBuilder(\Closure $function): static
+    {
+        $instance = clone $this;
+        $function($instance->queryBuilder);
+
+        return $instance;
     }
 
     /**
@@ -112,10 +129,5 @@ class QueryPageable implements PageableRecollection
             indexBy: $indexBy ?? $this->indexBy,
             count: $count,
         );
-    }
-
-    private function getCountStrategy(): CountStrategy
-    {
-        return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();
     }
 }

@@ -107,9 +107,21 @@ class QueryRecollection implements ReadableRecollection
         return $instance;
     }
 
-    final protected function getQueryBuilder(): QueryBuilder
+    final public function getQueryBuilder(): QueryBuilder
     {
         return $this->queryBuilder;
+    }
+
+    /**
+     * @param \Closure(QueryBuilder):void $function
+     * @return static
+     */
+    final public function updateQueryBuilder(\Closure $function): static
+    {
+        $instance = clone $this;
+        $function($instance->queryBuilder);
+
+        return $instance;
     }
 
     /**
