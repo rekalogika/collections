@@ -4,6 +4,8 @@
 
 * fix: static analysis problem with assignment of empty `ArrayCollection` to
   typed properties
+* feat(orm): make `getQueryBuilder()` public
+* feat(orm): add `updateQueryBuilder()`
 
 ## 0.9.0
 
