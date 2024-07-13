@@ -36,8 +36,8 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
      */
     public static function getObjectFieldValue(object|array $object, string $field)
     {
-        if (\str_contains($field, '.')) {
-            [$field, $subField] = \explode('.', $field, 2);
+        if (str_contains($field, '.')) {
+            [$field, $subField] = explode('.', $field, 2);
             $object             = self::getObjectFieldValue($object, $field);
 
             return self::getObjectFieldValue($object, $subField);
@@ -110,18 +110,18 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
 
                 return !\in_array($fieldValue, $value, \is_scalar($fieldValue));
             },
-            Comparison::CONTAINS => static fn ($object): bool => \str_contains((string) static::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::CONTAINS => static fn ($object): bool => str_contains((string) static::getObjectFieldValue($object, $field), (string) $value),
             Comparison::MEMBER_OF => static function ($object) use ($field, $value): bool {
                 $fieldValues = static::getObjectFieldValue($object, $field);
 
                 if (!\is_array($fieldValues)) {
-                    $fieldValues = \iterator_to_array($fieldValues);
+                    $fieldValues = iterator_to_array($fieldValues);
                 }
 
                 return \in_array($value, $fieldValues, true);
             },
-            Comparison::STARTS_WITH => static fn ($object): bool => \str_starts_with((string) static::getObjectFieldValue($object, $field), (string) $value),
-            Comparison::ENDS_WITH => static fn ($object): bool => \str_ends_with((string) static::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::STARTS_WITH => static fn ($object): bool => str_starts_with((string) static::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::ENDS_WITH => static fn ($object): bool => str_ends_with((string) static::getObjectFieldValue($object, $field), (string) $value),
             default => throw new \RuntimeException('Unknown comparison operator: ' . $comparison->getOperator()),
         };
     }
