@@ -76,7 +76,7 @@ class QueryPageable implements PageableRecollection
 
     final public function getQueryBuilder(): QueryBuilder
     {
-        return $this->queryBuilder;
+        return clone $this->queryBuilder;
     }
 
     /**
@@ -87,6 +87,14 @@ class QueryPageable implements PageableRecollection
     {
         $instance = clone $this;
         $function($instance->queryBuilder);
+
+        return $instance;
+    }
+
+    final protected function withQueryBuilder(QueryBuilder $queryBuilder): static
+    {
+        $instance = clone $this;
+        $instance->queryBuilder = $queryBuilder;
 
         return $instance;
     }
