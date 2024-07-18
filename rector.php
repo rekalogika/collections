@@ -35,7 +35,7 @@ return RectorConfig::configure()
         // symfonyCodeQuality: true,
         // doctrineCodeQuality: true,
     )
-    ->withDeadCodeLevel(17)
+    ->withDeadCodeLevel(19)
     ->withPhpSets(php82: true)
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class,
@@ -56,6 +56,8 @@ return RectorConfig::configure()
             __DIR__ . '/packages/collections-domain/src/Trait/ReadableExtraLazyTrait.php',
             __DIR__ . '/packages/collections-orm/src/Trait/MinimalReadableRepositoryTrait.php',
         ],
+
+        RemoveNonExistingVarAnnotationRector::class,
 
         // static analysis tools don't like this
         RemoveUnusedVariableAssignRector::class,
