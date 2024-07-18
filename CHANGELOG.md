@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.3
+
+* build: add rector
+
 ## 0.9.2
 
 * fix(orm): `getQueryBuilder()` now clones the query builder
