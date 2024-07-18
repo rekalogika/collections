@@ -35,7 +35,7 @@ return RectorConfig::configure()
         // symfonyCodeQuality: true,
         // doctrineCodeQuality: true,
     )
-    ->withDeadCodeLevel(16)
+    ->withDeadCodeLevel(17)
     ->withPhpSets(php82: true)
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class,
@@ -48,6 +48,7 @@ return RectorConfig::configure()
         ],
         RemoveUselessReturnTagRector::class => [
             // static analysis tools don't like this
+            __DIR__ . '/packages/collections-common/src/Trait/ReadableCollectionTrait.php',
             __DIR__ . '/packages/collections-common/src/Trait/MinimalReadableRecollectionTrait.php',
             __DIR__ . '/packages/collections-common/src/Trait/ReadableRecollectionTrait.php',
             __DIR__ . '/packages/collections-contracts/src/MinimalReadableRecollection.php',
