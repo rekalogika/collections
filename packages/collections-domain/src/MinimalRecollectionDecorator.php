@@ -209,7 +209,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
         ?CountStrategy $count = null,
     ): MinimalCriteriaRecollection {
         // if $criteria has no orderings, add the current ordering
-        if (\count($criteria->orderings()) === 0) {
+        if ($criteria->orderings() === []) {
             $criteria = $criteria->orderBy($this->orderBy);
         }
 
@@ -231,7 +231,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
         ?CountStrategy $count = null,
     ): PageableRecollection {
         // if $criteria has no orderings, add the current ordering
-        if (\count($criteria->orderings()) === 0) {
+        if ($criteria->orderings() === []) {
             $criteria = $criteria->orderBy($this->orderBy);
         }
 

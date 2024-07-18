@@ -9,6 +9,7 @@ use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPublicMethodParameterRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
@@ -36,6 +37,7 @@ return RectorConfig::configure()
         // symfonyCodeQuality: true,
         // doctrineCodeQuality: true,
     )
+    ->withCodeQualityLevel(60)
     ->withPhpSets(php82: true)
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class,
@@ -57,11 +59,16 @@ return RectorConfig::configure()
             __DIR__ . '/packages/collections-orm/src/Trait/MinimalReadableRepositoryTrait.php',
         ],
 
+        RemoveUnusedPublicMethodParameterRector::class => [
+            // @todo temporary
+            __DIR__ . '/packages/collections-domain/src/Internal/ExtraLazyDetector.php',
+        ],
+
         // static analysis tools don't like this
         RemoveNonExistingVarAnnotationRector::class,
 
         RemoveExtraParametersRector::class => [
-            // static analysis tools don't like this
+            // @todo temporary
             __DIR__ . '/packages/collections-domain/src/Internal/ExtraLazyDetector.php',
         ],
 
