@@ -52,21 +52,21 @@ final class ExtraLazyDetector
     /**
      * @template TKey of array-key
      * @template T
+     * @param ReadableCollection<TKey,T> $collection
      */
-    public static function isExtraLazy(): bool
+    public static function isExtraLazy(ReadableCollection $collection): bool
     {
-        return true;
-        // disabled for now
+        return true; // disabled for now
     }
 
     /**
      * @template TKey of array-key
      * @template T
+     * @param ReadableCollection<TKey,T> $collection
      */
-    public static function hasIndexBy(): bool
+    public static function hasIndexBy(ReadableCollection $collection): bool
     {
-        return true;
-        // disabled for now
+        return true; // disabled for now
     }
 
 }
