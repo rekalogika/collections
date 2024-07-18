@@ -30,19 +30,14 @@ interface MinimalReadableRecollection extends PageableInterface
      */
     public function contains(mixed $element): bool;
 
-    /**
-     * @param mixed $key
-     */
     public function containsKey(mixed $key): bool;
 
     /**
-     * @param mixed $key
      * @return T|null
      */
     public function get(mixed $key): mixed;
 
     /**
-     * @param mixed $key
      * @return T
      * @throws NotFoundException
      */

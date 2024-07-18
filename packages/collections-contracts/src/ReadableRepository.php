@@ -21,7 +21,6 @@ namespace Rekalogika\Contracts\Collections;
 interface ReadableRepository extends ReadableRecollection
 {
     /**
-     * @param mixed $key
      * @return T
      */
     public function reference(mixed $key): object;

@@ -41,9 +41,6 @@ trait RepositoryTrait
         }
     }
 
-    /**
-     * @param mixed $offset
-     */
     final public function offsetExists(mixed $offset): bool
     {
         /** @var TKey */
@@ -53,7 +50,6 @@ trait RepositoryTrait
     }
 
     /**
-     * @param mixed $offset
      * @return T|null
      */
     final public function offsetGet(mixed $offset): mixed
@@ -65,7 +61,6 @@ trait RepositoryTrait
     }
 
     /**
-     * @param mixed $offset
      * @param T $value
      */
     final public function offsetSet(mixed $offset, mixed $value): void
@@ -77,9 +72,6 @@ trait RepositoryTrait
         $this->add($value);
     }
 
-    /**
-     * @param mixed $offset
-     */
     final public function offsetUnset(mixed $offset): void
     {
         /** @var TKey */
@@ -89,7 +81,6 @@ trait RepositoryTrait
     }
 
     /**
-     * @param mixed $key
      * @param T $value
      */
     final public function set(mixed $key, mixed $value): void

@@ -22,7 +22,6 @@ use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 trait FetchTrait
 {
     /**
-     * @param mixed $key
      * @return T
      * @throws NotFoundException
      */

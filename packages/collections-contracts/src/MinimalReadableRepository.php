@@ -21,7 +21,6 @@ namespace Rekalogika\Contracts\Collections;
 interface MinimalReadableRepository extends MinimalReadableRecollection
 {
     /**
-     * @param mixed $key
      * @return T
      */
     public function reference(mixed $key): object;

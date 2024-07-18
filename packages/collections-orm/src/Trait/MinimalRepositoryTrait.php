@@ -49,7 +49,6 @@ trait MinimalRepositoryTrait
     }
 
     /**
-     * @param mixed $key
      * @return T|null
      */
     public function remove(mixed $key): mixed

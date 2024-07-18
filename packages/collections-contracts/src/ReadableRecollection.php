@@ -47,9 +47,7 @@ interface ReadableRecollection extends PageableInterface, ReadableCollection
     //
     // Methods
     //
-
     /**
-     * @param mixed $key
      * @return T
      * @throws NotFoundException
      */
