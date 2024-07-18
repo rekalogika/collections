@@ -8,6 +8,7 @@ use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
+use Rector\CodingStyle\Rector\Use_\SeparateMultiUseImportsRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPublicMethodParameterRector;
@@ -30,7 +31,7 @@ return RectorConfig::configure()
     ->withPreparedSets(
         deadCode: true,
         codeQuality: true,
-        // codingStyle: true,
+        codingStyle: true,
         typeDeclarations: true,
         // privatization: true,
         // instanceOf: true,
@@ -40,7 +41,6 @@ return RectorConfig::configure()
     )
     ->withPhpSets(php82: true)
     ->withRules([
-        NewlineAfterStatementRector::class,
         // AddOverrideAttributeToOverriddenMethodsRector::class,
     ])
     ->withSkip([
@@ -92,4 +92,7 @@ return RectorConfig::configure()
 
         // makes code unreadable
         DisallowedShortTernaryRuleFixerRector::class,
+
+        // unsafe
+        SeparateMultiUseImportsRector::class,
     ]);
