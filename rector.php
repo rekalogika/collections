@@ -27,15 +27,13 @@ return RectorConfig::configure()
         // deadCode: true,
         // codeQuality: true,
         // codingStyle: true,
-        // typeDeclarations: true,
+        typeDeclarations: true,
         // privatization: true,
         // instanceOf: true,
         // strictBooleans: true,
         // symfonyCodeQuality: true,
         // doctrineCodeQuality: true,
     )
-    ->withTypeCoverageLevel(10)
-    // uncomment to reach your current PHP version
     ->withPhpSets(php82: true)
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class,
