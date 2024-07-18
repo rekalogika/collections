@@ -34,6 +34,7 @@ return RectorConfig::configure()
         // symfonyCodeQuality: true,
         // doctrineCodeQuality: true,
     )
+    ->withTypeCoverageLevel(10)
     // uncomment to reach your current PHP version
     ->withPhpSets(php82: true)
     ->withRules([

@@ -184,6 +184,6 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
     /** @param callable[] $expressions */
     private function notExpression(array $expressions): \Closure
     {
-        return static fn ($object) => !$expressions[0]($object);
+        return static fn ($object): bool => !$expressions[0]($object);
     }
 }
