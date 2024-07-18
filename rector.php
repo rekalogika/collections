@@ -9,6 +9,7 @@ use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
 use Rector\Php80\Rector\FunctionLike\MixedTypeRector;
@@ -34,11 +35,27 @@ return RectorConfig::configure()
         // symfonyCodeQuality: true,
         // doctrineCodeQuality: true,
     )
+    ->withDeadCodeLevel(16)
     ->withPhpSets(php82: true)
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class,
     ])
     ->withSkip([
+        RemoveUselessParamTagRector::class => [
+            // static analysis tools don't like this
+            __DIR__ . '/packages/collections-contracts/src/ReadableRecollection.php',
+            __DIR__ . '/packages/collections-contracts/src/Recollection.php',
+        ],
+        RemoveUselessReturnTagRector::class => [
+            // static analysis tools don't like this
+            __DIR__ . '/packages/collections-common/src/Trait/MinimalReadableRecollectionTrait.php',
+            __DIR__ . '/packages/collections-common/src/Trait/ReadableRecollectionTrait.php',
+            __DIR__ . '/packages/collections-contracts/src/MinimalReadableRecollection.php',
+            __DIR__ . '/packages/collections-domain/src/Trait/CriteriaReadableTrait.php',
+            __DIR__ . '/packages/collections-domain/src/Trait/ReadableExtraLazyTrait.php',
+            __DIR__ . '/packages/collections-orm/src/Trait/MinimalReadableRepositoryTrait.php',
+        ],
+
         // static analysis tools don't like this
         RemoveUnusedVariableAssignRector::class,
 
