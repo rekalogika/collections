@@ -37,17 +37,17 @@ class AppFixtures extends Fixture
 
         CitizenFactory::createMany(2020, [
             'country' => $countrySy,
-            'age' => rand(1, 14),
+            'age' => random_int(1, 14),
         ]);
 
         CitizenFactory::createMany(2020, [
             'country' => $countrySy,
-            'age' => rand(16, 63),
+            'age' => random_int(16, 63),
         ]);
 
         CitizenFactory::createMany(2020, [
             'country' => $countrySy,
-            'age' => rand(65, 100),
+            'age' => random_int(65, 100),
         ]);
 
         // medium set
@@ -59,17 +59,17 @@ class AppFixtures extends Fixture
 
         CitizenFactory::createMany(550, [
             'country' => $countrySt,
-            'age' => rand(1, 14),
+            'age' => random_int(1, 14),
         ]);
 
         CitizenFactory::createMany(550, [
             'country' => $countrySt,
-            'age' => rand(16, 63),
+            'age' => random_int(16, 63),
         ]);
 
         CitizenFactory::createMany(550, [
             'country' => $countrySt,
-            'age' => rand(65, 100),
+            'age' => random_int(65, 100),
         ]);
 
         // small set
@@ -81,17 +81,17 @@ class AppFixtures extends Fixture
 
         CitizenFactory::createMany(10, [
             'country' => $countrySd,
-            'age' => rand(1, 14),
+            'age' => random_int(1, 14),
         ]);
 
         CitizenFactory::createMany(10, [
             'country' => $countrySd,
-            'age' => rand(16, 63),
+            'age' => random_int(16, 63),
         ]);
 
         CitizenFactory::createMany(10, [
             'country' => $countrySd,
-            'age' => rand(65, 100),
+            'age' => random_int(65, 100),
         ]);
 
         $manager->flush();

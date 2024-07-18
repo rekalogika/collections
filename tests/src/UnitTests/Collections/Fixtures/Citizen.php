@@ -16,9 +16,9 @@ namespace Rekalogika\Collections\Tests\UnitTests\Collections\Fixtures;
 class Citizen
 {
     public function __construct(
-        private int $id,
-        private string $name,
-        private ?Country $country = null,
+        private readonly int $id,
+        private readonly string $name,
+        private readonly ?Country $country = null,
     ) {
     }
 

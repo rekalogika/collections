@@ -11,6 +11,7 @@ use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
+use Rector\Php80\Rector\FunctionLike\MixedTypeRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Strict\Rector\Ternary\DisallowedShortTernaryRuleFixerRector;
 
@@ -36,7 +37,7 @@ return RectorConfig::configure()
     // uncomment to reach your current PHP version
     ->withPhpSets(php82: true)
     ->withRules([
-        AddOverrideAttributeToOverriddenMethodsRector::class,
+        // AddOverrideAttributeToOverriddenMethodsRector::class,
     ])
     ->withSkip([
         // static analysis tools don't like this

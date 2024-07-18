@@ -18,7 +18,7 @@ class Country
     private string $foo = 'bar';
 
     public function __construct(
-        private string $name,
+        private readonly string $name,
     ) {
     }
 

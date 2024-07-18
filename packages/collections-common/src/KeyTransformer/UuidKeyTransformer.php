@@ -44,7 +44,7 @@ class UuidKeyTransformer implements KeyTransformer
             $uuid = new Uuid($key);
 
             return $key;
-        } catch (\InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException) {
             throw new NotFoundException();
         }
     }
