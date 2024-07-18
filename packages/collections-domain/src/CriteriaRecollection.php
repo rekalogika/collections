@@ -213,7 +213,7 @@ class CriteriaRecollection implements ReadableRecollection
     {
         $ordering = $this->criteria->orderings();
 
-        if (empty($ordering)) {
+        if ($ordering === []) {
             return ['id' => Order::Descending];
         }
 
