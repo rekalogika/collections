@@ -61,8 +61,6 @@ final class Configuration
      * If the duration of a count operation exceeds this number of seconds, a
      * deprecation notice will be emitted. Used by `SafeDelegatedCountStrategy`,
      * Not applicable with other count strategies.
-     *
-     * @var float
      */
     public static float $defaultCountDurationThreshold = 2;
 
