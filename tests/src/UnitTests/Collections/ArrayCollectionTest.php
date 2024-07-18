@@ -26,7 +26,7 @@ class ArrayCollectionTest extends TestCase
     /**
      * @return array<int,Citizen>
      */
-    private static function createArray(): array
+    private function createArray(): array
     {
         $country = new Country('Khemed');
 
@@ -39,7 +39,7 @@ class ArrayCollectionTest extends TestCase
 
     public function testDoctrineArrayCollection(): void
     {
-        $citizens = new DoctrineArrayCollection(self::createArray());
+        $citizens = new DoctrineArrayCollection($this->createArray());
         $statelessCriteria = Criteria::create()
             ->where(Criteria::expr()->isNull('country'));
 
@@ -49,7 +49,7 @@ class ArrayCollectionTest extends TestCase
 
     public function testOurArrayCollection(): void
     {
-        $citizens = new ArrayCollection(self::createArray());
+        $citizens = new ArrayCollection($this->createArray());
         $statelessCriteria = Criteria::create()
             ->where(Criteria::expr()->isNull('country'));
 

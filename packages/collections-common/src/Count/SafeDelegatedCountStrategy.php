@@ -20,9 +20,9 @@ use Rekalogika\Domain\Collections\Common\Exception\SettingCountUnsupportedExcept
 class SafeDelegatedCountStrategy implements CountStrategy
 {
     public function __construct(
-        private ?int $softLimit = null,
-        private ?int $hardLimit = null,
-        private ?float $durationThreshold = null,
+        private readonly ?int $softLimit = null,
+        private readonly ?int $hardLimit = null,
+        private readonly ?float $durationThreshold = null,
     ) {
     }
 

@@ -41,6 +41,7 @@ trait CollectionTrait
      * @return Collection<TKey,T>
      */
     abstract private function getSafeCollection(): Collection;
+
     abstract private function ensureSafety(): void;
 
     /**
@@ -58,7 +59,6 @@ trait CollectionTrait
     }
 
     /**
-     * @param mixed $key
      * @return T|null
      */
     final public function remove(mixed $key): mixed
@@ -81,7 +81,6 @@ trait CollectionTrait
     }
 
     /**
-     * @param mixed $key
      * @param T $value
      */
     final public function set(mixed $key, mixed $value): void

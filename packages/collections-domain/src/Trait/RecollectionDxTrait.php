@@ -45,7 +45,7 @@ trait RecollectionDxTrait
         ?CountStrategy $count = null,
     ): CriteriaRecollection {
         // if $criteria has no orderings, add the current ordering
-        if (\count($criteria->orderings()) === 0) {
+        if ($criteria->orderings() === []) {
             $criteria = $criteria->orderBy($this->getOrderBy());
         }
 
@@ -69,7 +69,7 @@ trait RecollectionDxTrait
         ?CountStrategy $count = null,
     ): PageableRecollection {
         // if $criteria has no orderings, add the current ordering
-        if (\count($criteria->orderings()) === 0) {
+        if ($criteria->orderings() === []) {
             $criteria = $criteria->orderBy($this->getOrderBy());
         }
 

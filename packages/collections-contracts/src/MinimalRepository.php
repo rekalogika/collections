@@ -22,7 +22,6 @@ namespace Rekalogika\Contracts\Collections;
 interface MinimalRepository extends MinimalReadableRepository, MinimalRecollection
 {
     /**
-     * @param mixed $key
      * @return T|null
      */
     public function remove(mixed $key): mixed;

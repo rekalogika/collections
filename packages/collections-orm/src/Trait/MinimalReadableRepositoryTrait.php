@@ -47,7 +47,6 @@ trait MinimalReadableRepositoryTrait
     abstract private function getClass(): string;
 
     /**
-     * @param mixed $key
      * @return T
      */
     public function reference(mixed $key): object
@@ -71,16 +70,12 @@ trait MinimalReadableRepositoryTrait
         return $this->getEntityManager()->contains($element);
     }
 
-    /**
-     * @param mixed $key
-     */
     public function containsKey(mixed $key): bool
     {
         return $this->get($key) !== null;
     }
 
     /**
-     * @param mixed $key
      * @return T|null
      */
     public function get(mixed $key): mixed

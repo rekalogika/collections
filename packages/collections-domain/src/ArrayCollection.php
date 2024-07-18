@@ -52,7 +52,7 @@ class ArrayCollection extends DoctrineArrayCollection
 
         $orderings = $criteria->orderings();
 
-        if ($orderings) {
+        if ($orderings !== []) {
             $next = null;
             foreach (array_reverse($orderings) as $field => $ordering) {
                 /** @var \Closure(mixed,mixed):int */

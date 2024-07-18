@@ -81,7 +81,6 @@ class QueryPageable implements PageableRecollection
 
     /**
      * @param \Closure(QueryBuilder):void $function
-     * @return static
      */
     final public function updateQueryBuilder(\Closure $function): static
     {

@@ -64,6 +64,7 @@ abstract class AbstractRepository implements Repository
     private readonly array $orderBy;
 
     private readonly ?string $indexBy;
+
     private ?EntityManagerInterface $entityManager = null;
 
     /**
@@ -92,7 +93,7 @@ abstract class AbstractRepository implements Repository
 
         // set index by
         $identifiers = $this->getEntityManager()
-            ->getClassMetadata($this->getClass())
+            ->getClassMetadata($this->class)
             ->getIdentifier();
 
         if (\count($identifiers) !== 1) {

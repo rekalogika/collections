@@ -51,6 +51,7 @@ class CriteriaPageable implements PageableRecollection
     private readonly Selectable $collection;
 
     private readonly Criteria $criteria;
+
     private readonly ?string $indexBy;
 
     /**
@@ -96,7 +97,6 @@ class CriteriaPageable implements PageableRecollection
      * @template ST
      * @param ReadableCollection<STKey,ST>|Selectable<STKey,ST> $collection
      * @param int<1,max> $itemsPerPage
-     * @return static
      */
     final public static function create(
         ReadableCollection|Selectable $collection,

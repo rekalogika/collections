@@ -26,6 +26,7 @@ trait ArrayAccessTrait
      * @return Collection<TKey,T>
      */
     abstract private function getSafeCollection(): Collection;
+
     abstract private function ensureSafety(): void;
 
     /**
@@ -33,9 +34,6 @@ trait ArrayAccessTrait
      */
     abstract private function getRealCollection(): Collection;
 
-    /**
-     * @param mixed $offset
-     */
     final public function offsetExists(mixed $offset): bool
     {
         /** @var TKey */
@@ -47,7 +45,6 @@ trait ArrayAccessTrait
     }
 
     /**
-     * @param mixed $offset
      * @return T|null
      */
     final public function offsetGet(mixed $offset): mixed
@@ -61,7 +58,6 @@ trait ArrayAccessTrait
     }
 
     /**
-     * @param mixed $offset
      * @param T $value
      */
     final public function offsetSet(mixed $offset, mixed $value): void
@@ -80,9 +76,6 @@ trait ArrayAccessTrait
         $this->getRealCollection()->offsetSet($offset, $value);
     }
 
-    /**
-     * @param mixed $offset
-     */
     final public function offsetUnset(mixed $offset): void
     {
         /** @var TKey */

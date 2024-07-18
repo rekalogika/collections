@@ -28,8 +28,11 @@ abstract class BaseRecollectionTestCase extends KernelTestCase
      * @return R
      */
     abstract protected function getObject(): mixed;
+
     abstract protected function isSafe(): bool;
+
     abstract protected function isSingleton(): bool;
+
     abstract protected function getExpectedTotal(): int;
 
     protected function getEntityManager(): EntityManagerInterface

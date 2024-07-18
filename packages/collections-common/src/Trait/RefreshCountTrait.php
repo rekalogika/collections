@@ -19,6 +19,7 @@ use Rekalogika\Domain\Collections\Common\Exception\InvalidCountException;
 trait RefreshCountTrait
 {
     abstract private function getCountStrategy(): CountStrategy;
+
     abstract private function getUnderlyingCountable(): ?\Countable;
 
     /**

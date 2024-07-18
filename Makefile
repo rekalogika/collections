@@ -29,6 +29,11 @@ php-cs-fixer: tools/php-cs-fixer
 tools/php-cs-fixer:
 	phive install php-cs-fixer
 
+.PHONY: rector
+rector:
+	$(PHP) vendor/bin/rector process > rector.log
+	make php-cs-fixer
+
 .PHONY: clean
 clean:
 	$(PHP) vendor/bin/psalm --clear-cache
@@ -37,6 +42,10 @@ clean:
 .PHONY: merge
 monorepo-merge:
 	$(PHP) vendor/bin/monorepo-builder merge
+
+.PHONY: monorepo-release-%
+monorepo-release-%:
+	$(PHP) vendor/bin/monorepo-builder release $*
 
 .PHONY:
 fixtures: tests/var/data.db

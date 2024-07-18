@@ -57,6 +57,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
     private readonly array $orderBy;
 
     private readonly ?string $indexBy;
+
     private ?EntityManagerInterface $entityManager = null;
 
     /**
@@ -80,7 +81,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
 
         // set index by
         $identifiers = $this->getEntityManager()
-            ->getClassMetadata($this->getClass())
+            ->getClassMetadata($this->class)
             ->getIdentifier();
 
         if (\count($identifiers) !== 1) {

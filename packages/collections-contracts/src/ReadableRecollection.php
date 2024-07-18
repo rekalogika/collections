@@ -29,10 +29,8 @@ interface ReadableRecollection extends PageableInterface, ReadableCollection
     // Overridden methods, to widen keys in parameters to accommodate Uuid key
     // types
     //
-
     /**
      * @param mixed $key
-     * @return bool
      */
     #[\Override]
     public function containsKey(mixed $key): bool;
@@ -47,9 +45,7 @@ interface ReadableRecollection extends PageableInterface, ReadableCollection
     //
     // Methods
     //
-
     /**
-     * @param mixed $key
      * @return T
      * @throws NotFoundException
      */

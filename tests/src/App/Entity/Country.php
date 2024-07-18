@@ -77,7 +77,7 @@ class Country
         return $this->citizens;
     }
 
-    private static function getWorkingAgeCriteria(): Criteria
+    private function getWorkingAgeCriteria(): Criteria
     {
         return Criteria::create()
             ->where(Criteria::expr()->gte('age', 15))
@@ -113,7 +113,7 @@ class Country
     {
         return CriteriaRecollection::create(
             collection: $this->citizens,
-            criteria: self::getWorkingAgeCriteria(),
+            criteria: $this->getWorkingAgeCriteria(),
             indexBy: 'id',
             instanceId: __METHOD__,
         );
@@ -126,7 +126,7 @@ class Country
     {
         return MinimalCriteriaRecollection::create(
             collection: $this->citizens,
-            criteria: self::getWorkingAgeCriteria(),
+            criteria: $this->getWorkingAgeCriteria(),
             indexBy: 'id',
             instanceId: __METHOD__,
         );

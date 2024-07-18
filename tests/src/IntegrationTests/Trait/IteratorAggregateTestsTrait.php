@@ -39,6 +39,7 @@ trait IteratorAggregateTestsTrait
             static::assertEquals($key, $value->getId());
             $count++;
         }
+
         static::assertGreaterThan(0, $count);
     }
 }

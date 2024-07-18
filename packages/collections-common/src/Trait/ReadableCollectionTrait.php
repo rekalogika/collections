@@ -55,9 +55,6 @@ trait ReadableCollectionTrait
         return $this->getSafeCollection()->isEmpty();
     }
 
-    /**
-     * @param mixed $key
-     */
     final public function containsKey(mixed $key): bool
     {
         /** @var TKey */
@@ -67,7 +64,6 @@ trait ReadableCollectionTrait
     }
 
     /**
-     * @param mixed $key
      * @return T|null
      */
     final public function get(mixed $key): mixed

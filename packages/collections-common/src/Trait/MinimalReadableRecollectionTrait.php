@@ -49,9 +49,6 @@ trait MinimalReadableRecollectionTrait
         return $this->getRealCollection()->contains($element);
     }
 
-    /**
-     * @param mixed $key
-     */
     final public function containsKey(mixed $key): bool
     {
         /** @var TKey */
@@ -61,7 +58,6 @@ trait MinimalReadableRecollectionTrait
     }
 
     /**
-     * @param mixed $key
      * @return T|null
      */
     final public function get(mixed $key): mixed

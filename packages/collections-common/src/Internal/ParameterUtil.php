@@ -81,7 +81,7 @@ final class ParameterUtil
             $orderBy = [$orderBy => Order::Ascending];
         }
 
-        if (empty($orderBy)) {
+        if ($orderBy === []) {
             throw new UnexpectedValueException('The order by clause cannot be empty.');
         }
 
