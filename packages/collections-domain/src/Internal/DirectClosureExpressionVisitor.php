@@ -68,7 +68,7 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
      */
     public static function sortByField(string $name, int $orientation = 1, \Closure|null $next = null)
     {
-        if (!$next) {
+        if ($next === null) {
             $next = static fn (): int => 0;
         }
 
