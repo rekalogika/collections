@@ -12,6 +12,7 @@ use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
+use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
 use Rector\Php80\Rector\FunctionLike\MixedTypeRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Strict\Rector\Ternary\DisallowedShortTernaryRuleFixerRector;
@@ -25,7 +26,7 @@ return RectorConfig::configure()
         __DIR__ . '/tests/src',
     ])
     ->withPreparedSets(
-        // deadCode: true,
+        deadCode: true,
         // codeQuality: true,
         // codingStyle: true,
         typeDeclarations: true,
@@ -35,7 +36,6 @@ return RectorConfig::configure()
         // symfonyCodeQuality: true,
         // doctrineCodeQuality: true,
     )
-    ->withDeadCodeLevel(20)
     ->withPhpSets(php82: true)
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class,
@@ -57,7 +57,13 @@ return RectorConfig::configure()
             __DIR__ . '/packages/collections-orm/src/Trait/MinimalReadableRepositoryTrait.php',
         ],
 
+        // static analysis tools don't like this
         RemoveNonExistingVarAnnotationRector::class,
+
+        RemoveExtraParametersRector::class => [
+            // static analysis tools don't like this
+            __DIR__ . '/packages/collections-domain/src/Internal/ExtraLazyDetector.php',
+        ],
 
         // static analysis tools don't like this
         RemoveUnusedVariableAssignRector::class,
