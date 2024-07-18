@@ -51,6 +51,7 @@ class CriteriaPageable implements PageableRecollection
     private readonly Selectable $collection;
 
     private readonly Criteria $criteria;
+
     private readonly ?string $indexBy;
 
     /**

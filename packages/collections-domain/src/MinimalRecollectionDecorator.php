@@ -56,6 +56,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
     private readonly array $orderBy;
 
     private readonly ?string $indexBy;
+
     private readonly Criteria $criteria;
 
     /**

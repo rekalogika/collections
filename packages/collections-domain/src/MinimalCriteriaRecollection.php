@@ -53,6 +53,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
     private readonly Selectable $collection;
 
     private readonly Criteria $criteria;
+
     private readonly ?string $indexBy;
 
     /**

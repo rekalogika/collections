@@ -23,6 +23,7 @@ use Rekalogika\Domain\Collections\Internal\ExtraLazyDetector;
 trait SafetyCheckTrait
 {
     private ?bool $isSafe = null;
+
     private ?bool $isSafeWithIndex = null;
 
     /**

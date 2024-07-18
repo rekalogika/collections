@@ -41,6 +41,7 @@ trait CollectionTrait
      * @return Collection<TKey,T>
      */
     abstract private function getSafeCollection(): Collection;
+
     abstract private function ensureSafety(): void;
 
     /**

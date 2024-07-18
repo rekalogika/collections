@@ -64,6 +64,7 @@ abstract class AbstractRepository implements Repository
     private readonly array $orderBy;
 
     private readonly ?string $indexBy;
+
     private ?EntityManagerInterface $entityManager = null;
 
     /**

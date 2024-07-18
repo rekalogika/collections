@@ -67,6 +67,7 @@ class CriteriaRecollection implements ReadableRecollection
     private readonly Selectable $collection;
 
     private readonly Criteria $criteria;
+
     private readonly ?string $indexBy;
 
     /**

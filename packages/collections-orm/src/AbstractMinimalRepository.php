@@ -57,6 +57,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
     private readonly array $orderBy;
 
     private readonly ?string $indexBy;
+
     private ?EntityManagerInterface $entityManager = null;
 
     /**

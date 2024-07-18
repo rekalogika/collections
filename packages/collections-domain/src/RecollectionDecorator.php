@@ -76,6 +76,7 @@ class RecollectionDecorator implements Recollection
     private readonly array $orderBy;
 
     private readonly ?string $indexBy;
+
     private readonly Criteria $criteria;
 
     /**
