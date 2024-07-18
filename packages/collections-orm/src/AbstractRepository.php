@@ -93,7 +93,7 @@ abstract class AbstractRepository implements Repository
 
         // set index by
         $identifiers = $this->getEntityManager()
-            ->getClassMetadata($this->getClass())
+            ->getClassMetadata($this->class)
             ->getIdentifier();
 
         if (\count($identifiers) !== 1) {
