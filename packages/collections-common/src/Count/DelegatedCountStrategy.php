@@ -18,6 +18,7 @@ use Rekalogika\Domain\Collections\Common\Exception\SettingCountUnsupportedExcept
 
 class DelegatedCountStrategy implements CountStrategy
 {
+    #[\Override]
     public function getCount(?\Countable $underlyingObject): int
     {
         if (!$underlyingObject instanceof \Countable) {
@@ -27,6 +28,7 @@ class DelegatedCountStrategy implements CountStrategy
         return \count($underlyingObject);
     }
 
+    #[\Override]
     public function setCount(?\Countable $underlyingObject, int $count): void
     {
         throw new SettingCountUnsupportedException('Setting count is disabled');

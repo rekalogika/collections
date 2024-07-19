@@ -30,21 +30,25 @@ class MinimalRecollectionDecoratorTest extends BaseRecollectionTestCase
     /** @use MinimalRecollectionTestsTrait<MinimalRecollection<array-key,Citizen>> */
     use MinimalRecollectionTestsTrait;
 
+    #[\Override]
     protected function isSingleton(): bool
     {
         return true;
     }
 
+    #[\Override]
     protected function getExpectedTotal(): int
     {
         return 6060;
     }
 
+    #[\Override]
     protected function isSafe(): bool
     {
         return true;
     }
 
+    #[\Override]
     protected function getObject(): MinimalRecollection
     {
         $repository = static::getContainer()->get(CountryMinimalRepository::class);

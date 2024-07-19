@@ -30,6 +30,7 @@ final class CountryFactory extends PersistentProxyObjectFactory
     {
     }
 
+    #[\Override]
     public static function class(): string
     {
         return Country::class;
@@ -40,6 +41,7 @@ final class CountryFactory extends PersistentProxyObjectFactory
      *
      * @return array<string,mixed>
      */
+    #[\Override]
     protected function defaults(): array
     {
         return [
@@ -50,6 +52,7 @@ final class CountryFactory extends PersistentProxyObjectFactory
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
      */
+    #[\Override]
     protected function initialize(): static
     {
         return $this

@@ -18,11 +18,13 @@ use Rekalogika\Domain\Collections\Common\Exception\SettingCountUnsupportedExcept
 
 class DisabledCountStrategy implements CountStrategy
 {
+    #[\Override]
     public function getCount(?\Countable $underlyingObject): int
     {
         throw new GettingCountUnsupportedException('Counting is disabled');
     }
 
+    #[\Override]
     public function setCount(?\Countable $underlyingObject, int $count): void
     {
         throw new SettingCountUnsupportedException('Setting count is disabled');

@@ -30,21 +30,25 @@ class RecollectionDecoratorSmallSetTest extends BaseRecollectionTestCase
     /** @use RecollectionTestsTrait<Recollection<array-key,Citizen>> */
     use RecollectionTestsTrait;
 
+    #[\Override]
     protected function isSingleton(): bool
     {
         return true;
     }
 
+    #[\Override]
     protected function getExpectedTotal(): int
     {
         return 30;
     }
 
+    #[\Override]
     protected function isSafe(): bool
     {
         return true;
     }
 
+    #[\Override]
     protected function getObject(): Recollection
     {
         $repository = static::getContainer()->get(CountryMinimalRepository::class);

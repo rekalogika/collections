@@ -15,11 +15,13 @@ namespace Rekalogika\Domain\Collections\Common\Count;
 
 class ZeroCountStrategy implements CountStrategy
 {
+    #[\Override]
     public function getCount(?\Countable $underlyingObject): int
     {
         return 0;
     }
 
+    #[\Override]
     public function setCount(?\Countable $underlyingObject, int $count): void
     {
     }

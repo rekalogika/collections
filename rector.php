@@ -14,6 +14,7 @@ use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
 use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
+use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Strict\Rector\Ternary\DisallowedShortTernaryRuleFixerRector;
 
 return RectorConfig::configure()
@@ -37,7 +38,7 @@ return RectorConfig::configure()
     )
     ->withPhpSets(php82: true)
     ->withRules([
-        // AddOverrideAttributeToOverriddenMethodsRector::class,
+        AddOverrideAttributeToOverriddenMethodsRector::class,
     ])
     ->withSkip([
         RemoveUselessParamTagRector::class => [

@@ -31,21 +31,25 @@ class CriteriaRecollectionSmallSetTest extends BaseRecollectionTestCase
      */
     use CriteriaReadableRecollectionTestsTrait;
 
+    #[\Override]
     protected function isSingleton(): bool
     {
         return true;
     }
 
+    #[\Override]
     protected function getExpectedTotal(): int
     {
         return 10;
     }
 
+    #[\Override]
     protected function isSafe(): bool
     {
         return true;
     }
 
+    #[\Override]
     protected function getObject(): ReadableRecollection
     {
         $repository = static::getContainer()->get(CountryMinimalRepository::class);

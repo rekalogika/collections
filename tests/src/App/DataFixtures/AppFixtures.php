@@ -20,6 +20,7 @@ use Rekalogika\Collections\Tests\App\Factory\CountryFactory;
 
 class AppFixtures extends Fixture
 {
+    #[\Override]
     public function load(ObjectManager $manager): void
     {
         // large set: 6060

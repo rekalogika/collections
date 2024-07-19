@@ -88,6 +88,7 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function walkComparison(Comparison $comparison)
     {
         $field = $comparison->getField();
@@ -129,6 +130,7 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function walkValue(Value $value)
     {
         return $value->getValue();
@@ -137,6 +139,7 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function walkCompositeExpression(CompositeExpression $expr)
     {
         $expressionList = [];

@@ -28,6 +28,7 @@ class DefaultKeyTransformer implements KeyTransformer
     {
     }
 
+    #[\Override]
     public function transformToKey(mixed $key): int|string
     {
         if ($key instanceof \Stringable) {

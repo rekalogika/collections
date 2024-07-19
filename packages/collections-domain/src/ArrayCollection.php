@@ -38,6 +38,7 @@ class ArrayCollection extends DoctrineArrayCollection
     /**
      * @psalm-return Collection<TKey,T>&Selectable<TKey,T>
      */
+    #[\Override]
     public function matching(Criteria $criteria): Collection&Selectable
     {
         $expr     = $criteria->getWhereExpression();
