@@ -29,21 +29,25 @@ class MinimalCriteriaRecollectionTest extends BaseRecollectionTestCase
     /** @use MinimalReadableRecollectionTestsTrait<MinimalReadableRecollection<array-key,Citizen>> */
     use MinimalReadableRecollectionTestsTrait;
 
+    #[\Override]
     protected function isSingleton(): bool
     {
         return true;
     }
 
+    #[\Override]
     protected function getExpectedTotal(): int
     {
         return 550;
     }
 
+    #[\Override]
     protected function isSafe(): bool
     {
         return true;
     }
 
+    #[\Override]
     protected function getObject(): MinimalReadableRecollection
     {
         $repository = static::getContainer()->get(CountryMinimalRepository::class);

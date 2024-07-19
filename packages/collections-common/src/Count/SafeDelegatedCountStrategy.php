@@ -26,6 +26,7 @@ class SafeDelegatedCountStrategy implements CountStrategy
     ) {
     }
 
+    #[\Override]
     public function getCount(?\Countable $underlyingObject): int
     {
         if ($underlyingObject === null) {
@@ -51,6 +52,7 @@ class SafeDelegatedCountStrategy implements CountStrategy
         return $result;
     }
 
+    #[\Override]
     public function setCount(?\Countable $underlyingObject, int $count): void
     {
         throw new SettingCountUnsupportedException('Setting count is disabled');

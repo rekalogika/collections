@@ -3,6 +3,7 @@
 ## 0.9.3
 
 * build: add rector
+* chore: add `Override` where applicable
 
 ## 0.9.2
 

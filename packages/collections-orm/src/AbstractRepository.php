@@ -146,6 +146,7 @@ abstract class AbstractRepository implements Repository
     /**
      * @param int<1,max> $itemsPerPage
      */
+    #[\Override]
     public function withItemsPerPage(int $itemsPerPage): static
     {
         $instance = clone $this;

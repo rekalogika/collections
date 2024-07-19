@@ -30,6 +30,7 @@ final class CitizenFactory extends PersistentProxyObjectFactory
     {
     }
 
+    #[\Override]
     public static function class(): string
     {
         return Citizen::class;
@@ -40,6 +41,7 @@ final class CitizenFactory extends PersistentProxyObjectFactory
      *
      * @return array<string,mixed>
      */
+    #[\Override]
     protected function defaults(): array
     {
         return [
@@ -52,6 +54,7 @@ final class CitizenFactory extends PersistentProxyObjectFactory
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
      */
+    #[\Override]
     protected function initialize(): static
     {
         return $this

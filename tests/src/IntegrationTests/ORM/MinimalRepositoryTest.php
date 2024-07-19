@@ -27,21 +27,25 @@ class MinimalRepositoryTest extends BaseRecollectionTestCase
     /** @use MinimalRepositoryTestsTrait<MinimalRepository<array-key,Citizen>> */
     use MinimalRepositoryTestsTrait;
 
+    #[\Override]
     protected function isSingleton(): bool
     {
         return true;
     }
 
+    #[\Override]
     protected function getExpectedTotal(): int
     {
         return 7740;
     }
 
+    #[\Override]
     protected function isSafe(): bool
     {
         return false;
     }
 
+    #[\Override]
     protected function getObject(): MinimalRepository
     {
         $repository = static::getContainer()->get(CitizenMinimalRepository::class);

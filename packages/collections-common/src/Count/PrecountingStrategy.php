@@ -22,11 +22,13 @@ class PrecountingStrategy implements CountStrategy
     {
     }
 
+    #[\Override]
     public function getCount(?\Countable $underlyingObject): int
     {
         return $this->count;
     }
 
+    #[\Override]
     public function setCount(?\Countable $underlyingObject, int $count): void
     {
         $this->count = $count;

@@ -151,6 +151,7 @@ class CriteriaPageable implements PageableRecollection
     /**
      * @param int<1,max> $itemsPerPage
      */
+    #[\Override]
     public function withItemsPerPage(int $itemsPerPage): static
     {
         return self::create(

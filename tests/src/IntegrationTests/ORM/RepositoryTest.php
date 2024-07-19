@@ -27,21 +27,25 @@ class RepositoryTest extends BaseRecollectionTestCase
     /** @use RepositoryTestsTrait<Repository<array-key,Citizen>> */
     use RepositoryTestsTrait;
 
+    #[\Override]
     protected function isSingleton(): bool
     {
         return true;
     }
 
+    #[\Override]
     protected function getExpectedTotal(): int
     {
         return 7740;
     }
 
+    #[\Override]
     protected function isSafe(): bool
     {
         return false;
     }
 
+    #[\Override]
     protected function getObject(): Repository
     {
         $repository = static::getContainer()->get(CitizenRepository::class);

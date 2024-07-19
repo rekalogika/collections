@@ -14,9 +14,12 @@ use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
 use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
+use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Strict\Rector\Ternary\DisallowedShortTernaryRuleFixerRector;
+use Rector\ValueObject\PhpVersion;
 
 return RectorConfig::configure()
+    ->withPhpVersion(PhpVersion::PHP_83)
     ->withPaths([
         __DIR__ . '/packages',
         __DIR__ . '/tests/bin',
@@ -37,7 +40,7 @@ return RectorConfig::configure()
     )
     ->withPhpSets(php82: true)
     ->withRules([
-        // AddOverrideAttributeToOverriddenMethodsRector::class,
+        AddOverrideAttributeToOverriddenMethodsRector::class,
     ])
     ->withSkip([
         RemoveUselessParamTagRector::class => [

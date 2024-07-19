@@ -181,6 +181,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
     /**
      * @param int<1,max> $itemsPerPage
      */
+    #[\Override]
     final public function withItemsPerPage(int $itemsPerPage): static
     {
         return static::create(

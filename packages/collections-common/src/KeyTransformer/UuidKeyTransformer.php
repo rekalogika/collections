@@ -30,6 +30,7 @@ class UuidKeyTransformer implements KeyTransformer
     {
     }
 
+    #[\Override]
     public function transformToKey(mixed $key): int|string
     {
         if ($key instanceof AbstractUid) {

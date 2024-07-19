@@ -27,6 +27,7 @@ class CollectionTest extends ArrayCollectionTestCase
      *
      * @return Collection<array-key,mixed>
      */
+    #[\Override]
     protected function buildCollection(array $elements = []): Collection
     {
         return RecollectionDecorator::create(
@@ -36,6 +37,7 @@ class CollectionTest extends ArrayCollectionTestCase
     }
 
     /** @psalm-return array<string, array{mixed[]}> */
+    #[\Override]
     public static function provideDifferentElements(): array
     {
         return [
