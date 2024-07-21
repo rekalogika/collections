@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.9.3
+## 0.10.0
 
 * fix(orm): `getQueryBuilder()` now clones the query builder
 * feat(orm): add `withQueryBuilder()`
