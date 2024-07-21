@@ -7,6 +7,7 @@
 * build: add rector
 * chore: add `Override` where applicable
 * build: update release target
+* deps: update rekapager to 0.14
 
 ## 0.9.1
 
