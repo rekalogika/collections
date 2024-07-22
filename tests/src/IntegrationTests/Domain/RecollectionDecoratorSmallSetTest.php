@@ -57,7 +57,7 @@ class RecollectionDecoratorSmallSetTest extends BaseRecollectionTestCase
         /** @var MinimalRepository<array-key,Country> $repository */
 
         $country = $repository->fetch(3);
-        $citizens = $country->getCitizensInRecollection();
+        $citizens = $country->getCitizensInRecollection($this->getPaginationType());
 
         static::assertInstanceOf(Recollection::class, $citizens);
         static::assertInstanceOf(PersistentCollection::class, $country->getRawCitizens());

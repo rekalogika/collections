@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Collections\Tests\IntegrationTests;
+namespace Rekalogika\Collections\Tests\IntegrationTests\Domain;
 
 use Doctrine\ORM\PersistentCollection;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
@@ -57,7 +57,9 @@ class RecollectionDecoratorTest extends BaseRecollectionTestCase
         /** @var MinimalRepository<array-key,Country> $repository */
 
         $country = $repository->fetch(1);
-        $citizens = $country->getCitizensInRecollection();
+        $citizens = $country->getCitizensInRecollection(
+            $this->getPaginationType()
+        );
 
         static::assertInstanceOf(Recollection::class, $citizens);
         static::assertInstanceOf(PersistentCollection::class, $country->getRawCitizens());

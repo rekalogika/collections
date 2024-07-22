@@ -6,7 +6,7 @@ test: composer-dump phpstan psalm phpunit
 
 .PHONY: composer-dump
 composer-dump:
-	$(COMPOSER) dump-autoload
+	$(COMPOSER) dump-autoload --optimize
 
 .PHONY: phpstan
 phpstan:
