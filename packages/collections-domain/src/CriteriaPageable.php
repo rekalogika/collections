@@ -21,6 +21,7 @@ use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
+use Rekalogika\Domain\Collections\Common\Pagination;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\RefreshCountTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
@@ -69,6 +70,7 @@ class CriteriaPageable implements PageableRecollection
         ?string $indexBy = null,
         ?int $itemsPerPage = null,
         private readonly ?CountStrategy $count = null,
+        private readonly ?Pagination $pagination = null,
     ) {
         $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
@@ -105,6 +107,7 @@ class CriteriaPageable implements PageableRecollection
         ?string $indexBy = null,
         int $itemsPerPage = 50,
         ?CountStrategy $count = null,
+        ?Pagination $pagination = null,
     ): static {
         if (self::$instances === null) {
             /** @var \WeakMap<object,array<string,self<array-key,mixed>>> */
@@ -117,6 +120,7 @@ class CriteriaPageable implements PageableRecollection
             $instanceId ?? $criteria,
             $indexBy,
             $itemsPerPage,
+            $pagination,
         ]));
 
         if (isset(self::$instances[$collection][$cacheKey])) {
@@ -131,6 +135,7 @@ class CriteriaPageable implements PageableRecollection
             indexBy: $indexBy,
             itemsPerPage: $itemsPerPage,
             count: $count,
+            pagination: $pagination,
         );
 
         if (!isset(self::$instances[$collection])) {

@@ -1,8 +1,9 @@
 # Changelog
 
-## 0.10.1
+## 0.11.0
 
 * docs: update readme
+* feat: offset pagination support
 
 ## 0.10.0
 

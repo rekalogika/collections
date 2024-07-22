@@ -103,4 +103,6 @@ final class Configuration
      * @var int<1,max>
      */
     public static int $defaultItemsPerPage = 50;
+
+    public static Pagination $defaultPagination = Pagination::Keyset;
 }

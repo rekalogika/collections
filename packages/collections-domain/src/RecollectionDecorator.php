@@ -23,6 +23,7 @@ use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
+use Rekalogika\Domain\Collections\Common\Pagination;
 use Rekalogika\Domain\Collections\Common\Trait\RecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
 use Rekalogika\Domain\Collections\Trait\ExtraLazyTrait;
@@ -100,6 +101,7 @@ class RecollectionDecorator implements Recollection
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
         private readonly ?KeyTransformer $keyTransformer = null,
+        private readonly ?Pagination $pagination = null,
     ) {
         $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
@@ -141,6 +143,7 @@ class RecollectionDecorator implements Recollection
         ?int $softLimit = null,
         ?int $hardLimit = null,
         ?KeyTransformer $keyTransformer = null,
+        ?Pagination $pagination = null,
     ): Recollection {
         if (self::$instances === null) {
             /** @var \WeakMap<object,array<string,self<array-key,mixed>>>    */
@@ -153,6 +156,7 @@ class RecollectionDecorator implements Recollection
             $orderBy,
             $indexBy,
             $itemsPerPage,
+            $pagination,
         ]));
 
         if (isset(self::$instances[$collection][$cacheKey])) {
@@ -170,6 +174,7 @@ class RecollectionDecorator implements Recollection
             softLimit: $softLimit,
             hardLimit: $hardLimit,
             keyTransformer: $keyTransformer,
+            pagination: $pagination,
         );
 
         if (!isset(self::$instances[$collection])) {
