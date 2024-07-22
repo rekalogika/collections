@@ -15,9 +15,12 @@ namespace Rekalogika\Collections\ORM\Trait;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Exception\GettingCountUnsupportedException;
+use Rekalogika\Domain\Collections\Common\Pagination;
 use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
+use Rekalogika\Rekapager\Offset\OffsetPageable;
 
 /**
  * @template TKey of array-key
@@ -55,11 +58,18 @@ trait QueryBuilderPageableTrait
         };
 
         // @phpstan-ignore-next-line
-        $this->pageable = new KeysetPageable(
-            adapter: $adapter,
-            itemsPerPage: $this->itemsPerPage,
-            count: $count,
-        );
+        $this->pageable = match ($this->pagination ?? Configuration::$defaultPagination) {
+            Pagination::Keyset => new KeysetPageable(
+                adapter: $adapter,
+                itemsPerPage: $this->itemsPerPage,
+                count: $count,
+            ),
+            Pagination::Offset => new OffsetPageable(
+                adapter: $adapter,
+                itemsPerPage: $this->itemsPerPage,
+                count: $count,
+            ),
+        };
 
         // @phpstan-ignore-next-line
         return $this->pageable;

@@ -19,6 +19,7 @@ use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
+use Rekalogika\Domain\Collections\Common\Pagination;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\RefreshCountTrait;
 
@@ -52,6 +53,7 @@ class QueryPageable implements PageableRecollection
         ?string $indexBy = null,
         ?int $itemsPerPage = null,
         private readonly ?CountStrategy $count = null,
+        private readonly ?Pagination $pagination = null,
     ) {
         $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
@@ -106,6 +108,7 @@ class QueryPageable implements PageableRecollection
         QueryBuilder $queryBuilder,
         ?string $indexBy = null,
         ?CountStrategy $count = null,
+        ?Pagination $pagination = null,
     ): self {
         /**
          * @var self<TKey,T>
@@ -116,6 +119,7 @@ class QueryPageable implements PageableRecollection
             indexBy: $indexBy ?? $this->indexBy,
             count: $count,
             itemsPerPage: $this->itemsPerPage,
+            pagination: $pagination,
         );
     }
 
@@ -126,6 +130,7 @@ class QueryPageable implements PageableRecollection
         QueryBuilder $queryBuilder,
         ?string $indexBy = null,
         ?CountStrategy $count = null,
+        ?Pagination $pagination = null,
     ): PageableRecollection {
         /**
          * @var PageableRecollection<TKey,T>
@@ -136,6 +141,7 @@ class QueryPageable implements PageableRecollection
             itemsPerPage: $this->itemsPerPage,
             indexBy: $indexBy ?? $this->indexBy,
             count: $count,
+            pagination: $pagination,
         );
     }
 }
