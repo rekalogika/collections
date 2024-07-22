@@ -17,10 +17,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Contracts\Collections\Exception\OverflowException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Domain\Collections\Common\Pagination;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * @template-covariant R of object
+ * @runTestsInSeparateProcesses
  */
 abstract class BaseRecollectionTestCase extends KernelTestCase
 {
@@ -34,6 +36,11 @@ abstract class BaseRecollectionTestCase extends KernelTestCase
     abstract protected function isSingleton(): bool;
 
     abstract protected function getExpectedTotal(): int;
+
+    protected function getPaginationType(): Pagination
+    {
+        return Pagination::Keyset;
+    }
 
     protected function getEntityManager(): EntityManagerInterface
     {

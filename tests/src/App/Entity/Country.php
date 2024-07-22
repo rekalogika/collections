@@ -22,6 +22,8 @@ use Rekalogika\Contracts\Collections\MinimalRecollection;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Contracts\Collections\Recollection;
 use Rekalogika\Domain\Collections\ArrayCollection;
+use Rekalogika\Domain\Collections\Common\Count\DisabledCountStrategy;
+use Rekalogika\Domain\Collections\Common\Pagination;
 use Rekalogika\Domain\Collections\CriteriaRecollection;
 use Rekalogika\Domain\Collections\MinimalCriteriaRecollection;
 use Rekalogika\Domain\Collections\MinimalRecollectionDecorator;
@@ -87,48 +89,58 @@ class Country
     /**
      * @return Recollection<int, Citizen>
      */
-    public function getCitizensInRecollection(): Recollection
-    {
+    public function getCitizensInRecollection(
+        Pagination $pagination
+    ): Recollection {
         return RecollectionDecorator::create(
             collection: $this->citizens,
-            indexBy: 'id'
+            indexBy: 'id',
+            pagination: $pagination,
+            count: new DisabledCountStrategy()
         );
     }
 
     /**
      * @return MinimalRecollection<int, Citizen>
      */
-    public function getCitizensInMinimalRecollection(): MinimalRecollection
-    {
+    public function getCitizensInMinimalRecollection(
+        Pagination $pagination
+    ): MinimalRecollection {
         return MinimalRecollectionDecorator::create(
             collection: $this->citizens,
-            indexBy: 'id'
+            indexBy: 'id',
+            pagination: $pagination,
+            count: new DisabledCountStrategy()
         );
     }
 
     /**
      * @return ReadableRecollection<int, Citizen>
      */
-    public function getWorkingAgeCitizensInRecollection(): ReadableRecollection
-    {
+    public function getWorkingAgeCitizensInRecollection(
+        Pagination $pagination
+    ): ReadableRecollection {
         return CriteriaRecollection::create(
             collection: $this->citizens,
             criteria: $this->getWorkingAgeCriteria(),
             indexBy: 'id',
             instanceId: __METHOD__,
+            pagination: $pagination,
         );
     }
 
     /**
      * @return MinimalReadableRecollection<int, Citizen>
      */
-    public function getWorkingAgeCitizensInMinimalRecollection(): MinimalReadableRecollection
-    {
+    public function getWorkingAgeCitizensInMinimalRecollection(
+        Pagination $pagination
+    ): MinimalReadableRecollection {
         return MinimalCriteriaRecollection::create(
             collection: $this->citizens,
             criteria: $this->getWorkingAgeCriteria(),
             indexBy: 'id',
             instanceId: __METHOD__,
+            pagination: $pagination,
         );
     }
 

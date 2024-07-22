@@ -26,6 +26,7 @@ use Rekalogika\Contracts\Collections\MinimalRepository;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
+use Rekalogika\Domain\Collections\Common\Pagination;
 
 /**
  * @template TKey of array-key
@@ -76,6 +77,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
         array|string|null $orderBy = null,
         ?int $itemsPerPage = null,
         private readonly ?CountStrategy $count = null,
+        private readonly ?Pagination $pagination = null,
     ) {
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
 

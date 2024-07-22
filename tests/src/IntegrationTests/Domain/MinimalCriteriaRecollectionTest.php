@@ -56,7 +56,9 @@ class MinimalCriteriaRecollectionTest extends BaseRecollectionTestCase
         /** @var MinimalRepository<array-key,Country> $repository */
 
         $country = $repository->fetch(2);
-        $citizens = $country->getWorkingAgeCitizensInMinimalRecollection();
+        $citizens = $country->getWorkingAgeCitizensInMinimalRecollection(
+            $this->getPaginationType()
+        );
 
         static::assertInstanceOf(MinimalReadableRecollection::class, $citizens);
 
