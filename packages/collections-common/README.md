@@ -1,11 +1,18 @@
-# Rekalogika Collections Domain
+# rekalogika/collections-common
 
-TBD
+Common library required by other components of the `rekalogika/collections`
+library.
 
 ## Documentation
 
-TBD
+[rekalogika.dev/collections](https://rekalogika.dev/collections)
 
 ## License
 
 MIT
+
+## Contributing
+
+This library consists of multiple repositories split from a monorepo. Be sure to
+submit issues and pull requests to the
+[rekalogika/collections](https://github.com/rekalogika/collections) monorepo.

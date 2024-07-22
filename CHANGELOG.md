@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.1
+
+* docs: update readme
+
 ## 0.10.0
 
 * fix(orm): `getQueryBuilder()` now clones the query builder
