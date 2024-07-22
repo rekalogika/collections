@@ -39,8 +39,8 @@
         "rekalogika/collections-common": "^0.10",
         "rekalogika/collections-contracts": "^0.10",
         "rekalogika/collections-domain": "^0.10",
-        "rekalogika/rekapager-contracts": "^0.14",
-        "rekalogika/rekapager-doctrine-orm-adapter": "^0.14",
-        "rekalogika/rekapager-keyset-pagination": "^0.14"
+        "rekalogika/rekapager-contracts": "^0.15",
+        "rekalogika/rekapager-doctrine-orm-adapter": "^0.15",
+        "rekalogika/rekapager-keyset-pagination": "^0.15"
     }
 }
