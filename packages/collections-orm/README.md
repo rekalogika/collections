@@ -1,9 +1,9 @@
 # rekalogika/collections-orm
 
-A collection class using Doctrine ORM `QueryBuilder` as the data source. Unlike
-doing the query in the traditional way, this class allows lazy loading. You can
-safely pass the object around, and it will only execute the query when you start
-getting items from it.
+Lazy-loading collection class using Doctrine ORM `QueryBuilder` as the data
+source. Unlike doing the query in the traditional way, this class allows lazy
+loading. You can safely pass the object around, and it will only execute the
+query when you start getting items from it.
 
 The class also implements the `PageableInterface` from the
 [`rekalogika/rekapager`](https://rekalogika.dev/rekapager) library. This allows

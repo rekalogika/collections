@@ -1,13 +1,25 @@
 {
     "name": "rekalogika/collections-contracts",
-    "description": "",
+    "description": "Interfaces and nominal classes for the rekalogika/collections library.",
     "license": "MIT",
     "type": "library",
     "keywords": [
         "domain",
         "collections",
         "doctrine",
-        "pagination"
+        "pagination",
+        "orm",
+        "recollection",
+        "minimalrecollection",
+        "count",
+        "precounting",
+        "extra-lazy",
+        "rekapager",
+        "keyset-pagination",
+        "cursor-pagination",
+        "batch",
+        "batch-processing",
+        "repository"
     ],
     "authors": [
         {

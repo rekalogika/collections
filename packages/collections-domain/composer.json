@@ -1,13 +1,25 @@
 {
     "name": "rekalogika/collections-domain",
-    "description": "Improves Doctrine Collections usage in your domain entities.",
+    "description": "Transforms a Doctrine Collection object into our Recollection object, which extends Collection itself but also extends PageableInterface from our rekalogika/rekapager library.",
     "license": "MIT",
     "type": "library",
     "keywords": [
         "domain",
         "collections",
         "doctrine",
-        "pagination"
+        "pagination",
+        "orm",
+        "recollection",
+        "minimalrecollection",
+        "count",
+        "precounting",
+        "extra-lazy",
+        "rekapager",
+        "keyset-pagination",
+        "cursor-pagination",
+        "batch",
+        "batch-processing",
+        "repository"
     ],
     "authors": [
         {

@@ -1,13 +1,25 @@
 {
     "name": "rekalogika/collections-orm",
-    "description": "Supercharged query-backed Doctrine Collection.",
+    "description": "Lazy-loading collection class using Doctrine ORM QueryBuilder as the data source",
     "license": "MIT",
     "type": "library",
     "keywords": [
         "domain",
         "collections",
         "doctrine",
-        "pagination"
+        "pagination",
+        "orm",
+        "recollection",
+        "minimalrecollection",
+        "count",
+        "precounting",
+        "extra-lazy",
+        "rekapager",
+        "keyset-pagination",
+        "cursor-pagination",
+        "batch",
+        "batch-processing",
+        "repository"
     ],
     "authors": [
         {
