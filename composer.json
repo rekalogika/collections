@@ -59,10 +59,10 @@
         "rector/rector": "^1.2"
     },
     "replace": {
-        "rekalogika/collections-common": "0.10.0",
-        "rekalogika/collections-contracts": "0.10.0",
-        "rekalogika/collections-domain": "0.10.0",
-        "rekalogika/collections-orm": "0.10.0"
+        "rekalogika/collections-common": "0.11.1",
+        "rekalogika/collections-contracts": "0.11.1",
+        "rekalogika/collections-domain": "0.11.1",
+        "rekalogika/collections-orm": "0.11.1"
     },
     "config": {
         "allow-plugins": {
