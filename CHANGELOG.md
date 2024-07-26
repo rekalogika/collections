@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.11.0
+## 0.11.2
+
+* fix: `PrecountingStrategy` now accepts null as the underlying data
+
+## 0.11.1
 
 * docs: update readme
 * feat: offset pagination support
