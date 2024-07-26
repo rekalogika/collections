@@ -16,16 +16,16 @@ namespace Rekalogika\Domain\Collections\Common\Count;
 class PrecountingStrategy implements CountStrategy
 {
     /**
-     * @param int<0,max> $count
+     * @param ?int<0,max> $count
      */
-    public function __construct(private int &$count)
+    public function __construct(private ?int &$count)
     {
     }
 
     #[\Override]
     public function getCount(?\Countable $underlyingObject): int
     {
-        return $this->count;
+        return $this->count ?? 0;
     }
 
     #[\Override]
