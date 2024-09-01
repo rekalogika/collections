@@ -31,6 +31,7 @@ class AppFixtures extends Fixture
 
         // large set
 
+        /** @psalm-suppress InvalidArgument */
         $countrySy = CountryFactory::createOne([
             'name' => 'Syldavia',
             'code' => 'SY',
@@ -53,6 +54,7 @@ class AppFixtures extends Fixture
 
         // medium set
 
+        /** @psalm-suppress InvalidArgument */
         $countrySt = CountryFactory::createOne([
             'name' => 'San Theodoros',
             'code' => 'ST',
@@ -75,6 +77,7 @@ class AppFixtures extends Fixture
 
         // small set
 
+        /** @psalm-suppress InvalidArgument */
         $countrySd = CountryFactory::createOne([
             'name' => 'Sondonesia',
             'code' => 'SD',

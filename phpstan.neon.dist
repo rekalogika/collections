@@ -15,6 +15,9 @@ parameters:
         - tests/var/*
         - packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php
     ignoreErrors:
+        -
+            message: '#Property .* is never assigned .+ so it can be removed from the property type.#'
+            reportUnmatched: false
 
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
