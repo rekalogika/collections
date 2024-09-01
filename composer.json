@@ -33,7 +33,7 @@
         "rekalogika/rekapager-keyset-pagination": "^0.15"
     },
     "require-dev": {
-        "ekino/phpstan-banned-code": "^1.0",
+        "ekino/phpstan-banned-code": "^1.0 || ^2.0",
         "phpstan/phpstan": "^1.10.66 || ^1.11",
         "phpstan/phpstan-deprecation-rules": "^1.1",
         "phpstan/phpstan-phpunit": "^1.4",
