@@ -44,6 +44,7 @@ final class CitizenFactory extends PersistentProxyObjectFactory
     #[\Override]
     protected function defaults(): array
     {
+        /** @psalm-suppress TooManyTemplateParams */
         return [
             'country' => CountryFactory::new(),
             'name' => self::faker()->name(),

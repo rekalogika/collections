@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.3
+
+* deps: bump rekapager to 0.17
+
 ## 0.11.2
 
 * fix: `PrecountingStrategy` now accepts null as the underlying data
