@@ -19,9 +19,7 @@ use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 
 final class Configuration
 {
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     /**
      * If the collection has more than this number of items, a deprecation

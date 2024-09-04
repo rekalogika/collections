@@ -58,7 +58,7 @@ class RecollectionDecoratorMediumSetTest extends BaseRecollectionTestCase
 
         $country = $repository->fetch(2);
         $citizens = $country->getCitizensInRecollection(
-            $this->getPaginationType()
+            $this->getPaginationType(),
         );
 
         static::assertInstanceOf(Recollection::class, $citizens);

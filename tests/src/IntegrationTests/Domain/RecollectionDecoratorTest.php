@@ -58,7 +58,7 @@ class RecollectionDecoratorTest extends BaseRecollectionTestCase
 
         $country = $repository->fetch(1);
         $citizens = $country->getCitizensInRecollection(
-            $this->getPaginationType()
+            $this->getPaginationType(),
         );
 
         static::assertInstanceOf(Recollection::class, $citizens);

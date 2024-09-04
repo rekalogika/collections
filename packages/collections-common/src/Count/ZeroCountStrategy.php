@@ -22,7 +22,5 @@ class ZeroCountStrategy implements CountStrategy
     }
 
     #[\Override]
-    public function setCount(?\Countable $underlyingObject, int $count): void
-    {
-    }
+    public function setCount(?\Countable $underlyingObject, int $count): void {}
 }

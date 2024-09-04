@@ -43,11 +43,11 @@ trait RepositoryDxTrait
         $entityManager = $this->managerRegistry->getManagerForClass($this->getClass());
 
         if (null === $entityManager) {
-            throw new InvalidArgumentException(sprintf('Entity manager not found for class "%s"', $this->getClass()));
+            throw new InvalidArgumentException(\sprintf('Entity manager not found for class "%s"', $this->getClass()));
         }
 
         if (!$entityManager instanceof EntityManagerInterface) {
-            throw new InvalidArgumentException(sprintf('Manager for class "%s" is not an instance of EntityManagerInterface', $this->getClass()));
+            throw new InvalidArgumentException(\sprintf('Manager for class "%s" is not an instance of EntityManagerInterface', $this->getClass()));
         }
 
         return $this->entityManager = $entityManager;
@@ -55,7 +55,7 @@ trait RepositoryDxTrait
 
     final protected function createQueryBuilder(
         string $alias,
-        ?string $indexBy = null
+        ?string $indexBy = null,
     ): QueryBuilder {
         return $this->getEntityManager()->createQueryBuilder()
             ->select($alias)

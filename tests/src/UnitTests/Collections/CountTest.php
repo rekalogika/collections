@@ -31,7 +31,7 @@ class CountTest extends TestCase
                 new Citizen(3, 'John Doe'),
                 new Citizen(2, 'Jane Doe'),
                 new Citizen(1, 'John Smith'),
-            ])
+            ]),
         );
 
         $count = \count($collection);
@@ -46,7 +46,7 @@ class CountTest extends TestCase
                 new Citizen(2, 'Jane Doe'),
                 new Citizen(1, 'John Smith'),
             ]),
-            count: new DisabledCountStrategy()
+            count: new DisabledCountStrategy(),
         );
 
         $this->expectException(GettingCountUnsupportedException::class);
@@ -61,7 +61,7 @@ class CountTest extends TestCase
                 new Citizen(2, 'Jane Doe'),
                 new Citizen(1, 'John Smith'),
             ]),
-            count: new DelegatedCountStrategy()
+            count: new DelegatedCountStrategy(),
         );
 
         $count = \count($collection);

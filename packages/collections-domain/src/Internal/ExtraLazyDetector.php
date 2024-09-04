@@ -21,9 +21,7 @@ use Doctrine\Common\Collections\ReadableCollection;
  */
 final class ExtraLazyDetector
 {
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     /**
      * @template TKey of array-key

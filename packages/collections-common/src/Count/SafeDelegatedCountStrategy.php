@@ -23,8 +23,7 @@ class SafeDelegatedCountStrategy implements CountStrategy
         private readonly ?int $softLimit = null,
         private readonly ?int $hardLimit = null,
         private readonly ?float $durationThreshold = null,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function getCount(?\Countable $underlyingObject): int
@@ -42,11 +41,11 @@ class SafeDelegatedCountStrategy implements CountStrategy
         $duration = microtime(true) - $start;
 
         if ($result > $hardLimit) {
-            throw new GettingCountUnsupportedException(sprintf('The count exceeds the threshold of %d. You should refactor and use other counting strategy. Count duration: %d s', $hardLimit, $duration));
+            throw new GettingCountUnsupportedException(\sprintf('The count exceeds the threshold of %d. You should refactor and use other counting strategy. Count duration: %d s', $hardLimit, $duration));
         } elseif ($result > $softLimit) {
-            @trigger_error(sprintf('The count exceeds the warning threshold of %d. As it might impact performance, you should refactor and use other counting strategy. Count duration: %d s.', $softLimit, $duration), \E_USER_DEPRECATED);
+            @trigger_error(\sprintf('The count exceeds the warning threshold of %d. As it might impact performance, you should refactor and use other counting strategy. Count duration: %d s.', $softLimit, $duration), \E_USER_DEPRECATED);
         } elseif ($duration > $durationThreshold) {
-            @trigger_error(sprintf('The count duration is %d s. You should consider refactoring and using other counting strategy.', $duration), \E_USER_DEPRECATED);
+            @trigger_error(\sprintf('The count duration is %d s. You should consider refactoring and using other counting strategy.', $duration), \E_USER_DEPRECATED);
         }
 
         return $result;

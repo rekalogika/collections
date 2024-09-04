@@ -46,7 +46,7 @@ class CollectionTest extends ArrayCollectionTestCase
                     3 => new Citizen(3, 'Jack'),
                     2 => new Citizen(2, 'Jane'),
                     1 => new Citizen(1, 'John'),
-                ]
+                ],
             ],
         ];
     }

@@ -59,7 +59,7 @@ class CriteriaRecollectionSmallSetTest extends BaseRecollectionTestCase
 
         $country = $repository->fetch(3);
         $citizens = $country->getWorkingAgeCitizensInRecollection(
-            $this->getPaginationType()
+            $this->getPaginationType(),
         );
 
         static::assertInstanceOf(ReadableRecollection::class, $citizens);

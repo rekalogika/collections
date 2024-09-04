@@ -19,8 +19,7 @@ class Citizen
         private readonly int $id,
         private readonly string $name,
         private readonly ?Country $country = null,
-    ) {
-    }
+    ) {}
 
     public function getId(): int
     {

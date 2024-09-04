@@ -41,9 +41,7 @@ class Kernel extends BaseKernel
     }
 
     #[\Override]
-    protected function build(ContainerBuilder $container): void
-    {
-    }
+    protected function build(ContainerBuilder $container): void {}
 
     #[\Override]
     public function registerBundles(): iterable

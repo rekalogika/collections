@@ -19,8 +19,7 @@ class Country
 
     public function __construct(
         private readonly string $name,
-    ) {
-    }
+    ) {}
 
     public function getName(): string
     {

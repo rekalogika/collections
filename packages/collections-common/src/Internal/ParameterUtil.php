@@ -27,14 +27,12 @@ use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
  */
 final class ParameterUtil
 {
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function getDefaultCountStrategyForFullClasses(): CountStrategy
     {
         $closure = Configuration::$defaultCountStrategyForFullClasses
-            ?? fn (): CountStrategy => new SafeDelegatedCountStrategy();
+            ?? fn(): CountStrategy => new SafeDelegatedCountStrategy();
 
         return $closure();
     }
@@ -42,7 +40,7 @@ final class ParameterUtil
     public static function getDefaultCountStrategyForMinimalClasses(): CountStrategy
     {
         $closure = Configuration::$defaultCountStrategyForMinimalClasses
-            ?? fn (): CountStrategy => new DisabledCountStrategy();
+            ?? fn(): CountStrategy => new DisabledCountStrategy();
 
         return $closure();
     }
@@ -50,14 +48,14 @@ final class ParameterUtil
     public static function getDefaultKeyTransformer(): KeyTransformer
     {
         $closure = Configuration::$defaultKeyTransformer
-            ?? fn (): KeyTransformer => DefaultKeyTransformer::create();
+            ?? fn(): KeyTransformer => DefaultKeyTransformer::create();
 
         return $closure();
     }
 
     public static function transformInputToKey(
         ?KeyTransformer $keyTransformer,
-        mixed $input
+        mixed $input,
     ): int|string {
         $keyTransformer ??= self::getDefaultKeyTransformer();
 

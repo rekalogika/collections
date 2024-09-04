@@ -19,6 +19,4 @@ namespace Rekalogika\Contracts\Collections;
  * @extends ReadableRepository<TKey,T>
  * @extends Recollection<TKey,T>
  */
-interface Repository extends ReadableRepository, Recollection
-{
-}
+interface Repository extends ReadableRepository, Recollection {}

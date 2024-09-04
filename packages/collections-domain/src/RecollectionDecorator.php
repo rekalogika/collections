@@ -118,7 +118,7 @@ class RecollectionDecorator implements Recollection
 
         $this->orderBy = ParameterUtil::normalizeOrderBy(
             orderBy: $orderBy,
-            defaultOrderBy: $this->getDefaultOrderBy()
+            defaultOrderBy: $this->getDefaultOrderBy(),
         );
 
         $this->criteria = Criteria::create()->orderBy($this->orderBy);

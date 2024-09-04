@@ -25,7 +25,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.6",
         "doctrine/persistence": "^3.1",
         "ekino/phpstan-banned-code": "^1.0 || ^2.0",
-        "phpstan/phpstan": "^1.10.66 || ^1.11",
+        "phpstan/phpstan": "^1.12",
         "phpstan/phpstan-deprecation-rules": "^1.1",
         "phpstan/phpstan-phpunit": "^1.4",
         "phpunit/phpunit": "^10.1",
