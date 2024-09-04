@@ -132,7 +132,7 @@ trait CollectionTrait
     {
         $result = $this->getSafeCollection()->partition($p);
 
-        if (!\is_array($result) || \count($result) !== 2 || !$result[0] instanceof Collection || !$result[1] instanceof Collection) {
+        if (!\is_array($result) || \count($result) !== 2) {
             throw new \RuntimeException('Unexpected return type from partition');
         }
 
