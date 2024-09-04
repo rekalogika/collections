@@ -13,6 +13,4 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Collections\Exception;
 
-class OverflowException extends \OverflowException implements ExceptionInterface
-{
-}
+class OverflowException extends \OverflowException implements ExceptionInterface {}

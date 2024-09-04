@@ -18,9 +18,7 @@ class PrecountingStrategy implements CountStrategy
     /**
      * @param ?int<0,max> $count
      */
-    public function __construct(private ?int &$count)
-    {
-    }
+    public function __construct(private ?int &$count) {}
 
     #[\Override]
     public function getCount(?\Countable $underlyingObject): int

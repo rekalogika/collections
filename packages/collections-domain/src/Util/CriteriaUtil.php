@@ -17,9 +17,7 @@ use Doctrine\Common\Collections\Criteria;
 
 final class CriteriaUtil
 {
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function mergeCriteria(Criteria $criteria1, Criteria $criteria2): Criteria
     {

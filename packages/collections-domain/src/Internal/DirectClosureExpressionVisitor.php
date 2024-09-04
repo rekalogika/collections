@@ -15,7 +15,6 @@ namespace Rekalogika\Domain\Collections\Internal;
 
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
-
 use Doctrine\Common\Collections\Expr\ExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Value;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
@@ -69,7 +68,7 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
     public static function sortByField(string $name, int $orientation = 1, \Closure|null $next = null)
     {
         if ($next === null) {
-            $next = static fn (): int => 0;
+            $next = static fn(): int => 0;
         }
 
         return static function ($a, $b) use ($name, $next, $orientation): int {
@@ -95,12 +94,12 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
         $value = $comparison->getValue()->getValue();
 
         return match ($comparison->getOperator()) {
-            Comparison::EQ => static fn ($object): bool => static::getObjectFieldValue($object, $field) === $value,
-            Comparison::NEQ => static fn ($object): bool => static::getObjectFieldValue($object, $field) !== $value,
-            Comparison::LT => static fn ($object): bool => static::getObjectFieldValue($object, $field) < $value,
-            Comparison::LTE => static fn ($object): bool => static::getObjectFieldValue($object, $field) <= $value,
-            Comparison::GT => static fn ($object): bool => static::getObjectFieldValue($object, $field) > $value,
-            Comparison::GTE => static fn ($object): bool => static::getObjectFieldValue($object, $field) >= $value,
+            Comparison::EQ => static fn($object): bool => static::getObjectFieldValue($object, $field) === $value,
+            Comparison::NEQ => static fn($object): bool => static::getObjectFieldValue($object, $field) !== $value,
+            Comparison::LT => static fn($object): bool => static::getObjectFieldValue($object, $field) < $value,
+            Comparison::LTE => static fn($object): bool => static::getObjectFieldValue($object, $field) <= $value,
+            Comparison::GT => static fn($object): bool => static::getObjectFieldValue($object, $field) > $value,
+            Comparison::GTE => static fn($object): bool => static::getObjectFieldValue($object, $field) >= $value,
             Comparison::IN => static function ($object) use ($field, $value): bool {
                 $fieldValue = static::getObjectFieldValue($object, $field);
 
@@ -111,7 +110,7 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
 
                 return !\in_array($fieldValue, $value, \is_scalar($fieldValue));
             },
-            Comparison::CONTAINS => static fn ($object): bool => str_contains((string) static::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::CONTAINS => static fn($object): bool => str_contains((string) static::getObjectFieldValue($object, $field), (string) $value),
             Comparison::MEMBER_OF => static function ($object) use ($field, $value): bool {
                 $fieldValues = static::getObjectFieldValue($object, $field);
 
@@ -121,8 +120,8 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
 
                 return \in_array($value, $fieldValues, true);
             },
-            Comparison::STARTS_WITH => static fn ($object): bool => str_starts_with((string) static::getObjectFieldValue($object, $field), (string) $value),
-            Comparison::ENDS_WITH => static fn ($object): bool => str_ends_with((string) static::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::STARTS_WITH => static fn($object): bool => str_starts_with((string) static::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::ENDS_WITH => static fn($object): bool => str_ends_with((string) static::getObjectFieldValue($object, $field), (string) $value),
             default => throw new \RuntimeException('Unknown comparison operator: ' . $comparison->getOperator()),
         };
     }
@@ -187,6 +186,6 @@ class DirectClosureExpressionVisitor extends ExpressionVisitor
     /** @param callable[] $expressions */
     private function notExpression(array $expressions): \Closure
     {
-        return static fn ($object): bool => !$expressions[0]($object);
+        return static fn($object): bool => !$expressions[0]($object);
     }
 }

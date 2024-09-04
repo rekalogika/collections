@@ -13,6 +13,4 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Collections\Exception;
 
-class UnexpectedValueException extends \UnexpectedValueException implements ExceptionInterface
-{
-}
+class UnexpectedValueException extends \UnexpectedValueException implements ExceptionInterface {}

@@ -90,13 +90,13 @@ class Country
      * @return Recollection<int, Citizen>
      */
     public function getCitizensInRecollection(
-        Pagination $pagination
+        Pagination $pagination,
     ): Recollection {
         return RecollectionDecorator::create(
             collection: $this->citizens,
             indexBy: 'id',
             pagination: $pagination,
-            count: new DisabledCountStrategy()
+            count: new DisabledCountStrategy(),
         );
     }
 
@@ -104,13 +104,13 @@ class Country
      * @return MinimalRecollection<int, Citizen>
      */
     public function getCitizensInMinimalRecollection(
-        Pagination $pagination
+        Pagination $pagination,
     ): MinimalRecollection {
         return MinimalRecollectionDecorator::create(
             collection: $this->citizens,
             indexBy: 'id',
             pagination: $pagination,
-            count: new DisabledCountStrategy()
+            count: new DisabledCountStrategy(),
         );
     }
 
@@ -118,7 +118,7 @@ class Country
      * @return ReadableRecollection<int, Citizen>
      */
     public function getWorkingAgeCitizensInRecollection(
-        Pagination $pagination
+        Pagination $pagination,
     ): ReadableRecollection {
         return CriteriaRecollection::create(
             collection: $this->citizens,
@@ -133,7 +133,7 @@ class Country
      * @return MinimalReadableRecollection<int, Citizen>
      */
     public function getWorkingAgeCitizensInMinimalRecollection(
-        Pagination $pagination
+        Pagination $pagination,
     ): MinimalReadableRecollection {
         return MinimalCriteriaRecollection::create(
             collection: $this->citizens,

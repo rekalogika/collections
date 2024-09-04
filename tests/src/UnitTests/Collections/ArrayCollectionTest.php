@@ -64,7 +64,7 @@ class ArrayCollectionTest extends TestCase
             new Country('San Theodoros'),
             new Country('Borduria'),
             new Country('Syldavia'),
-            new NullCountry()
+            new NullCountry(),
         ]);
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('foo', 'bar'));

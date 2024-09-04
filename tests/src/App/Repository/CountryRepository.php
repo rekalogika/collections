@@ -19,6 +19,4 @@ use Rekalogika\Contracts\Collections\Repository;
 /**
  * @extends Repository<array-key,Country>
  */
-interface CountryRepository extends Repository
-{
-}
+interface CountryRepository extends Repository {}

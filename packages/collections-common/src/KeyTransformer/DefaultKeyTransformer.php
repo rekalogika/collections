@@ -24,9 +24,7 @@ class DefaultKeyTransformer implements KeyTransformer
         return self::$instance ??= new self();
     }
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     #[\Override]
     public function transformToKey(mixed $key): int|string
