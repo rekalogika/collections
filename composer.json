@@ -41,7 +41,7 @@
         "symfony/var-dumper": "^6.4 || ^7.1",
         "symfony/yaml": "^6.4 || ^7.1",
         "symplify/monorepo-builder": "^11.2.20 || ^11.3",
-        "vimeo/psalm": "^5.15",
+        "vimeo/psalm": "^5.26",
         "zenstruck/foundry": "^2.0"
     },
     "replace": {

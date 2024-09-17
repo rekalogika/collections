@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php: [ '8.2', '8.3' ]
+        php: [ '8.2', '8.3', '8.4' ]
         dep: [highest,lowest]
 
     name: ${{ matrix.dep }} deps, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
@@ -46,10 +46,11 @@ jobs:
       uses: ramsey/composer-install@v3
       with:
         dependency-versions: ${{ matrix.dep }}
-        composer-options: --prefer-dist --no-progress --no-scripts
+        composer-options: --prefer-dist --no-progress --no-scripts --ignore-platform-reqs
 
     - name: Run psalm
       run: vendor/bin/psalm
+      if: matrix.dep == 'highest'
 
     - name: Run phpstan
       run: vendor/bin/phpstan analyse
