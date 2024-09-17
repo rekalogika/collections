@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.4
+
+* deps: bump rekapager
+
 ## 0.11.3
 
 * deps: bump rekapager to 0.17
