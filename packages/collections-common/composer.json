@@ -35,6 +35,6 @@
     "require": {
         "php": "^8.2",
         "doctrine/collections": "^2.2.2 || ^2.3",
-        "rekalogika/rekapager-contracts": "^0.18"
+        "rekalogika/rekapager-contracts": "^0.19"
     }
 }

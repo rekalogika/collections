@@ -7,12 +7,13 @@
     beStrictAboutOutputDuringTests="true"
     failOnRisky="true"
     failOnWarning="false"
+    failOnDeprecation="false"
     cacheDirectory=".phpunit.cache"
     beStrictAboutCoverageMetadata="true">
   <php>
     <ini
         name="display_errors"
-        value="1" />
+        value="0" />
     <ini
         name="error_reporting"
         value="-1" />

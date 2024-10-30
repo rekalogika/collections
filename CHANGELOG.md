@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.0
+
+* deps: bump rekapager to 0.19
+
 ## 0.12.0
 
 * feat: php 8.4 compatibility
