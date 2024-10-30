@@ -2,13 +2,13 @@
     "name": "rekalogika/collections",
     "description": "Improves the usage of Doctrine Collections in your applications.",
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
             "name": "Priyadi Iman Nurcahyo",
             "email": "priyadi@rekalogika.com"
         }
     ],
-    "type": "library",
     "require": {
         "doctrine/collections": "^2.2.2 || ^2.3",
         "doctrine/orm": "^2.14 || ^3.0",
@@ -44,6 +44,12 @@
         "vimeo/psalm": "^5.26",
         "zenstruck/foundry": "^2.0"
     },
+    "replace": {
+        "rekalogika/collections-common": "0.12.0",
+        "rekalogika/collections-contracts": "0.12.0",
+        "rekalogika/collections-domain": "0.12.0",
+        "rekalogika/collections-orm": "0.12.0"
+    },
     "autoload": {
         "psr-4": {
             "Rekalogika\\Collections\\ORM\\": "packages/collections-orm/src/",
@@ -62,11 +68,5 @@
         "allow-plugins": {
             "symfony/runtime": true
         }
-    },
-    "replace": {
-        "rekalogika/collections-common": "0.12.0",
-        "rekalogika/collections-contracts": "0.12.0",
-        "rekalogika/collections-domain": "0.12.0",
-        "rekalogika/collections-orm": "0.12.0"
     }
 }
