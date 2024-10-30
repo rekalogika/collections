@@ -36,9 +36,9 @@
         "php": "^8.2",
         "doctrine/collections": "^2.2.2 || ^2.3",
         "doctrine/orm": "^2.14 || ^3.0",
-        "rekalogika/collections-common": "^0.12",
-        "rekalogika/collections-contracts": "^0.12",
-        "rekalogika/collections-domain": "^0.12",
+        "rekalogika/collections-common": "^0.13",
+        "rekalogika/collections-contracts": "^0.13",
+        "rekalogika/collections-domain": "^0.13",
         "rekalogika/rekapager-contracts": "^0.19",
         "rekalogika/rekapager-doctrine-orm-adapter": "^0.19",
         "rekalogika/rekapager-keyset-pagination": "^0.19"
