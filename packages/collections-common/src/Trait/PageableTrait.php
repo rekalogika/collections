@@ -60,9 +60,9 @@ trait PageableTrait
     }
 
     /**
-     * @return \Traversable<PageInterface<TKey,T>>
+     * @return \Iterator<PageInterface<TKey,T>>
      */
-    final public function getPages(?object $start = null): \Traversable
+    final public function getPages(?object $start = null): \Iterator
     {
         return $this->getPageable()->getPages($start);
     }
