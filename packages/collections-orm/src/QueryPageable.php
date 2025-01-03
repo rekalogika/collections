@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\ORM;
 
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Collections\PageableRecollection;
@@ -22,6 +23,7 @@ use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 use Rekalogika\Domain\Collections\Common\Pagination;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\RefreshCountTrait;
+use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
 
 /**
  * @template TKey of array-key
@@ -54,6 +56,8 @@ class QueryPageable implements PageableRecollection
         ?int $itemsPerPage = null,
         private readonly ?CountStrategy $count = null,
         private readonly ?Pagination $pagination = null,
+        private readonly SeekMethod $seekMethod = SeekMethod::Approximated,
+        private readonly LockMode|null $lockMode = null,
     ) {
         $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
@@ -109,6 +113,8 @@ class QueryPageable implements PageableRecollection
         ?string $indexBy = null,
         ?CountStrategy $count = null,
         ?Pagination $pagination = null,
+        ?SeekMethod $seekMethod = null,
+        ?LockMode $lockMode = null,
     ): self {
         /**
          * @var self<TKey,T>
@@ -117,9 +123,11 @@ class QueryPageable implements PageableRecollection
         return new QueryRecollection(
             queryBuilder: $queryBuilder,
             indexBy: $indexBy ?? $this->indexBy,
-            count: $count,
+            count: $count ?? $this->count,
             itemsPerPage: $this->itemsPerPage,
-            pagination: $pagination,
+            pagination: $pagination ?? $this->pagination,
+            seekMethod: $seekMethod ?? $this->seekMethod,
+            lockMode: $lockMode ?? $this->lockMode,
         );
     }
 
@@ -131,6 +139,8 @@ class QueryPageable implements PageableRecollection
         ?string $indexBy = null,
         ?CountStrategy $count = null,
         ?Pagination $pagination = null,
+        ?SeekMethod $seekMethod = null,
+        ?LockMode $lockMode = null,
     ): PageableRecollection {
         /**
          * @var PageableRecollection<TKey,T>
@@ -140,8 +150,10 @@ class QueryPageable implements PageableRecollection
             queryBuilder: $queryBuilder,
             itemsPerPage: $this->itemsPerPage,
             indexBy: $indexBy ?? $this->indexBy,
-            count: $count,
-            pagination: $pagination,
+            count: $count ?? $this->count,
+            pagination: $pagination ?? $this->pagination,
+            seekMethod: $seekMethod ?? $this->seekMethod,
+            lockMode: $lockMode ?? $this->lockMode,
         );
     }
 }

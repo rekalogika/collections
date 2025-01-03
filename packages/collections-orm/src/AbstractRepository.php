@@ -15,6 +15,7 @@ namespace Rekalogika\Collections\ORM;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -29,6 +30,7 @@ use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Pagination;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
+use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
 
 /**
  * @template TKey of array-key
@@ -90,6 +92,8 @@ abstract class AbstractRepository implements Repository
         private readonly ?int $hardLimit = null,
         private readonly ?KeyTransformer $keyTransformer = null,
         private readonly ?Pagination $pagination = null,
+        private readonly SeekMethod $seekMethod = SeekMethod::Approximated,
+        private readonly LockMode|null $lockMode = null,
     ) {
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
 

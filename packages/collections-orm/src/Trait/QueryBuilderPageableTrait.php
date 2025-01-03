@@ -47,6 +47,8 @@ trait QueryBuilderPageableTrait
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $this->queryBuilder,
             indexBy: $this->indexBy,
+            seekMethod: $this->seekMethod,
+            lockMode: $this->lockMode,
         );
 
         $count = function (): int|bool {
