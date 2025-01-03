@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\ORM;
 
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
 use Rekalogika\Contracts\Collections\PageableRecollection;
@@ -26,6 +27,7 @@ use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableCollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
+use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
 
 /**
  * @template TKey of array-key
@@ -70,6 +72,8 @@ class QueryRecollection implements ReadableRecollection
         private readonly ?int $hardLimit = null,
         private readonly ?KeyTransformer $keyTransformer = null,
         private readonly ?Pagination $pagination = null,
+        private readonly SeekMethod $seekMethod = SeekMethod::Approximated,
+        private readonly LockMode|null $lockMode = null,
     ) {
         $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
@@ -142,16 +146,20 @@ class QueryRecollection implements ReadableRecollection
         ?string $indexBy = null,
         ?CountStrategy $count = null,
         ?Pagination $pagination = null,
+        ?SeekMethod $seekMethod = null,
+        ?LockMode $lockMode = null,
     ): self {
         /** @var QueryRecollection<TKey,T> */
         return new QueryRecollection(
             queryBuilder: $queryBuilder,
             indexBy: $indexBy ?? $this->indexBy,
-            count: $count,
+            count: $count ?? $this->count,
             itemsPerPage: $this->itemsPerPage,
             softLimit: $this->softLimit,
             hardLimit: $this->hardLimit,
-            pagination: $pagination,
+            pagination: $pagination ?? $this->pagination,
+            seekMethod: $seekMethod ?? $this->seekMethod,
+            lockMode: $lockMode ?? $this->lockMode,
         );
     }
 
@@ -163,6 +171,8 @@ class QueryRecollection implements ReadableRecollection
         ?string $indexBy = null,
         ?CountStrategy $count = null,
         ?Pagination $pagination = null,
+        ?SeekMethod $seekMethod = null,
+        ?LockMode $lockMode = null,
     ): PageableRecollection {
         /**
          * @var PageableRecollection<TKey,T>
@@ -172,8 +182,10 @@ class QueryRecollection implements ReadableRecollection
             queryBuilder: $queryBuilder,
             itemsPerPage: $this->itemsPerPage,
             indexBy: $indexBy ?? $this->indexBy,
-            count: $count,
-            pagination: $pagination,
+            count: $count ?? $this->count,
+            pagination: $pagination ?? $this->pagination,
+            seekMethod: $seekMethod ?? $this->seekMethod,
+            lockMode: $lockMode ?? $this->lockMode,
         );
     }
 }
