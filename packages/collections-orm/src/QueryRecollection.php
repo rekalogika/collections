@@ -62,6 +62,7 @@ class QueryRecollection implements ReadableRecollection
      * @param int<1,max> $itemsPerPage
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
+     * @param null|LockMode|LockMode::* $lockMode
      */
     public function __construct(
         private QueryBuilder $queryBuilder,
@@ -73,7 +74,7 @@ class QueryRecollection implements ReadableRecollection
         private readonly ?KeyTransformer $keyTransformer = null,
         private readonly ?Pagination $pagination = null,
         private readonly SeekMethod $seekMethod = SeekMethod::Approximated,
-        private readonly LockMode|null $lockMode = null,
+        private readonly LockMode|int|null $lockMode = null,
     ) {
         $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
