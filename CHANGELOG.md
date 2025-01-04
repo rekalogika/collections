@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.14.2
+
+* fix: ORM 2 compatibility
+
 ## 0.14.1
 
 * feat: add `seekMethod` and `lockMode` arguments to `QueryBuilder`-backed classes

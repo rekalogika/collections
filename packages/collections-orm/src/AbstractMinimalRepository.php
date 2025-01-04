@@ -81,7 +81,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
         private readonly ?CountStrategy $count = null,
         private readonly ?Pagination $pagination = null,
         private readonly SeekMethod $seekMethod = SeekMethod::Approximated,
-        private readonly LockMode|null $lockMode = null,
+        private readonly LockMode|int|null $lockMode = null,
     ) {
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
 
