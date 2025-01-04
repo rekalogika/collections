@@ -72,6 +72,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
      * @param class-string<T> $class
      * @param int<1,max> $itemsPerPage
      * @param null|non-empty-array<string,Order>|string $orderBy
+     * @param null|LockMode|LockMode::* $lockMode
      */
     public function __construct(
         private readonly ManagerRegistry $managerRegistry,

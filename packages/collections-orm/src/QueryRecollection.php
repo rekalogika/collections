@@ -62,6 +62,7 @@ class QueryRecollection implements ReadableRecollection
      * @param int<1,max> $itemsPerPage
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
+     * @param null|LockMode|LockMode::* $lockMode
      */
     public function __construct(
         private QueryBuilder $queryBuilder,

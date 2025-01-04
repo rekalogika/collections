@@ -49,6 +49,7 @@ class QueryPageable implements PageableRecollection
 
     /**
      * @param int<1,max> $itemsPerPage
+     * @param null|LockMode|LockMode::* $lockMode
      */
     public function __construct(
         private QueryBuilder $queryBuilder,
