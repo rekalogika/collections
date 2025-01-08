@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.15.0
+
+* feat: support `$boundaryFields` argument in `QueryBuilderAdapter`
+
 ## 0.14.2
 
 * fix: ORM 2 compatibility
