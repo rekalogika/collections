@@ -73,6 +73,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
      * @param int<1,max> $itemsPerPage
      * @param null|non-empty-array<string,Order>|string $orderBy
      * @param null|LockMode|LockMode::* $lockMode
+     * @param list<string> $boundaryFields
      */
     public function __construct(
         private readonly ManagerRegistry $managerRegistry,
@@ -83,6 +84,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
         private readonly ?Pagination $pagination = null,
         private readonly SeekMethod $seekMethod = SeekMethod::Approximated,
         private readonly LockMode|int|null $lockMode = null,
+        private readonly null|array $boundaryFields = null,
     ) {
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
 

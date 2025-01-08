@@ -63,6 +63,7 @@ class QueryRecollection implements ReadableRecollection
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      * @param null|LockMode|LockMode::* $lockMode
+     * @param list<string> $boundaryFields
      */
     public function __construct(
         private QueryBuilder $queryBuilder,
@@ -75,6 +76,7 @@ class QueryRecollection implements ReadableRecollection
         private readonly ?Pagination $pagination = null,
         private readonly SeekMethod $seekMethod = SeekMethod::Approximated,
         private readonly LockMode|int|null $lockMode = null,
+        private readonly null|array $boundaryFields = null,
     ) {
         $this->indexBy = $indexBy ?? Configuration::$defaultIndexBy;
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
@@ -161,6 +163,7 @@ class QueryRecollection implements ReadableRecollection
             pagination: $pagination ?? $this->pagination,
             seekMethod: $seekMethod ?? $this->seekMethod,
             lockMode: $lockMode ?? $this->lockMode,
+            boundaryFields: $this->boundaryFields,
         );
     }
 
@@ -187,6 +190,7 @@ class QueryRecollection implements ReadableRecollection
             pagination: $pagination ?? $this->pagination,
             seekMethod: $seekMethod ?? $this->seekMethod,
             lockMode: $lockMode ?? $this->lockMode,
+            boundaryFields: $this->boundaryFields,
         );
     }
 }

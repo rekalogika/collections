@@ -49,6 +49,7 @@ trait QueryBuilderPageableTrait
             indexBy: $this->indexBy,
             seekMethod: $this->seekMethod,
             lockMode: $this->lockMode,
+            boundaryFields: $this->boundaryFields,
         );
 
         $count = function (): int|bool {
