@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.15.1
+
+* deps: bump rekapager to 0.22
+
 ## 0.15.0
 
 * feat: support `$boundaryFields` argument in `QueryBuilderAdapter`
