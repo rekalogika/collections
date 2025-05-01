@@ -4,6 +4,7 @@
 
 * chore: modernize
 * fix: unfinalize & define apis
+* chore: rector
 
 ## 0.15.2
 
