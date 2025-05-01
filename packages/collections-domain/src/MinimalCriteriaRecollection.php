@@ -173,7 +173,10 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
          */
         self::$instances[$collection][$cacheKey] = $newInstance;
 
-        /** @var static */
+        /**
+         * @var static 
+         * @phpstan-ignore varTag.nativeType
+         */
         return $newInstance;
     }
 

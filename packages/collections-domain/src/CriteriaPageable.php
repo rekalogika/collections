@@ -149,7 +149,10 @@ class CriteriaPageable implements PageableRecollection
          */
         self::$instances[$collection][$cacheKey] = $newInstance;
 
-        /** @var static */
+        /**
+         * @var static 
+         * @phpstan-ignore varTag.nativeType
+         */
         return $newInstance;
     }
 
