@@ -29,8 +29,9 @@ use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
  * @template TKey of array-key
  * @template T
  * @implements PageableRecollection<TKey,T>
+ * @api
  */
-final class QueryPageable implements PageableRecollection
+class QueryPageable implements PageableRecollection
 {
     /** @use QueryBuilderPageableTrait<TKey,T> */
     use QueryBuilderPageableTrait;

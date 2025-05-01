@@ -3,6 +3,7 @@
 ## 0.16.0
 
 * chore: modernize
+* fix: unfinalize & define apis
 
 ## 0.15.2
 

@@ -33,8 +33,9 @@ use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
  * @template TKey of array-key
  * @template T
  * @implements ReadableRecollection<TKey,T>
+ * @api
  */
-final class QueryRecollection implements ReadableRecollection
+class QueryRecollection implements ReadableRecollection
 {
     /** @use QueryBuilderPageableTrait<TKey,T> */
     use QueryBuilderPageableTrait;

@@ -32,8 +32,9 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template TKey of array-key
  * @template T
  * @implements MinimalRecollection<TKey,T>
+ * @api
  */
-final class MinimalRecollectionDecorator implements MinimalRecollection
+class MinimalRecollectionDecorator implements MinimalRecollection
 {
     /** @use RecollectionPageableTrait<TKey,T> */
     use RecollectionPageableTrait;
