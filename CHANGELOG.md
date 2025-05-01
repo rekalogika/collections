@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.15.2
+
+* deps: allow rekapager 1.0
+
 ## 0.15.1
 
 * deps: bump rekapager to 0.22

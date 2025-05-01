@@ -13,10 +13,10 @@
         "doctrine/collections": "^2.2.2 || ^2.3",
         "doctrine/orm": "^2.14 || ^3.0",
         "php": "^8.2",
-        "rekalogika/rekapager-contracts": "^0.22",
-        "rekalogika/rekapager-doctrine-collections-adapter": "^0.22",
-        "rekalogika/rekapager-doctrine-orm-adapter": "^0.22",
-        "rekalogika/rekapager-keyset-pagination": "^0.22"
+        "rekalogika/rekapager-contracts": "^0.22 || ^1.0",
+        "rekalogika/rekapager-doctrine-collections-adapter": "^0.22 || ^1.0",
+        "rekalogika/rekapager-doctrine-orm-adapter": "^0.22 || ^1.0",
+        "rekalogika/rekapager-keyset-pagination": "^0.22 || ^1.0"
     },
     "require-dev": {
         "bnf/phpstan-psr-container": "^1.0",
