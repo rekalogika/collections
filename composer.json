@@ -24,14 +24,14 @@
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-fixtures-bundle": "^3.6 || ^4.0",
         "doctrine/persistence": "^3.1 || ^4.0",
-        "ekino/phpstan-banned-code": "^1.0 || ^2.0",
-        "phpstan/phpstan": "^1.12",
-        "phpstan/phpstan-deprecation-rules": "^1.1",
-        "phpstan/phpstan-phpunit": "^1.4",
+        "ekino/phpstan-banned-code": "^3.0",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
         "phpunit/phpunit": "^10.1",
-        "psalm/plugin-phpunit": "^0.18.4 || ^0.19.0",
+        "psalm/plugin-phpunit": "^0.19.0",
         "psalm/plugin-symfony": "^5.2",
-        "rector/rector": "^1.2",
+        "rector/rector": "^2.0",
         "symfony/debug-bundle": "^7.1",
         "symfony/framework-bundle": "^6.4 || ^7.1",
         "symfony/http-kernel": "^6.4 || ^7.1",
@@ -41,8 +41,9 @@
         "symfony/var-dumper": "^6.4 || ^7.1",
         "symfony/yaml": "^6.4 || ^7.1",
         "symplify/monorepo-builder": "^11.2.20 || ^11.3",
-        "vimeo/psalm": "^5.26",
-        "zenstruck/foundry": "^2.0"
+        "vimeo/psalm": "^6.1",
+        "zenstruck/foundry": "^2.0",
+        "rector/swiss-knife": "^2.2"
     },
     "autoload": {
         "psr-4": {

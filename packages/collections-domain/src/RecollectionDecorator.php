@@ -35,7 +35,7 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template T
  * @implements Recollection<TKey,T>
  */
-class RecollectionDecorator implements Recollection
+final class RecollectionDecorator implements Recollection
 {
     /** @use RecollectionPageableTrait<TKey,T> */
     use RecollectionPageableTrait;
@@ -230,9 +230,9 @@ class RecollectionDecorator implements Recollection
     }
 
     /**
-     * @return non-empty-array<string,Order>|string
+     * @return non-empty-array<string,Order>
      */
-    protected function getDefaultOrderBy(): array|string
+    protected function getDefaultOrderBy(): array
     {
         return Configuration::$defaultOrderBy;
     }

@@ -16,7 +16,7 @@ namespace Rekalogika\Collections\Tests\IntegrationTests\DomainOffset;
 use Rekalogika\Collections\Tests\IntegrationTests\Domain\CriteriaRecollectionMediumSetTest;
 use Rekalogika\Domain\Collections\Common\Pagination;
 
-class CriteriaRecollectionMediumSetOffsetTest extends CriteriaRecollectionMediumSetTest
+final class CriteriaRecollectionMediumSetOffsetTest extends CriteriaRecollectionMediumSetTest
 {
     #[\Override]
     protected function getPaginationType(): Pagination

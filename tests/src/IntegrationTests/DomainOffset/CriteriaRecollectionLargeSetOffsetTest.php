@@ -16,7 +16,7 @@ namespace Rekalogika\Collections\Tests\IntegrationTests\DomainOffset;
 use Rekalogika\Collections\Tests\IntegrationTests\Domain\CriteriaRecollectionLargeSetTest;
 use Rekalogika\Domain\Collections\Common\Pagination;
 
-class CriteriaRecollectionLargeSetOffsetTest extends CriteriaRecollectionLargeSetTest
+final class CriteriaRecollectionLargeSetOffsetTest extends CriteriaRecollectionLargeSetTest
 {
     #[\Override]
     protected function getPaginationType(): Pagination

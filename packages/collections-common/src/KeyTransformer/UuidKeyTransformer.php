@@ -17,7 +17,7 @@ use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 use Symfony\Component\Uid\AbstractUid;
 use Symfony\Component\Uid\Uuid;
 
-class UuidKeyTransformer implements KeyTransformer
+final class UuidKeyTransformer implements KeyTransformer
 {
     private static ?self $instance = null;
 
@@ -29,7 +29,7 @@ class UuidKeyTransformer implements KeyTransformer
     private function __construct() {}
 
     #[\Override]
-    public function transformToKey(mixed $key): int|string
+    public function transformToKey(mixed $key): string
     {
         if ($key instanceof AbstractUid) {
             return $key->toRfc4122();

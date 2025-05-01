@@ -22,7 +22,7 @@ use Rekalogika\Contracts\Collections\MinimalRepository;
 /**
  * @extends BaseRecollectionTestCase<MinimalRepository<array-key,Citizen>>
  */
-class MinimalRepositoryTest extends BaseRecollectionTestCase
+final class MinimalRepositoryTest extends BaseRecollectionTestCase
 {
     /** @use MinimalRepositoryTestsTrait<MinimalRepository<array-key,Citizen>> */
     use MinimalRepositoryTestsTrait;

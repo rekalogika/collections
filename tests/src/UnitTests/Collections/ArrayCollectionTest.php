@@ -21,7 +21,7 @@ use Rekalogika\Collections\Tests\UnitTests\Collections\Fixtures\Country;
 use Rekalogika\Collections\Tests\UnitTests\Collections\Fixtures\NullCountry;
 use Rekalogika\Domain\Collections\ArrayCollection;
 
-class ArrayCollectionTest extends TestCase
+final class ArrayCollectionTest extends TestCase
 {
     /**
      * @return array<int,Citizen>

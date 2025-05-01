@@ -20,7 +20,7 @@ use Rekalogika\Collections\Tests\UnitTests\Collections\Fixtures\Citizen;
 use Rekalogika\Domain\Collections\Common\Count\DelegatedCountStrategy;
 use Rekalogika\Domain\Collections\RecollectionDecorator;
 
-class CollectionTest extends ArrayCollectionTestCase
+final class CollectionTest extends ArrayCollectionTestCase
 {
     /**
      * @param mixed[] $elements

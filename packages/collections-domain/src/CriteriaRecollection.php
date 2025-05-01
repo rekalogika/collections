@@ -35,7 +35,7 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template T
  * @implements ReadableRecollection<TKey,T>
  */
-class CriteriaRecollection implements ReadableRecollection
+final class CriteriaRecollection implements ReadableRecollection
 {
     /** @use RecollectionPageableTrait<TKey,T> */
     use RecollectionPageableTrait;

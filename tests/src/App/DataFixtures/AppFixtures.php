@@ -18,7 +18,7 @@ use Doctrine\Persistence\ObjectManager;
 use Rekalogika\Collections\Tests\App\Factory\CitizenFactory;
 use Rekalogika\Collections\Tests\App\Factory\CountryFactory;
 
-class AppFixtures extends Fixture
+final class AppFixtures extends Fixture
 {
     #[\Override]
     public function load(ObjectManager $manager): void

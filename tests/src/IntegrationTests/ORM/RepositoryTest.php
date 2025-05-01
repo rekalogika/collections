@@ -22,7 +22,7 @@ use Rekalogika\Contracts\Collections\Repository;
 /**
  * @extends BaseRecollectionTestCase<Repository<array-key,Citizen>>
  */
-class RepositoryTest extends BaseRecollectionTestCase
+final class RepositoryTest extends BaseRecollectionTestCase
 {
     /** @use RepositoryTestsTrait<Repository<array-key,Citizen>> */
     use RepositoryTestsTrait;

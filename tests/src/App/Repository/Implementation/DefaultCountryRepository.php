@@ -21,7 +21,7 @@ use Rekalogika\Collections\Tests\App\Repository\CountryRepository;
 /**
  * @extends AbstractRepository<array-key,Country>
  */
-class DefaultCountryRepository extends AbstractRepository implements CountryRepository
+final class DefaultCountryRepository extends AbstractRepository implements CountryRepository
 {
     public function __construct(ManagerRegistry $managerRegistry)
     {

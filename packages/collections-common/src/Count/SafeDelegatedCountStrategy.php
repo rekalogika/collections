@@ -17,7 +17,7 @@ use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Exception\GettingCountUnsupportedException;
 use Rekalogika\Domain\Collections\Common\Exception\SettingCountUnsupportedException;
 
-class SafeDelegatedCountStrategy implements CountStrategy
+final class SafeDelegatedCountStrategy implements CountStrategy
 {
     public function __construct(
         private readonly ?int $softLimit = null,

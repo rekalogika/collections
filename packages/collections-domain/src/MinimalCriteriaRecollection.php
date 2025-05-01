@@ -32,7 +32,7 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template T
  * @implements MinimalReadableRecollection<TKey,T>
  */
-class MinimalCriteriaRecollection implements MinimalReadableRecollection
+final class MinimalCriteriaRecollection implements MinimalReadableRecollection
 {
     /** @use RecollectionPageableTrait<TKey,T> */
     use RecollectionPageableTrait;
@@ -174,7 +174,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
         self::$instances[$collection][$cacheKey] = $newInstance;
 
         /**
-         * @var static 
+         * @var static
          * @phpstan-ignore varTag.nativeType
          */
         return $newInstance;
