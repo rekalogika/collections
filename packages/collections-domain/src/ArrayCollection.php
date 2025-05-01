@@ -24,8 +24,9 @@ use Rekalogika\Domain\Collections\Internal\DirectClosureExpressionVisitor;
  * @template TKey of array-key
  * @template T
  * @extends DoctrineArrayCollection<TKey,T>
+ * @api
  */
-final class ArrayCollection extends DoctrineArrayCollection
+class ArrayCollection extends DoctrineArrayCollection
 {
     /**
      * @param array<TKey,T> $elements

@@ -15,7 +15,7 @@ namespace Rekalogika\Domain\Collections\Util;
 
 use Doctrine\Common\Collections\Criteria;
 
-final class CriteriaUtil
+final readonly class CriteriaUtil
 {
     private function __construct() {}
 
