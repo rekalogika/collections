@@ -72,9 +72,9 @@ final class DirectClosureExpressionVisitor extends ExpressionVisitor
         }
 
         return static function ($a, $b) use ($name, $next, $orientation): int {
-            $aValue = static::getObjectFieldValue($a, $name);
+            $aValue = self::getObjectFieldValue($a, $name);
 
-            $bValue = static::getObjectFieldValue($b, $name);
+            $bValue = self::getObjectFieldValue($b, $name);
 
             if ($aValue === $bValue) {
                 return $next($a, $b);
@@ -94,25 +94,25 @@ final class DirectClosureExpressionVisitor extends ExpressionVisitor
         $value = $comparison->getValue()->getValue();
 
         return match ($comparison->getOperator()) {
-            Comparison::EQ => static fn($object): bool => static::getObjectFieldValue($object, $field) === $value,
-            Comparison::NEQ => static fn($object): bool => static::getObjectFieldValue($object, $field) !== $value,
-            Comparison::LT => static fn($object): bool => static::getObjectFieldValue($object, $field) < $value,
-            Comparison::LTE => static fn($object): bool => static::getObjectFieldValue($object, $field) <= $value,
-            Comparison::GT => static fn($object): bool => static::getObjectFieldValue($object, $field) > $value,
-            Comparison::GTE => static fn($object): bool => static::getObjectFieldValue($object, $field) >= $value,
+            Comparison::EQ => static fn($object): bool => self::getObjectFieldValue($object, $field) === $value,
+            Comparison::NEQ => static fn($object): bool => self::getObjectFieldValue($object, $field) !== $value,
+            Comparison::LT => static fn($object): bool => self::getObjectFieldValue($object, $field) < $value,
+            Comparison::LTE => static fn($object): bool => self::getObjectFieldValue($object, $field) <= $value,
+            Comparison::GT => static fn($object): bool => self::getObjectFieldValue($object, $field) > $value,
+            Comparison::GTE => static fn($object): bool => self::getObjectFieldValue($object, $field) >= $value,
             Comparison::IN => static function ($object) use ($field, $value): bool {
-                $fieldValue = static::getObjectFieldValue($object, $field);
+                $fieldValue = self::getObjectFieldValue($object, $field);
 
                 return \in_array($fieldValue, $value, \is_scalar($fieldValue));
             },
             Comparison::NIN => static function ($object) use ($field, $value): bool {
-                $fieldValue = static::getObjectFieldValue($object, $field);
+                $fieldValue = self::getObjectFieldValue($object, $field);
 
                 return !\in_array($fieldValue, $value, \is_scalar($fieldValue));
             },
-            Comparison::CONTAINS => static fn($object): bool => str_contains((string) static::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::CONTAINS => static fn($object): bool => str_contains((string) self::getObjectFieldValue($object, $field), (string) $value),
             Comparison::MEMBER_OF => static function ($object) use ($field, $value): bool {
-                $fieldValues = static::getObjectFieldValue($object, $field);
+                $fieldValues = self::getObjectFieldValue($object, $field);
 
                 if (!\is_array($fieldValues)) {
                     $fieldValues = iterator_to_array($fieldValues);
@@ -120,8 +120,8 @@ final class DirectClosureExpressionVisitor extends ExpressionVisitor
 
                 return \in_array($value, $fieldValues, true);
             },
-            Comparison::STARTS_WITH => static fn($object): bool => str_starts_with((string) static::getObjectFieldValue($object, $field), (string) $value),
-            Comparison::ENDS_WITH => static fn($object): bool => str_ends_with((string) static::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::STARTS_WITH => static fn($object): bool => str_starts_with((string) self::getObjectFieldValue($object, $field), (string) $value),
+            Comparison::ENDS_WITH => static fn($object): bool => str_ends_with((string) self::getObjectFieldValue($object, $field), (string) $value),
             default => throw new \RuntimeException('Unknown comparison operator: ' . $comparison->getOperator()),
         };
     }

@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\UnitTests\Collections\Fixtures;
 
-final class Citizen
+final readonly class Citizen
 {
     public function __construct(
-        private readonly int $id,
-        private readonly string $name,
-        private readonly ?Country $country = null,
+        private int $id,
+        private string $name,
+        private ?Country $country = null,
     ) {}
 
     public function getId(): int

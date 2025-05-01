@@ -17,12 +17,12 @@ use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Exception\GettingCountUnsupportedException;
 use Rekalogika\Domain\Collections\Common\Exception\SettingCountUnsupportedException;
 
-final class SafeDelegatedCountStrategy implements CountStrategy
+final readonly class SafeDelegatedCountStrategy implements CountStrategy
 {
     public function __construct(
-        private readonly ?int $softLimit = null,
-        private readonly ?int $hardLimit = null,
-        private readonly ?float $durationThreshold = null,
+        private ?int $softLimit = null,
+        private ?int $hardLimit = null,
+        private ?float $durationThreshold = null,
     ) {}
 
     #[\Override]
