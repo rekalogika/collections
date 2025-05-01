@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Count;
 
-class PrecountingStrategy implements CountStrategy
+final class PrecountingStrategy implements CountStrategy
 {
     /**
      * @param ?int<0,max> $count

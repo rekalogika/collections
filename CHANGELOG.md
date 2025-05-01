@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.16.0
+
+* chore: modernize
+
 ## 0.15.2
 
 * deps: allow rekapager 1.0

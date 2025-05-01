@@ -15,4 +15,4 @@ namespace Rekalogika\Domain\Collections\Common\Exception;
 
 use Rekalogika\Contracts\Collections\Exception\BadMethodCallException;
 
-class GettingCountUnsupportedException extends BadMethodCallException {}
+final class GettingCountUnsupportedException extends BadMethodCallException {}

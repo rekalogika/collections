@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Count;
 
-class ZeroCountStrategy implements CountStrategy
+final class ZeroCountStrategy implements CountStrategy
 {
     #[\Override]
     public function getCount(?\Countable $underlyingObject): int

@@ -15,4 +15,4 @@ namespace Rekalogika\Domain\Collections\Common\Exception;
 
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 
-class InvalidCountException extends UnexpectedValueException {}
+final class InvalidCountException extends UnexpectedValueException {}

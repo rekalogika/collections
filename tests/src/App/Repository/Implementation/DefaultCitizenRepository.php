@@ -21,7 +21,7 @@ use Rekalogika\Collections\Tests\App\Repository\CitizenRepository;
 /**
  * @extends AbstractRepository<array-key,Citizen>
  */
-class DefaultCitizenRepository extends AbstractRepository implements CitizenRepository
+final class DefaultCitizenRepository extends AbstractRepository implements CitizenRepository
 {
     public function __construct(ManagerRegistry $managerRegistry)
     {

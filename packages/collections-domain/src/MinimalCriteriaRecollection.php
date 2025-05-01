@@ -32,7 +32,7 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template T
  * @implements MinimalReadableRecollection<TKey,T>
  */
-class MinimalCriteriaRecollection implements MinimalReadableRecollection
+final class MinimalCriteriaRecollection implements MinimalReadableRecollection
 {
     /** @use RecollectionPageableTrait<TKey,T> */
     use RecollectionPageableTrait;
@@ -101,6 +101,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
      * @return null|int<1,max>
      */
     // @phpstan-ignore-next-line
+    #[\Override]
     private function getSoftLimit(): ?int
     {
         return null;
@@ -110,6 +111,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
      * @return null|int<1,max>
      */
     // @phpstan-ignore-next-line
+    #[\Override]
     private function getHardLimit(): ?int
     {
         return null;
@@ -174,12 +176,13 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
         self::$instances[$collection][$cacheKey] = $newInstance;
 
         /**
-         * @var static 
+         * @var static
          * @phpstan-ignore varTag.nativeType
          */
         return $newInstance;
     }
 
+    #[\Override]
     private function getCountStrategy(): CountStrategy
     {
         return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();
@@ -188,6 +191,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
     /**
      * @return ReadableCollection<TKey,T>
      */
+    #[\Override]
     private function getRealCollection(): ReadableCollection
     {
         return $this->getSafeCollection();
@@ -208,6 +212,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
         );
     }
 
+    #[\Override]
     private function getUnderlyingCountable(): \Countable
     {
         return $this->collection->matching($this->criteria);

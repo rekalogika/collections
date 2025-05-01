@@ -22,7 +22,7 @@ use Rekalogika\Domain\Collections\Common\Count\PrecountingStrategy;
 use Rekalogika\Domain\Collections\Common\Exception\GettingCountUnsupportedException;
 use Rekalogika\Domain\Collections\RecollectionDecorator;
 
-class CountTest extends TestCase
+final class CountTest extends TestCase
 {
     public function testDefaultCount(): void
     {

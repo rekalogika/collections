@@ -15,7 +15,7 @@ namespace Rekalogika\Domain\Collections\Common\KeyTransformer;
 
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 
-class DefaultKeyTransformer implements KeyTransformer
+final class DefaultKeyTransformer implements KeyTransformer
 {
     private static ?self $instance = null;
 

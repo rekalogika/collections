@@ -13,4 +13,4 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Collections\Exception;
 
-class LogicException extends \LogicException implements ExceptionInterface {}
+final class LogicException extends \LogicException implements ExceptionInterface {}

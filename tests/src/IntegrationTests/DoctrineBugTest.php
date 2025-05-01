@@ -21,7 +21,7 @@ use Rekalogika\Collections\Tests\App\MinimalRepository\CountryMinimalRepository;
 use Rekalogika\Contracts\Collections\MinimalRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class DoctrineBugTest extends KernelTestCase
+final class DoctrineBugTest extends KernelTestCase
 {
     /**
      * If this test fails, it means the bug is fixed, and we should update our

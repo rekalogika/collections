@@ -35,7 +35,7 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template T
  * @implements ReadableRecollection<TKey,T>
  */
-class CriteriaRecollection implements ReadableRecollection
+final class CriteriaRecollection implements ReadableRecollection
 {
     /** @use RecollectionPageableTrait<TKey,T> */
     use RecollectionPageableTrait;
@@ -183,6 +183,7 @@ class CriteriaRecollection implements ReadableRecollection
         return $newInstance;
     }
 
+    #[\Override]
     private function getCountStrategy(): CountStrategy
     {
         return $this->count ?? ParameterUtil::getDefaultCountStrategyForFullClasses();
@@ -191,6 +192,7 @@ class CriteriaRecollection implements ReadableRecollection
     /**
      * @return ReadableCollection<TKey,T>
      */
+    #[\Override]
     private function getRealCollection(): ReadableCollection
     {
         return $this->getSafeCollection();
@@ -199,6 +201,7 @@ class CriteriaRecollection implements ReadableRecollection
     /**
      * @return null|int<1,max>
      */
+    #[\Override]
     private function getSoftLimit(): ?int
     {
         return $this->softLimit;
@@ -207,6 +210,7 @@ class CriteriaRecollection implements ReadableRecollection
     /**
      * @return null|int<1,max>
      */
+    #[\Override]
     private function getHardLimit(): ?int
     {
         return $this->hardLimit;
@@ -215,6 +219,7 @@ class CriteriaRecollection implements ReadableRecollection
     /**
      * @return non-empty-array<string,Order>
      */
+    #[\Override]
     private function getOrderBy(): array
     {
         $ordering = $this->criteria->orderings();
@@ -243,6 +248,7 @@ class CriteriaRecollection implements ReadableRecollection
         );
     }
 
+    #[\Override]
     private function getUnderlyingCountable(): \Countable
     {
         return $this->collection->matching($this->criteria);

@@ -16,7 +16,7 @@ namespace Rekalogika\Collections\Tests\IntegrationTests\DomainOffset;
 use Rekalogika\Collections\Tests\IntegrationTests\Domain\MinimalCriteriaRecollectionTest;
 use Rekalogika\Domain\Collections\Common\Pagination;
 
-class MinimalCriteriaRecollectionOffsetTest extends MinimalCriteriaRecollectionTest
+final class MinimalCriteriaRecollectionOffsetTest extends MinimalCriteriaRecollectionTest
 {
     #[\Override]
     protected function getPaginationType(): Pagination

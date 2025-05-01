@@ -24,7 +24,7 @@ use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Domain\Collections\MinimalCriteriaRecollection;
 use Rekalogika\Domain\Collections\MinimalRecollectionDecorator;
 
-class AntiInterfaceTest extends TestCase
+final class AntiInterfaceTest extends TestCase
 {
     /**
      * @param class-string $class

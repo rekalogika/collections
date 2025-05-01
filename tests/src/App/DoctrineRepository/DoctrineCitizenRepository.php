@@ -20,7 +20,7 @@ use Rekalogika\Collections\Tests\App\Entity\Citizen;
 /**
  * @extends ServiceEntityRepository<Citizen>
  */
-class DoctrineCitizenRepository extends ServiceEntityRepository
+final class DoctrineCitizenRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

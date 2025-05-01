@@ -31,7 +31,7 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template T
  * @implements PageableRecollection<TKey,T>
  */
-class CriteriaPageable implements PageableRecollection
+final class CriteriaPageable implements PageableRecollection
 {
     /** @use RecollectionPageableTrait<TKey,T> */
     use RecollectionPageableTrait;
@@ -150,7 +150,7 @@ class CriteriaPageable implements PageableRecollection
         self::$instances[$collection][$cacheKey] = $newInstance;
 
         /**
-         * @var static 
+         * @var static
          * @phpstan-ignore varTag.nativeType
          */
         return $newInstance;
@@ -170,11 +170,13 @@ class CriteriaPageable implements PageableRecollection
         );
     }
 
+    #[\Override]
     private function getUnderlyingCountable(): \Countable
     {
         return $this->collection->matching($this->criteria);
     }
 
+    #[\Override]
     private function getCountStrategy(): CountStrategy
     {
         return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();

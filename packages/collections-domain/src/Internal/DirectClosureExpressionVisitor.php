@@ -22,7 +22,7 @@ use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 /**
  * Copied from ClosureExpressionVisitor from doctrine/collections package.
  */
-class DirectClosureExpressionVisitor extends ExpressionVisitor
+final class DirectClosureExpressionVisitor extends ExpressionVisitor
 {
     /**
      * Accesses the field of a given object. This field has to be public

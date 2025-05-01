@@ -30,7 +30,7 @@ use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
  * @template T
  * @implements PageableRecollection<TKey,T>
  */
-class QueryPageable implements PageableRecollection
+final class QueryPageable implements PageableRecollection
 {
     /** @use QueryBuilderPageableTrait<TKey,T> */
     use QueryBuilderPageableTrait;
@@ -66,6 +66,7 @@ class QueryPageable implements PageableRecollection
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
     }
 
+    #[\Override]
     private function getCountStrategy(): CountStrategy
     {
         return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();

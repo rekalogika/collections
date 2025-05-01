@@ -24,7 +24,7 @@ use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Domain\Collections\MinimalCriteriaRecollection;
 use Rekalogika\Domain\Collections\MinimalRecollectionDecorator;
 
-class AntiMethodTest extends TestCase
+final class AntiMethodTest extends TestCase
 {
     /**
      * @param class-string $class

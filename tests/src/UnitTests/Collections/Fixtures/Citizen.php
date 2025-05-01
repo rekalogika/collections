@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\UnitTests\Collections\Fixtures;
 
-class Citizen
+final class Citizen
 {
     public function __construct(
         private readonly int $id,

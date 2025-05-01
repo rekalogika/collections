@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\UnitTests\Collections\Fixtures;
 
-class NullCountry extends Country
+final class NullCountry extends Country
 {
     public function __construct()
     {

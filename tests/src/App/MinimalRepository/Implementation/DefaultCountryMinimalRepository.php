@@ -21,7 +21,7 @@ use Rekalogika\Collections\Tests\App\MinimalRepository\CountryMinimalRepository;
 /**
  * @extends AbstractMinimalRepository<array-key,Country>
  */
-class DefaultCountryMinimalRepository extends AbstractMinimalRepository implements CountryMinimalRepository
+final class DefaultCountryMinimalRepository extends AbstractMinimalRepository implements CountryMinimalRepository
 {
     public function __construct(ManagerRegistry $managerRegistry)
     {

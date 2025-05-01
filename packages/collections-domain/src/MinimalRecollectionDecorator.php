@@ -33,7 +33,7 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template T
  * @implements MinimalRecollection<TKey,T>
  */
-class MinimalRecollectionDecorator implements MinimalRecollection
+final class MinimalRecollectionDecorator implements MinimalRecollection
 {
     /** @use RecollectionPageableTrait<TKey,T> */
     use RecollectionPageableTrait;
@@ -159,12 +159,13 @@ class MinimalRecollectionDecorator implements MinimalRecollection
         self::$instances[$collection][$cacheKey] = $newInstance;
 
         /**
-         * @var static 
+         * @var static
          * @phpstan-ignore varTag.nativeType
          */
         return $newInstance;
     }
 
+    #[\Override]
     private function getCountStrategy(): CountStrategy
     {
         return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();
@@ -173,15 +174,16 @@ class MinimalRecollectionDecorator implements MinimalRecollection
     /**
      * @return Collection<TKey,T>
      */
+    #[\Override]
     private function getRealCollection(): Collection
     {
         return $this->collection;
     }
 
     /**
-     * @return non-empty-array<string,Order>|string
+     * @return non-empty-array<string,Order>
      */
-    protected function getDefaultOrderBy(): array|string
+    protected function getDefaultOrderBy(): array
     {
         return Configuration::$defaultOrderBy;
     }
@@ -201,6 +203,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
         );
     }
 
+    #[\Override]
     private function getUnderlyingCountable(): \Countable
     {
         return $this->collection;

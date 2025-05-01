@@ -16,7 +16,7 @@ namespace Rekalogika\Domain\Collections\Common\Count;
 use Rekalogika\Domain\Collections\Common\Exception\GettingCountUnsupportedException;
 use Rekalogika\Domain\Collections\Common\Exception\SettingCountUnsupportedException;
 
-class DisabledCountStrategy implements CountStrategy
+final class DisabledCountStrategy implements CountStrategy
 {
     #[\Override]
     public function getCount(?\Countable $underlyingObject): int

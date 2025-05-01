@@ -34,7 +34,7 @@ use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
  * @template T
  * @implements ReadableRecollection<TKey,T>
  */
-class QueryRecollection implements ReadableRecollection
+final class QueryRecollection implements ReadableRecollection
 {
     /** @use QueryBuilderPageableTrait<TKey,T> */
     use QueryBuilderPageableTrait;
@@ -83,6 +83,7 @@ class QueryRecollection implements ReadableRecollection
     }
 
 
+    #[\Override]
     private function getCountStrategy(): CountStrategy
     {
         return $this->count ?? ParameterUtil::getDefaultCountStrategyForFullClasses();
@@ -91,6 +92,7 @@ class QueryRecollection implements ReadableRecollection
     /**
      * @return null|int<1,max>
      */
+    #[\Override]
     private function getSoftLimit(): ?int
     {
         return $this->softLimit;
@@ -99,6 +101,7 @@ class QueryRecollection implements ReadableRecollection
     /**
      * @return null|int<1,max>
      */
+    #[\Override]
     private function getHardLimit(): ?int
     {
         return $this->hardLimit;
