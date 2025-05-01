@@ -192,6 +192,7 @@ final class RecollectionDecorator implements Recollection
         return $newInstance;
     }
 
+    #[\Override]
     private function getCountStrategy(): CountStrategy
     {
         return $this->count ?? ParameterUtil::getDefaultCountStrategyForFullClasses();
@@ -200,6 +201,7 @@ final class RecollectionDecorator implements Recollection
     /**
      * @return null|int<1,max>
      */
+    #[\Override]
     private function getSoftLimit(): ?int
     {
         return $this->softLimit;
@@ -208,6 +210,7 @@ final class RecollectionDecorator implements Recollection
     /**
      * @return null|int<1,max>
      */
+    #[\Override]
     private function getHardLimit(): ?int
     {
         return $this->hardLimit;
@@ -216,6 +219,7 @@ final class RecollectionDecorator implements Recollection
     /**
      * @return non-empty-array<string,Order>
      */
+    #[\Override]
     private function getOrderBy(): array
     {
         return $this->orderBy;
@@ -224,6 +228,7 @@ final class RecollectionDecorator implements Recollection
     /**
      * @return Collection<TKey,T>
      */
+    #[\Override]
     private function getRealCollection(): Collection
     {
         return $this->collection;
@@ -254,6 +259,7 @@ final class RecollectionDecorator implements Recollection
         );
     }
 
+    #[\Override]
     private function getUnderlyingCountable(): \Countable
     {
         return $this->collection;

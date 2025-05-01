@@ -122,6 +122,7 @@ abstract class AbstractRepository implements Repository
             ->addCriteria($criteria);
     }
 
+    #[\Override]
     private function getCountStrategy(): CountStrategy
     {
         return $this->count ?? ParameterUtil::getDefaultCountStrategyForFullClasses();
@@ -130,6 +131,7 @@ abstract class AbstractRepository implements Repository
     /**
      * @return null|int<1,max>
      */
+    #[\Override]
     private function getSoftLimit(): ?int
     {
         return $this->softLimit;
@@ -138,6 +140,7 @@ abstract class AbstractRepository implements Repository
     /**
      * @return null|int<1,max>
      */
+    #[\Override]
     private function getHardLimit(): ?int
     {
         return $this->hardLimit;
@@ -146,6 +149,7 @@ abstract class AbstractRepository implements Repository
     /**
      * @return class-string<T>
      */
+    #[\Override]
     private function getClass(): string
     {
         /** @var class-string<T> */

@@ -165,6 +165,7 @@ final class MinimalRecollectionDecorator implements MinimalRecollection
         return $newInstance;
     }
 
+    #[\Override]
     private function getCountStrategy(): CountStrategy
     {
         return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();
@@ -173,6 +174,7 @@ final class MinimalRecollectionDecorator implements MinimalRecollection
     /**
      * @return Collection<TKey,T>
      */
+    #[\Override]
     private function getRealCollection(): Collection
     {
         return $this->collection;
@@ -201,6 +203,7 @@ final class MinimalRecollectionDecorator implements MinimalRecollection
         );
     }
 
+    #[\Override]
     private function getUnderlyingCountable(): \Countable
     {
         return $this->collection;

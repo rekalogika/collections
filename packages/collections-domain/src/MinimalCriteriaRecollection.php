@@ -101,6 +101,7 @@ final class MinimalCriteriaRecollection implements MinimalReadableRecollection
      * @return null|int<1,max>
      */
     // @phpstan-ignore-next-line
+    #[\Override]
     private function getSoftLimit(): ?int
     {
         return null;
@@ -110,6 +111,7 @@ final class MinimalCriteriaRecollection implements MinimalReadableRecollection
      * @return null|int<1,max>
      */
     // @phpstan-ignore-next-line
+    #[\Override]
     private function getHardLimit(): ?int
     {
         return null;
@@ -180,6 +182,7 @@ final class MinimalCriteriaRecollection implements MinimalReadableRecollection
         return $newInstance;
     }
 
+    #[\Override]
     private function getCountStrategy(): CountStrategy
     {
         return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();
@@ -188,6 +191,7 @@ final class MinimalCriteriaRecollection implements MinimalReadableRecollection
     /**
      * @return ReadableCollection<TKey,T>
      */
+    #[\Override]
     private function getRealCollection(): ReadableCollection
     {
         return $this->getSafeCollection();
@@ -208,6 +212,7 @@ final class MinimalCriteriaRecollection implements MinimalReadableRecollection
         );
     }
 
+    #[\Override]
     private function getUnderlyingCountable(): \Countable
     {
         return $this->collection->matching($this->criteria);

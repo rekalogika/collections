@@ -66,6 +66,7 @@ final class QueryPageable implements PageableRecollection
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
     }
 
+    #[\Override]
     private function getCountStrategy(): CountStrategy
     {
         return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();

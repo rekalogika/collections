@@ -170,11 +170,13 @@ final class CriteriaPageable implements PageableRecollection
         );
     }
 
+    #[\Override]
     private function getUnderlyingCountable(): \Countable
     {
         return $this->collection->matching($this->criteria);
     }
 
+    #[\Override]
     private function getCountStrategy(): CountStrategy
     {
         return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();
