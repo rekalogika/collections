@@ -238,7 +238,7 @@ class RecollectionDecorator implements Recollection
     /**
      * @return non-empty-array<string,Order>
      */
-    protected function getDefaultOrderBy(): array
+    protected function getDefaultOrderBy(): array|string
     {
         return Configuration::$defaultOrderBy;
     }
