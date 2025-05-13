@@ -15,6 +15,7 @@ namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ReadableCollection;
+use Rekalogika\Domain\Collections\ArrayCollection;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 
 /**
@@ -41,18 +42,27 @@ trait ReadableCollectionTrait
     abstract private function getSafeCollection(): Collection;
 
     /**
+     * @return Collection<TKey,T>
+     */
+    abstract private function getNewCollection(): Collection;
+
+    /**
      * @template TMaybeContained
      * @param TMaybeContained $element
      * @return (TMaybeContained is T ? bool : false)
      */
     final public function contains(mixed $element): bool
     {
-        return $this->getSafeCollection()->contains($element);
+        return
+            $this->getNewCollection()->contains($element)
+            || $this->getSafeCollection()->contains($element);
     }
 
     final public function isEmpty(): bool
     {
-        return $this->getSafeCollection()->isEmpty();
+        return
+            $this->getNewCollection()->isEmpty()
+            && $this->getSafeCollection()->isEmpty();
     }
 
     final public function containsKey(mixed $key): bool
@@ -60,7 +70,9 @@ trait ReadableCollectionTrait
         /** @var TKey */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
-        return $this->getSafeCollection()->containsKey($key);
+        return
+            $this->getNewCollection()->containsKey($key)
+            || $this->getSafeCollection()->containsKey($key);
     }
 
     /**
@@ -71,7 +83,9 @@ trait ReadableCollectionTrait
         /** @var TKey */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
-        return $this->getSafeCollection()->get($key);
+        return
+            $this->getNewCollection()->get($key)
+            ?? $this->getSafeCollection()->get($key);
     }
 
     /**
@@ -79,7 +93,10 @@ trait ReadableCollectionTrait
      */
     final public function getKeys(): array
     {
-        return $this->getSafeCollection()->getKeys();
+        return [
+            ...$this->getSafeCollection()->getKeys(),
+            ...$this->getNewCollection()->getKeys(),
+        ];
     }
 
     /**
@@ -87,7 +104,10 @@ trait ReadableCollectionTrait
      */
     final public function getValues(): array
     {
-        return $this->getSafeCollection()->getValues();
+        return [
+            ...$this->getSafeCollection()->getValues(),
+            ...$this->getNewCollection()->getValues(),
+        ];
     }
 
     /**
@@ -95,7 +115,9 @@ trait ReadableCollectionTrait
      */
     final public function toArray(): array
     {
-        return $this->getSafeCollection()->toArray();
+        return
+            $this->getSafeCollection()->toArray()
+            + $this->getNewCollection()->toArray();
     }
 
     /**
@@ -103,7 +125,11 @@ trait ReadableCollectionTrait
      */
     final public function first(): mixed
     {
-        return $this->getSafeCollection()->first();
+        if ($first = $this->getSafeCollection()->first()) {
+            return $first;
+        }
+
+        return $this->getNewCollection()->first();
     }
 
     /**
@@ -111,11 +137,16 @@ trait ReadableCollectionTrait
      */
     final public function last(): mixed
     {
+        if ($last = $this->getNewCollection()->last()) {
+            return $last;
+        }
+
         return $this->getSafeCollection()->last();
     }
 
     /**
      * @return TKey|null
+     * @todo Does not consider items in new collection
      */
     final public function key(): int|string|null
     {
@@ -124,6 +155,7 @@ trait ReadableCollectionTrait
 
     /**
      * @return T|false
+     * @todo Does not consider items in new collection
      */
     final public function current(): mixed
     {
@@ -132,6 +164,7 @@ trait ReadableCollectionTrait
 
     /**
      * @return T|false
+     * @todo Does not consider items in new collection
      */
     final public function next(): mixed
     {
@@ -140,6 +173,7 @@ trait ReadableCollectionTrait
 
     /**
      * @return array<TKey,T>
+     * @todo Does not consider items in new collection
      */
     final public function slice(int $offset, ?int $length = null): array
     {
@@ -151,7 +185,9 @@ trait ReadableCollectionTrait
      */
     final public function exists(\Closure $p): bool
     {
-        return $this->getSafeCollection()->exists($p);
+        return
+            $this->getNewCollection()->exists($p)
+            || $this->getSafeCollection()->exists($p);
     }
 
     /**
@@ -160,7 +196,10 @@ trait ReadableCollectionTrait
      */
     final public function filter(\Closure $p): ReadableCollection
     {
-        return $this->getSafeCollection()->filter($p);
+        return new ArrayCollection(
+            $this->getSafeCollection()->filter($p)->toArray() +
+                $this->getNewCollection()->filter($p)->toArray(),
+        );
     }
 
     /**
@@ -170,7 +209,10 @@ trait ReadableCollectionTrait
      */
     final public function map(\Closure $func): ReadableCollection
     {
-        return $this->getSafeCollection()->map($func);
+        return new ArrayCollection(
+            $this->getSafeCollection()->map($func)->toArray() +
+                $this->getNewCollection()->map($func)->toArray(),
+        );
     }
 
     /**
@@ -179,7 +221,17 @@ trait ReadableCollectionTrait
      */
     final public function partition(\Closure $p): array
     {
-        return $this->getSafeCollection()->partition($p);
+        $safe = $this->getSafeCollection()->partition($p);
+        $new = $this->getNewCollection()->partition($p);
+
+        return [
+            new ArrayCollection(
+                $safe[0]->toArray() + $new[0]->toArray(),
+            ),
+            new ArrayCollection(
+                $safe[1]->toArray() + $new[1]->toArray(),
+            ),
+        ];
     }
 
     /**
@@ -187,7 +239,9 @@ trait ReadableCollectionTrait
      */
     final public function forAll(\Closure $p): bool
     {
-        return $this->getSafeCollection()->forAll($p);
+        return
+            $this->getSafeCollection()->forAll($p)
+            && $this->getNewCollection()->forAll($p);
     }
 
     /**
@@ -197,6 +251,10 @@ trait ReadableCollectionTrait
      */
     final public function indexOf(mixed $element): bool|int|string
     {
+        if ($this->getNewCollection()->contains($element)) {
+            return $this->getNewCollection()->indexOf($element);
+        }
+
         return $this->getSafeCollection()->indexOf($element);
     }
 
@@ -206,7 +264,8 @@ trait ReadableCollectionTrait
      */
     final public function findFirst(\Closure $p): mixed
     {
-        return $this->getSafeCollection()->findFirst($p);
+        return $this->getSafeCollection()->findFirst($p)
+            ?? $this->getNewCollection()->findFirst($p);
     }
 
     /**
@@ -218,6 +277,11 @@ trait ReadableCollectionTrait
      */
     final public function reduce(\Closure $func, mixed $initial = null): mixed
     {
-        return $this->getSafeCollection()->reduce($func, $initial);
+        $collection = new ArrayCollection(
+            $this->getSafeCollection()->toArray() +
+                $this->getNewCollection()->toArray(),
+        );
+
+        return $collection->reduce($func, $initial);
     }
 }

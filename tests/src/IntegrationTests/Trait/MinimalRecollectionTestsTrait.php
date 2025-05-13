@@ -25,7 +25,7 @@ trait MinimalRecollectionTestsTrait
     /** @use MinimalReadableRecollectionTestsTrait<R> */
     use MinimalReadableRecollectionTestsTrait;
 
-    public function testAdd(): void
+    public function testAddAndTestByContains(): void
     {
         $citizen = new Citizen();
         $citizen->setName('John Doe');
@@ -34,5 +34,27 @@ trait MinimalRecollectionTestsTrait
         static::assertFalse($this->getObject()->contains($citizen));
         $this->getObject()->add($citizen);
         static::assertTrue($this->getObject()->contains($citizen));
+    }
+
+    public function testAddAndTestByIteration(): void
+    {
+        $object = $this->getObject();
+
+        // @phpstan-ignore function.alreadyNarrowedType
+        if (!is_iterable($object)) {
+            static::markTestSkipped('This test only works with iterable');
+        }
+
+        if (!$this->isSafe()) {
+            $this->expectException(\OverflowException::class);
+        }
+
+        $citizen = new Citizen();
+        $citizen->setName('John Doe');
+        $citizen->setAge(30);
+
+        static::assertNotContains($citizen, $object);
+        $this->getObject()->add($citizen);
+        static::assertContains($citizen, $object);
     }
 }

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.16.1
+
+* fix: calling `add($item)` and iterating over the collection now includes the
+  new item
+
 ## 0.16.0
 
 * chore: modernize

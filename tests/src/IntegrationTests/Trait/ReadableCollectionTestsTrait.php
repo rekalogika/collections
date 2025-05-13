@@ -131,7 +131,7 @@ trait ReadableCollectionTestsTrait
         /** @var int|string $key */
         foreach ($filtered as $key => $citizen) {
             static::assertIsInt($key);
-            static::assertTrue($key % 2 === 0);
+            static::assertTrue($key % 2 === 0, \sprintf('key %d is not even', $key));
             static::assertInstanceOf(Citizen::class, $citizen);
         }
     }
