@@ -73,7 +73,8 @@ trait ExtraLazyTrait
     final public function offsetSet(mixed $offset, mixed $value): void
     {
         if (!isset($offset)) {
-            $this->getRealCollection()->add($value);
+            $this->getRealCollection()->offsetSet(null, $value);
+            $this->getNewCollection()->offsetSet(null, $value);
 
             return;
         }
