@@ -49,7 +49,6 @@ trait CollectionTrait
      */
     final public function add(mixed $element): void
     {
-        $this->getNewCollection()->add($element);
         $this->getRealCollection()->add($element);
     }
 
@@ -92,7 +91,6 @@ trait CollectionTrait
         /** @psalm-suppress MixedArgumentTypeCoercion */
         $this->getSafeCollection()->set($key, $value);
         $this->getRealCollection()->set($key, $value);
-        $this->getNewCollection()->set($key, $value);
     }
 
     /**

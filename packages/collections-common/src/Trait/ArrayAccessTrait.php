@@ -64,7 +64,7 @@ trait ArrayAccessTrait
     {
         if (!isset($offset)) {
             $this->getRealCollection()->offsetSet(null, $value);
-            $this->getNewCollection()->offsetSet($offset, $value);
+            $this->getNewCollection()->offsetSet(null, $value);
 
             return;
         }
