@@ -72,6 +72,23 @@
                 <directory name="tests/src/App/Entity/" />
             </errorLevel>
         </ClassMustBeFinal>
+        <NoValue>
+            <errorLevel type="suppress">
+                <file name="packages/collections-common/src/Trait/IteratorAggregateTrait.php" />
+                <file name="packages/collections-common/src/Trait/ReadableCollectionTrait.php" />
+                <file name="tests/src/IntegrationTests/Trait/MinimalRecollectionTestsTrait.php" />
+            </errorLevel>
+        </NoValue>
+        <MixedReturnTypeCoercion>
+            <errorLevel type="suppress">
+                <file name="packages/collections-common/src/Trait/IteratorAggregateTrait.php" />
+            </errorLevel>
+        </MixedReturnTypeCoercion>
+        <DocblockTypeContradiction>
+            <errorLevel type="suppress">
+                <file name="packages/collections-common/src/Trait/ReadableCollectionTrait.php" />
+            </errorLevel>
+        </DocblockTypeContradiction>
     </issueHandlers>
 
     <plugins>

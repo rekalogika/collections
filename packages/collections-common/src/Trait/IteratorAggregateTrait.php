@@ -27,10 +27,21 @@ trait IteratorAggregateTrait
     abstract private function getSafeCollection(): Collection;
 
     /**
+     * @return Collection<TKey,T>
+     */
+    abstract private function getNewCollection(): Collection;
+
+    /**
      * @return \Traversable<TKey,T>
      */
     final public function getIterator(): \Traversable
     {
-        return $this->getSafeCollection()->getIterator();
+        foreach ($this->getSafeCollection() as $key => $value) {
+            yield $key => $value;
+        }
+
+        foreach ($this->getNewCollection() as $key => $value) {
+            yield $key => $value;
+        }
     }
 }

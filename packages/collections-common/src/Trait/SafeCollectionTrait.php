@@ -33,6 +33,11 @@ trait SafeCollectionTrait
     private ?Collection $safeCollection = null;
 
     /**
+     * @var Collection<TKey,T>|null
+     */
+    private ?Collection $newCollection = null;
+
+    /**
      * @return PageableInterface<TKey,T>
      */
     abstract private function getPageable(): PageableInterface;
@@ -50,6 +55,14 @@ trait SafeCollectionTrait
     private function ensureSafety(): void
     {
         $this->getSafeCollection();
+    }
+
+    /**
+     * @return null|Collection<TKey,T>
+     */
+    private function getSafeCollectionOrNull(): ?Collection
+    {
+        return $this->safeCollection;
     }
 
     /**
@@ -83,5 +96,21 @@ trait SafeCollectionTrait
         }
 
         return $this->safeCollection = new ArrayCollection($items);
+    }
+
+    /**
+     * @return null|Collection<TKey,T>
+     */
+    private function getNewCollectionOrNull(): ?Collection
+    {
+        return $this->newCollection;
+    }
+
+    /**
+     * @return Collection<TKey,T>
+     */
+    private function getNewCollection(): Collection
+    {
+        return $this->newCollection ??= new ArrayCollection();
     }
 }

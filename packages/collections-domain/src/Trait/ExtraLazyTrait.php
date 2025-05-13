@@ -37,6 +37,11 @@ trait ExtraLazyTrait
     abstract private function getSafeCollection(): Collection;
 
     /**
+     * @return Collection<TKey,T>
+     */
+    abstract private function getNewCollection(): Collection;
+
+    /**
      * @param TKey $offset
      */
     final public function offsetExists(mixed $offset): bool
@@ -85,5 +90,6 @@ trait ExtraLazyTrait
     final public function add(mixed $element): void
     {
         $this->getRealCollection()->add($element);
+        $this->getNewCollection()->add($element);
     }
 }

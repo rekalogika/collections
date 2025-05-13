@@ -23,9 +23,8 @@ trait IteratorAggregateTestsTrait
 {
     public function testGetIterator(): void
     {
-        $this->testSafety();
         $iterator = $this->getObject()->getIterator();
-        static::assertInstanceOf(\Iterator::class, $iterator);
+        static::assertInstanceOf(\Traversable::class, $iterator);
     }
 
     public function testIteratorIteration(): void

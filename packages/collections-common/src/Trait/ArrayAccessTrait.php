@@ -64,6 +64,7 @@ trait ArrayAccessTrait
     {
         if (!isset($offset)) {
             $this->getRealCollection()->offsetSet(null, $value);
+            $this->getNewCollection()->offsetSet($offset, $value);
 
             return;
         }
@@ -74,6 +75,7 @@ trait ArrayAccessTrait
         $this->ensureSafety();
 
         $this->getRealCollection()->offsetSet($offset, $value);
+        $this->getNewCollection()->offsetSet($offset, $value);
     }
 
     final public function offsetUnset(mixed $offset): void
