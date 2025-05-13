@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.16.1
+
+* fix: restore the return signature of `getDefaultOrderBy()` to `array|string`
+
 ## 0.16.0
 
 * chore: modernize
