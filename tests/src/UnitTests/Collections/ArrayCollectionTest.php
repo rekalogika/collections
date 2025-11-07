@@ -49,6 +49,7 @@ final class ArrayCollectionTest extends TestCase
 
     public function testOurArrayCollection(): void
     {
+        /** @psalm-suppress DeprecatedClass */
         $citizens = new ArrayCollection($this->createArray());
         $statelessCriteria = Criteria::create()
             ->where(Criteria::expr()->isNull('country'));
@@ -59,6 +60,7 @@ final class ArrayCollectionTest extends TestCase
 
     public function testParentPrivateProperty(): void
     {
+        /** @psalm-suppress DeprecatedClass */
         $citizens = new ArrayCollection([
             new Country('Khemed'),
             new Country('San Theodoros'),

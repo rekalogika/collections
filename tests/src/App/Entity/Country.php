@@ -51,6 +51,7 @@ class Country
 
     public function __construct()
     {
+        /** @psalm-suppress DeprecatedClass */
         $this->citizens = new ArrayCollection();
     }
 
