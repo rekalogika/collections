@@ -30,6 +30,11 @@ jobs:
         extensions: intl
         tools: flex
 
+    - name: Install Symfony Flex globally
+      run: |
+        composer global config --no-plugins allow-plugins.symfony/flex true
+        composer global require --no-progress --no-scripts --no-plugins symfony/flex
+
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
@@ -46,7 +51,7 @@ jobs:
       uses: ramsey/composer-install@v3
       with:
         dependency-versions: ${{ matrix.dep }}
-        composer-options: --prefer-dist --no-progress --no-scripts --ignore-platform-reqs
+        composer-options: --prefer-dist --no-progress --no-scripts
 
     - name: Run psalm
       run: vendor/bin/psalm
