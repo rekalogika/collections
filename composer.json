@@ -39,6 +39,7 @@
         "symfony/runtime": "^6.4 || ^7.1",
         "symfony/uid": "^7.1",
         "symfony/var-dumper": "^6.4 || ^7.1",
+        "symfony/var-exporter": "^6.4 || ^7.1",
         "symfony/yaml": "^6.4 || ^7.1",
         "symplify/monorepo-builder": "^11.2.20 || ^11.3",
         "vimeo/psalm": "^6.1",
