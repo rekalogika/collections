@@ -15,6 +15,9 @@ parameters:
         - tests/var/*
         - packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php
     ignoreErrors:
+        -
+            message: '#Static method Doctrine\\Common\\Collections\\Criteria::create\(\) invoked#'
+            reportUnmatched: false
         - '#Call to method __construct\(\) of internal class Doctrine\\Bundle\\DoctrineBundle\\Repository\\LazyServiceEntityRepository\<T#'
         -
             message: '#Property .* is never assigned .+ so it can be removed from the property type.#'
