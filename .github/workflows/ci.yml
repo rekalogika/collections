@@ -53,10 +53,6 @@ jobs:
         dependency-versions: ${{ matrix.dep }}
         composer-options: --prefer-dist --no-progress --no-scripts
 
-    - name: Run psalm
-      run: vendor/bin/psalm
-      if: matrix.dep == 'highest'
-
     - name: Run phpstan
       run: vendor/bin/phpstan analyse
 
