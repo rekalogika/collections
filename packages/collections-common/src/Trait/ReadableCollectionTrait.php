@@ -196,6 +196,7 @@ trait ReadableCollectionTrait
      */
     final public function filter(\Closure $p): ReadableCollection
     {
+        /** @psalm-suppress DeprecatedClass */
         return new ArrayCollection(
             $this->getSafeCollection()->filter($p)->toArray() +
                 $this->getNewCollection()->filter($p)->toArray(),
@@ -209,6 +210,7 @@ trait ReadableCollectionTrait
      */
     final public function map(\Closure $func): ReadableCollection
     {
+        /** @psalm-suppress DeprecatedClass */
         return new ArrayCollection(
             $this->getSafeCollection()->map($func)->toArray() +
                 $this->getNewCollection()->map($func)->toArray(),
@@ -224,6 +226,7 @@ trait ReadableCollectionTrait
         $safe = $this->getSafeCollection()->partition($p);
         $new = $this->getNewCollection()->partition($p);
 
+        /** @psalm-suppress DeprecatedClass */
         return [
             new ArrayCollection(
                 $safe[0]->toArray() + $new[0]->toArray(),
@@ -277,6 +280,7 @@ trait ReadableCollectionTrait
      */
     final public function reduce(\Closure $func, mixed $initial = null): mixed
     {
+        /** @psalm-suppress DeprecatedClass */
         $collection = new ArrayCollection(
             $this->getSafeCollection()->toArray() +
                 $this->getNewCollection()->toArray(),

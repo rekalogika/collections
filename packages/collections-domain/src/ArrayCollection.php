@@ -25,6 +25,7 @@ use Rekalogika\Domain\Collections\Internal\DirectClosureExpressionVisitor;
  * @template T
  * @extends DoctrineArrayCollection<TKey,T>
  * @api
+ * @deprecated Use doctrine/collections >=2.4 instead, see https://github.com/doctrine/collections/pull/472
  */
 class ArrayCollection extends DoctrineArrayCollection
 {

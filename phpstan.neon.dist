@@ -19,6 +19,8 @@ parameters:
         -
             message: '#Property .* is never assigned .+ so it can be removed from the property type.#'
             reportUnmatched: false
+        -
+            message: '#deprecated class Rekalogika\\Domain\\Collections\\ArrayCollection#'
 
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
