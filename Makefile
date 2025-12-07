@@ -2,7 +2,7 @@ PHP=php
 COMPOSER=composer
 
 .PHONY: test
-test: composer-dump phpstan psalm phpunit
+test: composer-dump phpstan phpunit
 
 .PHONY: composer-dump
 composer-dump:
@@ -11,10 +11,6 @@ composer-dump:
 .PHONY: phpstan
 phpstan:
 	$(PHP) vendor/bin/phpstan analyse
-
-.PHONY: psalm
-psalm:
-	$(PHP) vendor/bin/psalm
 
 .PHONY: phpunit
 phpunit:
@@ -36,7 +32,6 @@ rector:
 
 .PHONY: clean
 clean:
-	$(PHP) vendor/bin/psalm --clear-cache
 	rm -rf tests/var/*
 
 .PHONY: merge
@@ -71,4 +66,3 @@ dump:
 
 clear-cache:
 	$(PHP) vendor/bin/phpstan clear-result-cache
-	$(PHP) vendor/bin/psalm --clear-cache

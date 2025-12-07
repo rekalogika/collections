@@ -37,15 +37,16 @@ final class ArrayCollectionTest extends TestCase
         ];
     }
 
-    public function testDoctrineArrayCollection(): void
-    {
-        $citizens = new DoctrineArrayCollection($this->createArray());
-        $statelessCriteria = Criteria::create()
-            ->where(Criteria::expr()->isNull('country'));
+    // no longer necessary because doctrine already fixed the issue
+    // public function testDoctrineArrayCollection(): void
+    // {
+    //     $citizens = new DoctrineArrayCollection($this->createArray());
+    //     $statelessCriteria = Criteria::create()
+    //         ->where(Criteria::expr()->isNull('country'));
 
-        $statelessCitizens = $citizens->matching($statelessCriteria);
-        static::assertCount(0, $statelessCitizens); // wrong count
-    }
+    //     $statelessCitizens = $citizens->matching($statelessCriteria);
+    //     static::assertCount(0, $statelessCitizens); // wrong count
+    // }
 
     public function testOurArrayCollection(): void
     {
