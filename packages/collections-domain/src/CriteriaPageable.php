@@ -86,7 +86,7 @@ class CriteriaPageable implements PageableRecollection
 
         // save criteria
 
-        $criteria = clone ($criteria ?? Criteria::create());
+        $criteria = clone ($criteria ?? Criteria::create(true));
 
         if (\count($criteria->orderings()) === 0) {
             $criteria->orderBy(Configuration::$defaultOrderBy);

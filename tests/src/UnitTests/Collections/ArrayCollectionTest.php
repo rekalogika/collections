@@ -40,7 +40,7 @@ final class ArrayCollectionTest extends TestCase
     public function testDoctrineArrayCollection(): void
     {
         $citizens = new DoctrineArrayCollection($this->createArray());
-        $statelessCriteria = Criteria::create()
+        $statelessCriteria = Criteria::create(true)
             ->where(Criteria::expr()->isNull('country'));
 
         $statelessCitizens = $citizens->matching($statelessCriteria);
@@ -51,7 +51,7 @@ final class ArrayCollectionTest extends TestCase
     {
         /** @psalm-suppress DeprecatedClass */
         $citizens = new ArrayCollection($this->createArray());
-        $statelessCriteria = Criteria::create()
+        $statelessCriteria = Criteria::create(true)
             ->where(Criteria::expr()->isNull('country'));
 
         $statelessCitizens = $citizens->matching($statelessCriteria);
@@ -68,7 +68,7 @@ final class ArrayCollectionTest extends TestCase
             new Country('Syldavia'),
             new NullCountry(),
         ]);
-        $criteria = Criteria::create()
+        $criteria = Criteria::create(true)
             ->where(Criteria::expr()->eq('foo', 'bar'));
 
         $result = $citizens->matching($criteria);
