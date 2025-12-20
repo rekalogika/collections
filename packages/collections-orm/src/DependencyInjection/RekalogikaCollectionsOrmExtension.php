@@ -24,8 +24,10 @@ final class RekalogikaCollectionsOrmExtension extends Extension
     public function load(array $configs, ContainerBuilder $container): void
     {
         $container
-            ->register(DatabaseSession::class, DefaultDatabaseSession::class)
+            ->register(DefaultDatabaseSession::class)
             ->setAutowired(true)
             ->setPublic(false);
+
+        $container->setAlias(DatabaseSession::class, DefaultDatabaseSession::class);
     }
 }
