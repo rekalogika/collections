@@ -53,6 +53,8 @@ trait CollectionTestsTrait
     public function testRemoveNull(): void
     {
         $this->getObject()->remove(null);
+        
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
         static::assertTrue(true);
     }
 
