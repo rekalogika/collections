@@ -67,12 +67,13 @@ trait ReadableCollectionTrait
 
     final public function containsKey(mixed $key): bool
     {
-        /** @var TKey|null */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
         if ($key === null) {
             return false;
         }
+
+        /** @phpstan-var TKey $key */
 
         return
             $this->getNewCollection()->containsKey($key)
@@ -84,12 +85,13 @@ trait ReadableCollectionTrait
      */
     final public function get(mixed $key): mixed
     {
-        /** @var TKey|null */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
         if ($key === null) {
             return null;
         }
+
+        /** @phpstan-var TKey $key */
 
         return
             $this->getNewCollection()->get($key)

@@ -64,12 +64,13 @@ trait CollectionTrait
      */
     final public function remove(mixed $key): mixed
     {
-        /** @var TKey|null $key */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
         if ($key === null) {
             return null;
         }
+
+        /** @phpstan-var TKey $key */
 
         $this->getSafeCollection()->remove($key);
         return $this->getRealCollection()->remove($key);
@@ -90,12 +91,13 @@ trait CollectionTrait
      */
     final public function set(mixed $key, mixed $value): void
     {
-        /** @var TKey|null */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
         if ($key === null) {
             throw new InvalidArgumentException('Key cannot be null.');
         }
+
+        /** @phpstan-var TKey $key */
 
         /** @psalm-suppress MixedArgumentTypeCoercion */
         $this->getSafeCollection()->set($key, $value);
