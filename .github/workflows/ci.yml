@@ -63,3 +63,5 @@ jobs:
       run: |
         make fixtures
         make phpunit
+      env:
+        SYMFONY_DEPRECATIONS_HELPER: disabled
