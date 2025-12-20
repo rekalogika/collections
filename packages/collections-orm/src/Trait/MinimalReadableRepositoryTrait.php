@@ -40,12 +40,12 @@ trait MinimalReadableRepositoryTrait
      */
     use FetchTrait;
 
-    abstract private function getEntityManager(): EntityManagerInterface;
+    abstract protected function getEntityManager(): EntityManagerInterface;
 
     /**
      * @return class-string
      */
-    abstract private function getClass(): string;
+    abstract protected function getClass(): string;
 
     /**
      * @return T
