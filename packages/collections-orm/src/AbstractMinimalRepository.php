@@ -114,7 +114,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
      * @return class-string<T>
      */
     #[\Override]
-    private function getClass(): string
+    protected function getClass(): string
     {
         /** @var class-string<T> */
         return $this->class;
