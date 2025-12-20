@@ -13,16 +13,21 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\ORM\DependencyInjection;
 
+use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Rekalogika\Collections\ORM\DatabaseSession;
 use Rekalogika\Collections\ORM\Implementation\DefaultDatabaseSession;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 
-final class RekalogikaCollectionsOrmExtension extends Extension
+final class RekalogikaCollectionsORMExtension extends Extension
 {
     #[\Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
+        if (!class_exists(DoctrineBundle::class)) {
+            return;
+        }
+
         $container
             ->register(DefaultDatabaseSession::class)
             ->setAutowired(true)
