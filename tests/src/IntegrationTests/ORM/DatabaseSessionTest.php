@@ -56,7 +56,11 @@ final class DatabaseSessionTest extends KernelTestCase
         $this->assertFalse($entityManager->contains($citizen));
 
         // Remove the entity to avoid affecting other tests
-        $entityManager->remove($entityManager->find(Citizen::class, $citizen->getId()));
+        $citizen = $entityManager->find(Citizen::class, $citizen->getId());
+
+        $this->assertNotNull($citizen);
+
+        $entityManager->remove($citizen);
         $databaseSession->flush();
     }
 
