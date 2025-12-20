@@ -43,7 +43,7 @@ trait RepositoryTrait
 
     final public function offsetExists(mixed $offset): bool
     {
-        /** @var TKey */
+        /** @var TKey|null */
         $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
         if ($offset === null) {
@@ -58,7 +58,7 @@ trait RepositoryTrait
      */
     final public function offsetGet(mixed $offset): mixed
     {
-        /** @var TKey */
+        /** @var TKey|null */
         $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
         if ($offset === null) {
@@ -82,7 +82,7 @@ trait RepositoryTrait
 
     final public function offsetUnset(mixed $offset): void
     {
-        /** @var TKey */
+        /** @var TKey|null */
         $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
         if ($offset === null) {

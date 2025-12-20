@@ -53,7 +53,7 @@ trait ArrayAccessTrait
      */
     final public function offsetGet(mixed $offset): mixed
     {
-        /** @var TKey */
+        /** @var TKey|null */
         $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
         if ($offset === null) {
@@ -77,7 +77,7 @@ trait ArrayAccessTrait
             return;
         }
 
-        /** @var TKey */
+        /** @var TKey|null */
         $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
         $this->ensureSafety();
@@ -88,7 +88,7 @@ trait ArrayAccessTrait
 
     final public function offsetUnset(mixed $offset): void
     {
-        /** @var TKey */
+        /** @var TKey|null */
         $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
         if ($offset === null) {

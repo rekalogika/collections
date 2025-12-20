@@ -67,7 +67,7 @@ trait ReadableCollectionTrait
 
     final public function containsKey(mixed $key): bool
     {
-        /** @var TKey */
+        /** @var TKey|null */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
         if ($key === null) {
@@ -84,7 +84,7 @@ trait ReadableCollectionTrait
      */
     final public function get(mixed $key): mixed
     {
-        /** @var TKey */
+        /** @var TKey|null */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
         if ($key === null) {

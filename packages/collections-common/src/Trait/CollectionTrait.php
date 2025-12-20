@@ -64,7 +64,7 @@ trait CollectionTrait
      */
     final public function remove(mixed $key): mixed
     {
-        /** @var TKey */
+        /** @var TKey|null $key */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
         if ($key === null) {
@@ -90,11 +90,11 @@ trait CollectionTrait
      */
     final public function set(mixed $key, mixed $value): void
     {
-        /** @var TKey */
+        /** @var TKey|null */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
         if ($key === null) {
-            throw new InvalidArgumentException('Null key provided.');
+            throw new InvalidArgumentException('Key cannot be null.');
         }
 
         /** @psalm-suppress MixedArgumentTypeCoercion */
