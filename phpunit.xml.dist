@@ -16,7 +16,7 @@
         value="0" />
     <ini
         name="error_reporting"
-        value="-1" />
+        value="32767" />
     <server
         name="APP_ENV"
         value="test"
