@@ -70,6 +70,10 @@ trait ReadableCollectionTrait
         /** @var TKey */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
+        if ($key === null) {
+            return false;
+        }
+
         return
             $this->getNewCollection()->containsKey($key)
             || $this->getSafeCollection()->containsKey($key);
@@ -82,6 +86,10 @@ trait ReadableCollectionTrait
     {
         /** @var TKey */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
+
+        if ($key === null) {
+            return null;
+        }
 
         return
             $this->getNewCollection()->get($key)

@@ -53,6 +53,10 @@ trait MinimalRepositoryTrait
      */
     public function remove(mixed $key): mixed
     {
+        if ($key === null) {
+            return null;
+        }
+
         $element = $this->get($key);
 
         if ($element === null) {

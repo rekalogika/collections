@@ -57,6 +57,10 @@ trait ReadableExtraLazyTrait
         /** @var TKey */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
+        if ($key === null) {
+            return false;
+        }
+
         if ($this->isSafeWithIndex()) {
             return $this->getRealCollection()->containsKey($key);
         }
@@ -71,6 +75,10 @@ trait ReadableExtraLazyTrait
     {
         /** @var TKey */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
+
+        if ($key === null) {
+            return null;
+        }
 
         if ($this->isSafeWithIndex()) {
             return $this->getRealCollection()->get($key);

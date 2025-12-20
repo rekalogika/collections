@@ -46,6 +46,10 @@ trait RepositoryTrait
         /** @var TKey */
         $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
+        if ($offset === null) {
+            return false;
+        }
+
         return $this->containsKey($offset);
     }
 
@@ -56,6 +60,10 @@ trait RepositoryTrait
     {
         /** @var TKey */
         $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
+
+        if ($offset === null) {
+            return null;
+        }
 
         return $this->get($offset);
     }
@@ -76,6 +84,10 @@ trait RepositoryTrait
     {
         /** @var TKey */
         $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
+
+        if ($offset === null) {
+            return;
+        }
 
         $this->remove($offset);
     }

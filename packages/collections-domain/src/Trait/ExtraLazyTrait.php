@@ -59,6 +59,10 @@ trait ExtraLazyTrait
      */
     final public function offsetGet(mixed $offset): mixed
     {
+        if ($offset === null) {
+            return null;
+        }
+
         if ($this->isSafeWithIndex()) {
             return $this->getRealCollection()->get($offset);
         }

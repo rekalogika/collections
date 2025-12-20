@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Doctrine\Common\Collections\Collection;
+use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 
 /**
@@ -66,6 +67,10 @@ trait CollectionTrait
         /** @var TKey */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
+        if ($key === null) {
+            return null;
+        }
+
         $this->getSafeCollection()->remove($key);
         return $this->getRealCollection()->remove($key);
     }
@@ -87,6 +92,10 @@ trait CollectionTrait
     {
         /** @var TKey */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
+
+        if ($key === null) {
+            throw new InvalidArgumentException('Null key provided.');
+        }
 
         /** @psalm-suppress MixedArgumentTypeCoercion */
         $this->getSafeCollection()->set($key, $value);

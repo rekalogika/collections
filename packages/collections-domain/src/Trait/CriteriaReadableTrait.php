@@ -47,6 +47,10 @@ trait CriteriaReadableTrait
         /** @var TKey */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
 
+        if ($key === null) {
+            return false;
+        }
+
         return $this->getSafeCollection()->containsKey($key);
     }
 
@@ -57,6 +61,10 @@ trait CriteriaReadableTrait
     {
         /** @var TKey */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
+
+        if ($key === null) {
+            return null;
+        }
 
         return $this->getSafeCollection()->get($key);
     }

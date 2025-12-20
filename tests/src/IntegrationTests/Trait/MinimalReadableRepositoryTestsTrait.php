@@ -15,6 +15,7 @@ namespace Rekalogika\Collections\Tests\IntegrationTests\Trait;
 
 use Doctrine\ORM\EntityNotFoundException;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
+use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Collections\MinimalReadableRepository;
 
 /**
@@ -31,6 +32,12 @@ trait MinimalReadableRepositoryTestsTrait
         static::assertInstanceOf(Citizen::class, $citizen);
         $name = $citizen->getName();
         static::assertIsString($name);
+    }
+
+    public function testReferenceNull(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->getObject()->reference(null);
     }
 
     public function testReferenceNegative(): void

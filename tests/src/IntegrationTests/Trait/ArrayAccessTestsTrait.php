@@ -43,6 +43,11 @@ trait ArrayAccessTestsTrait
         static::assertSame($citizen, $citizen2);
     }
 
+    public function testOffsetGetNull(): void
+    {
+        static::assertNull($this->getObject()->offsetGet(null));
+    }
+
     public function testOffsetSetWithIndex(): void
     {
         $this->testSafety();
@@ -67,5 +72,11 @@ trait ArrayAccessTestsTrait
         static::assertNotNull($key);
         $this->getObject()->offsetUnset($key);
         static::assertNull($this->getObject()->offsetGet($key));
+    }
+
+    public function testOffsetUnsetNull(): void
+    {
+        $this->getObject()->offsetUnset(null);
+        static::assertTrue(true);
     }
 }

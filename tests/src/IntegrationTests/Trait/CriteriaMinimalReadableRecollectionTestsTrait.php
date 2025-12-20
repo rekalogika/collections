@@ -47,6 +47,11 @@ trait CriteriaMinimalReadableRecollectionTestsTrait
         static::assertTrue($this->getObject()->containsKey($citizen->getId() ?? -1));
     }
 
+    public function testContainsKeyNull(): void
+    {
+        static::assertFalse($this->getObject()->containsKey(null));
+    }
+
     public function testContainsKeyNegative(): void
     {
         $this->testSafety();
@@ -59,6 +64,12 @@ trait CriteriaMinimalReadableRecollectionTestsTrait
         $citizen = $this->getOne();
         $citizen2 = $this->getObject()->get($citizen->getId() ?? -1);
         static::assertSame($citizen, $citizen2);
+    }
+
+    public function testGetNull(): void
+    {
+        $citizen = $this->getObject()->get(null);
+        static::assertNull($citizen);
     }
 
     public function testGetNegative(): void
@@ -74,6 +85,12 @@ trait CriteriaMinimalReadableRecollectionTestsTrait
         $citizen = $this->getOne();
         $citizen2 = $this->getObject()->fetch($citizen->getId() ?? -1);
         static::assertSame($citizen, $citizen2);
+    }
+
+    public function testFetchNull(): void
+    {
+        $this->expectException(NotFoundException::class);
+        $citizen = $this->getObject()->fetch(null);
     }
 
     public function testFetchNegative(): void
