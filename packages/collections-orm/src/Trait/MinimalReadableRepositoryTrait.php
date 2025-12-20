@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\ORM\Trait;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 use Rekalogika\Domain\Collections\Common\Trait\FetchTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
@@ -51,6 +52,10 @@ trait MinimalReadableRepositoryTrait
      */
     public function reference(mixed $key): object
     {
+        if ($key === null) {
+            throw new InvalidArgumentException('Key cannot be null');
+        }
+
         return $this->getEntityManager()
             ->getReference($this->getClass(), $key)
             ?? throw new NotFoundException('Entity not found');
@@ -72,6 +77,10 @@ trait MinimalReadableRepositoryTrait
 
     public function containsKey(mixed $key): bool
     {
+        if ($key === null) {
+            return false;
+        }
+
         return $this->get($key) !== null;
     }
 
@@ -80,6 +89,10 @@ trait MinimalReadableRepositoryTrait
      */
     public function get(mixed $key): mixed
     {
+        if ($key === null) {
+            return null;
+        }
+
         return $this->getEntityManager()->find($this->getClass(), $key);
     }
 }

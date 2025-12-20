@@ -56,7 +56,7 @@ final class ParameterUtil
     public static function transformInputToKey(
         ?KeyTransformer $keyTransformer,
         mixed $input,
-    ): int|string {
+    ): null|int|string {
         $keyTransformer ??= self::getDefaultKeyTransformer();
 
         return $keyTransformer->transformToKey($input);

@@ -43,6 +43,12 @@ trait ArrayAccessTestsTrait
         static::assertSame($citizen, $citizen2);
     }
 
+    public function testOffsetGetNull(): void
+    {
+        // @phpstan-ignore argument.type
+        static::assertNull($this->getObject()->offsetGet(null)); 
+    }
+
     public function testOffsetSetWithIndex(): void
     {
         $this->testSafety();
@@ -67,5 +73,14 @@ trait ArrayAccessTestsTrait
         static::assertNotNull($key);
         $this->getObject()->offsetUnset($key);
         static::assertNull($this->getObject()->offsetGet($key));
+    }
+
+    public function testOffsetUnsetNull(): void
+    {
+        // @phpstan-ignore argument.type
+        $this->getObject()->offsetUnset(null);
+        
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
+        static::assertTrue(true);
     }
 }

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Doctrine\Common\Collections\Collection;
+use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 
 /**
@@ -63,8 +64,13 @@ trait CollectionTrait
      */
     final public function remove(mixed $key): mixed
     {
-        /** @var TKey */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
+
+        if ($key === null) {
+            return null;
+        }
+
+        /** @phpstan-var TKey $key */
 
         $this->getSafeCollection()->remove($key);
         return $this->getRealCollection()->remove($key);
@@ -85,8 +91,13 @@ trait CollectionTrait
      */
     final public function set(mixed $key, mixed $value): void
     {
-        /** @var TKey */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
+
+        if ($key === null) {
+            throw new InvalidArgumentException('Key cannot be null.');
+        }
+
+        /** @phpstan-var TKey $key */
 
         /** @psalm-suppress MixedArgumentTypeCoercion */
         $this->getSafeCollection()->set($key, $value);

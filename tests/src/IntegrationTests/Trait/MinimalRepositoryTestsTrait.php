@@ -33,6 +33,12 @@ trait MinimalRepositoryTestsTrait
         static::assertFalse($this->getObject()->contains($removed));
     }
 
+    public function testRemoveNull(): void
+    {
+        $removed = $this->getObject()->remove(null);
+        static::assertNull($removed);
+    }
+
     public function testRemoveNegative(): void
     {
         $removed = $this->getObject()->remove(9999999);

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\KeyTransformer;
 
-use Rekalogika\Contracts\Collections\Exception\NotFoundException;
 use Symfony\Component\Uid\AbstractUid;
 use Symfony\Component\Uid\Uuid;
 
@@ -29,14 +28,14 @@ final class UuidKeyTransformer implements KeyTransformer
     private function __construct() {}
 
     #[\Override]
-    public function transformToKey(mixed $key): string
+    public function transformToKey(mixed $key): null|string
     {
         if ($key instanceof AbstractUid) {
             return $key->toRfc4122();
         }
 
         if (!\is_string($key)) {
-            throw new NotFoundException();
+            return null;
         }
 
         try {
@@ -44,7 +43,7 @@ final class UuidKeyTransformer implements KeyTransformer
 
             return $key;
         } catch (\InvalidArgumentException) {
-            throw new NotFoundException();
+            return null;
         }
     }
 }

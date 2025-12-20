@@ -36,8 +36,12 @@ trait ArrayAccessTrait
 
     final public function offsetExists(mixed $offset): bool
     {
-        /** @var TKey */
+        /** @var null|TKey */
         $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
+
+        if ($offset === null) {
+            return false;
+        }
 
         // return $this->getSafeCollection()->containsKey($offset);
 
@@ -49,8 +53,12 @@ trait ArrayAccessTrait
      */
     final public function offsetGet(mixed $offset): mixed
     {
-        /** @var TKey */
+        /** @var TKey|null */
         $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
+
+        if ($offset === null) {
+            return null;
+        }
 
         // return $this->getSafeCollection()->get($offset);
 
@@ -69,7 +77,7 @@ trait ArrayAccessTrait
             return;
         }
 
-        /** @var TKey */
+        /** @var TKey|null */
         $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
 
         $this->ensureSafety();
@@ -80,8 +88,12 @@ trait ArrayAccessTrait
 
     final public function offsetUnset(mixed $offset): void
     {
-        /** @var TKey */
+        /** @var TKey|null */
         $offset = ParameterUtil::transformInputToKey($this->keyTransformer, $offset);
+
+        if ($offset === null) {
+            return;
+        }
 
         $this->ensureSafety();
 

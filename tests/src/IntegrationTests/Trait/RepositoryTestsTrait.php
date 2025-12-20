@@ -38,6 +38,13 @@ trait RepositoryTestsTrait
         static::assertTrue($this->getObject()->contains($citizen));
     }
 
+    public function testSetNull(): void
+    {
+        $citizen = new Citizen();
+        $this->getObject()->set(null, $citizen);
+        static::assertTrue($this->getObject()->contains($citizen));
+    }
+
     public function testOffsetSetWithIndex(): void
     {
         $this->expectException(InvalidArgumentException::class);

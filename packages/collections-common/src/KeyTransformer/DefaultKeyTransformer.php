@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\KeyTransformer;
 
-use Rekalogika\Contracts\Collections\Exception\NotFoundException;
-
 final class DefaultKeyTransformer implements KeyTransformer
 {
     private static ?self $instance = null;
@@ -27,12 +25,12 @@ final class DefaultKeyTransformer implements KeyTransformer
     private function __construct() {}
 
     #[\Override]
-    public function transformToKey(mixed $key): int|string
+    public function transformToKey(mixed $key): null|int|string
     {
         if ($key instanceof \Stringable) {
             return (string) $key;
         } elseif (!\is_string($key) && !\is_int($key)) {
-            throw new NotFoundException();
+            return null;
         }
 
         return $key;

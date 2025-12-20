@@ -30,10 +30,13 @@ trait CriteriaReadableRecollectionTestsTrait
         CriteriaMinimalReadableRecollectionTestsTrait::testContains insteadof ReadableRecollectionTestsTrait;
         CriteriaMinimalReadableRecollectionTestsTrait::testContainsNegative insteadof ReadableRecollectionTestsTrait;
         CriteriaMinimalReadableRecollectionTestsTrait::testContainsKey insteadof ReadableRecollectionTestsTrait;
+        CriteriaMinimalReadableRecollectionTestsTrait::testContainsKeyNull insteadof ReadableRecollectionTestsTrait;
         CriteriaMinimalReadableRecollectionTestsTrait::testContainsKeyNegative insteadof ReadableRecollectionTestsTrait;
         CriteriaMinimalReadableRecollectionTestsTrait::testGet insteadof ReadableRecollectionTestsTrait;
+        CriteriaMinimalReadableRecollectionTestsTrait::testGetNull insteadof ReadableRecollectionTestsTrait;
         CriteriaMinimalReadableRecollectionTestsTrait::testGetNegative insteadof ReadableRecollectionTestsTrait;
         CriteriaMinimalReadableRecollectionTestsTrait::testFetch insteadof ReadableRecollectionTestsTrait;
+        CriteriaMinimalReadableRecollectionTestsTrait::testFetchNull insteadof ReadableRecollectionTestsTrait;
         CriteriaMinimalReadableRecollectionTestsTrait::testFetchNegative insteadof ReadableRecollectionTestsTrait;
         CriteriaMinimalReadableRecollectionTestsTrait::testSlice insteadof ReadableRecollectionTestsTrait;
     }

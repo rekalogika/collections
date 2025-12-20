@@ -51,8 +51,13 @@ trait MinimalReadableRecollectionTrait
 
     final public function containsKey(mixed $key): bool
     {
-        /** @var TKey */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
+
+        if ($key === null) {
+            return false;
+        }
+
+        /** @phpstan-var TKey $key */
 
         return $this->getRealCollection()->containsKey($key);
     }
@@ -62,8 +67,13 @@ trait MinimalReadableRecollectionTrait
      */
     final public function get(mixed $key): mixed
     {
-        /** @var TKey */
         $key = ParameterUtil::transformInputToKey($this->keyTransformer, $key);
+
+        if ($key === null) {
+            return null;
+        }
+
+        /** @phpstan-var TKey $key */
 
         return $this->getRealCollection()->get($key);
     }

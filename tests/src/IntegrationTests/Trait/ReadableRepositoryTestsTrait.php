@@ -15,6 +15,7 @@ namespace Rekalogika\Collections\Tests\IntegrationTests\Trait;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
+use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Collections\ReadableRepository;
 
 /**
@@ -36,5 +37,11 @@ trait ReadableRepositoryTestsTrait
         $object = $this->getObject()->reference($id);
         static::assertInstanceOf(Citizen::class, $object);
         $object->getAge();
+    }
+
+    public function testReferenceNull(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->getObject()->reference(null);
     }
 }

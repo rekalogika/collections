@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\Tests\IntegrationTests\Trait;
 
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
+use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Collections\Recollection;
 
 /**
@@ -49,6 +50,14 @@ trait CollectionTestsTrait
         static::assertNull($this->getObject()->get($key));
     }
 
+    public function testRemoveNull(): void
+    {
+        $this->getObject()->remove(null);
+        
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
+        static::assertTrue(true);
+    }
+
     public function testRemoveElement(): void
     {
         $this->testSafety();
@@ -68,6 +77,18 @@ trait CollectionTestsTrait
 
         $this->getObject()->set(99999, $citizen);
         static::assertTrue($this->getObject()->contains($citizen));
+    }
+
+    public function testSetNull(): void
+    {
+        $this->testSafety();
+
+        $citizen = new Citizen();
+        $citizen->setName('Jane Doe');
+        $citizen->setAge(25);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->getObject()->set(null, $citizen);
     }
 
     // map, filter and partition are already covered in
