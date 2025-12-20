@@ -16,6 +16,7 @@ namespace Rekalogika\Collections\Tests\App;
 use DAMA\DoctrineTestBundle\DAMADoctrineTestBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
+use Rekalogika\Collections\ORM\RekalogikaCollectionsORMBundle;
 use Symfony\Bundle\DebugBundle\DebugBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -53,6 +54,7 @@ final class Kernel extends BaseKernel
         yield new MakerBundle();
         yield new DebugBundle();
         yield new DAMADoctrineTestBundle();
+        yield new RekalogikaCollectionsORMBundle();
     }
 
     #[\Override]

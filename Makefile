@@ -53,7 +53,7 @@ fixtures: tests/var/data.db
 tests/var/data.db:
 	sqlite3 $@ < tests/etc/data.sql
 
-.PHONY: fixtures-init
+.PHONY: fixtures-dump
 fixtures-dump:
 	rm tests/var/data.db
 	$(PHP) tests/bin/console doctrine:schema:create
