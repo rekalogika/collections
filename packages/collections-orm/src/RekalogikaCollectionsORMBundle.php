@@ -15,4 +15,4 @@ namespace Rekalogika\Collections\ORM;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-final class RekalogikaCollectionsOrmBundle extends Bundle {}
+final class RekalogikaCollectionsORMBundle extends Bundle {}
