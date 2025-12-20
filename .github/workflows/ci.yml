@@ -17,6 +17,11 @@ jobs:
         operating-system: [ubuntu-latest]
         php: [ '8.2', '8.3', '8.4', '8.5' ]
         dep: [highest,lowest]
+        exclude:
+          - php: '8.4'
+            dep: lowest
+          - php: '8.5'
+            dep: lowest
 
     name: ${{ matrix.dep }} deps, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
 

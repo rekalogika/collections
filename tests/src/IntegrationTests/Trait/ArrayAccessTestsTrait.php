@@ -46,7 +46,7 @@ trait ArrayAccessTestsTrait
     public function testOffsetGetNull(): void
     {
         // @phpstan-ignore argument.type
-        static::assertNull($this->getObject()->offsetGet(null)); 
+        static::assertNull($this->getObject()->offsetGet(null));
     }
 
     public function testOffsetSetWithIndex(): void
@@ -79,7 +79,7 @@ trait ArrayAccessTestsTrait
     {
         // @phpstan-ignore argument.type
         $this->getObject()->offsetUnset(null);
-        
+
         // @phpstan-ignore staticMethod.alreadyNarrowedType
         static::assertTrue(true);
     }
