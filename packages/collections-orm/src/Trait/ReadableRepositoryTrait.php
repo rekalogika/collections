@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\ORM\Trait;
 
-use Rekalogika\Domain\Collections\Common\Trait\FetchTrait;
+use Rekalogika\Domain\Collections\Common\Trait\LockAwareFetchTrait;
 use Rekalogika\Domain\Collections\Common\Trait\ReadableRecollectionTrait;
 
 /**
@@ -36,9 +36,9 @@ trait ReadableRepositoryTrait
     }
 
     /**
-     * @use FetchTrait<TKey,T>
+     * @use LockAwareFetchTrait<TKey,T>
      */
-    use FetchTrait;
+    use LockAwareFetchTrait;
 
     /**
      * @return array<TKey,T>

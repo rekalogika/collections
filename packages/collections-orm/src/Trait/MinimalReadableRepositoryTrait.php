@@ -13,10 +13,12 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\ORM\Trait;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Rekalogika\Contracts\Collections\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
-use Rekalogika\Domain\Collections\Common\Trait\FetchTrait;
+use Rekalogika\Contracts\Collections\LockMode;
+use Rekalogika\Domain\Collections\Common\Trait\LockAwareFetchTrait;
 use Rekalogika\Domain\Collections\Common\Trait\PageableTrait;
 use Rekalogika\Domain\Collections\Common\Trait\RefreshCountTrait;
 
@@ -36,9 +38,9 @@ trait MinimalReadableRepositoryTrait
     use RefreshCountTrait;
 
     /**
-     * @use FetchTrait<TKey,T>
+     * @use LockAwareFetchTrait<TKey,T>
      */
-    use FetchTrait;
+    use LockAwareFetchTrait;
 
     abstract protected function getEntityManager(): EntityManagerInterface;
 
@@ -87,10 +89,16 @@ trait MinimalReadableRepositoryTrait
     /**
      * @return T|null
      */
-    public function get(mixed $key): mixed
+    public function get(mixed $key, ?LockMode $lockMode = null): mixed
     {
         if ($key === null) {
             return null;
+        }
+
+        $entityManager = $this->getEntityManager();
+
+        if ($entityManager instanceof EntityManager) {
+            return $entityManager->find($this->getClass(), $key, $lockMode?->toDoctrineLockMode());
         }
 
         return $this->getEntityManager()->find($this->getClass(), $key);

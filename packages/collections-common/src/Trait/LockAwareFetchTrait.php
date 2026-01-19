@@ -11,28 +11,29 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Contracts\Collections;
+namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Rekalogika\Contracts\Collections\Exception\NotFoundException;
+use Rekalogika\Contracts\Collections\LockMode;
 
 /**
  * @template TKey of array-key
- * @template T of object
- * @extends ReadableRepository<TKey,T>
- * @extends Recollection<TKey,T>
+ * @template T
  */
-interface Repository extends ReadableRepository, Recollection
+trait LockAwareFetchTrait
 {
-    /**
-     * @param mixed $key
-     * @return T|null
-     */
-    #[\Override]
-    public function get(mixed $key, ?LockMode $lockMode = null): mixed;
-
     /**
      * @return T
      * @throws NotFoundException
      */
-    public function fetch(mixed $key, ?LockMode $lockMode = null): mixed;
+    final public function fetch(mixed $key, ?LockMode $lockMode = null): mixed
+    {
+        $result = $this->get($key, $lockMode);
+
+        if ($result === null) {
+            throw new NotFoundException();
+        }
+
+        return $result;
+    }
 }
