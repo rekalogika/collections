@@ -34,6 +34,7 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template TKey of array-key
  * @template T
  * @implements Recollection<TKey,T>
+ * @consistent-constructor
  * @api
  */
 class RecollectionDecorator implements Recollection
@@ -93,7 +94,7 @@ class RecollectionDecorator implements Recollection
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      */
-    final private function __construct(
+    protected function __construct(
         Collection $collection,
         array|string|null $orderBy = null,
         ?string $indexBy = null,
