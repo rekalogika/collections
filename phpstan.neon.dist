@@ -14,7 +14,7 @@ parameters:
         - tests/doctrine/*
         - tests/var/*
         - packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php
-        - tests/config/reference.php
+        - tests/config/reference.php (?)
     ignoreErrors:
         -
             message: '#Static method Doctrine\\Common\\Collections\\Criteria::create\(\) invoked#'
