@@ -32,6 +32,7 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template TKey of array-key
  * @template T
  * @implements MinimalRecollection<TKey,T>
+ * @consistent-constructor
  * @api
  */
 class MinimalRecollectionDecorator implements MinimalRecollection
@@ -71,7 +72,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
      * @param null|non-empty-array<string,Order>|string $orderBy
      * @param int<1,max> $itemsPerPage
      */
-    final private function __construct(
+    protected function __construct(
         Collection $collection,
         array|string|null $orderBy = null,
         ?string $indexBy = null,

@@ -34,6 +34,7 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template TKey of array-key
  * @template T
  * @implements ReadableRecollection<TKey,T>
+ * @consistent-constructor
  * @api
  */
 class CriteriaRecollection implements ReadableRecollection
@@ -83,7 +84,7 @@ class CriteriaRecollection implements ReadableRecollection
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      */
-    final private function __construct(
+    protected function __construct(
         ReadableCollection|Selectable $collection,
         ?Criteria $criteria = null,
         ?string $indexBy = null,

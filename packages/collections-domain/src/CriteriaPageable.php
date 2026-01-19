@@ -30,6 +30,7 @@ use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
  * @template TKey of array-key
  * @template T
  * @implements PageableRecollection<TKey,T>
+ * @consistent-constructor
  * @api
  */
 class CriteriaPageable implements PageableRecollection
@@ -65,7 +66,7 @@ class CriteriaPageable implements PageableRecollection
      * @param ReadableCollection<TKey,T>|Selectable<TKey,T> $collection
      * @param int<1,max> $itemsPerPage
      */
-    final private function __construct(
+    protected function __construct(
         ReadableCollection|Selectable $collection,
         ?Criteria $criteria = null,
         ?string $indexBy = null,
