@@ -17,6 +17,8 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
+use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
+use Rekalogika\Domain\Collections\Common\Pagination;
 use Rekalogika\Domain\Collections\CriteriaPageable;
 use Rekalogika\Domain\Collections\CriteriaRecollection;
 
@@ -43,20 +45,32 @@ trait RecollectionDxTrait
         Criteria $criteria,
         ?string $instanceId = null,
         ?CountStrategy $count = null,
+        ?string $indexBy = null,
+        ?int $itemsPerPage = null,
+        ?KeyTransformer $keyTransformer = null,
+        ?Pagination $pagination = null,
     ): CriteriaRecollection {
         // if $criteria has no orderings, add the current ordering
         if ($criteria->orderings() === []) {
             $criteria = $criteria->orderBy($this->getOrderBy());
         }
 
+        $indexBy ??= $this->indexBy;
+        $itemsPerPage ??= $this->itemsPerPage;
+        $keyTransformer ??= $this->keyTransformer;
+        $pagination ??= $this->pagination;
+
         return CriteriaRecollection::create(
             collection: $this->collection,
             criteria: $criteria,
             instanceId: $instanceId,
-            itemsPerPage: $this->itemsPerPage,
+            indexBy: $indexBy,
+            itemsPerPage: $itemsPerPage,
             count: $count,
             softLimit: $this->softLimit,
             hardLimit: $this->hardLimit,
+            keyTransformer: $keyTransformer,
+            pagination: $pagination,
         );
     }
 
@@ -67,18 +81,27 @@ trait RecollectionDxTrait
         Criteria $criteria,
         ?string $instanceId = null,
         ?CountStrategy $count = null,
+        ?string $indexBy = null,
+        ?int $itemsPerPage = null,
+        ?Pagination $pagination = null,
     ): PageableRecollection {
         // if $criteria has no orderings, add the current ordering
         if ($criteria->orderings() === []) {
             $criteria = $criteria->orderBy($this->getOrderBy());
         }
 
+        $indexBy ??= $this->indexBy;
+        $itemsPerPage ??= $this->itemsPerPage;
+        $pagination ??= $this->pagination;
+
         return CriteriaPageable::create(
             collection: $this->collection,
             criteria: $criteria,
             instanceId: $instanceId,
-            itemsPerPage: $this->itemsPerPage,
+            indexBy: $indexBy,
+            itemsPerPage: $itemsPerPage,
             count: $count,
+            pagination: $pagination,
         );
     }
 }
