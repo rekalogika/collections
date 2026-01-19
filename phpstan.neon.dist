@@ -14,6 +14,7 @@ parameters:
         - tests/doctrine/*
         - tests/var/*
         - packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php
+        - tests/config/reference.php (?)
     ignoreErrors:
         -
             message: '#Static method Doctrine\\Common\\Collections\\Criteria::create\(\) invoked#'
@@ -24,6 +25,10 @@ parameters:
             reportUnmatched: false
         -
             message: '#deprecated class Rekalogika\\Domain\\Collections\\ArrayCollection#'
+        -
+            identifier: return.unusedType
+            path: packages/collections-contracts/src/LockMode.php
+
 
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
