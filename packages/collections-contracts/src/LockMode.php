@@ -13,15 +13,17 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Collections;
 
+use Doctrine\DBAL\LockMode as DBALLockMode;
+
 enum LockMode
 {
     case Read;
     case Write;
 
     /**
-     * @return 2|4
+     * @return DBALLockMode::PESSIMISTIC_WRITE|DBALLockMode::PESSIMISTIC_READ
      */
-    public function toDoctrineLockMode(): int
+    public function toDoctrineLockMode(): mixed
     {
         return match ($this) {
             self::Read => \Doctrine\DBAL\LockMode::PESSIMISTIC_READ,
