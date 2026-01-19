@@ -63,9 +63,9 @@
         }
     },
     "replace": {
-        "rekalogika/collections-common": "0.19.1",
-        "rekalogika/collections-contracts": "0.19.1",
-        "rekalogika/collections-domain": "0.19.1",
-        "rekalogika/collections-orm": "0.19.1"
+        "rekalogika/collections-common": "0.19.2",
+        "rekalogika/collections-contracts": "0.19.2",
+        "rekalogika/collections-domain": "0.19.2",
+        "rekalogika/collections-orm": "0.19.2"
     }
 }
