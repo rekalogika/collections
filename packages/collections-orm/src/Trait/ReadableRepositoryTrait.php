@@ -27,18 +27,15 @@ trait ReadableRepositoryTrait
     /**
      * @use ReadableRecollectionTrait<TKey,T>
      * @use MinimalReadableRepositoryTrait<TKey,T>
+     * @use LockAwareFetchTrait<TKey,T>
      */
-    use MinimalReadableRepositoryTrait, ReadableRecollectionTrait {
+    use MinimalReadableRepositoryTrait, ReadableRecollectionTrait, LockAwareFetchTrait {
         MinimalReadableRepositoryTrait::reference insteadof ReadableRecollectionTrait;
         MinimalReadableRepositoryTrait::contains insteadof ReadableRecollectionTrait;
         MinimalReadableRepositoryTrait::containsKey insteadof ReadableRecollectionTrait;
         MinimalReadableRepositoryTrait::get insteadof ReadableRecollectionTrait;
+        LockAwareFetchTrait::fetch insteadof ReadableRecollectionTrait;
     }
-
-    /**
-     * @use LockAwareFetchTrait<TKey,T>
-     */
-    use LockAwareFetchTrait;
 
     /**
      * @return array<TKey,T>
