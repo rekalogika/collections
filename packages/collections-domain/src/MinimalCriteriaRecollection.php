@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections;
 
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
@@ -25,6 +26,7 @@ use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Pagination;
 use Rekalogika\Domain\Collections\Common\Trait\MinimalReadableRecollectionTrait;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
+use Rekalogika\Domain\Collections\Trait\MinimalRecollectionDxTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
@@ -44,6 +46,9 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
 
     /** @use SafeCollectionTrait<TKey,T> */
     use SafeCollectionTrait;
+
+    /** @use MinimalRecollectionDxTrait<TKey,T> */
+    use MinimalRecollectionDxTrait;
 
     /**
      * @var null|\WeakMap<object,array<string,self<array-key,mixed>>>
@@ -120,6 +125,21 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
     }
 
     /**
+     * @return non-empty-array<string,Order>
+     */
+    #[\Override]
+    private function getOrderBy(): array
+    {
+        $ordering = $this->criteria->orderings();
+
+        if (\count($ordering) === 0) {
+            throw new UnexpectedValueException('The criteria has no orderings.');
+        }
+
+        return $ordering;
+    }
+
+    /**
      * @template STKey of array-key
      * @template ST
      * @param ReadableCollection<STKey,ST>|Selectable<STKey,ST> $collection
@@ -148,6 +168,7 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
             $indexBy,
             $itemsPerPage,
             $pagination,
+            $keyTransformer,
         ]));
 
         if (isset(self::$instances[$collection][$cacheKey])) {

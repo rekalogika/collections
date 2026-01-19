@@ -26,6 +26,7 @@ use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Pagination;
 use Rekalogika\Domain\Collections\Common\Trait\MinimalRecollectionTrait;
+use Rekalogika\Domain\Collections\Trait\MinimalRecollectionDxTrait;
 use Rekalogika\Domain\Collections\Trait\RecollectionPageableTrait;
 
 /**
@@ -42,6 +43,9 @@ class MinimalRecollectionDecorator implements MinimalRecollection
 
     /** @use MinimalRecollectionTrait<TKey,T> */
     use MinimalRecollectionTrait;
+
+    /** @use MinimalRecollectionDxTrait<TKey,T> */
+    use MinimalRecollectionDxTrait;
 
     /**
      * @var null|\WeakMap<object,array<string,self<array-key,mixed>>>
@@ -171,6 +175,16 @@ class MinimalRecollectionDecorator implements MinimalRecollection
     private function getCountStrategy(): CountStrategy
     {
         return $this->count ?? ParameterUtil::getDefaultCountStrategyForMinimalClasses();
+    }
+
+    /**
+     * @return non-empty-array<string,Order>
+     * @phpstan-ignore method.unused
+     */
+    #[\Override]
+    private function getOrderBy(): array
+    {
+        return $this->orderBy;
     }
 
     /**
