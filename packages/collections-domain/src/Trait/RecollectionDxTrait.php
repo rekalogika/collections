@@ -39,6 +39,7 @@ trait RecollectionDxTrait
     }
 
     /**
+     * @param int<1,max>|null $itemsPerPage
      * @return CriteriaRecollection<TKey,T>
      */
     final protected function createCriteriaRecollection(
@@ -75,6 +76,7 @@ trait RecollectionDxTrait
     }
 
     /**
+     * @param int<1,max>|null $itemsPerPage
      * @return PageableRecollection<TKey,T>
      */
     final protected function createCriteriaPageable(
