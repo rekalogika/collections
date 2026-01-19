@@ -26,8 +26,8 @@ enum LockMode
     public function toDoctrineLockMode(): mixed
     {
         return match ($this) {
-            self::Read => \Doctrine\DBAL\LockMode::PESSIMISTIC_READ,
-            self::Write => \Doctrine\DBAL\LockMode::PESSIMISTIC_WRITE,
+            self::Read => DBALLockMode::PESSIMISTIC_READ,
+            self::Write => DBALLockMode::PESSIMISTIC_WRITE,
         };
     }
 }
