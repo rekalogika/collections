@@ -13,26 +13,10 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Collections;
 
-use Rekalogika\Contracts\Collections\Exception\NotFoundException;
-
 /**
  * @template TKey of array-key
  * @template T of object
  * @extends ReadableRepository<TKey,T>
  * @extends Recollection<TKey,T>
  */
-interface Repository extends ReadableRepository, Recollection
-{
-    /**
-     * @param mixed $key
-     * @return T|null
-     */
-    #[\Override]
-    public function get(mixed $key, ?LockMode $lockMode = null): mixed;
-
-    /**
-     * @return T
-     * @throws NotFoundException
-     */
-    public function fetch(mixed $key, ?LockMode $lockMode = null): mixed;
-}
+interface Repository extends ReadableRepository, Recollection {}
