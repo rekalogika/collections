@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.21.0
+
+* deps: bump rekapager to 2.0
+* deps: require PHP 8.4, `doctrine/collections` 3.1 and `doctrine/orm` 3.7
+* refactor: use `\SortDirection` instead of the deprecated `Order` enum in
+  `$orderBy` parameters and `Configuration::$defaultOrderBy`
+* feat: implement `matching()` in `RecollectionDecorator`,
+  `CriteriaRecollection`, `QueryRecollection` and `AbstractRepository`, now
+  required by `doctrine/collections` 3
+* fix: `indexOf()` now returns `int|string|false`
+* refactor: deprecated `ArrayCollection` no longer overrides `matching()`, as
+  `doctrine/collections` 3 already handles it correctly
+
 ## 0.16.1
 
 * fix: restore the return signature of `getDefaultOrderBy()` to `array|string`

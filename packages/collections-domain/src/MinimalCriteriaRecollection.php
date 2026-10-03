@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
@@ -70,11 +69,11 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
     private readonly int $itemsPerPage;
 
     /**
-     * @param ReadableCollection<TKey,T>|Selectable<TKey,T> $collection
+     * @param Selectable<TKey,T> $collection
      * @param int<1,max> $itemsPerPage
      */
     protected function __construct(
-        ReadableCollection|Selectable $collection,
+        Selectable $collection,
         ?Criteria $criteria = null,
         ?string $indexBy = null,
         ?int $itemsPerPage = null,
@@ -87,17 +86,13 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
 
         // save collection
 
-        if (!$collection instanceof Selectable) {
-            throw new UnexpectedValueException('The wrapped collection must implement the Selectable interface.');
-        }
-
         $this->collection = $collection;
 
         // save criteria
 
         $criteria = clone ($criteria ?? Criteria::create(true));
 
-        if (\count($criteria->orderings()) === 0) {
+        if (\count($criteria->getOrderings()) === 0) {
             $criteria->orderBy(Configuration::$defaultOrderBy);
         }
 
@@ -125,12 +120,12 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
     }
 
     /**
-     * @return non-empty-array<string,Order>
+     * @return non-empty-array<string,\SortDirection>
      */
     #[\Override]
     private function getOrderBy(): array
     {
-        $ordering = $this->criteria->orderings();
+        $ordering = $this->criteria->getOrderings();
 
         if (\count($ordering) === 0) {
             throw new UnexpectedValueException('The criteria has no orderings.');
@@ -142,12 +137,12 @@ class MinimalCriteriaRecollection implements MinimalReadableRecollection
     /**
      * @template STKey of array-key
      * @template ST
-     * @param ReadableCollection<STKey,ST>|Selectable<STKey,ST> $collection
+     * @param Selectable<STKey,ST> $collection
      * @param int<1,max> $itemsPerPage
      * @return static
      */
     final public static function create(
-        ReadableCollection|Selectable $collection,
+        Selectable $collection,
         ?Criteria $criteria = null,
         ?string $instanceId = null,
         ?string $indexBy = null,

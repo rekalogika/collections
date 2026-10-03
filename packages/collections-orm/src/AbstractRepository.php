@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\ORM;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
@@ -30,6 +29,7 @@ use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 use Rekalogika\Domain\Collections\Common\Pagination;
 use Rekalogika\Domain\Collections\Common\Trait\SafeCollectionTrait;
+use Rekalogika\Domain\Collections\CriteriaRecollection;
 use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
 
 /**
@@ -62,7 +62,7 @@ abstract class AbstractRepository implements Repository
     private readonly QueryBuilder $queryBuilder;
 
     /**
-     * @var non-empty-array<string,Order>
+     * @var non-empty-array<string,\SortDirection>
      */
     private readonly array $orderBy;
 
@@ -80,7 +80,7 @@ abstract class AbstractRepository implements Repository
      * @param int<1,max> $itemsPerPage
      * @param int<1,max> $softLimit
      * @param int<1,max> $hardLimit
-     * @param null|non-empty-array<string,Order>|string $orderBy
+     * @param null|non-empty-array<string,\SortDirection>|string $orderBy
      * @param null|LockMode|LockMode::* $lockMode
      * @param list<string> $boundaryFields
      */
@@ -154,6 +154,19 @@ abstract class AbstractRepository implements Repository
     {
         /** @var class-string<T> */
         return $this->class;
+    }
+
+    /**
+     * Narrows down this repository using the supplied criteria. If the
+     * criteria does not have orderings, the repository's ordering will be
+     * used.
+     *
+     * @return CriteriaRecollection<array-key,T>
+     */
+    #[\Override]
+    public function matching(Criteria $criteria): CriteriaRecollection
+    {
+        return $this->createCriteriaRecollection(clone $criteria);
     }
 
     /**

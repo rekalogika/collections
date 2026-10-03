@@ -38,8 +38,8 @@ final readonly class CriteriaUtil
         }
 
         $criteria->orderBy([
-            ...$criteria->orderings(),
-            ...$criteria2->orderings(),
+            ...$criteria->getOrderings(),
+            ...$criteria2->getOrderings(),
         ]);
 
         return $criteria;

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common\Internal;
 
-use Doctrine\Common\Collections\Order;
 use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
@@ -63,9 +62,9 @@ final class ParameterUtil
     }
 
     /**
-     * @param null|non-empty-array<string,Order>|string $orderBy
-     * @param null|non-empty-array<string,Order>|string $defaultOrderBy
-     * @return non-empty-array<string,Order>
+     * @param null|non-empty-array<string,\SortDirection>|string $orderBy
+     * @param null|non-empty-array<string,\SortDirection>|string $defaultOrderBy
+     * @return non-empty-array<string,\SortDirection>
      */
     public static function normalizeOrderBy(
         array|string|null $orderBy = null,
@@ -76,7 +75,7 @@ final class ParameterUtil
         }
 
         if (\is_string($orderBy)) {
-            $orderBy = [$orderBy => Order::Ascending];
+            $orderBy = [$orderBy => \SortDirection::Ascending];
         }
 
         if ($orderBy === []) {

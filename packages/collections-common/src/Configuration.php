@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Domain\Collections\Common;
 
-use Doctrine\Common\Collections\Order;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
 
@@ -65,9 +64,9 @@ final class Configuration
     /**
      * The default order by clause for the collection.
      *
-     * @var non-empty-array<string,Order>
+     * @var non-empty-array<string,\SortDirection>
      */
-    public static array $defaultOrderBy = ['id' => Order::Descending];
+    public static array $defaultOrderBy = ['id' => \SortDirection::Descending];
 
     /**
      * The default key transformer for the collection.

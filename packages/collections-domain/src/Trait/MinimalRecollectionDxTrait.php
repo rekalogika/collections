@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Trait;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
 use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
@@ -29,7 +28,7 @@ use Rekalogika\Domain\Collections\MinimalCriteriaRecollection;
 trait MinimalRecollectionDxTrait
 {
     /**
-     * @return non-empty-array<string,Order>
+     * @return non-empty-array<string,\SortDirection>
      */
     abstract private function getOrderBy(): array;
 
@@ -52,7 +51,7 @@ trait MinimalRecollectionDxTrait
         ?Pagination $pagination = null,
     ): MinimalCriteriaRecollection {
         // if $criteria has no orderings, add the current ordering
-        if ($criteria->orderings() === []) {
+        if ($criteria->getOrderings() === []) {
             $criteria = $criteria->orderBy($this->getOrderBy());
         }
 
@@ -86,7 +85,7 @@ trait MinimalRecollectionDxTrait
         ?Pagination $pagination = null,
     ): PageableRecollection {
         // if $criteria has no orderings, add the current ordering
-        if ($criteria->orderings() === []) {
+        if ($criteria->getOrderings() === []) {
             $criteria = $criteria->orderBy($this->getOrderBy());
         }
 

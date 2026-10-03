@@ -15,9 +15,6 @@ namespace Rekalogika\Domain\Collections;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
-use Doctrine\Common\Collections\Selectable;
-use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\MinimalRecollection;
 use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
@@ -53,12 +50,12 @@ class MinimalRecollectionDecorator implements MinimalRecollection
     private static ?\WeakMap $instances = null;
 
     /**
-     * @var Collection<TKey,T>&Selectable<TKey,T>
+     * @var Collection<TKey,T>
      */
-    private readonly Collection&Selectable $collection;
+    private readonly Collection $collection;
 
     /**
-     * @var non-empty-array<string,Order>
+     * @var non-empty-array<string,\SortDirection>
      */
     private readonly array $orderBy;
 
@@ -73,7 +70,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
 
     /**
      * @param Collection<TKey,T> $collection
-     * @param null|non-empty-array<string,Order>|string $orderBy
+     * @param null|non-empty-array<string,\SortDirection>|string $orderBy
      * @param int<1,max> $itemsPerPage
      */
     protected function __construct(
@@ -89,10 +86,6 @@ class MinimalRecollectionDecorator implements MinimalRecollection
         $this->itemsPerPage = $itemsPerPage ?? Configuration::$defaultItemsPerPage;
 
         // handle collection
-
-        if (!$collection instanceof Selectable) {
-            throw new UnexpectedValueException('The wrapped collection must implement the Selectable interface.');
-        }
 
         $this->collection = $collection;
 
@@ -110,7 +103,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
      * @template STKey of array-key
      * @template ST
      * @param Collection<STKey,ST> $collection
-     * @param null|non-empty-array<string,Order>|string $orderBy
+     * @param null|non-empty-array<string,\SortDirection>|string $orderBy
      * @param int<1,max> $itemsPerPage
      * @return static
      */
@@ -178,7 +171,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
     }
 
     /**
-     * @return non-empty-array<string,Order>
+     * @return non-empty-array<string,\SortDirection>
      * @phpstan-ignore method.unused
      */
     #[\Override]
@@ -197,7 +190,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
     }
 
     /**
-     * @return non-empty-array<string,Order>
+     * @return non-empty-array<string,\SortDirection>
      */
     protected function getDefaultOrderBy(): array|string
     {
@@ -238,7 +231,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
         ?CountStrategy $count = null,
     ): MinimalCriteriaRecollection {
         // if $criteria has no orderings, add the current ordering
-        if ($criteria->orderings() === []) {
+        if ($criteria->getOrderings() === []) {
             $criteria = $criteria->orderBy($this->orderBy);
         }
 
@@ -260,7 +253,7 @@ class MinimalRecollectionDecorator implements MinimalRecollection
         ?CountStrategy $count = null,
     ): PageableRecollection {
         // if $criteria has no orderings, add the current ordering
-        if ($criteria->orderings() === []) {
+        if ($criteria->getOrderings() === []) {
             $criteria = $criteria->orderBy($this->orderBy);
         }
 

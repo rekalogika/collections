@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Common\Trait;
 
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ReadableCollection;
 use Rekalogika\Domain\Collections\ArrayCollection;
 use Rekalogika\Domain\Collections\Common\Internal\ParameterUtil;
 
@@ -202,9 +201,9 @@ trait ReadableCollectionTrait
 
     /**
      * @param \Closure(T, TKey):bool $p
-     * @return ReadableCollection<TKey,T>
+     * @return Collection<TKey,T>
      */
-    final public function filter(\Closure $p): ReadableCollection
+    final public function filter(\Closure $p): Collection
     {
         /** @psalm-suppress DeprecatedClass */
         return new ArrayCollection(
@@ -216,9 +215,9 @@ trait ReadableCollectionTrait
     /**
      * @template U
      * @param \Closure(T):U $func
-     * @return ReadableCollection<TKey,U>
+     * @return Collection<TKey,U>
      */
-    final public function map(\Closure $func): ReadableCollection
+    final public function map(\Closure $func): Collection
     {
         /** @psalm-suppress DeprecatedClass */
         return new ArrayCollection(
@@ -229,7 +228,7 @@ trait ReadableCollectionTrait
 
     /**
      * @param \Closure(TKey, T):bool $p
-     * @return array{0: ReadableCollection<TKey,T>, 1: ReadableCollection<TKey,T>}
+     * @return array{0: Collection<TKey,T>, 1: Collection<TKey,T>}
      */
     final public function partition(\Closure $p): array
     {
@@ -262,7 +261,7 @@ trait ReadableCollectionTrait
      * @param TMaybeContained $element
      * @return (TMaybeContained is T ? TKey|false : false)
      */
-    final public function indexOf(mixed $element): bool|int|string
+    final public function indexOf(mixed $element): int|string|false
     {
         if ($this->getNewCollection()->contains($element)) {
             return $this->getNewCollection()->indexOf($element);
