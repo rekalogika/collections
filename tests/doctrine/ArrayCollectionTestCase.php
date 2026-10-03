@@ -15,6 +15,7 @@ namespace Doctrine\Tests\Common\Collections;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Selectable;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 abstract class ArrayCollectionTestCase extends TestCase
@@ -33,9 +34,8 @@ abstract class ArrayCollectionTestCase extends TestCase
 
     /**
      * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
      */
+    #[DataProvider('provideDifferentElements')]
     public function testToArray(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -45,9 +45,8 @@ abstract class ArrayCollectionTestCase extends TestCase
 
     /**
      * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
      */
+    #[DataProvider('provideDifferentElements')]
     public function testFirst(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -56,9 +55,8 @@ abstract class ArrayCollectionTestCase extends TestCase
 
     /**
      * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
      */
+    #[DataProvider('provideDifferentElements')]
     public function testLast(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -67,9 +65,8 @@ abstract class ArrayCollectionTestCase extends TestCase
 
     /**
      * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
      */
+    #[DataProvider('provideDifferentElements')]
     public function testKey(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -84,9 +81,8 @@ abstract class ArrayCollectionTestCase extends TestCase
 
     /**
      * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
      */
+    #[DataProvider('provideDifferentElements')]
     public function testNext(array $elements): void
     {
         $count      = \count($elements);
@@ -110,9 +106,8 @@ abstract class ArrayCollectionTestCase extends TestCase
 
     /**
      * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
      */
+    #[DataProvider('provideDifferentElements')]
     public function testCurrent(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -127,9 +122,8 @@ abstract class ArrayCollectionTestCase extends TestCase
 
     /**
      * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
      */
+    #[DataProvider('provideDifferentElements')]
     public function testGetKeys(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -139,9 +133,8 @@ abstract class ArrayCollectionTestCase extends TestCase
 
     /**
      * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
      */
+    #[DataProvider('provideDifferentElements')]
     public function testGetValues(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -151,9 +144,8 @@ abstract class ArrayCollectionTestCase extends TestCase
 
     /**
      * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
      */
+    #[DataProvider('provideDifferentElements')]
     public function testCount(array $elements): void
     {
         $collection = $this->buildCollection($elements);
@@ -163,9 +155,8 @@ abstract class ArrayCollectionTestCase extends TestCase
 
     /**
      * @param array<string|int, string|int> $elements
-     *
-     * @dataProvider provideDifferentElements
      */
+    #[DataProvider('provideDifferentElements')]
     public function testIterator(array $elements): void
     {
         $collection = $this->buildCollection($elements);

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\Tests\IntegrationTests\Base;
 
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Contracts\Collections\Exception\OverflowException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
@@ -22,8 +23,8 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * @template-covariant R of object
- * @runTestsInSeparateProcesses
  */
+#[RunTestsInSeparateProcesses]
 abstract class BaseRecollectionTestCase extends KernelTestCase
 {
     /**

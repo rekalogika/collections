@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\UnitTests\Collections;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rekalogika\Collections\ORM\AbstractMinimalRepository;
 use Rekalogika\Collections\ORM\QueryPageable;
@@ -28,8 +29,8 @@ final class AntiInterfaceTest extends TestCase
 {
     /**
      * @param class-string $class
-     * @dataProvider provideClasses
      */
+    #[DataProvider('provideClasses')]
     public function testDoesNotImplementCountable(string $class): void
     {
         $this->assertFalse(is_subclass_of($class, \Countable::class, true));
@@ -37,8 +38,8 @@ final class AntiInterfaceTest extends TestCase
 
     /**
      * @param class-string $class
-     * @dataProvider provideClasses
      */
+    #[DataProvider('provideClasses')]
     public function testDoesNotImplementTraversable(string $class): void
     {
         $this->assertFalse(is_subclass_of($class, \Traversable::class, true));
@@ -46,8 +47,8 @@ final class AntiInterfaceTest extends TestCase
 
     /**
      * @param class-string $class
-     * @dataProvider provideClasses
      */
+    #[DataProvider('provideClasses')]
     public function testDoesNotImplementArrayAccess(string $class): void
     {
         $this->assertFalse(is_subclass_of($class, \ArrayAccess::class, true));

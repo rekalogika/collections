@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\UnitTests\Collections;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rekalogika\Collections\ORM\AbstractMinimalRepository;
 use Rekalogika\Collections\ORM\QueryPageable;
@@ -28,8 +29,8 @@ final class AntiMethodTest extends TestCase
 {
     /**
      * @param class-string $class
-     * @dataProvider provideClasses
      */
+    #[DataProvider('provideClasses')]
     public function testDoesNotHaveCountMethod(string $class): void
     {
         $this->assertFalse(method_exists($class, 'count'));
