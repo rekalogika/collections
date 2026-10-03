@@ -14,14 +14,13 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\Tests\IntegrationTests\ORM;
 
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Rekalogika\Collections\ORM\DatabaseSession;
 use Rekalogika\Collections\ORM\Implementation\DefaultDatabaseSession;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * @runTestsInSeparateProcesses
- */
+#[RunTestsInSeparateProcesses]
 final class DatabaseSessionTest extends KernelTestCase
 {
     public function testDatabaseSessionIsRegistered(): void
