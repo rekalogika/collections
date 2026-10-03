@@ -111,13 +111,7 @@ trait CollectionTrait
      */
     final public function map(\Closure $func): Collection
     {
-        $result = $this->getSafeCollection()->map($func);
-
-        if (!$result instanceof Collection) {
-            throw new \RuntimeException('Unexpected return type from map');
-        }
-
-        return $result;
+        return $this->getSafeCollection()->map($func);
     }
 
     /**
@@ -126,13 +120,7 @@ trait CollectionTrait
      */
     final public function filter(\Closure $p): Collection
     {
-        $result = $this->getSafeCollection()->filter($p);
-
-        if (!$result instanceof Collection) {
-            throw new \RuntimeException('Unexpected return type from filter');
-        }
-
-        return $result;
+        return $this->getSafeCollection()->filter($p);
     }
 
     /**
@@ -141,12 +129,6 @@ trait CollectionTrait
      */
     final public function partition(\Closure $p): array
     {
-        $result = $this->getSafeCollection()->partition($p);
-
-        if (!\is_array($result) || \count($result) !== 2) {
-            throw new \RuntimeException('Unexpected return type from partition');
-        }
-
-        return $result;
+        return $this->getSafeCollection()->partition($p);
     }
 }

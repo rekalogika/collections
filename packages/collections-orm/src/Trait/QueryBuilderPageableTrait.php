@@ -80,6 +80,9 @@ trait QueryBuilderPageableTrait
 
     private function getUnderlyingCountable(): \Countable
     {
+        // OffsetPaginator, the suggested replacement, cannot count without
+        // also fetching the items
+        // @phpstan-ignore new.deprecatedClass, method.deprecatedClass
         return new Paginator($this->queryBuilder->getQuery());
     }
 }

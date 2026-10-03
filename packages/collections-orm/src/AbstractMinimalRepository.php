@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Collections\ORM;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
@@ -55,7 +54,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
     private readonly QueryBuilder $queryBuilder;
 
     /**
-     * @var non-empty-array<string,Order>
+     * @var non-empty-array<string,\SortDirection>
      */
     private readonly array $orderBy;
 
@@ -71,7 +70,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
     /**
      * @param class-string<T> $class
      * @param int<1,max> $itemsPerPage
-     * @param null|non-empty-array<string,Order>|string $orderBy
+     * @param null|non-empty-array<string,\SortDirection>|string $orderBy
      * @param null|LockMode|LockMode::* $lockMode
      * @param list<string> $boundaryFields
      */

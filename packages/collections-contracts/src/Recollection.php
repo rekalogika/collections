@@ -24,6 +24,26 @@ use Doctrine\Common\Collections\Collection;
 interface Recollection extends ReadableRecollection, Collection
 {
     //
+    // Overridden methods, to resolve the conflicting return types inherited
+    // from both ReadableRecollection and Collection
+    //
+
+    /**
+     * @template U
+     * @param \Closure(T):U $func
+     * @return Collection<TKey,U>
+     */
+    #[\Override]
+    public function map(\Closure $func): Collection;
+
+    /**
+     * @param \Closure(T, TKey):bool $p
+     * @return Collection<TKey,T>
+     */
+    #[\Override]
+    public function filter(\Closure $p): Collection;
+
+    //
     // Overridden methods, to widen keys in parameters to accommodate Uuid key
     // types
     //

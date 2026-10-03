@@ -80,7 +80,7 @@ trait RepositoryDxTrait
         ?CountStrategy $count = null,
     ): CriteriaRecollection {
         // if $criteria has no orderings, add the current ordering
-        if ($criteria->orderings() === []) {
+        if ($criteria->getOrderings() === []) {
             $criteria = $criteria->orderBy($this->orderBy);
         }
 

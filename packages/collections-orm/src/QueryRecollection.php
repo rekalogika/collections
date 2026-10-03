@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\ORM;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Collections\ORM\Trait\QueryBuilderPageableTrait;
@@ -135,6 +136,25 @@ class QueryRecollection implements ReadableRecollection
         $function($instance->queryBuilder);
 
         return $instance;
+    }
+
+    /**
+     * Narrows down this collection by adding the supplied criteria to the
+     * query builder. The orderings of the supplied criteria, if any, replace
+     * the existing ones.
+     *
+     * @return self<TKey,T>
+     */
+    #[\Override]
+    final public function matching(Criteria $criteria): self
+    {
+        $queryBuilder = $this->getQueryBuilder();
+
+        if ($criteria->getOrderings() !== []) {
+            $queryBuilder->resetDQLPart('orderBy');
+        }
+
+        return $this->createQueryRecollection($queryBuilder->addCriteria($criteria));
     }
 
     final protected function withQueryBuilder(QueryBuilder $queryBuilder): static

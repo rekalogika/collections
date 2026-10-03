@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections\Trait;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
 use Rekalogika\Contracts\Collections\PageableRecollection;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
 use Rekalogika\Domain\Collections\Common\KeyTransformer\KeyTransformer;
@@ -29,13 +28,48 @@ use Rekalogika\Domain\Collections\CriteriaRecollection;
 trait RecollectionDxTrait
 {
     /**
-     * @return non-empty-array<string,Order>
+     * @return non-empty-array<string,\SortDirection>
      */
     abstract private function getOrderBy(): array;
 
     final protected function createCriteria(): Criteria
     {
         return clone $this->criteria;
+    }
+
+    /**
+     * Narrows down this collection using the supplied criteria. The orderings,
+     * first result & max results of the supplied criteria take precedence
+     * over the current ones.
+     *
+     * @return CriteriaRecollection<TKey,T>
+     */
+    #[\Override]
+    final public function matching(Criteria $criteria): CriteriaRecollection
+    {
+        $newCriteria = $this->createCriteria();
+
+        $where = $criteria->getWhereExpression();
+        if ($where !== null) {
+            $newCriteria->andWhere($where);
+        }
+
+        $orderings = $criteria->getOrderings();
+        if ($orderings !== []) {
+            $newCriteria->orderBy($orderings);
+        }
+
+        $firstResult = $criteria->getFirstResult();
+        if ($firstResult !== null) {
+            $newCriteria->setFirstResult($firstResult);
+        }
+
+        $maxResults = $criteria->getMaxResults();
+        if ($maxResults !== null) {
+            $newCriteria->setMaxResults($maxResults);
+        }
+
+        return $this->createCriteriaRecollection($newCriteria);
     }
 
     /**
@@ -52,7 +86,7 @@ trait RecollectionDxTrait
         ?Pagination $pagination = null,
     ): CriteriaRecollection {
         // if $criteria has no orderings, add the current ordering
-        if ($criteria->orderings() === []) {
+        if ($criteria->getOrderings() === []) {
             $criteria = $criteria->orderBy($this->getOrderBy());
         }
 
@@ -88,7 +122,7 @@ trait RecollectionDxTrait
         ?Pagination $pagination = null,
     ): PageableRecollection {
         // if $criteria has no orderings, add the current ordering
-        if ($criteria->orderings() === []) {
+        if ($criteria->getOrderings() === []) {
             $criteria = $criteria->orderBy($this->getOrderBy());
         }
 

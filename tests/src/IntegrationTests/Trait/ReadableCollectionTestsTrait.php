@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Collections\Tests\IntegrationTests\Trait;
 
-use Doctrine\Common\Collections\ReadableCollection;
+use Doctrine\Common\Collections\Criteria;
 use Rekalogika\Collections\Tests\App\Entity\Citizen;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
 
@@ -27,6 +27,51 @@ trait ReadableCollectionTestsTrait
 
     /** @use IteratorAggregateTestsTrait<R> */
     use IteratorAggregateTestsTrait;
+
+    public function testMatching(): void
+    {
+        $citizen = $this->getOne();
+
+        $criteria = Criteria::create(true)
+            ->where(Criteria::expr()->eq('id', $citizen->getId()));
+
+        $matched = $this->getObject()->matching($criteria);
+
+        static::assertSame([$citizen], array_values($matched->toArray()));
+    }
+
+    public function testMatchingOrdering(): void
+    {
+        $ids = [];
+
+        foreach ($this->getObject()->getPages() as $page) {
+            foreach ($page as $citizen) {
+                static::assertInstanceOf(Citizen::class, $citizen);
+                $ids[] = $citizen->getId();
+            }
+
+            break;
+        }
+
+        static::assertGreaterThan(1, \count($ids));
+        sort($ids);
+
+        foreach ([\SortDirection::Ascending, \SortDirection::Descending] as $direction) {
+            $criteria = Criteria::create(true)
+                ->where(Criteria::expr()->in('id', $ids))
+                ->orderBy(['id' => $direction]);
+
+            $matchedIds = array_map(
+                static fn(Citizen $citizen): ?int => $citizen->getId(),
+                array_values($this->getObject()->matching($criteria)->toArray()),
+            );
+
+            static::assertSame(
+                $direction === \SortDirection::Ascending ? $ids : array_reverse($ids),
+                $matchedIds,
+            );
+        }
+    }
 
     public function testIsEmpty(): void
     {
@@ -126,7 +171,6 @@ trait ReadableCollectionTestsTrait
         $this->testSafety();
         $func = fn(mixed $value, int|string $key): bool => (int) $key % 2 === 0;
         $filtered = $this->getObject()->filter($func);
-        static::assertInstanceOf(ReadableCollection::class, $filtered);
 
         /** @var int|string $key */
         foreach ($filtered as $key => $citizen) {
@@ -141,7 +185,6 @@ trait ReadableCollectionTestsTrait
         $this->testSafety();
         $func = fn(mixed $value, int|string $key): bool => $key === 9999999;
         $filtered = $this->getObject()->filter($func);
-        static::assertInstanceOf(ReadableCollection::class, $filtered);
         static::assertCount(0, $filtered);
     }
 
@@ -153,7 +196,7 @@ trait ReadableCollectionTestsTrait
             return $value;
         };
         $mapped = $this->getObject()->map($func);
-        static::assertInstanceOf(ReadableCollection::class, $mapped);
+        static::assertSame($this->getObject()->getKeys(), $mapped->getKeys());
     }
 
     public function testPartition(): void

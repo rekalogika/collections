@@ -14,10 +14,8 @@ declare(strict_types=1);
 namespace Rekalogika\Domain\Collections;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\Common\Collections\Selectable;
-use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\ReadableRecollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
@@ -79,13 +77,13 @@ class CriteriaRecollection implements ReadableRecollection
     private readonly int $itemsPerPage;
 
     /**
-     * @param ReadableCollection<TKey,T>|Selectable<TKey,T> $collection
+     * @param Selectable<TKey,T> $collection
      * @param int<1,max> $itemsPerPage
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      */
     protected function __construct(
-        ReadableCollection|Selectable $collection,
+        Selectable $collection,
         ?Criteria $criteria = null,
         ?string $indexBy = null,
         ?int $itemsPerPage = null,
@@ -100,17 +98,13 @@ class CriteriaRecollection implements ReadableRecollection
 
         // save collection
 
-        if (!$collection instanceof Selectable) {
-            throw new UnexpectedValueException('The wrapped collection must implement the Selectable interface.');
-        }
-
         $this->collection = $collection;
 
         // save criteria
 
         $criteria = clone ($criteria ?? Criteria::create(true));
 
-        if (\count($criteria->orderings()) === 0) {
+        if (\count($criteria->getOrderings()) === 0) {
             $criteria->orderBy(Configuration::$defaultOrderBy);
         }
 
@@ -120,14 +114,14 @@ class CriteriaRecollection implements ReadableRecollection
     /**
      * @template STKey of array-key
      * @template ST
-     * @param ReadableCollection<STKey,ST>|Selectable<STKey,ST> $collection
+     * @param Selectable<STKey,ST> $collection
      * @param int<1,max> $itemsPerPage
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
      * @return static
      */
     final public static function create(
-        ReadableCollection|Selectable $collection,
+        Selectable $collection,
         ?Criteria $criteria = null,
         ?string $instanceId = null,
         ?string $indexBy = null,
@@ -219,15 +213,15 @@ class CriteriaRecollection implements ReadableRecollection
     }
 
     /**
-     * @return non-empty-array<string,Order>
+     * @return non-empty-array<string,\SortDirection>
      */
     #[\Override]
     private function getOrderBy(): array
     {
-        $ordering = $this->criteria->orderings();
+        $ordering = $this->criteria->getOrderings();
 
         if ($ordering === []) {
-            return ['id' => Order::Descending];
+            return ['id' => \SortDirection::Descending];
         }
 
         return $ordering;

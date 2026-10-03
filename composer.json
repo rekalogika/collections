@@ -10,13 +10,14 @@
     ],
     "type": "library",
     "require": {
-        "doctrine/collections": "^2.2.2 || ^2.3",
-        "doctrine/orm": "^2.14 || ^3.0",
-        "php": "^8.2",
-        "rekalogika/rekapager-contracts": "^0.22 || ^1.0",
-        "rekalogika/rekapager-doctrine-collections-adapter": "^0.22 || ^1.0",
-        "rekalogika/rekapager-doctrine-orm-adapter": "^0.22 || ^1.0",
-        "rekalogika/rekapager-keyset-pagination": "^0.22 || ^1.0"
+        "doctrine/collections": "^3.1",
+        "doctrine/orm": "^3.7",
+        "php": "^8.4",
+        "rekalogika/rekapager-contracts": "^2.0",
+        "rekalogika/rekapager-doctrine-collections-adapter": "^2.0",
+        "rekalogika/rekapager-doctrine-orm-adapter": "^2.0",
+        "rekalogika/rekapager-keyset-pagination": "^2.0",
+        "symfony/polyfill-php86": "^1.37"
     },
     "require-dev": {
         "bnf/phpstan-psr-container": "^1.0",
@@ -25,7 +26,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.6 || ^4.0",
         "doctrine/persistence": "^3.1 || ^4.0",
         "ekino/phpstan-banned-code": "^3.0",
-        "phpstan/phpstan": "^2.1.33",
+        "phpstan/phpstan": "2.1.33",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
         "phpunit/phpunit": "^11.5",

@@ -15,9 +15,6 @@ namespace Rekalogika\Domain\Collections;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
-use Doctrine\Common\Collections\Selectable;
-use Rekalogika\Contracts\Collections\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Collections\Recollection;
 use Rekalogika\Domain\Collections\Common\Configuration;
 use Rekalogika\Domain\Collections\Common\Count\CountStrategy;
@@ -69,12 +66,12 @@ class RecollectionDecorator implements Recollection
     private static ?\WeakMap $instances = null;
 
     /**
-     * @var Collection<TKey,T>&Selectable<TKey,T>
+     * @var Collection<TKey,T>
      */
-    private readonly Collection&Selectable $collection;
+    private readonly Collection $collection;
 
     /**
-     * @var non-empty-array<string,Order>
+     * @var non-empty-array<string,\SortDirection>
      */
     private readonly array $orderBy;
 
@@ -89,7 +86,7 @@ class RecollectionDecorator implements Recollection
 
     /**
      * @param Collection<TKey,T> $collection
-     * @param null|non-empty-array<string,Order>|string $orderBy
+     * @param null|non-empty-array<string,\SortDirection>|string $orderBy
      * @param int<1,max> $itemsPerPage
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
@@ -110,10 +107,6 @@ class RecollectionDecorator implements Recollection
 
         // handle collection
 
-        if (!$collection instanceof Selectable) {
-            throw new UnexpectedValueException('The wrapped collection must implement the Selectable interface.');
-        }
-
         $this->collection = $collection;
 
         // handle orderBy
@@ -130,7 +123,7 @@ class RecollectionDecorator implements Recollection
      * @template STKey of array-key
      * @template ST
      * @param Collection<STKey,ST> $collection
-     * @param null|non-empty-array<string,Order>|string $orderBy
+     * @param null|non-empty-array<string,\SortDirection>|string $orderBy
      * @param int<1,max> $itemsPerPage
      * @param null|int<1,max> $softLimit
      * @param null|int<1,max> $hardLimit
@@ -219,7 +212,7 @@ class RecollectionDecorator implements Recollection
     }
 
     /**
-     * @return non-empty-array<string,Order>
+     * @return non-empty-array<string,\SortDirection>
      */
     #[\Override]
     private function getOrderBy(): array
@@ -237,7 +230,7 @@ class RecollectionDecorator implements Recollection
     }
 
     /**
-     * @return non-empty-array<string,Order>
+     * @return non-empty-array<string,\SortDirection>
      */
     protected function getDefaultOrderBy(): array|string
     {

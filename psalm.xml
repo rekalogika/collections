@@ -37,36 +37,6 @@
                 <file name="packages/collections-contracts/src/ReadableRecollection.php" />
             </errorLevel>
         </InvalidTemplateParam>
-        <PossiblyUndefinedArrayOffset>
-            <errorLevel type="suppress">
-                <file name="packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php" />
-            </errorLevel>
-        </PossiblyUndefinedArrayOffset>
-        <MixedArgument>
-            <errorLevel type="suppress">
-                <file name="packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php" />
-            </errorLevel>
-        </MixedArgument>
-        <MissingClosureParamType>
-            <errorLevel type="suppress">
-                <file name="packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php" />
-            </errorLevel>
-        </MissingClosureParamType>
-        <MixedAssignment>
-            <errorLevel type="suppress">
-                <file name="packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php" />
-            </errorLevel>
-        </MixedAssignment>
-        <MixedReturnStatement>
-            <errorLevel type="suppress">
-                <file name="packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php" />
-            </errorLevel>
-        </MixedReturnStatement>
-        <MixedArgumentTypeCoercion>
-            <errorLevel type="suppress">
-                <file name="packages/collections-domain/src/Internal/DirectClosureExpressionVisitor.php" />
-            </errorLevel>
-        </MixedArgumentTypeCoercion>
         <ClassMustBeFinal>
             <errorLevel type="suppress">
                 <directory name="tests/src/App/Entity/" />
