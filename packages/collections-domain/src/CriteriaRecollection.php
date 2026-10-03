@@ -102,7 +102,7 @@ class CriteriaRecollection implements ReadableRecollection
 
         // save criteria
 
-        $criteria = clone ($criteria ?? Criteria::create(true));
+        $criteria = clone ($criteria ?? Criteria::create());
 
         if (\count($criteria->getOrderings()) === 0) {
             $criteria->orderBy(Configuration::$defaultOrderBy);

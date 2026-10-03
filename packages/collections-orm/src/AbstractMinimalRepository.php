@@ -102,7 +102,7 @@ abstract class AbstractMinimalRepository implements MinimalRepository
         $this->orderBy = ParameterUtil::normalizeOrderBy($orderBy);
 
         // set query builder
-        $criteria = Criteria::create(true)->orderBy($this->orderBy);
+        $criteria = Criteria::create()->orderBy($this->orderBy);
 
         $this->queryBuilder = $this
             ->createQueryBuilder('e', 'e.' . $this->indexBy)

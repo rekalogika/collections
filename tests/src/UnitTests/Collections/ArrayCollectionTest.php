@@ -52,7 +52,7 @@ final class ArrayCollectionTest extends TestCase
     {
         /** @psalm-suppress DeprecatedClass */
         $citizens = new ArrayCollection($this->createArray());
-        $statelessCriteria = Criteria::create(true)
+        $statelessCriteria = Criteria::create()
             ->where(Criteria::expr()->isNull('country'));
 
         $statelessCitizens = $citizens->matching($statelessCriteria);
@@ -69,7 +69,7 @@ final class ArrayCollectionTest extends TestCase
             new Country('Syldavia'),
             new NullCountry(),
         ]);
-        $criteria = Criteria::create(true)
+        $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('foo', 'bar'));
 
         $result = $citizens->matching($criteria);

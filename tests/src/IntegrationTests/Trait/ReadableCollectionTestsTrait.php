@@ -32,7 +32,7 @@ trait ReadableCollectionTestsTrait
     {
         $citizen = $this->getOne();
 
-        $criteria = Criteria::create(true)
+        $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('id', $citizen->getId()));
 
         $matched = $this->getObject()->matching($criteria);
@@ -57,7 +57,7 @@ trait ReadableCollectionTestsTrait
         sort($ids);
 
         foreach ([\SortDirection::Ascending, \SortDirection::Descending] as $direction) {
-            $criteria = Criteria::create(true)
+            $criteria = Criteria::create()
                 ->where(Criteria::expr()->in('id', $ids))
                 ->orderBy(['id' => $direction]);
 
