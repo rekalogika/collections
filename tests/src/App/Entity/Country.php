@@ -82,7 +82,7 @@ class Country
 
     private function getWorkingAgeCriteria(): Criteria
     {
-        return Criteria::create(true)
+        return Criteria::create()
             ->where(Criteria::expr()->gte('age', 15))
             ->andWhere(Criteria::expr()->lte('age', 64));
     }

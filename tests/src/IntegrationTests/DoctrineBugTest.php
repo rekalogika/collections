@@ -41,7 +41,7 @@ final class DoctrineBugTest extends KernelTestCase
 
         static::assertInstanceOf(Selectable::class, $citizens);
 
-        $matchingCitizens = $citizens->matching(Criteria::create(true));
+        $matchingCitizens = $citizens->matching(Criteria::create());
 
         foreach ($matchingCitizens as $key => $citizen) {
             static::assertInstanceOf(Citizen::class, $citizen);
